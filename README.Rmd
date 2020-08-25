@@ -1,7 +1,14 @@
 ---
+title: "Syllabus for ANLY503 Data Visualization"
+subtitle: "Georgetown University, Fall 2020"
 output:
+  html_document: default
+  pdf_document: default
   md_document:
     variant: gfm
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = encoding,
+  output_format = "all") })
 ---
 
 ```{r setup, include=FALSE}
@@ -9,8 +16,6 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
 ```
 
 **This syllabus is effective as of `r strftime(Sys.time(), "%A,  %B %d, %Y at %I:%M %p", tz = "America/New_York")`**
-
-# ANLY503 - Analytical Data Visualization <br/> Georgetown University <br/> Fall 2020
 
 ## Course Information
 
@@ -23,14 +28,14 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
   - Kiwi Yu (ky240),
 - **Class Schedule:**
   - Class meets Thursdays 6:30-9:00pm 
-  - Recurring Zoom Link (GU credentials required): https://georgetown.zoom.us/j/92785221213
+  - Recurring Zoom Link (GU credentials required): https://georgetown.zoom.us/j/99864511820
   - Labs will breakout from the Lecture (no separate Zoom Link)
   
 ### Course Description
 
-Data visualization is both art and science.
+Data visualization is both art and science. More and more, the products of statistical analysis that we encounter in our everyday lives come in the form of data visualizations. Visualizations have the advantage of being easier to interpret for many people, but they also give the impression of being a form of absolute truth. As with any presentation method, though, visualizations can be manipulated by their creators to show the story they are trying to tell. In this class, we will explore the many methods of information visualization, and develop intuition for when data graphics are not telling the truth. 
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+This course will draw upon methods from statistics, graphic design, and computer science. We will approach these ideas from the ground up, and they will all be framed in the context of visualization. As a result, you can expect to come away from this course with a basic understanding of concepts from all of the aforementioned disciplines, as well as one place where they fit together.
 
 ### Course Objectives
 
@@ -119,7 +124,7 @@ This calendar is subject to change. We will make make any changes known in advan
 source("schedule.R")
 sched %>%
   knitr:::kable(., "markdown",
-                col.names = c("Class", "Date", "Topics", "Activity",
+                col.names = c("Class", "Module", "Date", "Topics", "Activity",
                               "Readings", "What is Due")
   )
 ``` 
