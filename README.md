@@ -1,4 +1,5 @@
-**This syllabus is effective as of Monday, August 24, 2020 at 10:49 PM**
+**This syllabus is effective as of Tuesday, August 25, 2020 at 12:25
+AM**
 
 # ANLY503 - Analytical Data Visualization <br/> Georgetown University <br/> Fall 2020
 
@@ -19,15 +20,22 @@
 
 ### Course Description
 
-Data visualization is both art and science.
+Data visualization is both art and science. More and more, the products
+of statistical analysis that we encounter in our everyday lives come in
+the form of data visualizations. Visualizations have the advantage of
+being easier to interpret for many people, but they also give the
+impression of being a form of absolute truth. As with any presentation
+method, though, visualizations can be manipulated by their creators to
+show the story they are trying to tell. In this class, we will explore
+the many methods of information visualization, and develop intuition for
+when data graphics are not telling the truth.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-mollit anim id est laborum.
+This course will draw upon methods from statistics, graphic design, and
+computer science. We will approach these ideas from the ground up, and
+they will all be framed in the context of visualization. As a result,
+you can expect to come away from this course with a basic understanding
+of concepts from all of the aforementioned disciplines, as well as one
+place where they fit together.
 
 ### Course Objectives
 
@@ -151,22 +159,22 @@ the letter grade will follow standard guidelines:
 This calendar is subject to change. We will make make any changes known
 in advance.
 
-| Class | Date   | Topics                                                    | Activity                                        | Readings | What is Due                                      |
-| ----: | :----- | :-------------------------------------------------------- | :---------------------------------------------- | :------- | :----------------------------------------------- |
-|     1 | Aug 27 | History and purpose of dataviz, designing for an Audience | Setup environment                               |          |                                                  |
-|     2 | Sep 03 | Picking the right visualization                           | Build an R Markdown website                     | \*       | A1 due Fri 9/4                                   |
-|     3 | Sep 10 | Making readable graphics, putting it all together         | Activity 3                                      | \*       | A2 due Fri 9/11                                  |
-|     4 | Sep 17 | Tools overview                                            | Activity 4                                      | \*       | A3 due Fri 9/18                                  |
-|     5 | Sep 24 | Data prep for visualization                               | Wrangle/structure a complex dataset for dataviz | \*       |                                                  |
-|     6 | Oct 01 | EDA Visualization, naniar, outliers                       | Understand your data                            | \*       | A4 due Fri 10/2                                  |
-|     7 | Oct 08 | Static graphics with R - ggplot and ecosystem             | Make graphs with R                              | \*       | A5 due Fri 10/9                                  |
-|     8 | Oct 15 | Static graphics with Python - matplotlib                  | Make graphs with Python                         | \*       | A6 due Fri 10/16                                 |
-|     9 | Oct 22 | Maps and geospatial data                                  | Cloropleth: mapping the FL 2000 election        | \*       | A7 due Fri 10/23                                 |
-|    10 | Oct 29 | Networks                                                  | Build and draw a network                        | \*       | A8 due Fri 10/31                                 |
-|    11 | Nov 05 | Dynamic graphs 1                                          | Activity 11                                     | \*       | A9 due Fri 11/6                                  |
-|    12 | Nov 12 | Dynamic graphs 2                                          | Activity 12                                     | \*       |                                                  |
-|    13 | Nov 19 | Visualizing model dianostics and results                  | ML diagnostics                                  | \*       | A10 due Fri 11/20                                |
-|    14 | Dec 03 | Wrapup                                                    |                                                 |          | Final Project and Online Portfolio due Fri 12/11 |
+| Class | Module                  | Date   | Topics                                                    | Activity                                        | Readings | What is Due                                      |
+| ----: | :---------------------- | :----- | :-------------------------------------------------------- | :---------------------------------------------- | :------- | :----------------------------------------------- |
+|     1 | 1 - Conceptual          | Aug 27 | History and purpose of dataviz, designing for an Audience | Setup environment                               |          |                                                  |
+|     2 | 1 - Conceptual          | Sep 03 | Picking the right visualization                           | Build an R Markdown website                     | \*       | A1 due Fri 9/4                                   |
+|     3 | 1 - Conceptual          | Sep 10 | Making readable graphics, putting it all together         | Activity 3                                      | \*       | A2 due Fri 9/11                                  |
+|     4 | 2 - Tools & Data        | Sep 17 | Tools overview                                            | Activity 4                                      | \*       | A3 due Fri 9/18                                  |
+|     5 | 2 - Tools & Data        | Sep 24 | Data prep for visualization                               | Wrangle/structure a complex dataset for dataviz | \*       |                                                  |
+|     6 | 2 - Tools & Data        | Oct 01 | EDA Visualization, naniar, outliers                       | Understand your data                            | \*       | A4 due Fri 10/2                                  |
+|     7 | 3 - Static Visuals      | Oct 08 | Static graphics with R - ggplot and ecosystem             | Make graphs with R                              | \*       | A5 due Fri 10/9                                  |
+|     8 | 3 - Static Visuals      | Oct 15 | Static graphics with Python - matplotlib                  | Make graphs with Python                         | \*       | A6 due Fri 10/16                                 |
+|     9 | 4 - Specialized Visuals | Oct 22 | Maps and geospatial data                                  | Cloropleth: mapping the FL 2000 election        | \*       | A7 due Fri 10/23                                 |
+|    10 | 4 - Specialized Visuals | Oct 29 | Networks                                                  | Build and draw a network                        | \*       | A8 due Fri 10/31                                 |
+|    11 | 5 - Dynamic Visuals     | Nov 05 | Dynamic graphs 1                                          | Activity 11                                     | \*       | A9 due Fri 11/6                                  |
+|    12 | 5 - Dynamic Visuals     | Nov 12 | Dynamic graphs 2                                          | Activity 12                                     | \*       |                                                  |
+|    13 | 6 - ML                  | Nov 19 | Visualizing model dianostics and results                  | ML diagnostics                                  | \*       | A10 due Fri 11/20                                |
+|    14 |                         | Dec 03 | Wrapup                                                    |                                                 |          | Final Project and Online Portfolio due Fri 12/11 |
 
 Calendar notes:
 
