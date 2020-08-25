@@ -1,0 +1,82 @@
+Data visualization is both art and science.
+
+Data visualization is as valuable to anyone working with data as grammer is to anyone working with words. One should not write an essay withouy proper grammer just as one should not create a graph without first mastering data visualization best practices.
+
+Learning visualization is an iterative process
+
+
+
+
+SHORT HISTORY OF DATA VISUALIZATION
+1) Most data visualization has taken place in the last 30 years.
+a) The first record of data vis dates back to 200 AD
+b) Astronomical data presentation for navigation
+2) 1700s: Rene Descartes
+a) Create the first recorded sort-of 2D “graph” to perform math.
+b) This type of graph was later used to present data.
+3) 1800-1900: Graphs and pie charts (WilliamPlayfair)
+4) 1913: Iowa State University: Introduced some of the first courses in “graphing” data 5) 1977: Princeton University:
+a) Statistics Professor John Tukey
+b) Developed the first exploratory data analysis (EDA) using visualizations.
+
+  6) 1983: Edward Tufte published “The Visual Display of Quantitative Information” which showed effective visualization methods.
+7) 1984, Apple Computer introduced the first popular and affordable computer that focused in graphics (GIU) as a mode of interaction and display. This was huge and persists today.
+8) 1999: The words, “information visualization” were so first named in the book: “Readings in Information Visualization: Using Vision to Think”, Card, Mackinlay, Shneiderman.
+9) Around 2000ish - : In Few’s opinion, the IBM PC detracted from the value of making graphs by hand as it offers a mouse and computer-application based option. When people made graphs by hand, the took the time to be responsible.
+
+
+Think about when you first get a dataset.
+- You open the file, not sure what to expect
+- You make and review summary charts and produce summary statistics to get a sense of what you are dealing with
+- You may plug the dataset into a tool for a quick overview
+-
+-
+
+A-ha! This is what John Tukey called _exploratory data analysis_ in 1977.
+
+Exploratory data analysis is detective work—numerical detective work—or counting detective work—or graphical detective work.
+
+You kind of know what you’re looking for, but you don’t know what you’re going to find yet. You work with your bag of tools through the available resources.
+That’s when it’s just you. If labels are not aligned, or you have to tilt your head to see the data in the right way, or the chart type isn’t ideal, who cares? You know what you’re looking at or can make another chart to change the view so that you do.
+A reader who lands on your chart (and the underlying data) does not have the same luxury of developing and answering questions like you did. Some might know little about data or making sense of it. Some might know more, but they don’t want to analyze the dataset. They want to know the results.
+With this in mind, let’s look over the main differences between you making charts for people to read versus you using charts for analysis.
+
+# D
+
+# How to think about datavis
+- Begin with the consumer in mind
+You have a deep understaing of the data you are presenting
+The audience that sees your visualizations may not
+Make sure the graphic is clear
+Makre sure the main point you want to make pops
+
+
+
+
+
+
+# Why visualize data
+
+- To communicate a story
+
+
+# Numbers don't tell the whole story
+
+anscombe and dinosair
+
+# Summaries don't differentiate
+
+
+# Good vs Bad
+
+
+
+transition into "let the data speak"
+
+
+
+
+
+# 7 Rules
+
+

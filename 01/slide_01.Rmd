@@ -1,0 +1,158 @@
+---
+title: "ANLY 503"
+subtitle: "Week 1"
+author: "Vaisman & Dasgupta"
+institute: "Georgetown University"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: [default, '../robot.css','../robot-fonts.css', '../sfah.css']
+    nature:
+      ratio: '16:9'
+      highlightStyle: zenburn
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+layout: true
+
+<div class="my-header">
+<span>ANLY 503, Scientific and Analytical Visualization</span>
+</div>
+
+---
+
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+library(pacman)
+p_load(char = c('tidyverse','knitr', 'htmlwidgets', 'kableExtra'))
+opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, comment="", 
+               cache=FALSE)
+```
+
+
+
+## Objectives of this course
+
++ Understand principles of good data visualization
++ Know what might make a visualization poor or ineffective
++ Get you going using R __for visualization__
+  + Various packages
++ Creating static and dynamic visualizations using R
++ Using the web as a presentation medium
+
+---
+
+## Course resources
+
+### Website [https://faes.instructure.com/courses/262](https://faes.instructue.com/courses/262)
+
+### Slack [https://biof439.slack.com](https://biof439.slack.com)
+
+
+---
+
+# Homework policies
+
+- Homework assignments will be posted on the website by Wednesday following class. There will also be a submission link. 
+- Homework assignments submissions will be based on a R Markdown file and the corresponding HTML file, unless otherwise specified. 
+- Homework assignments are due back to me by the following Monday at midnight. 
+- You may be late on at most 1 homework out of the 4 homeworks that will be assigned.
+- Homeworks will count for 50% of your grade.
+
+### Collaboration
+
+You are encouraged to collaborate either in person or through Slack, especially since there will be a fair amount of variability of R expertise in this class. However, your submitted work should be your own.
+
+
+---
+
+# Final Project
+
+- A R Markdown dashboard using the `flexdashboard` package
+- Use your own data
+- Use R package(s) to visualize your data sets in at least 3 ways, to show what your data looks like and what your analytic results look like.
+- Each student will be randomly assigned to 2 peers
+  - Critiques based on quality and effectiveness of visualizations
+- All final projects will be posted on the website, so we can learn from each other (unless you let me know first, for example, if the data is private and embargoed)
+- I fully expect some of you to blow me away!!
+
+This will count for 20% of your grade
+
+---
+
+# Class participation
+
+- Come prepared for class
+- Ask questions
+- Comment on the strengths and weaknesses of visualizations when we work on them
+- Discuss topics on the Slack channel
+
+This will count for 30% of your grade
+
+---
+
+# Exemplar data
+
+I don't work in bioinformatics anymore, or your particular disciplines. So:
+
+- you can send me exemplar datasets by the night of the 3rd class (February 18), as well as telling me what you want to achieve
+- I will try to incorporate common examples into the classes
+- I will get you back completed visualizations or at least what I could achieve, on the last day of class.
+
+---
+
+# Contact info
+
+### Email: adasgupta+biof439@araastat.com (don't use my NED email)
+
+### Slack
+
+---
+
+# Code repository
+
+All the code and materials for this class will be stored on GitHub, which is an online version control repository. You can access it from the class website
+
+---
+
+# Software requirements
+
+For this class you will need R and RStudio.
+
+1. You can install R on your machine from https://cran.r-project.org. There are versions for Windows, Mac OS X and Linux. On windows machines, R can be installed without administrative privileges
+1. You can install RStudio from [RStudio](https://rstudio.com/products/rstudio/download/#download). If you have a Windows machine and do not have administrative privileges, you should download the version from the Zip/Tarballs section, open the zip file and just run RStudio.exe from there. 
+1. You can access R and RStudio online without any installations using [RStudio Cloud](https://rstudio.cloud/). You can get an account for free. 
+
+---
+
+# Software requirements
+
+For R, we will require the following packages:
+
+1. `tidyverse` (a meta-package containing 8 other packages)
+1. `flexdashboard` (the main reporting package)
+1. `RColorBrewer` and `viridis` (color palettes)
+1. `shiny` for some interactivity
+1. `htmlwidgets`, `plotly`,`DataTables`, `highcharter` for dynamic plotting and reporting
+
+> On the website, there will be a file *packages.R*. This will have the R script to 
+install these packages. There will be instructions and (hopefully) a screencast up by Thursday
+
+---
+
+# Other useful software
+
+1. Adobe Illustrator / Inkscape
+1. Adobe Photoshop / GIMP
+1. Adobe Reader Pro / Preview
+1. ImageMagick (accessible via the R package `magick`)
+
+
+
+
+
+
+
+
+
+
