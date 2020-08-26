@@ -1,0 +1,183 @@
+class: inverse
+
+# About the Course
+
+---
+
+# Course objectives and outcomes
+
+- Increase your data visualization vocabulary
+- Understand what comes before and after creating visualizations
+- Think critically about data
+- Distinguish between using visualizations for data exploration or presentation
+- Manipulate and arrange different kinds of data for the purposes of analysis and visualization
+- Design effective visualizations for different purposes that are easily understandable by different types of audiences
+- Apply a set of rules to create highly effective and engaging data visualizations
+- Understand the role of data visualization within data science and for solving problems
+- Use an array of tools (including R, Python, Tableau) to execute all of the above
+
+---
+
+
+# Course resources
+
+### Website [https://faes.instructure.com/courses/262](https://faes.instructue.com/courses/262)
+
+### Slack [https://biof439.slack.com](https://biof439.slack.com)
+
+
+---
+
+# Homework policies
+
+- Homework assignments will be posted on the website by Wednesday following class. There will also be a submission link.
+- Homework assignments submissions will be based on a R Markdown file and the corresponding HTML file, unless otherwise specified.
+- Homework assignments are due back to me by the following Monday at midnight.
+- You may be late on at most 1 homework out of the 4 homeworks that will be assigned.
+- Homeworks will count for 50% of your grade.
+
+### Collaboration
+
+You are encouraged to collaborate either in person or through Slack, especially since there will be a fair amount of variability of R expertise in this class. However, your submitted work should be your own.
+
+
+---
+
+# Final Project
+
+- A R Markdown dashboard using the `flexdashboard` package
+- Use your own data
+- Use R package(s) to visualize your data sets in at least 3 ways, to show what your data looks like and what your analytic results look like.
+- Each student will be randomly assigned to 2 peers
+  - Critiques based on quality and effectiveness of visualizations
+- All final projects will be posted on the website, so we can learn from each other (unless you let me know first, for example, if the data is private and embargoed)
+- I fully expect some of you to blow me away!!
+
+This will count for 20% of your grade
+
+---
+
+# Class participation
+
+- Come prepared for class
+- Ask questions
+- Comment on the strengths and weaknesses of visualizations when we work on them
+- Discuss topics on the Slack channel
+
+This will count for 30% of your grade
+
+---
+
+# Exemplar data
+
+I don't work in bioinformatics anymore, or your particular disciplines. So:
+
+- you can send me exemplar datasets by the night of the 3rd class (February 18), as well as telling me what you want to achieve
+- I will try to incorporate common examples into the classes
+- I will get you back completed visualizations or at least what I could achieve, on the last day of class.
+
+---
+
+# Software requirements
+
+For this class you will need R and RStudio.
+
+1. You can install R on your machine from https://cran.r-project.org. There are versions for Windows, Mac OS X and Linux. On windows machines, R can be installed without administrative privileges
+1. You can install RStudio from [RStudio](https://rstudio.com/products/rstudio/download/#download). If you have a Windows machine and do not have administrative privileges, you should download the version from the Zip/Tarballs section, open the zip file and just run RStudio.exe from there.
+
+---
+
+# Software requirements
+
+For R, we will require the following packages:
+
+1. `tidyverse` (a meta-package containing 8 other packages)
+1. `flexdashboard` (the main reporting package)
+1. `RColorBrewer` and `viridis` (color palettes)
+1. `shiny` for some interactivity
+1. `htmlwidgets`, `plotly`,`DataTables`, `highcharter` for dynamic plotting and reporting
+
+> On the website, there will be a file *packages.R*. This will have the R script to
+install these packages. There will be instructions and (hopefully) a screencast up by Thursday
+
+---
+
+# Other useful software
+
+1. Adobe Illustrator / Inkscape
+1. Adobe Photoshop / GIMP
+1. Adobe Reader Pro / Preview
+1. ImageMagick (accessible via the R package `magick`)
+
+---
+
+
+---
+
+
+# Evaluation
+
+* Completion of weekly labs: 10%
+* Weekly quizzes: 20%
+* Problem Sets (3-4): 30%
+* Group Project: 40%
+
+???
+
+Labs must be completed. They are not graded for correctness. You have to do them: quizzes have lab content, and the labs are an integral part of the hand-on learning. 
+
+Quizzes are based on the readings, lectures and labs. Anything said in lecture is fair game. 
+
+---
+
+# Class Policies
+
+- **Online Zoom Rules**
+  - Participate and speak while on Zoom. We know it's harder to do classes over Zoom, but we love participation. Ask questions. Make comments. Challenge us. Acknowledge us. If we speak for three hours to a silent classroom, it is a lot more boring and tiring for everyone.
+  - Focus your attention to the class. Online classes require higher level of engagement for everyone. Don't multitask (you know what we mean...)
+  - Turn on your camera. If you have a bad hair day, that's ok (we do too.) We want to see you. If you have bandwidth issues and can't use your camera, we understand as well.
+- **Course Communication:** Please use the provided **Canvas Discussion Boards** (separate than the ones from required class discussion) for questions about the course, homework assignments, technical issues, etc. Staff will be monitoring them and providing answers on a regular basis. Individual emails will not be answered except for special circumstances.
+- **Due Dates:** Homework assignments are posted on Thursdays and will be due on the Friday a week after they are assigned, at the end of the day Eastern Time.  Due dates will not be extended.
+- **Late Policy:** Late assignments or discussions will not be accepted and will get zero (0) points. Period. The two lowest assignment grades will be dropped. In lieu of a late policy this allows you to miss **up to two weekly assignments. This DOES NOT include discussions, portfolio or final project.**
+- **Class materials are for class use only!:** Please refrain from making your private GitHub repositories or any other class materials public. A breach of this request is considered an Honor Code Violation.
+
+
+
+
+
+---
+
+# Class Policies (continued)
+
+* **Due Dates:** due dates will not be extended, and late deliverables will incur a penalty of 25% per day. No excuses:
+  * _It didn't work for me_
+  * _I lost my code because I didn't push to github_ 
+  * _It took me too long because it was the first time I'm doing it_ 
+  * _It took too long to process_
+  * _I ran out of credits_
+* **Open Door Policy:** If you don't like something or something is not working for you, come and talk to us
+* **Honor Code:** Follow the Honor Code. Collaboration policy in syllabus. Quizzes are individual. Code must be written individually and use your own cloud resources. Any deviation is considered a violation. **ZERO TOLERANCE POLICY**
+* **Class Materials:** For classroom use only. Please do not post publicly. Repositories must be maintained privately (for assignments, labs and project.)
+
+---
+
+
+
+
+# Project
+
+* Form into teams of 2-4 (preferably 3-4), no individual projects
+* Work with a _large_ dataset, > 20GB
+* Sections
+  * Data sourcing and ingesting
+  * Exploratory analysis
+  * Modeling
+  * Challenges and Learnings
+  * Conclusions 
+  * Future work
+  
+???
+  
+While ML is part of the project, it is not an ML project. 
+  
+

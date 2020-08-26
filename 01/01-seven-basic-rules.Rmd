@@ -1,0 +1,42 @@
+class: inverse, center, middle
+
+# Seven basic rules for making charts and graphs
+
+https://flowingdata.com/2010/07/22/7-basic-rules-for-making-charts-and-graphs/
+
+---
+
+# 1) Check the data
+
+
+---
+
+# 2) Explain encodings
+
+
+---
+
+# 3) Label axes
+
+
+---
+
+# 4) Include units
+
+
+---
+
+# 5) Keep your geometry in check
+
+
+---
+
+# 6) Include your sources
+
+
+---
+
+# 7) Consider your audience
+
+
+

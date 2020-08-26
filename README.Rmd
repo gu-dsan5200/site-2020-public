@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
   - Marck Vaisman (marck.vaisman at georgetown.edu)
 - **TA's:**
   - Adam Imran (ai410)
-  - Hao Liu (hl755),
+  - Leslie Liu (hl755),
   - Kiwi Yu (ky240),
 - **Class Schedule:**
   - Class meets Thursdays 6:30-9:00pm 

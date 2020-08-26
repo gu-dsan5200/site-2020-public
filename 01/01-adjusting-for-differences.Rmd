@@ -1,0 +1,69 @@
+class: inverse, center, middle
+
+# Adjusting for differences between visualization for analysis and for an audience
+
+---
+
+# Four ways to adjust for the differences:
+
+1. Explain the encodings
+1. Provide context
+1. Focus on readability
+1. Develop aesthetics
+1. **Bonus:** Whizbang
+
+---
+
+# Explain the encodings
+
+.pull-left[
+<div>
+<img src="https://flowingdata.com/wp-content/uploads/2020/03/Rank-of-populous-cities-1090x754.png">
+</div>
+]
+
+.pull-right[
+<div>
+<img src="https://flowingdata.com/wp-content/uploads/2020/03/annotation-750x484.png">
+</div>
+]
+
+.footnote[The Statistical Atlas of the United States, produced in the late 1800s]
+
+???
+
+When you don’t know if people can read your chart, explain all of the encodings. What scale are you using? What does that color represent? Is this normal?
+
+It’s better to err on the side of too much explanation than it is too little. At least with the former, people can gloss over the details if they’re already familiar. They can still read the chart. With the latter, people who are unfamiliar with the visual encodings will get stuck.
+
+Rewind a couple of centuries when charts were less common. The Statistical Atlas of the United States, produced in the late 1800s by the Census Bureau, explained all of the encodings. For example, look at this bump chart from the 1880 atlas. It ranks cities by population:
+
+---
+
+# Provide context
+
+https://flowingdata.com/wp-content/uploads/2019/03/Texting-history-750x629.png
+
+https://flowingdata.com/wp-content/uploads/2017/10/Heart-rate-during-layoff-720x425.png
+
+---
+
+# Improve readability
+
+https://flowingdata.com/wp-content/uploads/2020/07/flat-750x525.png
+
+
+https://flowingdata.com/wp-content/uploads/2020/07/organized-750x525.png
+
+
+---
+
+# Develop aesthetics
+
+https://flowingdata.com/wp-content/uploads/2013/05/Tufte-example.gif
+
+https://flowingdata.com/wp-content/uploads/2015/10/Feltron-Report-1090x681.jpg
+
+
+???
+
