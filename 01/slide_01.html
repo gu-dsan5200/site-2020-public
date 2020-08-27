@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Module 1 - Week 1: Introduction to Data Visualization and Designing for an Audience</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Vaisman &amp; Dasgupta" />
+    <meta name="date" content="2020-08-27" />
+    <link href="slide_01_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../robot.css" type="text/css" />
+    <link rel="stylesheet" href="../robot-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="../sfah.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Module 1 - Week 1: Introduction to Data Visualization and Designing for an Audience
+## ANLY 503, Fall 2020
+### Vaisman &amp; Dasgupta
+### Georgetown University
+### 2020-08-27
+
+---
+
+
+
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Data Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+---
+
+background-image: url("https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif")
+background-size: cover
+
+---
+
+# Marck
+
+.pull-left[
+&lt;img src="img/marck-vaisman-headshot.jpg" width=300&gt;
+]
+
+.pull-right[
+Professional
+
+* Sr. Cloud Solutions Architect, Microsoft Data &amp; AI
+* Adjunct professor at Georgetown and GWU
+* Co-founder of DataCommunityDC
+
+Personal
+
+* R Fanatic
+* Goofball
+* **I play great music in class!**
+]
+
+
+---
+
+
+# Abhijit
+
+.pull-left[
+&lt;img src="" width=300&gt;
+]
+
+.pull-right[
+Professional
+
+* Biostatistician
+* Co-founder of DataCommunityDC
+
+Personal
+
+* R Fanatic
+* Goofball
+* Aikido
+]
+
+---
+
+
+class: inverse, center, middle
+
+# About the Course
+
+---
+
+# Course objectives and outcomes
+
+- Increase your data visualization vocabulary
+- Understand what comes before and after creating visualizations
+- Think critically about data
+- Distinguish between using visualizations for data exploration or presentation
+- Manipulate and arrange different kinds of data for the purposes of analysis and visualization
+- Design effective visualizations for different purposes that are easily understandable by different types of audiences
+- Apply a set of rules to create highly effective and engaging data visualizations
+- Understand the role of data visualization within data science and for solving problems
+- Use an array of tools (including R, Python, Tableau) to execute all of the above
+
+---
+
+
+# Course resources
+
+### Website [https://faes.instructure.com/courses/262](https://faes.instructue.com/courses/262)
+
+### Slack [https://biof439.slack.com](https://biof439.slack.com)
+
+
+---
+
+# Homework policies
+
+- Homework assignments will be posted on the website by Wednesday following class. There will also be a submission link.
+- Homework assignments submissions will be based on a R Markdown file and the corresponding HTML file, unless otherwise specified.
+- Homework assignments are due back to me by the following Monday at midnight.
+- You may be late on at most 1 homework out of the 4 homeworks that will be assigned.
+- Homeworks will count for 50% of your grade.
+
+### Collaboration
+
+You are encouraged to collaborate either in person or through Slack, especially since there will be a fair amount of variability of R expertise in this class. However, your submitted work should be your own.
+
+
+---
+
+# Final Project
+
+- An R Markdown dashboard using the `flexdashboard` package
+- Use your own data
+- Use R package(s) to visualize your data sets in at least 3 ways, to show what your data looks like and what your analytic results look like.
+- Each student will be randomly assigned to 2 peers
+  - Critiques based on quality and effectiveness of visualizations
+- All final projects will be posted on the website, so we can learn from each other (unless you let me know first, for example, if the data is private and embargoed)
+- I fully expect some of you to blow me away!!
+
+This will count for 20% of your grade
+
+---
+
+# Class participation
+
+- Come prepared for class
+- Ask questions
+- Comment on the strengths and weaknesses of visualizations when we work on them
+- Discuss topics on the Slack channel
+
+This will count for 30% of your grade
+
+---
+
+# Exemplar data
+
+I don't work in bioinformatics anymore, or your particular disciplines. So:
+
+- you can send me exemplar datasets by the night of the 3rd class (February 18), as well as telling me what you want to achieve
+- I will try to incorporate common examples into the classes
+- I will get you back completed visualizations or at least what I could achieve, on the last day of class.
+
+---
+
+# Software requirements
+
+For this class you will need R and RStudio.
+
+1. You can install R on your machine from https://cran.r-project.org. There are versions for Windows, Mac OS X and Linux. On windows machines, R can be installed without administrative privileges
+1. You can install RStudio from [RStudio](https://rstudio.com/products/rstudio/download/#download). If you have a Windows machine and do not have administrative privileges, you should download the version from the Zip/Tarballs section, open the zip file and just run RStudio.exe from there.
+
+---
+
+# Software requirements
+
+For R, we will require the following packages:
+
+1. `tidyverse` (a meta-package containing 8 other packages)
+1. `flexdashboard` (the main reporting package)
+1. `RColorBrewer` and `viridis` (color palettes)
+1. `shiny` for some interactivity
+1. `htmlwidgets`, `plotly`,`DataTables`, `highcharter` for dynamic plotting and reporting
+
+&gt; On the website, there will be a file *packages.R*. This will have the R script to
+install these packages. There will be instructions and (hopefully) a screencast up by Thursday
+
+---
+
+# Other useful software
+
+1. Adobe Illustrator / Inkscape
+1. Adobe Photoshop / GIMP
+1. Adobe Reader Pro / Preview
+1. ImageMagick (accessible via the R package `magick`)
+
+---
+
+
+---
+
+
+# Evaluation
+
+* Completion of weekly labs: 10%
+* Weekly quizzes: 20%
+* Problem Sets (3-4): 30%
+* Group Project: 40%
+
+???
+
+Labs must be completed. They are not graded for correctness. You have to do them: quizzes have lab content, and the labs are an integral part of the hand-on learning. 
+
+Quizzes are based on the readings, lectures and labs. Anything said in lecture is fair game. 
+
+---
+
+# Class Policies
+
+- **Online Zoom Rules**
+  - Participate and speak while on Zoom. We know it's harder to do classes over Zoom, but we love participation. Ask questions. Make comments. Challenge us. Acknowledge us. If we speak for three hours to a silent classroom, it is a lot more boring and tiring for everyone.
+  - Focus your attention to the class. Online classes require higher level of engagement for everyone. Don't multitask (you know what we mean...)
+  - Turn on your camera. If you have a bad hair day, that's ok (we do too.) We want to see you. If you have bandwidth issues and can't use your camera, we understand as well.
+- **Course Communication:** Please use the provided **Canvas Discussion Boards** (separate than the ones from required class discussion) for questions about the course, homework assignments, technical issues, etc. Staff will be monitoring them and providing answers on a regular basis. Individual emails will not be answered except for special circumstances.
+- **Due Dates:** Homework assignments are posted on Thursdays and will be due on the Friday a week after they are assigned, at the end of the day Eastern Time.  Due dates will not be extended.
+- **Late Policy:** Late assignments or discussions will not be accepted and will get zero (0) points. Period. The two lowest assignment grades will be dropped. In lieu of a late policy this allows you to miss **up to two weekly assignments. This DOES NOT include discussions, portfolio or final project.**
+- **Class materials are for class use only!:** Please refrain from making your private GitHub repositories or any other class materials public. A breach of this request is considered an Honor Code Violation.
+
+
+
+
+
+---
+
+# Class Policies (continued)
+
+* **Due Dates:** due dates will not be extended, and late deliverables will incur a penalty of 25% per day. No excuses:
+  * _It didn't work for me_
+  * _I lost my code because I didn't push to github_ 
+  * _It took me too long because it was the first time I'm doing it_ 
+  * _It took too long to process_
+  * _I ran out of credits_
+* **Open Door Policy:** If you don't like something or something is not working for you, come and talk to us
+* **Honor Code:** Follow the Honor Code. Collaboration policy in syllabus. Quizzes are individual. Code must be written individually and use your own cloud resources. Any deviation is considered a violation. **ZERO TOLERANCE POLICY**
+* **Class Materials:** For classroom use only. Please do not post publicly. Repositories must be maintained privately (for assignments, labs and project.)
+
+---
+
+
+
+
+# Project
+
+* Form into teams of 2-4 (preferably 3-4), no individual projects
+* Work with a _large_ dataset, &gt; 20GB
+* Sections
+  * Data sourcing and ingesting
+  * Exploratory analysis
+  * Modeling
+  * Challenges and Learnings
+  * Conclusions 
+  * Future work
+  
+???
+  
+While ML is part of the project, it is not an ML project. 
+  
+
+
+---
+
+class: inverse
+
+# Data visualization is both _art_ and _science_.
+
+.pull-left[
+**Art**
+
+&lt;img src="https://media.giphy.com/media/gVJKzDaWKSETu/giphy.gif"&gt;
+]
+
+.pull-right[
+**Science**
+
+&lt;img src="https://media.giphy.com/media/VIo556t5920j07cCR4/giphy.gif"&gt;
+]
+
+---
+
+# Data as grammar
+
+.pull-left[
+&lt;img src="https://media.giphy.com/media/l2Je66zG6mAAZxgqI/giphy.gif"&gt;
+]
+
+.pull-right[
+* Data visualization is as valuable to anyone working with data as grammar is to anyone working with words
+* Just as you should not write an essay without proper grammar, you should not create a graph without first mastering data visualization best practices
+]
+
+---
+
+# Visualization is an iterative process
+
+&lt;div align="center"&gt;
+&lt;img src="https://flowingdata.com/wp-content/uploads/2016/09/visualization-process-720x561.jpeg"&gt;
+&lt;/div&gt;
+
+---
+
+# Practice, practice, practice
+
+https://media.giphy.com/media/Y2c1ZjXVHRdSr1YojF/giphy.gif
+---
+
+
+# Think about when you first get a dataset... what might happen?
+
+--
+- You don't know what to expect when you first open up a data file
+
+--
+- You make, remake and review summary charts to get a sense of what you are dealing with
+
+--
+- You throw the dataset into some kind of automatic tool for a quick overview
+
+--
+- You see something odd or interesting and you poke some more in that area
+
+---
+
+class: inverse, center, middle
+
+# a-ha!
+
+---
+
+# Exploratory Data Analysis
+
+* Statistician John Tukey called this exploratory data analysis in his 1977 book of the same name. He opened with:
+
+**Exploratory data analysis is detective work—numerical detective work—or counting detective work—or graphical detective work.**
+
+---
+
+class: middle
+
+# You kind of know what you’re looking for, but you don’t know what you’re going to find yet. You work with your bag of tools through the available resources.
+
+---
+
+class: middle, center
+
+&lt;div align="center" class="tenor-gif-embed" data-postid="13045781" data-share-method="host" data-width="70%" data-aspect-ratio="1.447674418604651"&gt;&lt;a href="https://tenor.com/view/fml-sylvester-cat-annoyed-head-bang-gif-13045781"&gt;Fml Sylvester GIF&lt;/a&gt; from &lt;a href="https://tenor.com/search/fml-gifs"&gt;Fml GIFs&lt;/a&gt;&lt;/div&gt;&lt;script type="text/javascript" async src="https://tenor.com/embed.js"&gt;&lt;/script&gt;
+
+---
+
+layout: true
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Data Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+---
+
+# Oh no!
+
+- Your labels are not aligned, 
+- you have to tilt your head to see the data in the right way, 
+- the chart type you have chosen isn’t ideal
+
+---
+
+background-image: url("https://media.giphy.com/media/G5X63GrrLjjVK/giphy.gif")
+background-size: contain
+class: inverse, center, bottom
+
+# Who cares, right?
+
+
+---
+
+# Two broad things you **MUST** care about:
+
+.pull-left[
+&lt;img src="https://media.giphy.com/media/l2YWAC4zYseVWIh8I/giphy.gif"&gt;
+]
+
+.pull-right[
+* How your chart looks for your own use
+* How your chart will work for your audience
+]
+
+
+---
+
+## You
+
+
+
+---
+
+# 
+
+A reader who lands on your chart (and the underlying data) does not have the same luxury of developing and answering questions like you did. Some might know little about data or making sense of it. Some might know more, but they don’t want to analyze the dataset. They want to know the results.
+
+With this in mind, let’s look over the main differences between you making charts for people to read versus you using charts for analysis.
+
+Prior Knowledge
+
+---
+
+class: inverse, middle, center
+
+# A _very_ short history of data visualization
+
+---
+
+# A [very] short history of data visualization
+
+1. Most data visualization has taken place in the last 30 years.
+1. The first record of data vis dates back to 200 AD
+1. Astronomical data presentation for navigation
+1. 1700s: Rene Descartes
+1. Create the first recorded sort-of 2D “graph” to perform math.
+1. This type of graph was later used to present data.
+1. 1800-1900: Graphs and pie charts (WilliamPlayfair)
+1. 1913: Iowa State University: Introduced some of the first courses in “graphing” data 1. 1977: Princeton University:
+1. Statistics Professor John Tukey
+1. Developed the first exploratory data analysis (EDA) using visualizations.
+
+  6) 1983: Edward Tufte published “The Visual Display of Quantitative Information” which showed effective visualization methods.
+7) 1984, Apple Computer introduced the first popular and affordable computer that focused in graphics (GIU) as a mode of interaction and display. This was huge and persists today.
+8) 1999: The words, “information visualization” were so first named in the book: “Readings in Information Visualization: Using Vision to Think”, Card, Mackinlay, Shneiderman.
+9) Around 2000ish - : In Few’s opinion, the IBM PC detracted from the value of making graphs by hand as it offers a mouse and computer-application based option. When people made graphs by hand, the took the time to be responsible.
+
+
+---
+
+---
+
+# 
+
+You kind of know what you’re looking for, but you don’t know what you’re going to find yet. You work with your bag of tools through the available resources.
+That’s when it’s just you. If labels are not aligned, or you have to tilt your head to see the data in the right way, or the chart type isn’t ideal, who cares? You know what you’re looking at or can make another chart to change the view so that you do.
+A reader who lands on your chart (and the underlying data) does not have the same luxury of developing and answering questions like you did. Some might know little about data or making sense of it. Some might know more, but they don’t want to analyze the dataset. They want to know the results.
+With this in mind, let’s look over the main differences between you making charts for people to read versus you using charts for analysis.
+
+# D
+
+---
+
+# How to think about datavis
+
+- Begin with the consumer in mind
+- You have a deep understaing of the data you are presenting
+- The audience that sees your visualizations may not
+- Make sure the graphic is clear
+- Makre sure the main point you want to make pops
+
+---
+
+# Why visualize data?
+
+- To communicate a story
+- To see what's in the data
+
+---
+
+# What are some ways a visualization can be useful?
+
+- Does it help you spot trends?
+- Does it help you explore?
+- Does it tell a story?
+
+
+---
+
+# Why is this important?
+
+Data have dimensions
+Visualizations have dimensions, too
+To build visualizations, we need to map data dimensions to visual dimensions
+
+
+# Numbers don't tell the whole story
+
+anscombe and dinosair
+
+# Summaries don't differentiate
+
+---
+
+# How do we get from Data to Visualization?
+
+Need to understand
+- the properties of the data or information
+- the properties of the image
+- the rules mapping data to images
+
+---
+
+---
+
+
+class: inverse, center, middle
+
+# Seven basic rules for making charts and graphs
+
+&lt;img src="https://flowingdata.com/wp-content/uploads/2010/07/0-basic-graph1.jpg"&gt;
+
+---
+
+.pull-left[
+### 1) Check the data
+
+&lt;img src="https://flowingdata.com/wp-content/uploads/2010/07/1-check-the-data.jpg"&gt;
+
+* This should be obvious
+* If your data is weak, your chart is weak
+* Start with simple graphs to see if there are any outliers
+]
+
+--
+
+.pull-right[
+### 2) Explain encodings
+
+&lt;img src="https://flowingdata.com/wp-content/uploads/2010/07/2-explain-encodings.jpg"&gt;
+
+* Don't assume the reader knows what everything means
+* Provide a legend
+* Label shapes
+* Explain color scales
+]
+
+---
+
+.pull-left[
+### 3) Label axes
+
+&lt;img src="https://flowingdata.com/wp-content/uploads/2010/07/3-labels-axes.jpg"&gt;
+
+* Axes without labels or explanation are just decoration
+* Describe the scale (incremental, exponential, logarithmic?)
+* Have axes values start at zero
+]
+
+--
+
+.pull-right[
+### 4) Include units
+
+&lt;img src="https://flowingdata.com/wp-content/uploads/2010/07/4-include-units.jpg"&gt;
+
+* Numbers without units are meaningless
+* Remove the guesswork
+]
+
+---
+
+.pull-left[
+### 5) Keep your geometry in check
+
+&lt;img src="https://flowingdata.com/wp-content/uploads/2010/07/5-keep-geometry-in-check.jpg"&gt;
+
+* This is something that is immediately noticeable
+* Don't use area to compare two units unless they are an area. An increase in a unit squares the area.
+* Tip: size circles and other 2D shapes by area, unless it's a bar chart
+]
+
+--
+
+.pull-left[
+# 6) Include your sources
+
+&lt;img src="https://flowingdata.com/wp-content/uploads/2010/07/6-sources.jpg"&gt;
+
+* This is another obvious one
+* Always include the source of your data
+* Makes your graphic more reputable
+* Allows for others to dig deeper
+]
+
+
+---
+
+.pull-left[
+### 7) Consider your audience
+
+&lt;img src="https://flowingdata.com/wp-content/uploads/2010/07/7-audience.jpg"&gt;
+
+* What purpose do your charts have and who are they for?
+* Av
+
+]
+
+
+---
+
+
+class: inverse, center, middle
+
+# Adjusting for differences between visualization for analysis and for an audience
+
+---
+
+# Four ways to adjust for the differences:
+
+1. Explain the encodings
+1. Provide context
+1. Focus on readability
+1. Develop aesthetics
+1. **Bonus:** Whizbang
+
+---
+
+# Explain the encodings
+
+.pull-left[
+&lt;div&gt;
+&lt;img src="https://flowingdata.com/wp-content/uploads/2020/03/Rank-of-populous-cities-1090x754.png"&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+&lt;div&gt;
+&lt;img src="https://flowingdata.com/wp-content/uploads/2020/03/annotation-750x484.png"&gt;
+&lt;/div&gt;
+]
+
+.footnote[The Statistical Atlas of the United States, produced in the late 1800s]
+
+???
+
+When you don’t know if people can read your chart, explain all of the encodings. What scale are you using? What does that color represent? Is this normal?
+
+It’s better to err on the side of too much explanation than it is too little. At least with the former, people can gloss over the details if they’re already familiar. They can still read the chart. With the latter, people who are unfamiliar with the visual encodings will get stuck.
+
+Rewind a couple of centuries when charts were less common. The Statistical Atlas of the United States, produced in the late 1800s by the Census Bureau, explained all of the encodings. For example, look at this bump chart from the 1880 atlas. It ranks cities by population:
+
+---
+
+# Provide context
+
+https://flowingdata.com/wp-content/uploads/2019/03/Texting-history-750x629.png
+
+https://flowingdata.com/wp-content/uploads/2017/10/Heart-rate-during-layoff-720x425.png
+
+---
+
+# Improve readability
+
+https://flowingdata.com/wp-content/uploads/2020/07/flat-750x525.png
+
+
+https://flowingdata.com/wp-content/uploads/2020/07/organized-750x525.png
+
+
+???
+
+Your charts should read like text. At the most basic level, it should be obvious what the chart is about and how to interpret it. When text and labels are scattered everywhere with no specific order, it can be a challenge to decipher any kind of visual hierarchy.
+
+Think about flipping through the pages of a book. There are chapters. There are paragraphs. There are breaks in between large bodies of text. Sometimes there are pictures to illustrate ideas. These fit within the page and tend to flow from left to right and top to bottom.
+
+Strip that organization away, and you have a bunch of words on a page with no apparent beginning or end.
+
+With visualization for an audience, you want to provide readability through design. A little bit of alignment and organization can go a long way.
+
+For example, here’s a chart with annotation layered on top of the visual encodings. It shows median assets and debt by age:
+
+---
+
+# Develop aesthetics
+
+Here’s a chart with annotation layered on top of the visual encodings. It shows median assets and debt by age:
+
+&lt;img src="https://flowingdata.com/wp-content/uploads/2013/05/Tufte-example.gif"&gt;
+
+There’s no obvious visual organization. It looks sloppy. It looks careless
+
+---
+
+Develop aesthetics (continued)
+
+Now here’s the same chart with a visual hierarchy:
+
+&lt;img src="https://flowingdata.com/wp-content/uploads/2015/10/Feltron-Report-1090x681.jpg"&gt;
+
+It’s more obvious what the chart represents and how the reader should interpret the patterns.
+
+Improve readability and the reader spends less time deciphering and more time taking in the information.
+
+
+???
+
+Default settings on charts are generic so that they can be useful for as many datasets as possible.
+
+The generalizations come at a cost though.
+
+The charts are not built specifically around a dataset and its context. They’re just built around the structure of a file. This generic aesthetic is a reflection of your analysis and the thought you put into it.
+
+At the most basic level, you can develop aesthetics to make your charts less ugly. Make them look less like computer output and more like a person had a hand in the process.
+
+But aesthetics can do more.
+
+They can lend themselves to readability. Pick visual encodings that are relevant to the topic. Use colors that are related to the things they represent. Provide cues for readers so that they can more easily relate to the data.
+
+If the topic is serious, then maybe you should try dark colors and more straightforward chart methods. If the topic is more fun, then maybe there is room for illustrations or brighter colors.
+
+Aesthetics can also be a calling card. Some groups or designers have a specific style that you can recognize when you see it.
+
+
+---
+
+This all sounds like checkboxes for your visualization that you either have or you don’t, but they’re more continuous than binary. Your charts might need more or less explanations, more or less context, etc.
+
+It depends on your audience and the purpose behind your chart. If your audience is a small group who has the same background as you, then you might not need to provide as much context for the data you show. If your audience is already excited about a dataset, then you probably don’t need much whizbang to draw attention (although a little bit sometimes helps). If you make charts for a research paper, there are probably publisher guidelines that you need to follow, which limits what you can do (sometimes a good thing).
+
+So, think of the above adjustments as continuous knobs that you can turn up or down. The more charts you make, the better you’ll get at deciding how much to turn.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "zenburn",
+"highlightLines": true,
+"countIncrementalSlides": true,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

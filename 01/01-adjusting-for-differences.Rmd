@@ -1,0 +1,119 @@
+class: inverse, center, middle
+
+# Adjusting for differences between visualization for analysis and for an audience
+
+---
+
+# Four ways to adjust for the differences:
+
+1. Explain the encodings
+1. Provide context
+1. Focus on readability
+1. Develop aesthetics
+1. **Bonus:** Whizbang
+
+---
+
+# Explain the encodings
+
+.pull-left[
+<div>
+<img src="https://flowingdata.com/wp-content/uploads/2020/03/Rank-of-populous-cities-1090x754.png">
+</div>
+]
+
+.pull-right[
+<div>
+<img src="https://flowingdata.com/wp-content/uploads/2020/03/annotation-750x484.png">
+</div>
+]
+
+.footnote[The Statistical Atlas of the United States, produced in the late 1800s]
+
+???
+
+When you don’t know if people can read your chart, explain all of the encodings. What scale are you using? What does that color represent? Is this normal?
+
+It’s better to err on the side of too much explanation than it is too little. At least with the former, people can gloss over the details if they’re already familiar. They can still read the chart. With the latter, people who are unfamiliar with the visual encodings will get stuck.
+
+Rewind a couple of centuries when charts were less common. The Statistical Atlas of the United States, produced in the late 1800s by the Census Bureau, explained all of the encodings. For example, look at this bump chart from the 1880 atlas. It ranks cities by population:
+
+---
+
+# Provide context
+
+https://flowingdata.com/wp-content/uploads/2019/03/Texting-history-750x629.png
+
+https://flowingdata.com/wp-content/uploads/2017/10/Heart-rate-during-layoff-720x425.png
+
+---
+
+# Improve readability
+
+https://flowingdata.com/wp-content/uploads/2020/07/flat-750x525.png
+
+
+https://flowingdata.com/wp-content/uploads/2020/07/organized-750x525.png
+
+
+???
+
+Your charts should read like text. At the most basic level, it should be obvious what the chart is about and how to interpret it. When text and labels are scattered everywhere with no specific order, it can be a challenge to decipher any kind of visual hierarchy.
+
+Think about flipping through the pages of a book. There are chapters. There are paragraphs. There are breaks in between large bodies of text. Sometimes there are pictures to illustrate ideas. These fit within the page and tend to flow from left to right and top to bottom.
+
+Strip that organization away, and you have a bunch of words on a page with no apparent beginning or end.
+
+With visualization for an audience, you want to provide readability through design. A little bit of alignment and organization can go a long way.
+
+For example, here’s a chart with annotation layered on top of the visual encodings. It shows median assets and debt by age:
+
+---
+
+# Develop aesthetics
+
+Here’s a chart with annotation layered on top of the visual encodings. It shows median assets and debt by age:
+
+<img src="https://flowingdata.com/wp-content/uploads/2013/05/Tufte-example.gif">
+
+There’s no obvious visual organization. It looks sloppy. It looks careless
+
+---
+
+Develop aesthetics (continued)
+
+Now here’s the same chart with a visual hierarchy:
+
+<img src="https://flowingdata.com/wp-content/uploads/2015/10/Feltron-Report-1090x681.jpg">
+
+It’s more obvious what the chart represents and how the reader should interpret the patterns.
+
+Improve readability and the reader spends less time deciphering and more time taking in the information.
+
+
+???
+
+Default settings on charts are generic so that they can be useful for as many datasets as possible.
+
+The generalizations come at a cost though.
+
+The charts are not built specifically around a dataset and its context. They’re just built around the structure of a file. This generic aesthetic is a reflection of your analysis and the thought you put into it.
+
+At the most basic level, you can develop aesthetics to make your charts less ugly. Make them look less like computer output and more like a person had a hand in the process.
+
+But aesthetics can do more.
+
+They can lend themselves to readability. Pick visual encodings that are relevant to the topic. Use colors that are related to the things they represent. Provide cues for readers so that they can more easily relate to the data.
+
+If the topic is serious, then maybe you should try dark colors and more straightforward chart methods. If the topic is more fun, then maybe there is room for illustrations or brighter colors.
+
+Aesthetics can also be a calling card. Some groups or designers have a specific style that you can recognize when you see it.
+
+
+---
+
+This all sounds like checkboxes for your visualization that you either have or you don’t, but they’re more continuous than binary. Your charts might need more or less explanations, more or less context, etc.
+
+It depends on your audience and the purpose behind your chart. If your audience is a small group who has the same background as you, then you might not need to provide as much context for the data you show. If your audience is already excited about a dataset, then you probably don’t need much whizbang to draw attention (although a little bit sometimes helps). If you make charts for a research paper, there are probably publisher guidelines that you need to follow, which limits what you can do (sometimes a good thing).
+
+So, think of the above adjustments as continuous knobs that you can turn up or down. The more charts you make, the better you’ll get at deciding how much to turn.

@@ -1,0 +1,336 @@
+---
+title: "Module 1 - Week 1: Introduction to Data Visualization and Designing for an Audience"
+subtitle: "ANLY 503, Fall 2020"
+author: "Vaisman & Dasgupta"
+institute: "Georgetown University"
+date: "2020-08-27"
+output:
+  xaringan::moon_reader:
+    css: [default, '../robot.css','../robot-fonts.css', '../sfah.css']
+    nature:
+      ratio: '16:9'
+      highlightStyle: zenburn
+      highlightLines: true
+      countIncrementalSlides: true
+      slideNumberFormat: "%current%"
+---
+
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+
+library(pacman)
+p_load(char = c('tidyverse', 'knitr', 'htmlwidgets', 'kableExtra'))
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  comment = NA,
+  cache = FALSE,
+  dpi = 300,
+  fig.align = "center",
+  out.width = "80%"
+)
+```
+
+layout: true
+
+<div class="my-header">
+<span>ANLY 503, Data Visualization</span>
+</div>
+
+---
+
+background-image: url("https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif")
+background-size: cover
+
+---
+
+# Marck
+
+.pull-left[
+<img src="img/marck-vaisman-headshot.jpg" width=300>
+]
+
+.pull-right[
+Professional
+
+* Sr. Cloud Solutions Architect, Microsoft Data & AI
+* Adjunct professor at Georgetown and GWU
+* Co-founder of DataCommunityDC
+
+Personal
+
+* R Fanatic
+* Goofball
+* **I play great music in class!**
+]
+
+
+---
+
+
+# Abhijit
+
+.pull-left[
+<img src="" width=300>
+]
+
+.pull-right[
+Professional
+
+* Biostatistician
+* Co-founder of DataCommunityDC
+
+Personal
+
+* R Fanatic
+* Goofball
+* Aikido
+]
+
+---
+
+```{r child='01-course-info.Rmd'}
+```
+
+---
+
+class: inverse
+
+# Data visualization is both _art_ and _science_.
+
+.pull-left[
+**Art**
+
+<img src="https://media.giphy.com/media/gVJKzDaWKSETu/giphy.gif">
+]
+
+.pull-right[
+**Science**
+
+<img src="https://media.giphy.com/media/VIo556t5920j07cCR4/giphy.gif">
+]
+
+---
+
+# Data as grammar
+
+.pull-left[
+<img src="https://media.giphy.com/media/l2Je66zG6mAAZxgqI/giphy.gif">
+]
+
+.pull-right[
+* Data visualization is as valuable to anyone working with data as grammar is to anyone working with words
+* Just as you should not write an essay without proper grammar, you should not create a graph without first mastering data visualization best practices
+]
+
+---
+
+# Visualization is an iterative process
+
+<div align="center">
+<img src="https://flowingdata.com/wp-content/uploads/2016/09/visualization-process-720x561.jpeg">
+</div>
+
+---
+
+# Practice, practice, practice
+
+https://media.giphy.com/media/Y2c1ZjXVHRdSr1YojF/giphy.gif
+---
+
+
+# Think about when you first get a dataset... what might happen?
+
+--
+- You don't know what to expect when you first open up a data file
+
+--
+- You make, remake and review summary charts to get a sense of what you are dealing with
+
+--
+- You throw the dataset into some kind of automatic tool for a quick overview
+
+--
+- You see something odd or interesting and you poke some more in that area
+
+---
+
+class: inverse, center, middle
+
+# a-ha!
+
+---
+
+# Exploratory Data Analysis
+
+* Statistician John Tukey called this exploratory data analysis in his 1977 book of the same name. He opened with:
+
+**Exploratory data analysis is detective work—numerical detective work—or counting detective work—or graphical detective work.**
+
+---
+
+class: middle
+
+# You kind of know what you’re looking for, but you don’t know what you’re going to find yet. You work with your bag of tools through the available resources.
+
+---
+
+class: middle, center
+
+<div align="center" class="tenor-gif-embed" data-postid="13045781" data-share-method="host" data-width="70%" data-aspect-ratio="1.447674418604651"><a href="https://tenor.com/view/fml-sylvester-cat-annoyed-head-bang-gif-13045781">Fml Sylvester GIF</a> from <a href="https://tenor.com/search/fml-gifs">Fml GIFs</a></div><script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+
+---
+
+layout: true
+<div class="my-header">
+<span>ANLY 503, Data Visualization</span>
+</div>
+
+---
+
+# Oh no!
+
+- Your labels are not aligned, 
+- you have to tilt your head to see the data in the right way, 
+- the chart type you have chosen isn’t ideal
+
+---
+
+background-image: url("https://media.giphy.com/media/G5X63GrrLjjVK/giphy.gif")
+background-size: contain
+class: inverse, center, bottom
+
+# Who cares, right?
+
+
+---
+
+# Two broad things you **MUST** care about:
+
+.pull-left[
+<img src="https://media.giphy.com/media/l2YWAC4zYseVWIh8I/giphy.gif">
+]
+
+.pull-right[
+* How your chart looks for your own use
+* How your chart will work for your audience
+]
+
+
+---
+
+## You
+
+
+
+---
+
+# 
+
+A reader who lands on your chart (and the underlying data) does not have the same luxury of developing and answering questions like you did. Some might know little about data or making sense of it. Some might know more, but they don’t want to analyze the dataset. They want to know the results.
+
+With this in mind, let’s look over the main differences between you making charts for people to read versus you using charts for analysis.
+
+Prior Knowledge
+
+---
+
+class: inverse, middle, center
+
+# A _very_ short history of data visualization
+
+---
+
+# A [very] short history of data visualization
+
+1. Most data visualization has taken place in the last 30 years.
+1. The first record of data vis dates back to 200 AD
+1. Astronomical data presentation for navigation
+1. 1700s: Rene Descartes
+1. Create the first recorded sort-of 2D “graph” to perform math.
+1. This type of graph was later used to present data.
+1. 1800-1900: Graphs and pie charts (WilliamPlayfair)
+1. 1913: Iowa State University: Introduced some of the first courses in “graphing” data 1. 1977: Princeton University:
+1. Statistics Professor John Tukey
+1. Developed the first exploratory data analysis (EDA) using visualizations.
+
+  6) 1983: Edward Tufte published “The Visual Display of Quantitative Information” which showed effective visualization methods.
+7) 1984, Apple Computer introduced the first popular and affordable computer that focused in graphics (GIU) as a mode of interaction and display. This was huge and persists today.
+8) 1999: The words, “information visualization” were so first named in the book: “Readings in Information Visualization: Using Vision to Think”, Card, Mackinlay, Shneiderman.
+9) Around 2000ish - : In Few’s opinion, the IBM PC detracted from the value of making graphs by hand as it offers a mouse and computer-application based option. When people made graphs by hand, the took the time to be responsible.
+
+
+---
+
+---
+
+# 
+
+You kind of know what you’re looking for, but you don’t know what you’re going to find yet. You work with your bag of tools through the available resources.
+That’s when it’s just you. If labels are not aligned, or you have to tilt your head to see the data in the right way, or the chart type isn’t ideal, who cares? You know what you’re looking at or can make another chart to change the view so that you do.
+A reader who lands on your chart (and the underlying data) does not have the same luxury of developing and answering questions like you did. Some might know little about data or making sense of it. Some might know more, but they don’t want to analyze the dataset. They want to know the results.
+With this in mind, let’s look over the main differences between you making charts for people to read versus you using charts for analysis.
+
+# D
+
+---
+
+# How to think about datavis
+
+- Begin with the consumer in mind
+- You have a deep understaing of the data you are presenting
+- The audience that sees your visualizations may not
+- Make sure the graphic is clear
+- Makre sure the main point you want to make pops
+
+---
+
+# Why visualize data?
+
+- To communicate a story
+- To see what's in the data
+
+---
+
+# What are some ways a visualization can be useful?
+
+- Does it help you spot trends?
+- Does it help you explore?
+- Does it tell a story?
+
+
+---
+
+# Why is this important?
+
+Data have dimensions
+Visualizations have dimensions, too
+To build visualizations, we need to map data dimensions to visual dimensions
+
+
+# Numbers don't tell the whole story
+
+anscombe and dinosair
+
+# Summaries don't differentiate
+
+---
+
+# How do we get from Data to Visualization?
+
+Need to understand
+- the properties of the data or information
+- the properties of the image
+- the rules mapping data to images
+
+---
+
+---
+
+```{r child='01-seven-basic-rules.Rmd'}
+```
+
+---
+
+```{r child='01-adjusting-for-differences.Rmd'}
+```
