@@ -2,41 +2,91 @@ class: inverse, center, middle
 
 # Seven basic rules for making charts and graphs
 
-https://flowingdata.com/2010/07/22/7-basic-rules-for-making-charts-and-graphs/
+<img src="https://flowingdata.com/wp-content/uploads/2010/07/0-basic-graph1.jpg">
 
 ---
 
-# 1) Check the data
+.pull-left[
+### 1) Check the data
 
+<img src="https://flowingdata.com/wp-content/uploads/2010/07/1-check-the-data.jpg">
+
+* This should be obvious
+* If your data is weak, your chart is weak
+* Start with simple graphs to see if there are any outliers
+]
+
+--
+
+.pull-right[
+### 2) Explain encodings
+
+<img src="https://flowingdata.com/wp-content/uploads/2010/07/2-explain-encodings.jpg">
+
+* Don't assume the reader knows what everything means
+* Provide a legend
+* Label shapes
+* Explain color scales
+]
 
 ---
 
-# 2) Explain encodings
+.pull-left[
+### 3) Label axes
 
+<img src="https://flowingdata.com/wp-content/uploads/2010/07/3-labels-axes.jpg">
+
+* Axes without labels or explanation are just decoration
+* Describe the scale (incremental, exponential, logarithmic?)
+* Have axes values start at zero
+]
+
+--
+
+.pull-right[
+### 4) Include units
+
+<img src="https://flowingdata.com/wp-content/uploads/2010/07/4-include-units.jpg">
+
+* Numbers without units are meaningless
+* Remove the guesswork
+]
 
 ---
 
-# 3) Label axes
+.pull-left[
+### 5) Keep your geometry in check
 
+<img src="https://flowingdata.com/wp-content/uploads/2010/07/5-keep-geometry-in-check.jpg">
 
----
+* This is something that is immediately noticeable
+* Don't use area to compare two units unless they are an area. An increase in a unit squares the area.
+* Tip: size circles and other 2D shapes by area, unless it's a bar chart
+]
 
-# 4) Include units
+--
 
-
----
-
-# 5) Keep your geometry in check
-
-
----
-
+.pull-left[
 # 6) Include your sources
 
+<img src="https://flowingdata.com/wp-content/uploads/2010/07/6-sources.jpg">
+
+* This is another obvious one
+* Always include the source of your data
+* Makes your graphic more reputable
+* Allows for others to dig deeper
+]
+
 
 ---
 
-# 7) Consider your audience
+.pull-left[
+### 7) Consider your audience
 
+<img src="https://flowingdata.com/wp-content/uploads/2010/07/7-audience.jpg">
 
+* What purpose do your charts have and who are they for?
+* Av
+
+]
 

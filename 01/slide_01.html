@@ -84,7 +84,7 @@ Personal
 ---
 
 
-class: inverse
+class: inverse, center, middle
 
 # About the Course
 
@@ -131,7 +131,7 @@ You are encouraged to collaborate either in person or through Slack, especially 
 
 # Final Project
 
-- A R Markdown dashboard using the `flexdashboard` package
+- An R Markdown dashboard using the `flexdashboard` package
 - Use your own data
 - Use R package(s) to visualize your data sets in at least 3 ways, to show what your data looks like and what your analytic results look like.
 - Each student will be randomly assigned to 2 peers
@@ -270,22 +270,34 @@ While ML is part of the project, it is not an ML project.
 
 ---
 
-class: inverse, center, middle
+class: inverse
 
 # Data visualization is both _art_ and _science_.
 
+.pull-left[
+**Art**
+
+&lt;img src="https://media.giphy.com/media/gVJKzDaWKSETu/giphy.gif"&gt;
+]
+
+.pull-right[
+**Science**
+
+&lt;img src="https://media.giphy.com/media/VIo556t5920j07cCR4/giphy.gif"&gt;
+]
 
 ---
 
 # Data as grammar
 
-https://media.giphy.com/media/l2Je66zG6mAAZxgqI/giphy.gif
+.pull-left[
+&lt;img src="https://media.giphy.com/media/l2Je66zG6mAAZxgqI/giphy.gif"&gt;
+]
 
---
-## Data visualization is as valuable to anyone working with data as grammar is to anyone working with words. 
-
---
-## Just as you should not write an essay without proper grammar, you should not create a graph without first mastering data visualization best practices
+.pull-right[
+* Data visualization is as valuable to anyone working with data as grammar is to anyone working with words
+* Just as you should not write an essay without proper grammar, you should not create a graph without first mastering data visualization best practices
+]
 
 ---
 
@@ -295,7 +307,11 @@ https://media.giphy.com/media/l2Je66zG6mAAZxgqI/giphy.gif
 &lt;img src="https://flowingdata.com/wp-content/uploads/2016/09/visualization-process-720x561.jpeg"&gt;
 &lt;/div&gt;
 
+---
 
+# Practice, practice, practice
+
+https://media.giphy.com/media/Y2c1ZjXVHRdSr1YojF/giphy.gif
 ---
 
 
@@ -333,10 +349,6 @@ class: middle
 
 # You kind of know what you’re looking for, but you don’t know what you’re going to find yet. You work with your bag of tools through the available resources.
 
-
----
-
-
 ---
 
 class: middle, center
@@ -365,8 +377,6 @@ background-size: contain
 class: inverse, center, bottom
 
 # Who cares, right?
-
-
 
 
 ---
@@ -498,43 +508,93 @@ class: inverse, center, middle
 
 # Seven basic rules for making charts and graphs
 
-https://flowingdata.com/2010/07/22/7-basic-rules-for-making-charts-and-graphs/
+&lt;img src="https://flowingdata.com/wp-content/uploads/2010/07/0-basic-graph1.jpg"&gt;
 
 ---
 
-# 1) Check the data
+.pull-left[
+### 1) Check the data
 
+&lt;img src="https://flowingdata.com/wp-content/uploads/2010/07/1-check-the-data.jpg"&gt;
+
+* This should be obvious
+* If your data is weak, your chart is weak
+* Start with simple graphs to see if there are any outliers
+]
+
+--
+
+.pull-right[
+### 2) Explain encodings
+
+&lt;img src="https://flowingdata.com/wp-content/uploads/2010/07/2-explain-encodings.jpg"&gt;
+
+* Don't assume the reader knows what everything means
+* Provide a legend
+* Label shapes
+* Explain color scales
+]
 
 ---
 
-# 2) Explain encodings
+.pull-left[
+### 3) Label axes
 
+&lt;img src="https://flowingdata.com/wp-content/uploads/2010/07/3-labels-axes.jpg"&gt;
+
+* Axes without labels or explanation are just decoration
+* Describe the scale (incremental, exponential, logarithmic?)
+* Have axes values start at zero
+]
+
+--
+
+.pull-right[
+### 4) Include units
+
+&lt;img src="https://flowingdata.com/wp-content/uploads/2010/07/4-include-units.jpg"&gt;
+
+* Numbers without units are meaningless
+* Remove the guesswork
+]
 
 ---
 
-# 3) Label axes
+.pull-left[
+### 5) Keep your geometry in check
 
+&lt;img src="https://flowingdata.com/wp-content/uploads/2010/07/5-keep-geometry-in-check.jpg"&gt;
 
----
+* This is something that is immediately noticeable
+* Don't use area to compare two units unless they are an area. An increase in a unit squares the area.
+* Tip: size circles and other 2D shapes by area, unless it's a bar chart
+]
 
-# 4) Include units
+--
 
-
----
-
-# 5) Keep your geometry in check
-
-
----
-
+.pull-left[
 # 6) Include your sources
 
+&lt;img src="https://flowingdata.com/wp-content/uploads/2010/07/6-sources.jpg"&gt;
+
+* This is another obvious one
+* Always include the source of your data
+* Makes your graphic more reputable
+* Allows for others to dig deeper
+]
+
 
 ---
 
-# 7) Consider your audience
+.pull-left[
+### 7) Consider your audience
 
+&lt;img src="https://flowingdata.com/wp-content/uploads/2010/07/7-audience.jpg"&gt;
 
+* What purpose do your charts have and who are they for?
+* Av
+
+]
 
 
 ---
@@ -558,7 +618,6 @@ class: inverse, center, middle
 
 # Explain the encodings
 
-.middle[
 .pull-left[
 &lt;div&gt;
 &lt;img src="https://flowingdata.com/wp-content/uploads/2020/03/Rank-of-populous-cities-1090x754.png"&gt;
@@ -570,7 +629,7 @@ class: inverse, center, middle
 &lt;img src="https://flowingdata.com/wp-content/uploads/2020/03/annotation-750x484.png"&gt;
 &lt;/div&gt;
 ]
-]
+
 .footnote[The Statistical Atlas of the United States, produced in the late 1800s]
 
 ???
@@ -599,16 +658,67 @@ https://flowingdata.com/wp-content/uploads/2020/07/flat-750x525.png
 https://flowingdata.com/wp-content/uploads/2020/07/organized-750x525.png
 
 
+???
+
+Your charts should read like text. At the most basic level, it should be obvious what the chart is about and how to interpret it. When text and labels are scattered everywhere with no specific order, it can be a challenge to decipher any kind of visual hierarchy.
+
+Think about flipping through the pages of a book. There are chapters. There are paragraphs. There are breaks in between large bodies of text. Sometimes there are pictures to illustrate ideas. These fit within the page and tend to flow from left to right and top to bottom.
+
+Strip that organization away, and you have a bunch of words on a page with no apparent beginning or end.
+
+With visualization for an audience, you want to provide readability through design. A little bit of alignment and organization can go a long way.
+
+For example, here’s a chart with annotation layered on top of the visual encodings. It shows median assets and debt by age:
+
 ---
 
 # Develop aesthetics
 
-https://flowingdata.com/wp-content/uploads/2013/05/Tufte-example.gif
+Here’s a chart with annotation layered on top of the visual encodings. It shows median assets and debt by age:
 
-https://flowingdata.com/wp-content/uploads/2015/10/Feltron-Report-1090x681.jpg
+&lt;img src="https://flowingdata.com/wp-content/uploads/2013/05/Tufte-example.gif"&gt;
+
+There’s no obvious visual organization. It looks sloppy. It looks careless
+
+---
+
+Develop aesthetics (continued)
+
+Now here’s the same chart with a visual hierarchy:
+
+&lt;img src="https://flowingdata.com/wp-content/uploads/2015/10/Feltron-Report-1090x681.jpg"&gt;
+
+It’s more obvious what the chart represents and how the reader should interpret the patterns.
+
+Improve readability and the reader spends less time deciphering and more time taking in the information.
 
 
 ???
+
+Default settings on charts are generic so that they can be useful for as many datasets as possible.
+
+The generalizations come at a cost though.
+
+The charts are not built specifically around a dataset and its context. They’re just built around the structure of a file. This generic aesthetic is a reflection of your analysis and the thought you put into it.
+
+At the most basic level, you can develop aesthetics to make your charts less ugly. Make them look less like computer output and more like a person had a hand in the process.
+
+But aesthetics can do more.
+
+They can lend themselves to readability. Pick visual encodings that are relevant to the topic. Use colors that are related to the things they represent. Provide cues for readers so that they can more easily relate to the data.
+
+If the topic is serious, then maybe you should try dark colors and more straightforward chart methods. If the topic is more fun, then maybe there is room for illustrations or brighter colors.
+
+Aesthetics can also be a calling card. Some groups or designers have a specific style that you can recognize when you see it.
+
+
+---
+
+This all sounds like checkboxes for your visualization that you either have or you don’t, but they’re more continuous than binary. Your charts might need more or less explanations, more or less context, etc.
+
+It depends on your audience and the purpose behind your chart. If your audience is a small group who has the same background as you, then you might not need to provide as much context for the data you show. If your audience is already excited about a dataset, then you probably don’t need much whizbang to draw attention (although a little bit sometimes helps). If you make charts for a research paper, there are probably publisher guidelines that you need to follow, which limits what you can do (sometimes a good thing).
+
+So, think of the above adjustments as continuous knobs that you can turn up or down. The more charts you make, the better you’ll get at deciding how much to turn.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

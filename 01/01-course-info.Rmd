@@ -1,4 +1,4 @@
-class: inverse
+class: inverse, center, middle
 
 # About the Course
 
@@ -45,7 +45,7 @@ You are encouraged to collaborate either in person or through Slack, especially 
 
 # Final Project
 
-- A R Markdown dashboard using the `flexdashboard` package
+- An R Markdown dashboard using the `flexdashboard` package
 - Use your own data
 - Use R package(s) to visualize your data sets in at least 3 ways, to show what your data looks like and what your analytic results look like.
 - Each student will be randomly assigned to 2 peers

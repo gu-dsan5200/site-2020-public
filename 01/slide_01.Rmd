@@ -94,22 +94,34 @@ Personal
 
 ---
 
-class: inverse, center, middle
+class: inverse
 
 # Data visualization is both _art_ and _science_.
 
+.pull-left[
+**Art**
+
+<img src="https://media.giphy.com/media/gVJKzDaWKSETu/giphy.gif">
+]
+
+.pull-right[
+**Science**
+
+<img src="https://media.giphy.com/media/VIo556t5920j07cCR4/giphy.gif">
+]
 
 ---
 
 # Data as grammar
 
-https://media.giphy.com/media/l2Je66zG6mAAZxgqI/giphy.gif
+.pull-left[
+<img src="https://media.giphy.com/media/l2Je66zG6mAAZxgqI/giphy.gif">
+]
 
---
-## Data visualization is as valuable to anyone working with data as grammar is to anyone working with words. 
-
---
-## Just as you should not write an essay without proper grammar, you should not create a graph without first mastering data visualization best practices
+.pull-right[
+* Data visualization is as valuable to anyone working with data as grammar is to anyone working with words
+* Just as you should not write an essay without proper grammar, you should not create a graph without first mastering data visualization best practices
+]
 
 ---
 
@@ -119,7 +131,11 @@ https://media.giphy.com/media/l2Je66zG6mAAZxgqI/giphy.gif
 <img src="https://flowingdata.com/wp-content/uploads/2016/09/visualization-process-720x561.jpeg">
 </div>
 
+---
 
+# Practice, practice, practice
+
+https://media.giphy.com/media/Y2c1ZjXVHRdSr1YojF/giphy.gif
 ---
 
 
@@ -157,10 +173,6 @@ class: middle
 
 # You kind of know what you’re looking for, but you don’t know what you’re going to find yet. You work with your bag of tools through the available resources.
 
-
----
-
-
 ---
 
 class: middle, center
@@ -189,8 +201,6 @@ background-size: contain
 class: inverse, center, bottom
 
 # Who cares, right?
-
-
 
 
 ---
