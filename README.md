@@ -1,5 +1,5 @@
-**This syllabus is effective as of Tuesday, August 25, 2020 at 10:36
-AM**
+**This syllabus is effective as of Wednesday, August 26, 2020 at 07:20
+PM**
 
 ## Course Information
 
@@ -8,7 +8,7 @@ AM**
       - Marck Vaisman (marck.vaisman at georgetown.edu)
   - **TA’s:**
       - Adam Imran (ai410)
-      - Hao Liu (hl755),
+      - Leslie Liu (hl755),
       - Kiwi Yu (ky240),
   - **Class Schedule:**
       - Class meets Thursdays 6:30-9:00pm
@@ -127,13 +127,13 @@ More details will be provided.
 
 ### Final Project
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-mollit anim id est laborum.
+You will create an R Markdown dashboard using the `flexdashboard`
+package to visualize data sets in at least 3 ways and to create a visual
+narrative., to show what your data looks like and what your analytic
+results look like. This dashboard will also be a part of the online
+portfolio, but it is an separate assignment.
+
+More details will be provided.
 
 ### Grading
 

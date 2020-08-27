@@ -1,0 +1,168 @@
+class: inverse, center, middle
+
+# Basic design rules for making charts
+
+<img src="https://flowingdata.com/wp-content/uploads/2010/07/0-basic-graph1.jpg">
+
+---
+
+# Two leading figures
+
+.pull-left[
+Ed Tufte
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Edward_Tufte_-_cropped.jpg/800px-Edward_Tufte_-_cropped.jpg" width=300>
+]
+
+.pull-right[
+Nathan Yau
+
+<img src="https://datastori.es/wp-content/uploads/2018/09/Nathan-Yau-nathan-yau.jpg" width=300>
+]
+
+---
+class: middle, center, inverse
+
+> Design is choice. The theory of the visual display of quantitative information consists of principles that generate design options and that guide choices among options. The principles should not be applied rigidly or in a peevish spirit; they are not logically or mathematically certain; and it is better to violate any principle than to place graceless or inelegant marks on paper. Most principles of design should be greeted with some skepticism, for word authority can dominate our vision, and we may come to see only through the lenses of word authority rather than with our own eyes.
+>
+> --- Edward Tufte, <cite>The Visual Display of Quantitative Data</cite>
+
+---
+
+## Tufte's Principles of Graphical Integrity
+
+1. Show data variation, not design variation
+1. Do not use graphics to quote data out of context
+1. Use clear, detailed, thorough labelling. 
+1. Representation of numbers should be directly proportional to numerical quantities
+1. Don't use more dimensions than the data require
+
+---
+
+## Tufte's Principles of Graphical Integrity
+
+1. Show data variation, not design variation
+    - Don't get fancy, let the data speak
+1. Do not use graphics to quote data out of context
+    - Maintain accuracy
+1. Use clear, detailed, thorough labelling. 
+    - Use annotations to make your point
+1. Representation of numbers should be directly proportional to numerical quantities
+    - This is essential for fair representation
+1. Don't use more dimensions than the data require
+    - Be appropriate in use of 3D graphics, for example
+
+---
+## Tufte's Fundamental Principles of Design
+
+1. Show comparisons
+1. Show causality
+1. Use multivariate data
+1. Completely integrate modes (like text, images, numbers)
+1. Establish credibility
+1. Focus on content
+
+---
+
+# Nathan Yau's Seven Basic Rules for Making Charts and Graphs
+
+1. Check the data
+1. Explain encodings
+1. Label axes
+1. Include units
+1. Keep your geometry in check
+1. Include your sources
+1. Consider your audience
+
+<div style='text-align: right'>
+Nathan Yau, Flowing Data<br>
+<a href="https://flowingdata.com/2010/07/22/7-basic-rules-for-making-charts-and-graphs/">https://flowingdata.com/2010/07/22/7-basic-rules-for-making-charts-and-graphs/</a>
+</div>
+
+---
+
+
+.pull-left[
+### 1) Check the data
+
+<img src="https://flowingdata.com/wp-content/uploads/2010/07/1-check-the-data.jpg">
+
+* This should be obvious
+* If your data is weak, your chart is weak
+* Start with simple graphs to see if there are any outliers
+]
+
+--
+
+.pull-right[
+### 2) Explain encodings
+
+<img src="https://flowingdata.com/wp-content/uploads/2010/07/2-explain-encodings.jpg">
+
+* Don't assume the reader knows what everything means
+* Provide a legend
+* Label shapes
+* Explain color scales
+]
+
+---
+
+.pull-left[
+### 3) Label axes
+
+<img src="https://flowingdata.com/wp-content/uploads/2010/07/3-labels-axes.jpg">
+
+* Axes without labels or explanation are just decoration
+* Describe the scale (incremental, exponential, logarithmic?)
+* Have axes values start at zero
+]
+
+--
+
+.pull-right[
+### 4) Include units
+
+<img src="https://flowingdata.com/wp-content/uploads/2010/07/4-include-units.jpg">
+
+* Numbers without units are meaningless
+* Remove the guesswork
+]
+
+---
+
+.pull-left[
+### 5) Keep your geometry in check
+
+<img src="https://flowingdata.com/wp-content/uploads/2010/07/5-keep-geometry-in-check.jpg">
+
+* This is something that is immediately noticeable
+* Don't use area to compare two units unless they are an area. An increase in a unit squares the area.
+* Tip: size circles and other 2D shapes by area, unless it's a bar chart
+]
+
+--
+
+.pull-left[
+### 6) Include your sources
+
+<img src="https://flowingdata.com/wp-content/uploads/2010/07/6-sources.jpg">
+
+* This is another obvious one
+* Always include the source of your data
+* Makes your graphic more reputable
+* Allows for others to dig deeper
+]
+
+
+---
+
+.pull-left[
+### 7) Consider your audience
+
+<img src="https://flowingdata.com/wp-content/uploads/2010/07/7-audience.jpg">
+
+* What purpose do your charts have and who are they for?
+* Avoid quirky fonts
+* Make good design choices
+]
+

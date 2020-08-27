@@ -1,0 +1,51 @@
+---
+title: "Assignment A1"
+author: "ANLY 503"
+date: "Due Friday September 4, 11:59pm"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+source(here::here('00','randomize_roster.R'))
+dsets <- c('cars2018.csv', 'clinical_data_breast_cancer_modified.csv',
+           'sydneybeaches3.csv', 'gapminder.csv','Dataset_spine.csv')
+```
+  
+## Instructions
+
+Each student will be assigned a dataset based on the allocation
+table below. All the datasets will be in CSV format and can be opened in Excel or in a text editor. 
+
+Open and explore your dataset and **draw** 3 conceptual data visualizations to describe different aspects of the data set, stating in each case the question you want to address with the visualization. 
+These should be **hand drawings**, but with enough detail (labels, shading, etc) to make the visualization clear to the reader. 
+
+Submit **PDF or PNG file(s)** that contain scans or photos of your
+concept drawings.
+
+## Dataset allocation
+
+```{r}
+out <- roster_randomize(roster, dsets)
+out1 <- split(out, out$assign)
+out1 %>% map(~mutate(., students = paste(sis_user_id, collapse=', '))) %>% 
+  map(~select(., students) %>% distinct()) %>% 
+  bind_rows(.id = 'dataset') %>% 
+  knitr::kable()
+# dknitr::kable(out)
+```
+
+## Description of data sets
+
+```{r}
+tibble::tribble(~Data, ~Description,
+                'cars2020.csv', 'A data set of fuel efficiency of cars available in the US in model year 2018',
+                'clinical_data_breast_cancer_modified.csv', 'A data set of characteristics of breast cancer patients. Interesting variables include ER, PR and HER2 status which help guide treatment, tumor stage and grade, and vital status (dead or alive)',
+                'sydneybeaches3.csv', 'Data on temperature, rainfall and bacterial (enterococci) concentrations at beaches in Sydney, Australia in 2013-2018',
+                'gapminder.csv', 'The famous gapminder dataset of population, life expectancy and GDP in different countries over a period of 50 years',
+                'Dataset_spine.csv', 'A dataset including normal and abnormal patients along with measures of cervical, thoracic and sacral spine and pelvic movement') %>% 
+  knitr::kable() %>% 
+  kableExtra::kable_styling()
+```
+
+

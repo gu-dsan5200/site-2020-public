@@ -1,0 +1,30 @@
+---
+title: "Tools setup"
+author: "Vaisman & Dasgupta"
+date: "8/27/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This course requires you to use the programming languages R and Python for most of this course. 
+we suggest that you install and set up R and Python environments on your own computers
+for use in this course, following these instructions
+
+## Python
+
+We will be using Python 3 for this workshop, since Python 2 is no longer being maintained. In particular, we will be using the Python 3.7 distribution provided by Anaconda. This distribution comes “batteries included” for all the data science work we’ll be doing, including all the requisite packages. This distribution is available for Windows, MacOS and Linux. 
+
+The Anaconda Python distribution is available at https://www.anaconda.com/products/individual. Scroll down to the bottom of the page and download the Python 3.7 Graphical Installer appropriate for your operating system. You should install the 64-Bit Graphical Installer unless you have a really old computer. 
+
+You can follow a [screencast](https://youtu.be/MiMD2KotldM) of the installation process if you like. 
+
+## R
+
+You need to install R and RStudio for this class. R is a statistical programming system, and RStudio
+is an integrated development environment to make running R easier. 
+
+A step-by-step guide to installing R and RStudio can be found [here](https://georgetown.instructure.com/files/5000885/download?download_frd=1)
+

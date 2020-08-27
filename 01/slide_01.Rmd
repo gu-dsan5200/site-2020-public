@@ -1,0 +1,270 @@
+---
+title: "Module 1 - Week 1: Introduction to Data Visualization and Designing for an Audience"
+subtitle: "ANLY 503, Fall 2020"
+author: "Vaisman & Dasgupta"
+institute: "Georgetown University"
+date: "2020-08-27"
+output:
+  xaringan::moon_reader:
+    css: [default, '../robot.css','../robot-fonts.css', '../sfah.css']
+    nature:
+      ratio: '16:9'
+      highlightStyle: zenburn
+      highlightLines: true
+      countIncrementalSlides: false
+      slideNumberFormat: "%current%"
+---
+
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+
+library(pacman)
+p_load(char = c('tidyverse', 'knitr', 'htmlwidgets', 'kableExtra'))
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  comment = NA,
+  cache = FALSE,
+  dpi = 300,
+  fig.align = "center",
+  out.width = "80%"
+)
+```
+
+layout: true
+
+<div class="my-header">
+<span>ANLY 503, Data Visualization</span>
+</div>
+
+---
+
+
+background-image: url("https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif")
+background-size: cover
+
+---
+
+# Marck
+
+.pull-left[
+<img src="img/marck-vaisman-headshot.jpg" width=300>
+]
+
+.pull-right[
+Professional
+
+* Sr. Cloud Solutions Architect, Microsoft Data & AI
+* Adjunct professor at Georgetown and GWU
+* Co-founder of DataCommunityDC
+
+Personal
+
+* R Fanatic
+* Goofball
+* **I play great music in class!**
+]
+
+
+---
+
+
+# Abhijit
+
+.pull-left[
+<img src="img/Abhijit_Headshot1.jpeg" width=300>
+]
+
+.pull-right[
+Professional
+
+* Biostatistician
+* Co-founder of DataCommunityDC
+
+Personal
+
+* R Fanatic
+* Goofball
+* Aikido
+]
+
+---
+
+```{r child='01-course-info.Rmd'}
+```
+
+---
+
+class: inverse, center, middle
+
+# Let's begin
+
+---
+
+# Data visualization is both _art_ and _science_.
+
+.pull-left[
+**Art**
+
+<img src="https://media.giphy.com/media/gVJKzDaWKSETu/giphy.gif">
+]
+
+.pull-right[
+**Science**
+
+<img src="https://media.giphy.com/media/VIo556t5920j07cCR4/giphy.gif">
+]
+
+---
+
+# Data <----> grammar
+
+.pull-left[
+<img src="https://media.giphy.com/media/l2Je66zG6mAAZxgqI/giphy.gif">
+]
+
+.pull-right[
+* Data visualization is as valuable to anyone working with data as grammar is to anyone working with words
+* Just as you should not write an essay without proper grammar, you should not create a graph without first mastering data visualization best practices
+]
+
+---
+
+# Visualization is an iterative process
+
+<div align="center">
+<img src="https://flowingdata.com/wp-content/uploads/2016/09/visualization-process-720x561.jpeg">
+</div>
+
+---
+
+# Practice, practice, practice
+
+<div align="center">
+<img src="https://media.giphy.com/media/Y2c1ZjXVHRdSr1YojF/giphy.gif">
+</div>
+
+
+---
+
+```{r child='01-why-we-visualize.Rmd'}
+```
+
+---
+
+class: inverse, center, middle
+
+# Back to our original programming...
+
+
+
+---
+
+
+# Think about when you first get a dataset... what might happen?
+
+--
+- You don't know what to expect when you first open up a data file
+
+--
+- You make, remake and review summary charts to get a sense of what you are dealing with
+
+--
+- You throw the dataset into some kind of automatic tool for a quick overview
+
+--
+- You see something odd or interesting and you poke some more in that area
+
+---
+
+class: inverse, center, middle
+
+# a-ha!
+
+---
+
+# Exploratory Data Analysis
+
+Statistician John Tukey called this exploratory data analysis in his 1977 book of the same name. He opened with:
+
+> Exploratory data analysis is detective work—numerical detective work—or counting detective work—or graphical detective work.
+
+---
+
+class: inverse
+
+# You kind of know what you’re looking for, but you don’t know what you’re going to find yet. You work with your bag of tools through the available resources.
+
+--
+
+# You then present to your team...
+
+
+---
+
+background-image: url("https://i.insider.com/51cb25fa69beddcd4f000005?width=700&format=jpeg&auto=webp")
+background-size: cover
+
+---
+
+class: middle, center
+
+<div align="center" class="tenor-gif-embed" data-postid="13045781" data-share-method="host" data-width="70%" data-aspect-ratio="1.447674418604651"><a href="https://tenor.com/view/fml-sylvester-cat-annoyed-head-bang-gif-13045781">Fml Sylvester GIF</a> from <a href="https://tenor.com/search/fml-gifs">Fml GIFs</a></div><script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+
+---
+
+# Oh no!
+
+--
+- Your labels are not aligned
+
+--
+- You have to tilt your head to see the data in the right way
+
+--
+- The chart type you have chosen is not ideal
+
+--
+- Your color choice is not color-blind friendly (and your boss is color blind)
+
+--
+- You used ComicSans font
+
+--
+- A variable is named _%$%#@!!_
+
+--
+- Your chart doesn't show properly on a mobile device and the CEO is looking at it from the beach
+
+
+---
+
+background-image: url("https://media.giphy.com/media/G5X63GrrLjjVK/giphy.gif")
+background-size: contain
+class: inverse, center, bottom
+
+# Who cares, right?
+
+
+---
+
+# Two broad things you **MUST** care about:
+
+.pull-left[
+<img src="https://media.giphy.com/media/l2YWAC4zYseVWIh8I/giphy.gif">
+]
+
+.pull-right[
+* How your chart looks for your own use
+* How your chart will work for your audience
+]
+
+---
+
+```{r child='01-adjusting-for-differences.Rmd'}
+```
+
+---
+
+```{r child='01-seven-basic-rules.Rmd'}
+```
