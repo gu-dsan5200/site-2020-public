@@ -1,5 +1,62 @@
 class: inverse, middle, center
 
+# Why we visualize and a _very_ short history of dataviz
+
+---
+
+class: middle, center
+
+# Visualization takes advantage of our human capability to understand visual patterns **quickly** and often **intuitively**
+
+---
+
+class: inverse, center, middle
+
+# Reasons for visualizing data
+
+---
+
+# Spotting trends
+
+
+
+---
+
+# Analyzing and exploring
+
+
+
+---
+
+# Telling a story
+
+https://www.youtube.com/watch?v=jbkSRLYSojo
+<iframe width="560" height="315" src="https://www.youtube.com/embed/8lXdyD2Yzls" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+---
+
+background-image: url("https://media.giphy.com/media/3o85gdhlpxVz8TjsTC/giphy.gif
+")
+background-size: cover
+https://media.giphy.com/media/3o85gdhlpxVz8TjsTC/giphy.gif
+
+---
+class: inverse
+
+# Numbers can lie!
+
+---
+# anscombe and dinosair
+
+---
+
+# Summaries don't differentiate
+
+---
+
+class: inverse, middle, center
+
 # A _very_ short history of data visualization
 
 ---
@@ -21,5 +78,15 @@ class: inverse, middle, center
 8) 1999: The words, “information visualization” were so first named in the book: “Readings in Information Visualization: Using Vision to Think”, Card, Mackinlay, Shneiderman.
 9) Around 2000ish - : In Few’s opinion, the IBM PC detracted from the value of making graphs by hand as it offers a mouse and computer-application based option. When people made graphs by hand, the took the time to be responsible.
 
+---
+
+class: inverse
+
+# Evolution of tools
 
 ---
+
+
+
+
+

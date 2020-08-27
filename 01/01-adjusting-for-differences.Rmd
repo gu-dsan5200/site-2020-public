@@ -4,6 +4,61 @@ class: inverse, center, middle
 
 ---
 
+class: middle
+
+# A reader who lands on your chart (and the underlying data) may not have the same luxury of developing and answering questions like you did. Some might know little about data or making sense of it. Some might know more, but they don’t want to analyze the dataset. They want to know the results.
+
+
+---
+
+# With this in mind, let’s look over the main differences between you making charts for people to read versus you using charts for analysis.
+
+```{r, echo=F}
+library(magrittr)
+library(tibble)
+library(kableExtra)
+tribble( ~"Designing for ", ~"Small Data is usually...", ~"On the other hand, Big Data...",
+"Goals", "gathered for a specifric goal", "may have a goal in mind when it's first started, but things can evolve or take unexpected directions",
+"Location", "in one place, and often in a single computer file", "can be in multiple files in multiple servers on computers in different geographic locations",
+"Structure/Contents",  "highly structured like an Excel spreadsheet, and it's got rows and columns of data",  "can be unstructured, it can have many formats in files involved across disciplines, and may link to other resources",
+"Preparation",  "prepared by the end user for their own purposes",  "is often prepared by one group of people, analyzed by a second group of people, and then used by a third group of people, and they may have different purposes, and they may have different disciplines",
+"Longevity" ,  "kept for a specific amount of time after the project is over because there's a clear ending point. In the academic world it's maybe five or seven years and then you can throw it away" , "contains data that must be stored in perpetuity. Many big data projects extend into the past and future",
+"Measurements" ,   "measured with a single protocol using set units and it's usually done at the same time" , "is collected and measured using many sources, protocols, units, etc",
+"Reproducibility" ,"be reproduced in their entirety if something goes wrong in the process" , "replication is seldom feasible",
+"Stakes" , "if things go wrong the costs are limited, it's not an enormous problem" , "can have high costs of failure in terms of money, time and labor",
+"Access" , "identified by a location specified in a row/column" , "unless it is exceptionally well designed, the organization can be inscrutable",
+"Analysis"  ,  "analyzed together, all at once" , "is ordinarily analyzed in incremental steps"
+) %>% 
+  kable(format = "html") %>% 
+  kable_styling(full_width = F) %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, width = "30em") %>% 
+  column_spec(3, width = "30em") %>% 
+  scroll_box(height = "400px")
+```
+
+
+
+
+
+
+
+
+
+
+* Prior Knowledge
+* Expectations
+* Usage
+
+
+---
+
+
+
+
+---
+
+
 # Four ways to adjust for the differences:
 
 1. Explain the encodings

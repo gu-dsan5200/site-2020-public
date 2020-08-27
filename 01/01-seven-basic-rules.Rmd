@@ -67,7 +67,7 @@ class: inverse, center, middle
 --
 
 .pull-left[
-# 6) Include your sources
+### 6) Include your sources
 
 <img src="https://flowingdata.com/wp-content/uploads/2010/07/6-sources.jpg">
 
@@ -86,7 +86,7 @@ class: inverse, center, middle
 <img src="https://flowingdata.com/wp-content/uploads/2010/07/7-audience.jpg">
 
 * What purpose do your charts have and who are they for?
-* Av
-
+* Avoid quirky fonts
+* Make good design choices
 ]
 
