@@ -152,6 +152,14 @@ class: inverse, center, middle
 
 ---
 
+class: inverse, center, middle
+
+# Back to our original programming...
+
+
+
+---
+
 
 # Think about when you first get a dataset... what might happen?
 
@@ -177,9 +185,9 @@ class: inverse, center, middle
 
 # Exploratory Data Analysis
 
-* Statistician John Tukey called this exploratory data analysis in his 1977 book of the same name. He opened with:
+Statistician John Tukey called this exploratory data analysis in his 1977 book of the same name. He opened with:
 
-**Exploratory data analysis is detective work—numerical detective work—or counting detective work—or graphical detective work.**
+> Exploratory data analysis is detective work—numerical detective work—or counting detective work—or graphical detective work.
 
 ---
 
@@ -251,13 +259,12 @@ class: inverse, center, bottom
 * How your chart will work for your audience
 ]
 
-
 ---
 
-```{r child='01-seven-basic-rules.Rmd'}
+```{r child='01-adjusting-for-differences.Rmd'}
 ```
 
 ---
 
-```{r child='01-adjusting-for-differences.Rmd'}
+```{r child='01-seven-basic-rules.Rmd'}
 ```

@@ -80,9 +80,18 @@ We will have a guest speaker, [Jonathan Schwabish](https://www.urban.org/author/
 # Policies & Expectations
 
 - Online Zoom Rules
+  - Turn camera on (even if you have a bad hair day). If you have bandwith issues let us know
+  - Don't multitask
+  - Please speak, we will not be checking the chat window
 - Course Communication
+  - Announcements in Canvas
+  - No email unless strictly necessary. Questions should be placed in Canvas discussion boards
 - Due Dates
+  - Homeworks posted on Thursdays after class and are due Fridays the following week
 - Late Policy
+  - No late policy. Late submissions get zero points. Two lowest homework grades dropped.
+- **Class materials are for class use only\!:**
+  - Don't make your private github repos public
 
 ---
 

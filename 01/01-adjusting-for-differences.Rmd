@@ -11,61 +11,32 @@ class: middle
 
 ---
 
-# With this in mind, let’s look over the main differences between you making charts for people to read versus you using charts for analysis.
+# With this in mind, let’s look over the main differences between you making charts for people to consume versus you using charts for analysis.
 
-```{r, echo=F}
-library(magrittr)
-library(tibble)
-library(kableExtra)
-tribble( ~"Designing for ", ~"Small Data is usually...", ~"On the other hand, Big Data...",
-"Goals", "gathered for a specifric goal", "may have a goal in mind when it's first started, but things can evolve or take unexpected directions",
-"Location", "in one place, and often in a single computer file", "can be in multiple files in multiple servers on computers in different geographic locations",
-"Structure/Contents",  "highly structured like an Excel spreadsheet, and it's got rows and columns of data",  "can be unstructured, it can have many formats in files involved across disciplines, and may link to other resources",
-"Preparation",  "prepared by the end user for their own purposes",  "is often prepared by one group of people, analyzed by a second group of people, and then used by a third group of people, and they may have different purposes, and they may have different disciplines",
-"Longevity" ,  "kept for a specific amount of time after the project is over because there's a clear ending point. In the academic world it's maybe five or seven years and then you can throw it away" , "contains data that must be stored in perpetuity. Many big data projects extend into the past and future",
-"Measurements" ,   "measured with a single protocol using set units and it's usually done at the same time" , "is collected and measured using many sources, protocols, units, etc",
-"Reproducibility" ,"be reproduced in their entirety if something goes wrong in the process" , "replication is seldom feasible",
-"Stakes" , "if things go wrong the costs are limited, it's not an enormous problem" , "can have high costs of failure in terms of money, time and labor",
-"Access" , "identified by a location specified in a row/column" , "unless it is exceptionally well designed, the organization can be inscrutable",
-"Analysis"  ,  "analyzed together, all at once" , "is ordinarily analyzed in incremental steps"
-) %>% 
-  kable(format = "html") %>% 
-  kable_styling(full_width = F) %>%
-  column_spec(1, bold = T, border_right = T) %>%
-  column_spec(2, width = "30em") %>% 
-  column_spec(3, width = "30em") %>% 
-  scroll_box(height = "400px")
-```
+.pull-left[
+**Visualization for analysis**
 
+* tool for understanding datasets
+* you ask questions and quickly answer them
+* iterate to develop insights
+]
 
+.pull-right[
+**Visualization for presentation**
 
-
-
-
-
-
-
-
-* Prior Knowledge
-* Expectations
-* Usage
-
+* designed to communicate something useful
+* can be a form of entertainment
+]
 
 ---
 
 
-
-
----
-
-
-# Four ways to adjust for the differences:
+# Four ways to adjust for these differences:
 
 1. Explain the encodings
 1. Provide context
 1. Focus on readability
 1. Develop aesthetics
-1. **Bonus:** Whizbang
 
 ---
 
@@ -97,23 +68,46 @@ Rewind a couple of centuries when charts were less common. The Statistical Atlas
 
 # Provide context
 
-https://flowingdata.com/wp-content/uploads/2019/03/Texting-history-750x629.png
+When readers can decode the shapes, colors and geometries on your chart, you are more than half way there to producing an awesome chart.
 
-https://flowingdata.com/wp-content/uploads/2017/10/Heart-rate-during-layoff-720x425.png
+However, **readers also need to understand the context of the data.** 
+
+<div align="center">
+<img src="https://flowingdata.com/wp-content/uploads/2019/03/Texting-history-750x629.png" width=500>
+</div>
+
+???
+
+Look at the comments
+
+
+---
+
+# Another context example
+
+<div align="center">
+<img src="https://flowingdata.com/wp-content/uploads/2017/10/Heart-rate-during-layoff-720x425.png" width=720>
+</div>
+
+The chart itself is not novel or unique, but the annotations make it relevant and contextual.
+
+???
+
+Drawing the lines to show milestones: head about layoff, met with HR, left work, etc.
 
 ---
 
 # Improve readability
 
-https://flowingdata.com/wp-content/uploads/2020/07/flat-750x525.png
+Charts should read like text. At the most basic level, it should be obvious what the chart is about and how to interpret it.
 
-
-https://flowingdata.com/wp-content/uploads/2020/07/organized-750x525.png
-
+<div align="center">
+<img src="https://flowingdata.com/wp-content/uploads/2020/07/flat-750x525.png" width=600>
+</div>
 
 ???
 
-Your charts should read like text. At the most basic level, it should be obvious what the chart is about and how to interpret it. When text and labels are scattered everywhere with no specific order, it can be a challenge to decipher any kind of visual hierarchy.
+Cluttered
 
 Think about flipping through the pages of a book. There are chapters. There are paragraphs. There are breaks in between large bodies of text. Sometimes there are pictures to illustrate ideas. These fit within the page and tend to flow from left to right and top to bottom.
 
@@ -123,52 +117,50 @@ With visualization for an audience, you want to provide readability through desi
 
 For example, here’s a chart with annotation layered on top of the visual encodings. It shows median assets and debt by age:
 
+
+---
+
+# Improve readability
+
+<div align="center">
+<img src="https://flowingdata.com/wp-content/uploads/2020/07/organized-750x525.png">
+</div>
+
+
 ---
 
 # Develop aesthetics
 
-Here’s a chart with annotation layered on top of the visual encodings. It shows median assets and debt by age:
+.pull-left[
+* Default setting in the tools are generic and designed in sucha a way that they would work with many datasets and visualization types
 
-<img src="https://flowingdata.com/wp-content/uploads/2013/05/Tufte-example.gif">
+* You can (and should) develop _aesthetics_ (your own visual style) to make your charts less ugly
+]
 
-There’s no obvious visual organization. It looks sloppy. It looks careless
-
+.pull-right[
+<img src="https://flowingdata.com/wp-content/uploads/2013/05/Tufte-example.gif" width=300>
+]
 ---
 
-Develop aesthetics (continued)
+# Develop aesthetics (continued)
 
-Now here’s the same chart with a visual hierarchy:
-
-<img src="https://flowingdata.com/wp-content/uploads/2015/10/Feltron-Report-1090x681.jpg">
-
-It’s more obvious what the chart represents and how the reader should interpret the patterns.
-
-Improve readability and the reader spends less time deciphering and more time taking in the information.
+<div align="center">
+<img src="https://flowingdata.com/wp-content/uploads/2015/10/Feltron-Report-1090x681.jpg" width=600>
+</div>
 
 
 ???
 
-Default settings on charts are generic so that they can be useful for as many datasets as possible.
-
-The generalizations come at a cost though.
-
-The charts are not built specifically around a dataset and its context. They’re just built around the structure of a file. This generic aesthetic is a reflection of your analysis and the thought you put into it.
-
-At the most basic level, you can develop aesthetics to make your charts less ugly. Make them look less like computer output and more like a person had a hand in the process.
-
-But aesthetics can do more.
-
-They can lend themselves to readability. Pick visual encodings that are relevant to the topic. Use colors that are related to the things they represent. Provide cues for readers so that they can more easily relate to the data.
-
-If the topic is serious, then maybe you should try dark colors and more straightforward chart methods. If the topic is more fun, then maybe there is room for illustrations or brighter colors.
-
-Aesthetics can also be a calling card. Some groups or designers have a specific style that you can recognize when you see it.
+Nicholas felton data about himself
 
 
 ---
 
-This all sounds like checkboxes for your visualization that you either have or you don’t, but they’re more continuous than binary. Your charts might need more or less explanations, more or less context, etc.
+# Using these gudelines
 
-It depends on your audience and the purpose behind your chart. If your audience is a small group who has the same background as you, then you might not need to provide as much context for the data you show. If your audience is already excited about a dataset, then you probably don’t need much whizbang to draw attention (although a little bit sometimes helps). If you make charts for a research paper, there are probably publisher guidelines that you need to follow, which limits what you can do (sometimes a good thing).
+* They’re more continuous than binary. Your charts might need more or less explanations, more or less context, etc.
 
-So, think of the above adjustments as continuous knobs that you can turn up or down. The more charts you make, the better you’ll get at deciding how much to turn.
+* Depends on your audience and the purpose behind your chart. If your audience is a small group who has the same background as you, then you might not need to provide as much context for the data you show. If your audience is already excited about a dataset, then you probably don’t need to make it too flashy. If you make charts for a research paper, there are probably publisher guidelines that you need to follow, which limits what you can do (sometimes a good thing).
+
+* Think of the above adjustments as _continuous knobs_ that you can turn up or down. The more charts you make, the better you’ll get at deciding how much to turn.
+
