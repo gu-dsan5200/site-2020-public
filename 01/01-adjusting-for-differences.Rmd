@@ -1,0 +1,166 @@
+class: inverse, center, middle
+
+# Adjusting for differences between visualization for analysis and for an audience
+
+---
+
+class: middle
+
+# A reader who lands on your chart (and the underlying data) may not have the same luxury of developing and answering questions like you did. Some might know little about data or making sense of it. Some might know more, but they don’t want to analyze the dataset. They want to know the results.
+
+
+---
+
+# With this in mind, let’s look over the main differences between you making charts for people to consume versus you using charts for analysis.
+
+.pull-left[
+**Visualization for analysis**
+
+* tool for understanding datasets
+* you ask questions and quickly answer them
+* iterate to develop insights
+]
+
+.pull-right[
+**Visualization for presentation**
+
+* designed to communicate something useful
+* can be a form of entertainment
+]
+
+---
+
+
+# Four ways to adjust for these differences:
+
+1. Explain the encodings
+1. Provide context
+1. Focus on readability
+1. Develop aesthetics
+
+---
+
+# Explain the encodings
+
+.pull-left[
+<div>
+<img src="https://flowingdata.com/wp-content/uploads/2020/03/Rank-of-populous-cities-1090x754.png">
+</div>
+]
+
+.pull-right[
+<div>
+<img src="https://flowingdata.com/wp-content/uploads/2020/03/annotation-750x484.png">
+</div>
+]
+
+.footnote[The Statistical Atlas of the United States, produced in the late 1800s]
+
+???
+
+When you don’t know if people can read your chart, explain all of the encodings. What scale are you using? What does that color represent? Is this normal?
+
+It’s better to err on the side of too much explanation than it is too little. At least with the former, people can gloss over the details if they’re already familiar. They can still read the chart. With the latter, people who are unfamiliar with the visual encodings will get stuck.
+
+Rewind a couple of centuries when charts were less common. The Statistical Atlas of the United States, produced in the late 1800s by the Census Bureau, explained all of the encodings. For example, look at this bump chart from the 1880 atlas. It ranks cities by population:
+
+---
+
+# Provide context
+
+When readers can decode the shapes, colors and geometries on your chart, you are more than half way there to producing an awesome chart.
+
+However, **readers also need to understand the context of the data.** 
+
+<div align="center">
+<img src="https://flowingdata.com/wp-content/uploads/2019/03/Texting-history-750x629.png" width=500>
+</div>
+
+???
+
+Look at the comments
+
+
+---
+
+# Another context example
+
+<div align="center">
+<img src="https://flowingdata.com/wp-content/uploads/2017/10/Heart-rate-during-layoff-720x425.png" width=720>
+</div>
+
+The chart itself is not novel or unique, but the annotations make it relevant and contextual.
+
+???
+
+Drawing the lines to show milestones: head about layoff, met with HR, left work, etc.
+
+---
+
+# Improve readability
+
+Charts should read like text. At the most basic level, it should be obvious what the chart is about and how to interpret it.
+
+<div align="center">
+<img src="https://flowingdata.com/wp-content/uploads/2020/07/flat-750x525.png" width=600>
+</div>
+
+???
+
+Cluttered
+
+Think about flipping through the pages of a book. There are chapters. There are paragraphs. There are breaks in between large bodies of text. Sometimes there are pictures to illustrate ideas. These fit within the page and tend to flow from left to right and top to bottom.
+
+Strip that organization away, and you have a bunch of words on a page with no apparent beginning or end.
+
+With visualization for an audience, you want to provide readability through design. A little bit of alignment and organization can go a long way.
+
+For example, here’s a chart with annotation layered on top of the visual encodings. It shows median assets and debt by age:
+
+
+---
+
+# Improve readability
+
+<div align="center">
+<img src="https://flowingdata.com/wp-content/uploads/2020/07/organized-750x525.png">
+</div>
+
+
+---
+
+# Develop aesthetics
+
+.pull-left[
+* Default setting in the tools are generic and designed in sucha a way that they would work with many datasets and visualization types
+
+* You can (and should) develop _aesthetics_ (your own visual style) to make your charts less ugly
+]
+
+.pull-right[
+<img src="https://flowingdata.com/wp-content/uploads/2013/05/Tufte-example.gif" width=300>
+]
+---
+
+# Develop aesthetics (continued)
+
+<div align="center">
+<img src="https://flowingdata.com/wp-content/uploads/2015/10/Feltron-Report-1090x681.jpg" width=600>
+</div>
+
+
+???
+
+Nicholas felton data about himself
+
+
+---
+
+# Using these gudelines
+
+* They’re more continuous than binary. Your charts might need more or less explanations, more or less context, etc.
+
+* Depends on your audience and the purpose behind your chart. If your audience is a small group who has the same background as you, then you might not need to provide as much context for the data you show. If your audience is already excited about a dataset, then you probably don’t need to make it too flashy. If you make charts for a research paper, there are probably publisher guidelines that you need to follow, which limits what you can do (sometimes a good thing).
+
+* Think of the above adjustments as _continuous knobs_ that you can turn up or down. The more charts you make, the better you’ll get at deciding how much to turn.
+

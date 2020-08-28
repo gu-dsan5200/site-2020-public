@@ -1,0 +1,25 @@
+class: inverse, middle, center
+
+# A _very_ short history of data visualization
+
+---
+
+
+1. Most data visualization has taken place in the last 30 years.
+1. The first record of data vis dates back to 200 AD
+1. Astronomical data presentation for navigation
+1. 1700s: Rene Descartes
+1. Create the first recorded sort-of 2D “graph” to perform math.
+1. This type of graph was later used to present data.
+1. 1800-1900: Graphs and pie charts (WilliamPlayfair)
+1. 1913: Iowa State University: Introduced some of the first courses in “graphing” data 1. 1977: Princeton University:
+1. Statistics Professor John Tukey
+1. Developed the first exploratory data analysis (EDA) using visualizations.
+
+  6) 1983: Edward Tufte published “The Visual Display of Quantitative Information” which showed effective visualization methods.
+7) 1984, Apple Computer introduced the first popular and affordable computer that focused in graphics (GIU) as a mode of interaction and display. This was huge and persists today.
+8) 1999: The words, “information visualization” were so first named in the book: “Readings in Information Visualization: Using Vision to Think”, Card, Mackinlay, Shneiderman.
+9) Around 2000ish - : In Few’s opinion, the IBM PC detracted from the value of making graphs by hand as it offers a mouse and computer-application based option. When people made graphs by hand, the took the time to be responsible.
+
+
+---

@@ -1,0 +1,232 @@
+---
+title: "Module 1 - Week 1: 25 ways to show your data"
+subtitle: "ANLY 503, Fall 2020"
+author: "Vaisman & Dasgupta"
+institute: "Georgetown University"
+date: "2020-08-27"
+output:
+  xaringan::moon_reader:
+    css: [default, '../robot.css','../robot-fonts.css', '../sfah.css']
+    nature:
+      ratio: '16:9'
+      highlightStyle: zenburn
+      highlightLines: true
+      countIncrementalSlides: false
+      slideNumberFormat: "%current%"
+---
+
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+
+library(pacman)
+p_load(char = c('tidyverse', 'knitr', 'htmlwidgets', 'kableExtra','here','janitor'))
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  comment = NA,
+  cache = FALSE
+)
+dat <- read_csv(here('01','data','data_25.csv'), skip=1) %>% clean_names()
+theme_set(theme_bw())
+```
+
+layout: true
+
+<div class="my-header">
+<span>ANLY 503, Data Visualization</span>
+</div>
+
+---
+
+## The data
+
+The data we'll be visualizing is from the World Health Organization and lists
+life expectancies at birth in all countries over the period 2000-2016. This data
+is available at https://apps.who.int/gho/data/view.main.SDG2016LEXv?lang=en.
+
+---
+class: middle, inverse
+
+# Many looks of the same data
+
+---
+
+```{r}
+ggplot(dat, aes(x = year, y = both_sexes, group = country))+
+  geom_line(alpha = 0.3)
+```
+
+---
+
+```{r}
+ggplot(dat, aes(x = year, y = both_sexes))+
+  geom_line(color='red')+
+  facet_wrap(~country, ncol = 14)+
+  theme(axis.text = element_blank(),
+        axis.title= element_blank(),
+        strip.text = element_text(size=4))
+
+```
+
+---
+
+```{r}
+ggplot(dat %>% filter(year==2016) %>% mutate(country = as.factor(country),
+                                             country = fct_reorder(country, both_sexes)),
+       aes(x = country, y = both_sexes))+
+  geom_bar(stat = 'identity', color = 'pink') +
+  theme(axis.text.y = element_text(size=4))+
+  labs(y='', title='Life expectancy at birth (2016)')+
+  coord_flip() 
+```
+
+---
+
+```{r}
+ggplot(dat %>% filter(year==2016) %>% mutate(country = as.factor(country),
+                                             country = fct_reorder(country, female)),
+       aes(x = country, ymin = male, ymax = female))+
+  geom_linerange(color='pink')+
+  geom_point(aes(x = country, y = female), color='pink')+
+  annotate('text',x=183, y = 78, label = 'MALE', size =2)+
+  annotate('text', x = 183, y = 90, label='FEMALE', size=2)+
+  expand_limits(x = c(-1, 190))+
+  coord_flip()+
+  theme(axis.text.y = element_text(size=4),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank())+
+  labs(x = '', y = '', main = 'Life expectancy at birth, 2015')
+```
+
+---
+
+```{r}
+d1 = dat %>% gather(sex, lexp, male,female)
+ggplot(d1, aes(x = year, y = lexp, group=sex))+
+  geom_line(color='blue')+
+  facet_wrap(~country, ncol=14)+
+    theme(axis.text = element_blank(),
+        axis.title= element_blank(),
+        strip.text = element_text(size=4))+
+  ggtitle('Life expectancy for males and females, 2000-2016')
+
+```
+
+---
+
+```{r}
+d2 <- dat %>% filter(year %in% c(2000, 2015)) %>% 
+  select(country, year, both_sexes) %>% 
+  spread(year, both_sexes ) %>% 
+  mutate(country = as.factor(country),
+         country = fct_reorder(country, `2015`))
+ggplot(d2, aes(x = country, ymin = `2000`, ymax = `2015`))+
+  geom_linerange(color = 'blue')+
+  geom_point(aes(x = country, y = `2015`), color='blue')+
+  annotate('text',x=183, y = 78, label = '2000', size =2)+
+  annotate('text', x = 183, y = 85, label='2015', size=2)+
+  expand_limits(x = c(-1, 190))+
+  coord_flip()+
+  theme(axis.text.y = element_text(size=4),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank())+
+  labs(x = '', y = '') + 
+  ggtitle('Life expectancy at birth, 2000 vs 2015')
+  
+```
+
+---
+
+```{r}
+
+ggplot(dat %>% filter(year == 2016), 
+       aes(x = male, y = female))+
+  geom_point()+
+  ggtitle('Life expectancy at birth for males and females, 2016')
+```
+
+
+---
+
+```{r}
+ggplot(dat, aes(x=male, y=female, group = country))+geom_line(alpha = 0.2)+
+  ggtitle('Life expectancy at birth, females, 2000-2016')
+```
+
+---
+
+```{r}
+library(gganimate)
+
+ggplot(dat, aes(x = male, y = female))+
+  geom_point() + 
+  labs(title = 'Year: {frame_time}') + transition_time(year) + ease_aes('linear')
+```
+
+---
+
+```{r}
+
+d3 = dat %>% select(country, year, both_sexes) %>% 
+  group_by(country) %>% arrange(year) %>% mutate(bs1 = lag(both_sexes)) %>% 
+  ungroup() %>% mutate(perc_change = (both_sexes - bs1)/bs1*100) 
+ggplot(d3, aes(x = year, y = perc_change, group = country))+
+  geom_line(alpha=0.6, color='skyblue')+
+  labs(y = 'Annual percent change')
+```
+
+---
+
+```{r}
+
+ggplot(dat, aes(x = factor(year), y = both_sexes))+
+  geom_boxplot(fill = 'wheat')+
+  labs(x = '', y = '', title = 'Life expectancy at birth', subtitle = 'Distribution, 2000-2016')
+```
+
+---
+
+```{r}
+
+ggplot(dat, aes(x = both_sexes))+
+  geom_histogram(fill = 'purple')+
+  facet_wrap(~factor(year), ncol=4)+
+  theme(axis.title = element_blank())+
+  labs(x = '', y = '', title = 'Life expectancy at birth', subtitle = 'Distribution, 2000-2016')
+
+```
+
+---
+
+```{r}
+ggplot(dat, aes(x = both_sexes))+
+  geom_density(fill = 'orange',color = 'orange')+
+  facet_wrap(~factor(year), ncol=4)+
+  theme(axis.title = element_blank())+
+  labs(x = '', y = '', title = 'Life expectancy at birth', subtitle = 'Distribution, 2000-2016')+
+  theme(axis.text.y = element_blank())
+
+```
+
+---
+
+```{r}
+ggplot(dat, aes(x = factor(year), y = both_sexes))+
+  geom_jitter(width=0.1, alpha = 0.3, color = 'purple')+
+  theme(axis.title=element_blank())+
+    labs(title = 'Life expectancy at birth', subtitle = 'Distribution, 2000-2016')
+
+```
+
+---
+
+```{r}
+ggplot(dat, aes(x = factor(year), y = both_sexes))+
+  geom_violin()+
+  geom_jitter(width=0.1, alpha = 0.3, color = 'purple')+
+  theme(axis.title=element_blank())+
+    labs(title = 'Life expectancy at birth', subtitle = 'Distribution, 2000-2016')
+
+```
+
+

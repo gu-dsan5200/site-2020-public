@@ -1,0 +1,54 @@
+/* From apreshill's sfah.css */
+
+:root {
+  --color-salt: #61acf0; /* blue */
+  --color-fat: #f0a561; /* orange */
+  --color-acid: #cbd20a; /* lime */
+  --color-heat: #e74a2f; /* red */
+  --color-black: #1a1917; /* black */
+}
+
+.large { 
+  font-size: 160%;
+}
+
+.salt {
+  color: var(--color-salt);
+  font-size: 200%; 
+  font-weight:700;
+}
+
+.fat {
+  color: var(--color-fat);
+  font-size: 200%; 
+  font-weight:700;
+}
+
+.acid {
+  color: var(--color-acid);
+  font-size: 200%;
+  font-weight:700;
+}
+
+.heat {
+  color: var(--color-heat);
+  font-size: 200%;
+  font-weight:700;
+}
+
+.saltinline {
+  color: var(--color-salt);
+}
+
+.fatinline {
+  color: var(--color-fat);
+}
+
+.acidinline {
+  color: var(--color-acid);
+}
+
+.heatinline {
+  color: var(--color-heat);
+}
+

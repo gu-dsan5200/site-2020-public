@@ -1,0 +1,108 @@
+class: inverse, center, middle
+
+# About the Course
+
+---
+
+# Course objectives and outcomes
+
+- Increase your data visualization vocabulary
+- Understand what comes before and after creating visualizations
+- Think critically about data
+- Distinguish between using visualizations for data exploration or presentation
+- Manipulate and arrange different kinds of data for the purposes of analysis and visualization
+- Design effective visualizations for different purposes that are easily understandable by different types of audiences
+- Apply a set of rules to create highly effective and engaging data visualizations
+- Understand the role of data visualization within data science and for solving problems
+- Use an array of tools (including R, Python, Tableau) to execute all of the above
+
+---
+
+class: inverse, middle, center
+
+# We have **strong** opinions
+
+---
+
+# Grading
+
+- Homework: 50% (two lowest will be dropped)
+- Online Portfolio: 20%
+- Final Project: 20%
+- Online Discussion Participation: 10%
+
+---
+
+# Software
+
+We will mainly use two scripting languages in this course: 
+[R](https://www.r-project.org) and [Python](https://www.python.org). In particular, we will make heavy use of the [tidyverse](https://www.tidyverse.org) group of packages and its philosophy in R, and Python packages in the [PyData ecosystem](https://pandas.pydata.org/community/ecosystem.html), primarily `pandas`, `matplotlib`, `seaborn`. Several other packages in both R and Python will be introduced as needed. 
+
+We will also use [Tableau](https://www.tableau.com), a popular data visualization software. 
+
+---
+
+# Other useful software (not required)
+
+1. Adobe Illustrator / Inkscape
+1. Adobe Photoshop / GIMP
+1. Adobe Reader Pro / Preview
+1. ImageMagick (accessible via the R package `magick`)
+
+---
+
+## Online Porfolio
+
+You will create an online presence via a hosted website. In this portfolio, you will showcase the work you have done in this class. Several of the homework assignments will be a part of your portfolio, as well as the final project. 
+
+
+## Final Project
+
+You will create an R Markdown dashboard using the `flexdashboard` package to visualize data sets in at least 3 ways and to create a visual narrative. This dashboard will also be a part of the online portfolio, but it is an separate assignment. 
+
+---
+
+# Course Calendar 
+
+```{r, echo = FALSE, warning = FALSE} 
+source("../schedule.R")
+sched %>%
+  select(session, module, date, topics, activity)%>%
+  kable(format = "html") %>% 
+  kable_styling(full_width = F) %>%
+  scroll_box(height = "400px")
+``` 
+
+We will have a guest speaker, [Jonathan Schwabish](https://www.urban.org/author/jonathan-schwabish) towards the end of the semester. Date TBD.
+
+---
+
+# Policies & Expectations
+
+- Online Zoom Rules
+  - Turn camera on (even if you have a bad hair day). If you have bandwith issues let us know
+  - Don't multitask
+  - Please speak, we will not be checking the chat window
+- Course Communication
+  - Announcements in Canvas
+  - No email unless strictly necessary. Questions should be placed in Canvas discussion boards
+- Due Dates
+  - Homeworks posted on Thursdays after class and are due Fridays the following week
+- Late Policy
+  - No late policy. Late submissions get zero points. Two lowest homework grades dropped.
+- **Class materials are for class use only\!:**
+  - Don't make your private github repos public
+
+---
+
+# Open Door Policy
+
+Please approach or get in touch with us if something is not working for you regarding the class, methods, etc. Our pledge to you is to provide the best learning experience possible. If you have any issue please do not wait until the last minute to speak with us. You will find that we are fair, reasonable and flexible and we deeply care about your success.
+
+---
+
+# Collaboration Policy
+
+* **All individual work is by definition, INDIVIDUAL. We have a ZERO TOLERANCE POLICY for cheating and not doing individual work when required. Homeworks, Online Portfolio, and the Final Project are ALL INDIVIDUAL.**
+* If an assignment deliverable looks too similar another one (or more) then the grade will be divided among all students whose work is similar.
+* You can, and should, work together on the asynchronous online discussions.
