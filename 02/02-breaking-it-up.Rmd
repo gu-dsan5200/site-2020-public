@@ -1,0 +1,161 @@
+
+class: middle, center, inverse
+
+# Creating a chart by splitting it into components
+
+---
+
+# No chart is made completely in a single pass
+
+* A chart is not a single element, so don't think of it as one
+
+* Perhaps this thought (single element) may work for standard charts like bar charts, line charts and scatterplots because most software tools provide quick ways of creating them, with _reasonable_ defaults
+
+* What do you do when even a basic chart or a single element is off?
+
+--
+
+**You split the chart into components**
+
+---
+
+# _Plane_ and _retinal variables_
+
+A **plane** is like the coordinate system that defines how geometries are placed in a space. A **retinal variable** defines how to encode data into visuals.
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2018/09/Bertin-components-750x670.png" width=400>]
+
+.small[Jacques Bertin, _Semiology of Graphics_, 1967]
+
+---
+
+# The Grammar of Graphics
+
+William S. Cleveland, in his 1994 book _The Elements of Graphing Data_, lists the “basic elements of graph construction” as **scales, captions, plotting symbols, reference lines, keys, labels, panels, and tick marks**.
+
+In _The Grammar of Graphics_, published in 2005, Leland Wilkinson built off the work by Bertin and more formally defined the components of a graphic:
+
+Statistical graphic specifications are expressed in six statements:
+
+>DATA: a set of data operations that create variables from datasets<br/>
+TRANS: variable transformation (e.g. rank)<br/>
+SCALE: scale transformations (e.g. log)<br/>
+COORD: a coordinate system (e.g. polar)<br/>
+ELEMENT: graphs (e.g. points) and their aesthetic attributes (e.g. color)<br/>
+GUIDE: one or more guides (axes, legends, etc.)
+
+**Hadley Wickham implemented Wilkinson’s grammar in R with the popular `ggplot2` package.**
+
+---
+
+# Strategies for breaking charts into individual components
+
+* The **data** drives all decisions
+* The **visual encodings** dictate the geometry and/or colors of a graphic
+* The **coordinate system** (Cartesian, polar, or geographic) specifies the space in which the visual encodings reside
+* The **context** communicates what the data is about, where it is from, and why it exists.
+
+---
+
+## Example 1: breaking up a chart
+
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/get-together-single-bar-750x741.png" width=450>]
+
+.small[A study on how people first met: [https://data.stanford.edu/hcmst2017](https://data.stanford.edu/hcmst2017)]
+
+---
+
+## The _data_ is aggregateted percentages
+
+```{r, eval = F, echo = T}
+waymet          n           p
+18         business_trip   7.260476 0.002214773
+17   single_serve_nonint  27.895815 0.008509483
+19        work_neighbors  35.471720 0.010820476
+16              vacation  40.959558 0.012494514
+8                    mil  65.504234 0.019981748
+15            blind_date  93.696132 0.028581549
+...
+```
+
+---
+
+## The bars are the _visual encoding_ 
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/get-together-single-bar-encoding-750x741.png" width=450>]
+
+.small[Length represents a percentage]
+---
+
+## The _coordinate system_ is Cartesian 
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/get-together-single-bar-scale-750x741.png" width=450>]
+
+.small[A _linar_ scale on the horizontal and a _categorical_ scale on the vertical axis]
+---
+
+## Additional information provides _context_
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/get-together-single-bar-context-750x741.png" width=450>]
+
+.small[Titles, labels, markings, etc.]
+
+---
+
+## Example 2
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/spending_main_categories-1090x906.png" width=500>]
+
+.small[A _mosaic plot_ that shows average spending by income group in the United States]
+
+---
+
+## The _data_ is the average dollar amount for each income group
+
+```{r, echo = T, eval = F}
+item    hierarchy_level all Less than $15,000   $15,000 to $29,999  $30,000 to $39,999  $40,000 to $49,999  $50,000 to $69,999  $70,000 to $99,999  $100,000 to $149,999    $150,000 to $199,999    $200,000 and more
+Food and Beverage   1   7216    3771    4453    5226    6040    6744    8453    10362   13571   16105
+Food at Home    2   4049    2450    2904    3064    3656    3893    4772    5554    6718    7135
+Food Away From Home 2   3154    1318    1533    2157    2371    2847    3664    4797    6832    8919
+Alcoholic Beverages 2   484 133 215 280 320 420 596 734 1169    1659
+Housing 1   18886   9698    12268   14533   15575   17331   20564   26003   33319   46076
+...
+```
+
+---
+
+## What are the _visual encodings_?
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/spending_main_categories-encodings-750x623.png" width=450>]
+
+--
+.small[Height: percentage, width: average total spending for each income group, color: spending category]
+---
+
+## What is the coordinate system?
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/spending_main_categories-coordinates-750x623.png" width=450>]
+
+--
+.small[Cartesian: x-axis is total dollars spend, y-axis is 0-100% for the group]
+
+---
+
+## What is the _context_?
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/spending_main_categories-context-750x623.png" width=450>]
+
+---
+
+## Let's decompose this one
+
+.left-column70[
+<img src="https://flowingdata.com/wp-content/uploads/2018/07/How-America-uses-its-land-750x496.png">]
+
+.right-column30[
+**Discuss**
+* Data
+* Visual encodings 
+* Coordinate system
+* Context
+]

@@ -1,0 +1,260 @@
+class: inverse, middle, center
+
+# Visual Encodings
+
+---
+
+
+## Visual encodings can be categorized into the main groups below
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/visual-encodings-1-1090x478.png" width=700>]
+
+.small[All visualizations use some combination of these]
+
+---
+
+## Example: a _scatterplot_ uses position on an x-y scale
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/scatter-plot-guide-750x443.png">]
+
+---
+
+## A _bar chart_ uses length to show values
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/bar-chart-type-750x360.png" align="center">]
+
+---
+
+## Some encodings work better than others
+
+.pull-left[
+<img src="https://flowingdata.com/wp-content/uploads/2010/03/errors.png">
+]
+
+.pull-right[
+**Decoding Error**
+1. Position along a common scale
+1. Length
+1. Angle and slope
+1. Area
+1. Volume, density, and color saturation
+1. Color hue
+]
+
+---
+
+## Position
+
+_Position_ allows you to compare values based on where they are placed with reference to a coordinate system.
+
+### Considerations
+
+* Avoid overplotting since many points can occupy the same space and obscure one another
+
+### Solutions
+
+* Use _transparency_ so that overlapping points make darker areas
+* Use _jitter_ (adding noise that moves points so they are not directly on top of another) 
+
+
+---
+
+## Length
+
+_Length_ is most commonly used in the context of bar charts. The longer a bar is, the greater the value. 
+**Don't truncate bar charts, use length in its entirety!**
+
+--
+
+.left-column70[
+.small[**BAD:** FOX News, again!]
+<img src="https://flowingdata.com/wp-content/uploads/2012/08/Bush-cuts.png">
+]
+
+--
+.right-column30[
+.small[**GOOD**]
+<img src="https://flowingdata.com/wp-content/uploads/2012/08/Fox-chart-corrected.png">
+]
+
+
+.small[FOX news, again...]
+
+---
+
+## Angle
+
+_Angles_ range from 0 to 360 degrees in a circle.
+
+.left-column30[
+### Considerations
+
+* Angles are most associated with _pie charts_. Pie chart is made up of parts that make up a whole. 
+* Don't use too many categories (bar chart is better)
+* **The sum of all percentages should equal 100%!**
+]
+
+--
+
+.right-column70[
+.small[NOT!]
+
+<img src="https://flowingdata.com/wp-content/uploads/2009/11/Fox-News-pie-chart.png" width=500>
+
+]
+
+
+---
+## Don't even think about this!
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/2b-angles-unclear-750x521.jpg">]
+
+---
+
+## Slope
+
+_Slope_ is similar to _angle_. Line charts are the most common use of slope to encode data. 
+
+.left-column30[
+### Considerations
+
+* Slope magnitude: steeper = greater change, flatter = lesser change
+* The aspect ratio 
+* Visual change should match the context of the change
+
+]
+
+--
+
+.right-column70[
+<img src="https://flowingdata.com/wp-content/uploads/2020/03/slope-scope-750x248.png" align="center">
+]
+---
+
+## Area
+
+Like _length_, _area_ can be used to represent data with size, but with two dimensions instead of one.
+
+
+.left-column30[
+### Considerations
+* While the encoding might not be as precise from a visual perception perspective, area can provide a more intuitive, less abstract view for some types of data
+* Make sure you scale by area, not edge (remember, area gets squared per unit increase)
+]
+
+.right-column70[
+<img src="https://flowingdata.com/wp-content/uploads/2020/03/area-incorrect-750x427.png">]
+
+---
+
+## A _treemap_ uses rectangle areas to show hierarchical data
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/spending-treemap-750x574.png">]
+
+---
+
+## Volume
+
+_Volume_ can used in the same way as _area_ but has one more dimension.
+
+.left-column30[
+### Considerations
+* Make sure you scale by volume, not edge (remember, volume gets cubed per unit increase)
+* 
+]
+
+.right-column70[
+<img src="https://flowingdata.com/wp-content/uploads/2020/03/volume-incorrect-750x399.png">
+]
+
+---
+
+## The volume, or 3D perspective representation can make tangible data more relatable
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/copper03-750x600.jpg">]
+
+---
+
+## Color
+
+_Color_ as a visual encoding can be split into two categories: **hue** and **saturation**. **Hue** is what most people refer to as color (red, green, blue, etc.) **Saturation** is the amount of **hue** in a color.
+
+.left-column30[
+
+* Qualitative: every color represents a distinct attribute (category)
+* Sequential: color represents a range (**saturation**) from low to high (or vice-versa)
+* Diverging: multiple hues represent a point of inflection of the data
+
+]
+
+.right-column70[
+<img src="img/brewer-scales.png">
+]
+
+---
+
+## Sequential example
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/Jeopardy-game-board-double-750x473.png" width=600>]
+
+---
+
+## Another sequential example
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2019/02/3-d-population-1090x419.png">]
+
+---
+
+## Divergent example
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2017/12/Tax-change-720x334.png">]
+
+---
+
+## Consider color blindness
+
+.pull-left[<img src="https://flowingdata.com/wp-content/uploads/2020/03/colorblind-750x281.png">]
+
+.pull-right[<img src="img/colorblindness.png">]
+---
+
+## Consider printing
+
+.center[<img src="img/printing.png">]
+
+---
+
+## Color can provide context
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2019/12/Christmas-trees-750x542.png" width=600>]
+
+.small[Where Christmas trees come from]
+
+---
+
+## In summary, work with the following attributes to encode your data
+
+
+.pull-left[
+
+* Position
+* Length
+* Angle
+* Slope
+* Area
+
+]
+
+.pull-right[
+
+* Volume
+* Color
+* Density \*
+* Shape \*
+
+]
+
+Or any combination thereof!
+
+.small[\* not discussed today]
+

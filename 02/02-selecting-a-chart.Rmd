@@ -1,0 +1,82 @@
+class: inverse, middle, center
+
+# Choosing the right chart type
+
+---
+
+## What is the best way to visualize your data?
+
+--
+* What do you want to show?
+
+--
+* Why do you want to show it?
+
+--
+* Who are you showing it to?
+
+---
+
+## Is choosing the right visualization a straightforward choice?
+
+--
+.pull-left[
+### Smaller datasets
+
+* Look at the data
+* Choose which patterns you want to visualize
+]
+
+--
+.pull-right[
+### Larger datasets
+* Experiment
+]
+
+
+---
+
+## The chart selection process is _not_ mechanical
+
+### Just as you can't
+* randomly place a bunch of words together to make a book
+* randomly record videos and get a finished film out of them
+* randomly grab ingredients from the pantry, toss them in the pan and expect a great meal...
+
+--
+
+You cannot just put a chart together as a sequence of steps.
+
+---
+
+## Ask and answer questions
+
+.pull-left[
+* Data can say a lots of things (25 ways example) 
+* Meaningful analysis requires **context, background, and a human in the loop**
+* Different questions can lead to different chart types and focus
+]
+
+.pull-right[
+<img src="https://flowingdata.com/wp-content/uploads/2019/04/Better-questions-for-data-analysis-750x804.png" width=400>
+]
+
+---
+
+class: inverse, center, middle
+
+# Choosing your data format
+
+---
+
+## Recipes for selecting the right chart
+
+[From Data to Viz by Yan Holtz and Conor Healy](https://www.data-to-viz.com/)
+
+[The Data Viz Project by ferdio](https://datavizproject.com/)
+
+[Multiple views on how to choose a visualization by Steven Franconeri](http://experception.net/Franconeri_ExperCeptionDotNet_DataVisQuickRef.pdf)
+
+[Slide Chooser by Andrew Abela](https://extremepresentation.typepad.com/blog/2015/01/announcing-the-slide-chooser.html)
+
+[The Graphic Continuum by Jon Schwabish and Severino Ribecca](https://policyviz.com/2014/09/09/graphic-continuum/)

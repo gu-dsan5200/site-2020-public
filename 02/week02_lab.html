@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>ANLY 503</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Vaisman &amp; Dasgupta" />
+    <meta name="date" content="2020-09-03" />
+    <link href="week02_lab_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../robot.css" type="text/css" />
+    <link rel="stylesheet" href="../robot-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="../sfah.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# ANLY 503
+## Week 2 Lab: Creating websites with RMarkdown
+### Vaisman &amp; Dasgupta
+### Georgetown University
+### September 3, 2020
+
+---
+
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+---
+background-image: url(img/rmarkdown_wizards.png)
+background-size: cover
+
+
+
+.footnote[Artwork by @allison_horst]
+---
+background-image: url(img/rmdflow.png)
+background-size: contain
+
+---
+
+## R Markdown
+
+
+
+
+.pull-left[
+R Markdown
+````markdown
+## Loading data
+
+Load the gapminder dataset
+
+```{r, echo=TRUE, eval = TRUE}
+library(tidyverse)
+gap &lt;- read_csv('data/gapminder.csv')
+
+```
+The data set has `r nrow(gap)` observations
+````
+
+Note that there are evaluated code in both the chunk and in an inline chunk
+]
+.pull-right[
+"Knitted" document
+.border[
+## Loading data
+
+Load the gapminder dataset
+
+
+```r
+library(tidyverse)
+gap &lt;- read_csv('data/gapminder.csv')
+```
+
+The data set has 1704 observations
+] 
+]
+
+---
+
+## Markdown
+
+Markdown is a lightweight text-based format that allows for easy translation into HTML (originally)
+
+It has a pretty easy syntax for writing formatted documents
+
+&lt;svg style="height:0.8em;top:.04em;position:relative;" viewBox="0 0 512 512"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/svg&gt; RStudio Markdown Quick Reference  
+&lt;svg style="height:0.8em;top:.04em;position:relative;" viewBox="0 0 512 512"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/svg&gt; https://www.markdownguide.org/basic-syntax  
+
+--
+
+.footnote[.fatinline[If you've used Jupyter notebooks before, you're familiar with Markdown]]
+---
+
+## Code
+
+Code is embedded in an R Markdown (RMD) document using .heatinline[code chunks]
+
+Code chunks can be standalone...
+
+````markdown
+```{[language] &lt;chunk name&gt;, &lt;options&gt;}
+
+Code here
+
+```
+````
+
+.pull-left[
+`[language]` = {`r`, `python`, `bash`, `sql`, `css`,... }  
+`&lt;chunk name&gt;` = optional name for chunk  
+`&lt;options&gt;` = [chunk options](https://yihui.org/knitr/options/)
+]
+.pull-right[
+![](img/chunk_rstudio.png)
+]
+
+---
+
+## Code
+
+Code is embedded in an R Markdown (RMD) document using .heatinline[code chunks]
+
+Code chunks can be standalone...
+
+````markdown
+```{[language] &lt;chunk name&gt;, &lt;options&gt;}
+
+Code here
+
+```
+````
+
+or inline (only using R)
+
+
+
+```markdown
+The *average fuel efficiency* is `r mean(mtcars$mpg)`
+```
+
+---
+
+## Getting started
+
+![](img/rstudio_rmd1.png)
+
+---
+
+## Getting started
+
+![](img/rmd1.png)
+
+---
+
+## Getting started
+
+![](img/rstudio_rmd2.png)
+
+---
+
+
+## R Markdown HTML document
+
+.pull-left[
+![](img/rmd1.png)
+
+This generates a template document
+
++ Update the header section (between the `---`)
++ Basically erase everything after the second `---` and do your own thing
+
+]
+.pull-right[
+````markdown
+---
+title: "Untitled"
+author: "Vaisman &amp; Dasgupta"
+date: "9/2/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see &lt;http://rmarkdown.rstudio.com&gt;.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+````
+]
+
+---
+
+## The header section
+
+The header section is written in a text markup language called YAML
+
+
+```yaml
+---
+title: "My document"
+author: "Abhijit Dasgupta"
+date: "September 3, 2020"
+output: html_document
+---
+```
+
+--
+
+The `output` entry tells `rmarkdown::render` what sort of output we want. 
+
+&gt; You can put multiple output options, and `rmarkdown::render` will do the first one
+by default. You can also add options that will be passed on to `rmarkdown::render`
+
+```yaml
+output:
+    html_document: 
+        toc: true
+        theme: journal
+        highlight: docco
+    word_document: default
+```
+
+---
+class: center,middle,inverse
+
+# Rendering R Markdown documents
+
+### .fatinline[This is where the magic happens]
+---
+background-image: url(img/knit1.png)
+background-size: 75%
+
+---
+background-image: url(img/knit2.png)
+background-size: 75%
+
+---
+
+## Render from the console
+
+The .fatinline[Knit] button really calls `rmarkdown::render`, so you can actually
+add a bit more control, and potentially automate rendering many documents, using 
+an R script
+
+
+```r
+rmarkdown::render('page1.Rmd', output=html_document())
+```
+
+You can replace `html_document` with any of the following with the **rmarkdown** package:
+
+|                     |                         |                       |
+|---------------------|-------------------------|-----------------------|
+| github_document     | md_document             | pdf_document          |
+| word_document       | odt_document            | rtf_document          |
+| pdf_document        | latex_document          | context_document      |
+| beamer_presentation | powerpoint_presentation | ioslides_presentation |
+| slidy_presentation  |                         |                       |
+---
+class: center,middle,inverse
+
+# Building websites using R Markdown
+
+---
+
+## Creating scaffolding using RStudio Projects
+
+RStudio Projects are a way to encapsulate particular projects in RStudio, so that 
+you can maintain separation between different projects and run separate 
+R processes for each project. 
+
++ Quickly get to the folder(s) where you are keeping project material
++ Improve reproducibility through encapsulation
++ Keep different projects separate and independent
++ Use available templates to create basic folder structure for different purposes
+
+----
+
+&lt;svg style="height:0.8em;top:.04em;position:relative;" viewBox="0 0 512 512"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/svg&gt; https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects  
+&lt;svg style="height:0.8em;top:.04em;position:relative;" viewBox="0 0 512 512"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/svg&gt; https://www.tidyverse.org/blog/2017/12/workflow-vs-script/  
+&lt;svg style="height:0.8em;top:.04em;position:relative;" viewBox="0 0 512 512"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/svg&gt; https://towardsdatascience.com/the-gold-standard-of-data-science-project-management-13d68c9e85d6
+
+---
+background-image: url(img/web1.png)
+background-size: 75%
+
+
+---
+background-image: url(img/web2.png)
+background-size: 75%
+
+---
+background-image: url(img/web3.png)
+background-size: 75%
+
+---
+background-image: url(img/web4.png)
+background-size: 75%
+
+---
+background-image: url(img/web5.png)
+background-size: 75%
+
+---
+
+## R Markdown website
+.left-column30[
+
+```
+~/ARAASTAT/Teaching/test_site
+├── _site
+│   ├── about.html
+│   ├── index.html
+│   └── site_libs
+│       ├── bootstrap-3.3.5
+│       │   ├── css
+│       │   │   ├── bootstrap-theme.css
+│       │   │   ├── bootstrap-theme.css.map
+│       │   │   ├── bootstrap-theme.min.css
+│       │   │   ├── bootstrap.css
+│       │   │   ├── bootstrap.css.map
+│       │   │   ├── bootstrap.min.css
+│       │   │   ├── cerulean.min.css
+│       │   │   ├── cosmo.min.css
+│       │   │   ├── darkly.min.css
+│       │   │   ├── flatly.min.css
+│       │   │   ├── fonts
+│       │   │   │   ├── Lato.ttf
+│       │   │   │   ├── LatoBold.ttf
+│       │   │   │   ├── LatoItalic.ttf
+│       │   │   │   ├── NewsCycle.ttf
+│       │   │   │   ├── NewsCycleBold.ttf
+│       │   │   │   ├── OpenSans.ttf
+│       │   │   │   ├── OpenSansBold.ttf
+│       │   │   │   ├── OpenSansBoldItalic.ttf
+│       │   │   │   ├── OpenSansItalic.ttf
+│       │   │   │   ├── OpenSansLight.ttf
+│       │   │   │   ├── OpenSansLightItalic.ttf
+│       │   │   │   ├── Raleway.ttf
+│       │   │   │   ├── RalewayBold.ttf
+│       │   │   │   ├── Roboto.ttf
+│       │   │   │   ├── RobotoBold.ttf
+│       │   │   │   ├── RobotoLight.ttf
+│       │   │   │   ├── RobotoMedium.ttf
+│       │   │   │   ├── SourceSansPro.ttf
+│       │   │   │   ├── SourceSansProBold.ttf
+│       │   │   │   ├── SourceSansProItalic.ttf
+│       │   │   │   ├── SourceSansProLight.ttf
+│       │   │   │   └── Ubuntu.ttf
+│       │   │   ├── journal.min.css
+│       │   │   ├── lumen.min.css
+│       │   │   ├── paper.min.css
+│       │   │   ├── readable.min.css
+│       │   │   ├── sandstone.min.css
+│       │   │   ├── simplex.min.css
+│       │   │   ├── spacelab.min.css
+│       │   │   ├── united.min.css
+│       │   │   └── yeti.min.css
+│       │   ├── fonts
+│       │   │   ├── glyphicons-halflings-regular.eot
+│       │   │   ├── glyphicons-halflings-regular.svg
+│       │   │   ├── glyphicons-halflings-regular.ttf
+│       │   │   ├── glyphicons-halflings-regular.woff
+│       │   │   └── glyphicons-halflings-regular.woff2
+│       │   ├── js
+│       │   │   ├── bootstrap.js
+│       │   │   ├── bootstrap.min.js
+│       │   │   └── npm.js
+│       │   └── shim
+│       │       ├── html5shiv.min.js
+│       │       └── respond.min.js
+│       ├── highlightjs-9.12.0
+│       │   ├── default.css
+│       │   ├── highlight.js
+│       │   └── textmate.css
+│       ├── jquery-1.11.3
+│       │   └── jquery.min.js
+│       └── navigation-1.1
+│           ├── codefolding.js
+│           ├── sourceembed.js
+│           └── tabsets.js
+├── _site.yml
+├── about.Rmd
+├── docs
+│   ├── about.html
+│   ├── index.html
+│   └── site_libs
+│       ├── bootstrap-3.3.5
+│       │   ├── css
+│       │   │   ├── bootstrap-theme.css
+│       │   │   ├── bootstrap-theme.css.map
+│       │   │   ├── bootstrap-theme.min.css
+│       │   │   ├── bootstrap.css
+│       │   │   ├── bootstrap.css.map
+│       │   │   ├── bootstrap.min.css
+│       │   │   ├── cerulean.min.css
+│       │   │   ├── cosmo.min.css
+│       │   │   ├── darkly.min.css
+│       │   │   ├── flatly.min.css
+│       │   │   ├── fonts
+│       │   │   │   ├── Lato.ttf
+│       │   │   │   ├── LatoBold.ttf
+│       │   │   │   ├── LatoItalic.ttf
+│       │   │   │   ├── NewsCycle.ttf
+│       │   │   │   ├── NewsCycleBold.ttf
+│       │   │   │   ├── OpenSans.ttf
+│       │   │   │   ├── OpenSansBold.ttf
+│       │   │   │   ├── OpenSansBoldItalic.ttf
+│       │   │   │   ├── OpenSansItalic.ttf
+│       │   │   │   ├── OpenSansLight.ttf
+│       │   │   │   ├── OpenSansLightItalic.ttf
+│       │   │   │   ├── Raleway.ttf
+│       │   │   │   ├── RalewayBold.ttf
+│       │   │   │   ├── Roboto.ttf
+│       │   │   │   ├── RobotoBold.ttf
+│       │   │   │   ├── RobotoLight.ttf
+│       │   │   │   ├── RobotoMedium.ttf
+│       │   │   │   ├── SourceSansPro.ttf
+│       │   │   │   ├── SourceSansProBold.ttf
+│       │   │   │   ├── SourceSansProItalic.ttf
+│       │   │   │   ├── SourceSansProLight.ttf
+│       │   │   │   └── Ubuntu.ttf
+│       │   │   ├── journal.min.css
+│       │   │   ├── lumen.min.css
+│       │   │   ├── paper.min.css
+│       │   │   ├── readable.min.css
+│       │   │   ├── sandstone.min.css
+│       │   │   ├── simplex.min.css
+│       │   │   ├── spacelab.min.css
+│       │   │   ├── united.min.css
+│       │   │   └── yeti.min.css
+│       │   ├── fonts
+│       │   │   ├── glyphicons-halflings-regular.eot
+│       │   │   ├── glyphicons-halflings-regular.svg
+│       │   │   ├── glyphicons-halflings-regular.ttf
+│       │   │   ├── glyphicons-halflings-regular.woff
+│       │   │   └── glyphicons-halflings-regular.woff2
+│       │   ├── js
+│       │   │   ├── bootstrap.js
+│       │   │   ├── bootstrap.min.js
+│       │   │   └── npm.js
+│       │   └── shim
+│       │       ├── html5shiv.min.js
+│       │       └── respond.min.js
+│       ├── highlightjs-9.12.0
+│       │   ├── default.css
+│       │   ├── highlight.js
+│       │   └── textmate.css
+│       ├── jquery-1.11.3
+│       │   └── jquery.min.js
+│       └── navigation-1.1
+│           ├── codefolding.js
+│           ├── sourceembed.js
+│           └── tabsets.js
+├── index.Rmd
+└── test_site.Rproj
+```
+]
+.right-column70[
+This default template has 
+
+1. Two pages (generated from the two Rmd files)
+1. A `_site.yml` file, which will give the structure of the website
+1. A `.Rproj` file, that you don't really need to touch
+]
+
+---
+
+## R Markdown website
+
+.left-column30[
+_site.yml
+
+```
+name: "my-website"
+navbar:
+  title: "My Website"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+```
+]
+.right-column70[
+This structure provides a navigation bar at the top. 
+
+You can have a `left` and `right` navigation bar
+
+The `_site.yml` determines the components of the navigation bar
+
+]
+
+---
+class: middle, center, inverse
+
+# Creating the website
+
+---
+background-image: url(img/build_site1.png)
+background-size: 75%
+
+---
+background-image: url(img/build_site2.png)
+background-size: 75%
+
+---
+background-image: url(img/build_site3.png)
+background-size: 75%
+
+---
+class: middle, center, inverse
+
+# Customization
+
+---
+
+## Adding to the `_site.yml`
+
+You can specify the format of each page globally
+
+
+```yaml
+output:
+  html_document:
+    theme: cosmo         # https://bookdown.org/yihui/rmarkdown/
+    highlight: textmate  #   html-document.html#appearance-and-style
+    css: styles.css      # Create your own custom CSS file
+```
+
+![](img/build_site4.png)
+
+---
+
+## Resources
+
++ https://rmarkdown.rstudio.com/lesson-13.html
++ https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html
++ https://www.emilyzabor.com/tutorials/rmarkdown_websites_tutorial.html &lt;svg style="height:0.8em;top:.04em;position:relative;" viewBox="0 0 512 512"&gt;&lt;path d="M505 174.8l-39.6-39.6c-9.4-9.4-24.6-9.4-33.9 0L192 374.7 80.6 263.2c-9.4-9.4-24.6-9.4-33.9 0L7 302.9c-9.4 9.4-9.4 24.6 0 34L175 505c9.4 9.4 24.6 9.4 33.9 0l296-296.2c9.4-9.5 9.4-24.7.1-34zm-324.3 106c6.2 6.3 16.4 6.3 22.6 0l208-208.2c6.2-6.3 6.2-16.4 0-22.6L366.1 4.7c-6.2-6.3-16.4-6.3-22.6 0L192 156.2l-55.4-55.5c-6.2-6.3-16.4-6.3-22.6 0L68.7 146c-6.2 6.3-6.2 16.4 0 22.6l112 112.2z"/&gt;&lt;/svg&gt;
+---
+class: middle,center, inverse
+
+# Deploying on Github
+
+---
+
+## Git/Github setup
+
++ Open the RStudio project for the website we created
++ Install the package **usethis** in R (`install.packages("usethis")`)
++ Run `usethis::use_git()` to initialize a git repository and make an initial commit
++ Run `usethis::use_github()` to create a remote on Github
++ You can push your current repo state using the RStudio Git pane. 
+    + If the Push button is greyed out, open a terminal in RStudio and type `git push -u origin master`, and then restart RStudio
+
+---
+
+## Setup for deploying to Github Pages
+
++ Create a new folder called .heatinline[`docs`]
++ Add the following line to your `_site.yml`
+
+
+```yaml
+output_dir: "docs"
+```
++ Build your website again
++ Commit and Push to Github
+
+---
+background-image: url(img/ghp1.png)
+background-size: 80%
+class: bottom, center
+
+### On Github
+
+---
+background-image: url(img/ghp2.png)
+background-size: 80%
+class: bottom, center
+
+### On Github
+
+---
+background-image: url(img/ghp3.png)
+background-size: 80%
+class: bottom, center
+
+### On Github
+
+---
+background-image: url(img/ghp4.png)
+background-size: 80%
+class: bottom, center
+
+### On Github
+
+---
+background-image: url(img/ghp5.png)
+background-size: 80%
+class: bottom, center
+
+### On Github
+
+---
+background-image: url(img/ghp6.png)
+background-size: cover
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
