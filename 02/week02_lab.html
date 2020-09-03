@@ -284,6 +284,7 @@ class: center,middle,inverse
 
 ---
 
+
 ## Creating scaffolding using RStudio Projects
 
 RStudio Projects are a way to encapsulate particular projects in RStudio, so that 
@@ -300,6 +301,66 @@ R processes for each project.
 &lt;svg style="height:0.8em;top:.04em;position:relative;" viewBox="0 0 512 512"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/svg&gt; https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects  
 &lt;svg style="height:0.8em;top:.04em;position:relative;" viewBox="0 0 512 512"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/svg&gt; https://www.tidyverse.org/blog/2017/12/workflow-vs-script/  
 &lt;svg style="height:0.8em;top:.04em;position:relative;" viewBox="0 0 512 512"&gt;&lt;path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/&gt;&lt;/svg&gt; https://towardsdatascience.com/the-gold-standard-of-data-science-project-management-13d68c9e85d6
+
+---
+class: middle, center
+
+# Starting from GitHub
+
+---
+
+## Setting up a repository in GitHub
+
++ In your GitHub, create a repository called .heatinline[ANLY503_Portfolio]
++ Add a README (makes cloning easier)
++ Clone this to your computer
+
+---
+class: middle, center
+
+# Making this repo a RStudio project
+
+---
+background-image: url(img/web1.png)
+background-size: 80%
+
+---
+background-image: url(img/ghp1_1.png)
+background-size: 80%
+
+---
+background-image: url(img/ghp1_2.png)
+background-size: 80%
+
+
+---
+
+## Bringing in a template
+
+Run the following code in your RStudio Console
+
+.pull-left[
+
+```r
+d &lt;- dir(system.file('rmd/site', 
+                  package='rmarkdown'), 
+        full.names=TRUE)
+for(f in d){
+  file.copy(f, '.')
+}
+```
+
+You should see these files  
+(with a different .Rproj file)
+]
+.pull-right[
+![](img/templ.png)
+]
+
+---
+class: middle, center
+
+# Starting with RStudio
 
 ---
 background-image: url(img/web1.png)
@@ -328,153 +389,11 @@ background-size: 75%
 .left-column30[
 
 ```
-~/ARAASTAT/Teaching/test_site
-├── _site
-│   ├── about.html
-│   ├── index.html
-│   └── site_libs
-│       ├── bootstrap-3.3.5
-│       │   ├── css
-│       │   │   ├── bootstrap-theme.css
-│       │   │   ├── bootstrap-theme.css.map
-│       │   │   ├── bootstrap-theme.min.css
-│       │   │   ├── bootstrap.css
-│       │   │   ├── bootstrap.css.map
-│       │   │   ├── bootstrap.min.css
-│       │   │   ├── cerulean.min.css
-│       │   │   ├── cosmo.min.css
-│       │   │   ├── darkly.min.css
-│       │   │   ├── flatly.min.css
-│       │   │   ├── fonts
-│       │   │   │   ├── Lato.ttf
-│       │   │   │   ├── LatoBold.ttf
-│       │   │   │   ├── LatoItalic.ttf
-│       │   │   │   ├── NewsCycle.ttf
-│       │   │   │   ├── NewsCycleBold.ttf
-│       │   │   │   ├── OpenSans.ttf
-│       │   │   │   ├── OpenSansBold.ttf
-│       │   │   │   ├── OpenSansBoldItalic.ttf
-│       │   │   │   ├── OpenSansItalic.ttf
-│       │   │   │   ├── OpenSansLight.ttf
-│       │   │   │   ├── OpenSansLightItalic.ttf
-│       │   │   │   ├── Raleway.ttf
-│       │   │   │   ├── RalewayBold.ttf
-│       │   │   │   ├── Roboto.ttf
-│       │   │   │   ├── RobotoBold.ttf
-│       │   │   │   ├── RobotoLight.ttf
-│       │   │   │   ├── RobotoMedium.ttf
-│       │   │   │   ├── SourceSansPro.ttf
-│       │   │   │   ├── SourceSansProBold.ttf
-│       │   │   │   ├── SourceSansProItalic.ttf
-│       │   │   │   ├── SourceSansProLight.ttf
-│       │   │   │   └── Ubuntu.ttf
-│       │   │   ├── journal.min.css
-│       │   │   ├── lumen.min.css
-│       │   │   ├── paper.min.css
-│       │   │   ├── readable.min.css
-│       │   │   ├── sandstone.min.css
-│       │   │   ├── simplex.min.css
-│       │   │   ├── spacelab.min.css
-│       │   │   ├── united.min.css
-│       │   │   └── yeti.min.css
-│       │   ├── fonts
-│       │   │   ├── glyphicons-halflings-regular.eot
-│       │   │   ├── glyphicons-halflings-regular.svg
-│       │   │   ├── glyphicons-halflings-regular.ttf
-│       │   │   ├── glyphicons-halflings-regular.woff
-│       │   │   └── glyphicons-halflings-regular.woff2
-│       │   ├── js
-│       │   │   ├── bootstrap.js
-│       │   │   ├── bootstrap.min.js
-│       │   │   └── npm.js
-│       │   └── shim
-│       │       ├── html5shiv.min.js
-│       │       └── respond.min.js
-│       ├── highlightjs-9.12.0
-│       │   ├── default.css
-│       │   ├── highlight.js
-│       │   └── textmate.css
-│       ├── jquery-1.11.3
-│       │   └── jquery.min.js
-│       └── navigation-1.1
-│           ├── codefolding.js
-│           ├── sourceembed.js
-│           └── tabsets.js
+~/ARAASTAT/Teaching/ANLY503_Portfolio
+├── ANLY503_Portfolio.Rproj
 ├── _site.yml
 ├── about.Rmd
-├── docs
-│   ├── about.html
-│   ├── index.html
-│   └── site_libs
-│       ├── bootstrap-3.3.5
-│       │   ├── css
-│       │   │   ├── bootstrap-theme.css
-│       │   │   ├── bootstrap-theme.css.map
-│       │   │   ├── bootstrap-theme.min.css
-│       │   │   ├── bootstrap.css
-│       │   │   ├── bootstrap.css.map
-│       │   │   ├── bootstrap.min.css
-│       │   │   ├── cerulean.min.css
-│       │   │   ├── cosmo.min.css
-│       │   │   ├── darkly.min.css
-│       │   │   ├── flatly.min.css
-│       │   │   ├── fonts
-│       │   │   │   ├── Lato.ttf
-│       │   │   │   ├── LatoBold.ttf
-│       │   │   │   ├── LatoItalic.ttf
-│       │   │   │   ├── NewsCycle.ttf
-│       │   │   │   ├── NewsCycleBold.ttf
-│       │   │   │   ├── OpenSans.ttf
-│       │   │   │   ├── OpenSansBold.ttf
-│       │   │   │   ├── OpenSansBoldItalic.ttf
-│       │   │   │   ├── OpenSansItalic.ttf
-│       │   │   │   ├── OpenSansLight.ttf
-│       │   │   │   ├── OpenSansLightItalic.ttf
-│       │   │   │   ├── Raleway.ttf
-│       │   │   │   ├── RalewayBold.ttf
-│       │   │   │   ├── Roboto.ttf
-│       │   │   │   ├── RobotoBold.ttf
-│       │   │   │   ├── RobotoLight.ttf
-│       │   │   │   ├── RobotoMedium.ttf
-│       │   │   │   ├── SourceSansPro.ttf
-│       │   │   │   ├── SourceSansProBold.ttf
-│       │   │   │   ├── SourceSansProItalic.ttf
-│       │   │   │   ├── SourceSansProLight.ttf
-│       │   │   │   └── Ubuntu.ttf
-│       │   │   ├── journal.min.css
-│       │   │   ├── lumen.min.css
-│       │   │   ├── paper.min.css
-│       │   │   ├── readable.min.css
-│       │   │   ├── sandstone.min.css
-│       │   │   ├── simplex.min.css
-│       │   │   ├── spacelab.min.css
-│       │   │   ├── united.min.css
-│       │   │   └── yeti.min.css
-│       │   ├── fonts
-│       │   │   ├── glyphicons-halflings-regular.eot
-│       │   │   ├── glyphicons-halflings-regular.svg
-│       │   │   ├── glyphicons-halflings-regular.ttf
-│       │   │   ├── glyphicons-halflings-regular.woff
-│       │   │   └── glyphicons-halflings-regular.woff2
-│       │   ├── js
-│       │   │   ├── bootstrap.js
-│       │   │   ├── bootstrap.min.js
-│       │   │   └── npm.js
-│       │   └── shim
-│       │       ├── html5shiv.min.js
-│       │       └── respond.min.js
-│       ├── highlightjs-9.12.0
-│       │   ├── default.css
-│       │   ├── highlight.js
-│       │   └── textmate.css
-│       ├── jquery-1.11.3
-│       │   └── jquery.min.js
-│       └── navigation-1.1
-│           ├── codefolding.js
-│           ├── sourceembed.js
-│           └── tabsets.js
-├── index.Rmd
-└── test_site.Rproj
+└── index.Rmd
 ```
 ]
 .right-column70[
@@ -559,13 +478,13 @@ output:
 + https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html
 + https://www.emilyzabor.com/tutorials/rmarkdown_websites_tutorial.html &lt;svg style="height:0.8em;top:.04em;position:relative;" viewBox="0 0 512 512"&gt;&lt;path d="M505 174.8l-39.6-39.6c-9.4-9.4-24.6-9.4-33.9 0L192 374.7 80.6 263.2c-9.4-9.4-24.6-9.4-33.9 0L7 302.9c-9.4 9.4-9.4 24.6 0 34L175 505c9.4 9.4 24.6 9.4 33.9 0l296-296.2c9.4-9.5 9.4-24.7.1-34zm-324.3 106c6.2 6.3 16.4 6.3 22.6 0l208-208.2c6.2-6.3 6.2-16.4 0-22.6L366.1 4.7c-6.2-6.3-16.4-6.3-22.6 0L192 156.2l-55.4-55.5c-6.2-6.3-16.4-6.3-22.6 0L68.7 146c-6.2 6.3-6.2 16.4 0 22.6l112 112.2z"/&gt;&lt;/svg&gt;
 ---
-class: middle,center, inverse
+class: middle,center
 
 # Deploying on Github
 
 ---
 
-## Git/Github setup
+## Git/Github setup (if you started from RStudio)
 
 + Open the RStudio project for the website we created
 + Install the package **usethis** in R (`install.packages("usethis")`)
@@ -575,7 +494,11 @@ class: middle,center, inverse
     + If the Push button is greyed out, open a terminal in RStudio and type `git push -u origin master`, and then restart RStudio
 
 ---
+class: middle, center, inverse
 
+# Setting up Github Pages
+
+---
 ## Setup for deploying to Github Pages
 
 + Create a new folder called .heatinline[`docs`]
