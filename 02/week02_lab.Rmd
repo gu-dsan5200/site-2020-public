@@ -239,6 +239,7 @@ class: center,middle,inverse
 
 ---
 
+
 ## Creating scaffolding using RStudio Projects
 
 RStudio Projects are a way to encapsulate particular projects in RStudio, so that 
@@ -255,6 +256,65 @@ R processes for each project.
 `r fontawesome::fa('info-circle')` https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects  
 `r fontawesome::fa('info-circle')` https://www.tidyverse.org/blog/2017/12/workflow-vs-script/  
 `r fontawesome::fa('info-circle')` https://towardsdatascience.com/the-gold-standard-of-data-science-project-management-13d68c9e85d6
+
+---
+class: middle, center
+
+# Starting from GitHub
+
+---
+
+## Setting up a repository in GitHub
+
++ In your GitHub, create a repository called .heatinline[ANLY503_Portfolio]
++ Add a README (makes cloning easier)
++ Clone this to your computer
+
+---
+class: middle, center
+
+# Making this repo a RStudio project
+
+---
+background-image: url(img/web1.png)
+background-size: 80%
+
+---
+background-image: url(img/ghp1_1.png)
+background-size: 80%
+
+---
+background-image: url(img/ghp1_2.png)
+background-size: 80%
+
+
+---
+
+## Bringing in a template
+
+Run the following code in your RStudio Console
+
+.pull-left[
+```{r, eval=F, echo=TRUE}
+d <- dir(system.file('rmd/site', 
+                  package='rmarkdown'), 
+        full.names=TRUE)
+for(f in d){
+  file.copy(f, '.')
+}
+```
+
+You should see these files  
+(with a different .Rproj file)
+]
+.pull-right[
+![](img/templ.png)
+]
+
+---
+class: middle, center
+
+# Starting with RStudio
 
 ---
 background-image: url(img/web1.png)
@@ -281,8 +341,8 @@ background-size: 75%
 
 ## R Markdown website
 .left-column30[
-```{r}
-fs::dir_tree('~/ARAASTAT/Teaching/test_site')
+```{r, cache=TRUE}
+fs::dir_tree('~/ARAASTAT/Teaching/ANLY503_Portfolio', recurse=FALSE)
 ```
 ]
 .right-column70[
@@ -366,13 +426,13 @@ output:
 + https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html
 + https://www.emilyzabor.com/tutorials/rmarkdown_websites_tutorial.html `r fontawesome::fa('check-double')`
 ---
-class: middle,center, inverse
+class: middle,center
 
 # Deploying on Github
 
 ---
 
-## Git/Github setup
+## Git/Github setup (if you started from RStudio)
 
 + Open the RStudio project for the website we created
 + Install the package **usethis** in R (`install.packages("usethis")`)
@@ -382,7 +442,11 @@ class: middle,center, inverse
     + If the Push button is greyed out, open a terminal in RStudio and type `git push -u origin master`, and then restart RStudio
 
 ---
+class: middle, center, inverse
 
+# Setting up Github Pages
+
+---
 ## Setup for deploying to Github Pages
 
 + Create a new folder called .heatinline[`docs`]
