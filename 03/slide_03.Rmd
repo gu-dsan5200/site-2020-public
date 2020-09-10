@@ -1,9 +1,9 @@
 ---
-title: "ANLY 503"
-subtitle: "Week 1"
+title: "Module 1 - Week 3: Finalizing conceptual design"
+subtitle: "ANLY 503, Fall 2020"
 author: "Vaisman & Dasgupta"
 institute: "Georgetown University"
-date: "`r Sys.Date()`"
+date: "September 10, 2020"
 output:
   xaringan::moon_reader:
     css: [default, '../robot.css','../robot-fonts.css', '../sfah.css']
@@ -12,20 +12,404 @@ output:
       highlightStyle: zenburn
       highlightLines: true
       countIncrementalSlides: false
+      slideNumberFormat: "%current%"
 ---
+
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+
+library(pacman)
+p_load(char = c('tidyverse', 'knitr', 'htmlwidgets', 'kableExtra'))
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  comment = NA,
+  cache = FALSE,
+  dpi = 300,
+  fig.align = "center",
+  out.width = "80%"
+)
+```
 
 layout: true
 
 <div class="my-header">
-<span>ANLY 503, Scientific and Analytical Visualization</span>
+<span>ANLY 503, Data Visualization</span>
 </div>
 
 ---
 
-```{r setup, include=FALSE, message=FALSE, warning=FALSE}
-library(pacman)
-p_load(char = c('tidyverse','knitr', 'htmlwidgets', 'kableExtra'))
-opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, comment="", 
-               cache=FALSE)
+## Last week
+
+1. Choosing the right visualization
+  * All about asking questions
+  * Decomposing your chart
+  * Understanding encodings
+1. Visualization critique discussion
+1. Activity: introduction to RMarkdown and building a website
+
+---
+
+## Today
+
+- Final conceptual and design considerations
+  * Marking readable graphics
+  * Deep dive into Tufte's principles
+  * Bringing it all together
+ - Activity: interactive discussion of graph types
+
+
+---
+
+## What makes a readable graphic?
+
+--
+* It depends on who you ask
+
+--
+* Many go by the _data-ink ratio_ as described by Tufte:
+
+.pull-left[
+> A large share of ink on a graphic should present data-information, the ink changing as the data change. Data-ink is the non-erasable core of a graphic, the non-redundant ink arranged in response to variation in the numbers represented.
+
+]
+
+.pull-right[
+<img src="https://infovis-wiki.net/w/images/5/55/DIR.jpg">
+]
+
+--
+* It depends
+
+---
+
+## Data is fluid and visualization represents that fluidity
+
+* Real world is complicated 
+* There are visualization rules that cannot be broken related to the technical aspects of how a chart is constructed
+* However, there are principles and guidelines (fuzzier aspects of chart design) that you need to adapt to the data and the context:
+  - The baseline _always_ needs to start at zero. _But what if the data has no zeros?_
+  - Pie charts are terrible, never use them. _But people know how to read pie charts and it's fine for this specific dataset._
+  - A bar chart would have been better. _Insert some snarky remark here._
+  
+---
+
+## Tradeoffs
+
+When visualizing for _an audience_ there are always factors to consider that can conflict with visual efficiency
+
+--
+### A _readable chart_:
+
+--
+* Provides **clarity** (removes confusion)
+
+--
+* Has a **clear purpose**
+
+--
+* Uses **visual encodings that make sense** for the **context** of the data
+
+--
+* Has a **clear direction for how to interpret**
+
+---
+
+class: inverse, middle, center
+
+# Visual Heirarchy
+
+---
+
+class: middle
+
+# When you make a chart using _default settings_, you usually get a flat graphic where everything — from the tick marks, to the encoded data, to the title — gets the same amount of importance visually
+
+---
+
+## Lines, colors, border box, etc. are on the same level of importance as the data itself. Nothing stands out.
+
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/hierarchy-defaults-750x326.png">]
+
+---
+
+## Small adjustments can help the data appear more prominently and the other parts move back to support.
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/hierarchy-shades-750x326.png">]
+
+
+---
+
+## It’s more obvious what part of the chart is the actual data and what part is background context
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/hierarchy-placement-750x326.png">]
+
+---
+
+## Example
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/hierarchy-us-emissions-750x539.png" width=600>]
+
+.small[[Interactive in NYT's site](https://www.nytimes.com/interactive/2019/02/13/climate/cut-us-emissions-with-policies-from-other-countries.html)]
+
+
+---
+
+## Color contrast
+
+.pull-left[
+* Color makes parts of chart stand out
+* Brighter and bolder appear more prominent than greyed or faded colors
+* To increase the visibility of your data, make it appear _higher_ in the visual hierarchy
+
+
+.small[[20 Years, 20 Titles - Roger Federer](https://www.srf.ch/static/srf-data/data/2018/federer/#/en)]
+]
+
+.pull-right[
+<img src="https://flowingdata.com/wp-content/uploads/2018/01/Roger-Federer-the-winner-720x586.png">
+
+]
+---
+
+## Size
+
+.pull-left[
+* Objects that use more space on the screen or paper will naturally draw more attention
+* Vary the sizes in your chart to bring more attention to points of interest
+* One obvious case is the size of text
+
+.small[[Salary and Occupation](https://flowingdata.com/2019/11/18/salary-and-occupation/)]
+
+]
+
+
+.pull-right[
+<img src="https://flowingdata.com/wp-content/uploads/2020/03/Salary-and-Occupation-750x822.png">
+]
+
+
+
+---
+
+## Placement
+
+.pull-left[
+* Where you put your data — top, bottom, left, right — also affects visual hierarchy 
+* Things placed at the top of a chart appear more important than things placed at the bottom.
+* For example, in government and politics, _left_ and _right_ might be linked to certain ideologies
+
+.small[[Are you a Democrat or a Republican?](https://www.nytimes.com/interactive/2019/08/08/opinion/sunday/party-polarization-quiz.html)]
+
+]
+
+
+.pull-right[
+<img src="https://flowingdata.com/wp-content/uploads/2020/03/decision-tree-1536x1326.png">
+]
+
+
+???
+
+
+Turn the whole chart around by 90 degrees to place Democratic groups on the bottom and Republican groups on the top, and the placement could be taken the wrong way. In this case, the left and right placement puts the two ideologies on the same level.
+
+
+---
+
+## Highlighting
+
+.pull-left[
+* Use highlighting to call out specific areas of a visualization to direct readers’ eyes to what is important
+
+
+
+.small[[Hurricane Maria](https://www.washingtonpost.com/graphics/2017/national/puerto-rico-hurricane-recovery/)]
+
+]
+
+
+.pull-right[
+<img src="https://flowingdata.com/wp-content/uploads/2020/03/Hurricane-Maria-1536x1120.png">
+]
+
+---
+
+## Layering
+
+* Think of the visual hierarchy as layers
+  - The most important items gets placed on the top of the stack
+  - Items that are less important, or rather, more boilerplate, can fall to the back
+* The layering metaphor is especially helpful when you implement or design your visualization.
+* For example, Adobe Illustrator or Inkscape already uses layers, so you can stack things on top of each other based on your goals
+* If you’re using code, the code for a bottom layer tends to run before the top layers.
+
+From the reader perspective, it’s more obvious where to focus attention. They can spend less time trying to interpret the chart and the data and more time understanding your own interpretations of the data.
+
+---
+
+## Give this flat chart some hierarchy
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/flat-line-chart-1536x1436.png" width=500>]
+
+
+---
+
+## Much better!
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/social-security-card-holders.png" width=500>]
+
+---
+
+class: inverse, center, middle
+
+# Providing Context
+
+---
+
+
+## Tips for Providing Context
+
+* Annotation
+* Tone
+* Direct Labeling
+* Font Selection
+* Point of Reference
+
+
+---
+
+## Annotation
+
+* Annotation is the quickest and most straightforward way to add context to your charts. However, under the false security of “letting the data speak”, oftentimes these words are missing from default charts.
+* Add the extra layer of information, and you draw attention to specific areas and points, help explain visual encodings, and describe what a reader is seeing.
+* Words can set expectations, so that readers know what they’re about to see. Here’s Hidy Kong on her group’s research on visualization titles:
+* Visualization titles influence how people interpret, perceive bias in, and trust data visualizations. 
+* Sometimes it doesn’t even matter that a title contradicted the chart. The title could say that something increased over time when the chart showed a clear decrease, and **the reader would take away the context of the title over the chart.**
+
+
+---
+
+## Tone
+
+.pull-left[
+* The words you use describe your data can change the tone of your charts, which can change how people interpret them
+* Using casual language could signal to readers that your chart presents a less serious topic
+* Using more technical language might seem like it was meant for a technical audience
+* Choose your words wisely
+]
+
+.pull-right[
+<img src="https://flowingdata.com/wp-content/uploads/2019/01/3-pt-midrange-line-chart-2-750x657.png">
+]
+
+.small[[Goodbye, midrange shot](https://flowingdata.com/2019/01/15/goodbye-mid-range-shot/)]
+
+---
+
+## Direct Labeling
+
+* Most visualization software lets you add legends to your charts to describe what each visual encoding represents
+* The challenge for readers is that they have to refer to the legend and **look away** from the actual chart
+* Try to directly label visual encodings
+
+However...
+
+* Most statistical software (R, Python, MATLAB, etc) cannot do words on graphics and typography
+* These programs lack control of typography – in contrast to maps, where words can be placed directly on the labelled map element.
+* Additional post-processing is usually done with Illustrator or some other tool
+
+---
+
+## Font Selection
+
+.pull-left[
+There are primarily two classes of annotations: 
+1. labels that help readers decode the visualization (axis, tick, and category labels)
+1. annotations that explain the data, which is usually required to provide contextfor a specific dataset
+
+Nathan Yau uses `monospace fonts` general labels and an _italicized serif font_ for contextual annotation
+]
+
+.pull-right[<img src="https://flowingdata.com/wp-content/uploads/2020/03/different-text.png">]
+
+.small[[Reaching $100k in savings](https://flowingdata.com/2019/10/29/when-people-reach-100k-in-savings/)]
+
+---
+
+## Point of Reference
+
+.pull-left[
+* Visualization is all about comparison
+* If it is difficult to compare visual encodings, then it is difficult to interpret a chart, much less get anything useful out of it
+* Providing a point of reference is a straightforward remedy
+* With time series data, it can be useful to use a specific time as a point of reference
+]
+
+.pull-right[
+<img src="https://flowingdata.com/wp-content/uploads/2020/03/Marrying-age-1536x846.png">]
+
+.small[[Marrying Age](https://flowingdata.com/2016/03/03/marrying-age/)]
+
+---
+
+class: inverse, middle, center
+
+# Aesthetics
+
+---
+
+## Aesthetics are subjective and can provide more _clarity_
+
+Put effort into aesthetics, and it can help readers understand your charts better and also differentiate your own style
+
+.pull-left[
+**Aesthetics can provide the following:**
+
+* Beauty
+* Readability
+* Identity
+* Expectations
+]
+
+.pull-right[
+**Elements of aesthetics:**
+
+* Organization and arrangement
+* Sizes and weights
+* Color palette 
+* Medium 
+]
+
+---
+
+```{r child='03-tufte.Rmd'}
 ```
+
+---
+
+```{r child='03-bringing-it-together.Rmd'}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

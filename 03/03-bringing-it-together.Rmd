@@ -1,0 +1,145 @@
+class: inverse, middle, center
+
+# Bringing it Together
+
+---
+
+## So far you've learned about
+
+* **designing for an audience**
+
+--
+* **picking the right visualization**
+
+--
+* **making readable graphics**
+
+--
+
+## Now what?
+
+---
+
+## Practice, practice, practice
+
+.center[<img src="https://media.giphy.com/media/Y2c1ZjXVHRdSr1YojF/giphy.gif">]
+
+
+---
+
+## You make awesome charts
+
+.center[<img src="https://64.media.tumblr.com/602e8a73e8230d7bb91205342ea88a33/tumblr_qemlmmsPHe1sgh0voo1_1280.png" width=600>]
+
+---
+
+## You are a Dataviz G.O.A.T. (greatest of all time)
+
+.center[<img src="https://media1.giphy.com/media/rTfN2FHPPTABy/giphy.gif">]
+
+---
+
+class: inverse
+
+## nah!
+
+.center[<img src="https://media2.giphy.com/media/W5YVAfSttCqre/giphy.gif">]
+
+---
+
+## You work with _MORE_ data!
+
+.center[<img src="https://media1.giphy.com/media/mD4Z5Iz80f0Kv1vC5H/giphy.gif">]
+
+--
+* more _complexity_
+
+--
+* larger files
+
+--
+* missing values
+
+--
+* incorrect encodings
+
+---
+
+## Show something instead of showing everything
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2019/06/Running-cities.png" width=600>]
+
+.small[[Where people run](https://flowingdata.com/2014/02/05/where-people-run/)]
+
+---
+
+## Too much leads to overload
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2019/11/kpi-overload-750x537.jpg" width=600>]
+
+.small[[KPI Overload](https://marketoonist.com/2019/11/kpi-overload.html)]
+
+---
+
+## Start asking questions
+
+.center[#ASK -> ANSWER -> ASK NEW -> ANSWER AGAIN -> REPEAT]
+
+--
+* What does the data look like?
+* Does anything stand out?
+* What is the mean and median?
+
+** Start simple and work your way up to more complex questions**
+
+---
+
+class: inverse, center, middle
+
+# Break it down
+
+---
+
+## Highlighting specific parts of a dataset
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/Screen-Shot-2020-02-07-at-12.01.56-PM-750x375.png" width=600>]
+
+.small[[The Rich really pay lower taxes than you](https://www.nytimes.com/interactive/2019/10/06/opinion/income-tax-rate-wealthy.html)]
+
+---
+
+## Multiple charts
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/obesity-rates-750x647.png"width = 500>]
+
+.small[[Mapping the spread of obesity](https://flowingdata.com/2016/09/26/the-spread-of-obesity/)]
+
+---
+
+## Linked views (dynamic)
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/linked-views-fivethirtyeight.gif">]
+
+.small[[How unpopular is Donald Trump](https://projects.fivethirtyeight.com/trump-approval-ratings/)]
+
+---
+
+class: inverse, center, middle
+
+# Build it up
+
+---
+
+## Follow the data
+
+.center[<img src="https://flowingdata.com/wp-content/uploads/2020/03/follower-factor-animation.gif" width=500>]
+
+.small[[The Follower Factory](https://www.nytimes.com/interactive/2018/01/27/technology/social-media-bots.html)]
+
+
+
+
+
+
+
+

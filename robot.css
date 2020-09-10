@@ -176,3 +176,10 @@ div.my-header span{
   width: 67%;
   float: left;
 }
+
+.left-column20 {
+  color: #777;
+  width: 20%;
+  height: 92%;
+  float: left;
+}

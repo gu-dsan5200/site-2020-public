@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Module 1 - Week 3: Finalizing conceptual design</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Vaisman &amp; Dasgupta" />
+    <meta name="date" content="2020-09-10" />
+    <link href="slide_03_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../robot.css" type="text/css" />
+    <link rel="stylesheet" href="../robot-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="../sfah.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Module 1 - Week 3: Finalizing conceptual design
+## ANLY 503, Fall 2020
+### Vaisman &amp; Dasgupta
+### Georgetown University
+### September 10, 2020
+
+---
+
+
+
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Data Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+---
+
+## Last week
+
+1. Choosing the right visualization
+  * All about asking questions
+  * Decomposing your chart
+  * Understanding encodings
+1. Visualization critique discussion
+1. Activity: introduction to RMarkdown and building a website
+
+---
+
+## Today
+
+- Final conceptual and design considerations
+  * Marking readable graphics
+  * Deep dive into Tufte's principles
+  * Bringing it all together
+ - Activity: interactive discussion of graph types
+
+
+---
+
+## What makes a readable graphic?
+
+--
+* It depends on who you ask
+
+--
+* Many go by the _data-ink ratio_ as described by Tufte:
+
+.pull-left[
+&gt; A large share of ink on a graphic should present data-information, the ink changing as the data change. Data-ink is the non-erasable core of a graphic, the non-redundant ink arranged in response to variation in the numbers represented.
+
+]
+
+.pull-right[
+&lt;img src="https://infovis-wiki.net/w/images/5/55/DIR.jpg"&gt;
+]
+
+--
+* It depends
+
+---
+
+## Data is fluid and visualization represents that fluidity
+
+* Real world is complicated 
+* There are visualization rules that cannot be broken related to the technical aspects of how a chart is constructed
+* However, there are principles and guidelines (fuzzier aspects of chart design) that you need to adapt to the data and the context:
+  - The baseline _always_ needs to start at zero. _But what if the data has no zeros?_
+  - Pie charts are terrible, never use them. _But people know how to read pie charts and it's fine for this specific dataset._
+  - A bar chart would have been better. _Insert some snarky remark here._
+  
+---
+
+## Tradeoffs
+
+When visualizing for _an audience_ there are always factors to consider that can conflict with visual efficiency
+
+--
+### A _readable chart_:
+
+--
+* Provides **clarity** (removes confusion)
+
+--
+* Has a **clear purpose**
+
+--
+* Uses **visual encodings that make sense** for the **context** of the data
+
+--
+* Has a **clear direction for how to interpret**
+
+---
+
+class: inverse, middle, center
+
+# Visual Heirarchy
+
+---
+
+class: middle
+
+# When you make a chart using _default settings_, you usually get a flat graphic where everything — from the tick marks, to the encoded data, to the title — gets the same amount of importance visually
+
+---
+
+## Lines, colors, border box, etc. are on the same level of importance as the data itself. Nothing stands out.
+
+
+.center[&lt;img src="https://flowingdata.com/wp-content/uploads/2020/03/hierarchy-defaults-750x326.png"&gt;]
+
+---
+
+## Small adjustments can help the data appear more prominently and the other parts move back to support.
+
+.center[&lt;img src="https://flowingdata.com/wp-content/uploads/2020/03/hierarchy-shades-750x326.png"&gt;]
+
+
+---
+
+## It’s more obvious what part of the chart is the actual data and what part is background context
+
+.center[&lt;img src="https://flowingdata.com/wp-content/uploads/2020/03/hierarchy-placement-750x326.png"&gt;]
+
+---
+
+## Example
+
+.center[&lt;img src="https://flowingdata.com/wp-content/uploads/2020/03/hierarchy-us-emissions-750x539.png" width=600&gt;]
+
+.small[[Interactive in NYT's site](https://www.nytimes.com/interactive/2019/02/13/climate/cut-us-emissions-with-policies-from-other-countries.html)]
+
+
+---
+
+## Color contrast
+
+.pull-left[
+* Color makes parts of chart stand out
+* Brighter and bolder appear more prominent than greyed or faded colors
+* To increase the visibility of your data, make it appear _higher_ in the visual hierarchy
+
+
+.small[[20 Years, 20 Titles - Roger Federer](https://www.srf.ch/static/srf-data/data/2018/federer/#/en)]
+]
+
+.pull-right[
+&lt;img src="https://flowingdata.com/wp-content/uploads/2018/01/Roger-Federer-the-winner-720x586.png"&gt;
+
+]
+---
+
+## Size
+
+.pull-left[
+* Objects that use more space on the screen or paper will naturally draw more attention
+* Vary the sizes in your chart to bring more attention to points of interest
+* One obvious case is the size of text
+
+.small[[Salary and Occupation](https://flowingdata.com/2019/11/18/salary-and-occupation/)]
+
+]
+
+
+.pull-right[
+&lt;img src="https://flowingdata.com/wp-content/uploads/2020/03/Salary-and-Occupation-750x822.png"&gt;
+]
+
+
+
+---
+
+## Placement
+
+.pull-left[
+* Where you put your data — top, bottom, left, right — also affects visual hierarchy 
+* Things placed at the top of a chart appear more important than things placed at the bottom.
+* For example, in government and politics, _left_ and _right_ might be linked to certain ideologies
+
+.small[[Are you a Democrat or a Republican?](https://www.nytimes.com/interactive/2019/08/08/opinion/sunday/party-polarization-quiz.html)]
+
+]
+
+
+.pull-right[
+&lt;img src="https://flowingdata.com/wp-content/uploads/2020/03/decision-tree-1536x1326.png"&gt;
+]
+
+
+???
+
+
+Turn the whole chart around by 90 degrees to place Democratic groups on the bottom and Republican groups on the top, and the placement could be taken the wrong way. In this case, the left and right placement puts the two ideologies on the same level.
+
+
+---
+
+## Highlighting
+
+.pull-left[
+* Use highlighting to call out specific areas of a visualization to direct readers’ eyes to what is important
+
+
+
+.small[[Hurricane Maria](https://www.washingtonpost.com/graphics/2017/national/puerto-rico-hurricane-recovery/)]
+
+]
+
+
+.pull-right[
+&lt;img src="https://flowingdata.com/wp-content/uploads/2020/03/Hurricane-Maria-1536x1120.png"&gt;
+]
+
+---
+
+## Layering
+
+* Think of the visual hierarchy as layers
+  - The most important items gets placed on the top of the stack
+  - Items that are less important, or rather, more boilerplate, can fall to the back
+* The layering metaphor is especially helpful when you implement or design your visualization.
+* For example, Adobe Illustrator or Inkscape already uses layers, so you can stack things on top of each other based on your goals
+* If you’re using code, the code for a bottom layer tends to run before the top layers.
+
+From the reader perspective, it’s more obvious where to focus attention. They can spend less time trying to interpret the chart and the data and more time understanding your own interpretations of the data.
+
+---
+
+## Give this flat chart some hierarchy
+
+.center[&lt;img src="https://flowingdata.com/wp-content/uploads/2020/03/flat-line-chart-1536x1436.png" width=500&gt;]
+
+
+---
+
+## Much better!
+
+.center[&lt;img src="https://flowingdata.com/wp-content/uploads/2020/03/social-security-card-holders.png" width=500&gt;]
+
+---
+
+class: inverse, center, middle
+
+# Providing Context
+
+---
+
+
+## Tips for Providing Context
+
+* Annotation
+* Tone
+* Direct Labeling
+* Font Selection
+* Point of Reference
+
+
+---
+
+## Annotation
+
+* Annotation is the quickest and most straightforward way to add context to your charts. However, under the false security of “letting the data speak”, oftentimes these words are missing from default charts.
+* Add the extra layer of information, and you draw attention to specific areas and points, help explain visual encodings, and describe what a reader is seeing.
+* Words can set expectations, so that readers know what they’re about to see. Here’s Hidy Kong on her group’s research on visualization titles:
+* Visualization titles influence how people interpret, perceive bias in, and trust data visualizations. 
+* Sometimes it doesn’t even matter that a title contradicted the chart. The title could say that something increased over time when the chart showed a clear decrease, and **the reader would take away the context of the title over the chart.**
+
+
+---
+
+## Tone
+
+.pull-left[
+* The words you use describe your data can change the tone of your charts, which can change how people interpret them
+* Using casual language could signal to readers that your chart presents a less serious topic
+* Using more technical language might seem like it was meant for a technical audience
+* Choose your words wisely
+]
+
+.pull-right[
+&lt;img src="https://flowingdata.com/wp-content/uploads/2019/01/3-pt-midrange-line-chart-2-750x657.png"&gt;
+]
+
+.small[[Goodbye, midrange shot](https://flowingdata.com/2019/01/15/goodbye-mid-range-shot/)]
+
+---
+
+## Direct Labeling
+
+* Most visualization software lets you add legends to your charts to describe what each visual encoding represents
+* The challenge for readers is that they have to refer to the legend and **look away** from the actual chart
+* Try to directly label visual encodings
+
+However...
+
+* Most statistical software (R, Python, MATLAB, etc) cannot do words on graphics and typography
+* These programs lack control of typography – in contrast to maps, where words can be placed directly on the labelled map element.
+* Additional post-processing is usually done with Illustrator or some other tool
+
+---
+
+## Font Selection
+
+.pull-left[
+There are primarily two classes of annotations: 
+1. labels that help readers decode the visualization (axis, tick, and category labels)
+1. annotations that explain the data, which is usually required to provide contextfor a specific dataset
+
+Nathan Yau uses `monospace fonts` general labels and an _italicized serif font_ for contextual annotation
+]
+
+.pull-right[&lt;img src="https://flowingdata.com/wp-content/uploads/2020/03/different-text.png"&gt;]
+
+.small[[Reaching $100k in savings](https://flowingdata.com/2019/10/29/when-people-reach-100k-in-savings/)]
+
+---
+
+## Point of Reference
+
+.pull-left[
+* Visualization is all about comparison
+* If it is difficult to compare visual encodings, then it is difficult to interpret a chart, much less get anything useful out of it
+* Providing a point of reference is a straightforward remedy
+* With time series data, it can be useful to use a specific time as a point of reference
+]
+
+.pull-right[
+&lt;img src="https://flowingdata.com/wp-content/uploads/2020/03/Marrying-age-1536x846.png"&gt;]
+
+.small[[Marrying Age](https://flowingdata.com/2016/03/03/marrying-age/)]
+
+---
+
+class: inverse, middle, center
+
+# Aesthetics
+
+---
+
+## Aesthetics are subjective and can provide more _clarity_
+
+Put effort into aesthetics, and it can help readers understand your charts better and also differentiate your own style
+
+.pull-left[
+**Aesthetics can provide the following:**
+
+* Beauty
+* Readability
+* Identity
+* Expectations
+]
+
+.pull-right[
+**Elements of aesthetics:**
+
+* Organization and arrangement
+* Sizes and weights
+* Color palette 
+* Medium 
+]
+
+---
+
+
+class: inverse, middle, center
+
+# Tufte's Principles
+
+[Tufte's Rules (requires Adobe Flash)](http://sealthreinhold.com/school/tuftes-rules/rule_five.php)
+
+---
+
+## The Visual Display of Quantitative Information
+
+.pull-left[&lt;img src="img/visual-display.png" width=400&gt;]
+
+.pull-right[This book discusses **statistical graphics**, **charts and tables**, as well as the theory behind the **design of information graphics or data graphics**.
+
+The book goes into a **detailed analysis of successful ways in which to display complex,** statistical information with quick, easy and **effective design techniques.**
+
+The first edition was published in 1983.
+]
+
+---
+
+## Envisioning Information
+
+.pull-left[
+&lt;img src="img/envisioning.png" width=400&gt;]
+
+.pull-right[
+This book tackles the problem of **conveying multiple variable information on a 2-d space.**
+
+It teaches us ways in which we can **communicate more information per unit to make good**, clear and smart presentations.
+
+This book won 17 awards, and was published in 1990.
+]
+
+
+---
+
+## Tufte's Principles of Graphical Integrity
+
+1. Show data variation, not design variation
+    - Don't get fancy, let the data speak
+1. Do not use graphics to quote data out of context
+    - Maintain accuracy
+1. Use clear, detailed, thorough labelling. 
+    - Use annotations to make your point
+1. Representation of numbers should be directly proportional to numerical quantities
+    - This is essential for fair representation
+1. Don't use more dimensions than the data require
+    - Be appropriate in use of 3D graphics, for example
+
+---
+
+## Tufte's Fundamental Principles of Design
+
+1. Show comparisons
+1. Show causality
+1. Use multivariate data
+1. Completely integrate modes (like text, images, numbers)
+1. Establish credibility
+1. Focus on content
+
+
+---
+
+## Sparklines
+
+Invention of the **sparkline**, most commonly used in stock activity.
+
+&gt; A sparkline is a small intense, simple, word-sized graphic with typographic resolution. Sparklines mean that graphics are no longer cartoonish special occasions with captions and boxes, but rather sparkline graphic can be everywhere a word or number can be: embedded in a sentence, table, headline, map, spreadsheet, graphic.
+
+.tiny[Tufte, May 27, 2004]
+
+.center[&lt;img src="img/sparklines.png" width=600&gt;]
+
+---
+
+## Small Multiples
+
+.pull-left[
+The **small multiples** method is one that Tufte uses often to portray multiple graphs of information.
+
+&gt;At the heart of quantitative reasoning is a single question: Compared to what? Small multiple designs, multivariate and data bountiful, answer directly by visually enforcing comparisons of changes, of the differences among objects, of the scope of alternatives. For a wide range of problems in data presentation, small multiples are the best design solution.
+
+.tiny[Tufte, Envision Information, page 67]
+]
+
+.pull-right[
+&lt;img src="img/small-multiples.png"&gt;
+]
+
+---
+
+## Graphical Integrity
+
+.small[
+* The representation of numbers, as physically measured on the surface of the graphic itself, should be directly proportional to the numerical quantities represented
+* Clear, detailed, and thorough labeling should be used to defeat graphical distortion and ambiguity. Write out explanations of the data on the graphic itself. Label important events in the data.
+* Graphics must not quote data out of context
+]
+
+.center[&lt;img src="img/integrity.png" width=600&gt;]
+
+---
+
+## Data-Ink
+
+.pull-left[
+A large share of ink on a graphic should present data-information, the ink changing as the data change. **Data-ink is the non-erasable core of a graphic**, the non-redundant ink arranged in response to variation in the numbers represented.
+
+How to maximize the data-ink ratio, within reason:
+
+1. Erase non-data-ink, within reason
+2. Erase redundant data-ink
+3. Revise and edit]
+]
+
+.pull-right[&lt;img src="img/dataink.png"&gt;]
+
+---
+
+## Chartjunk
+
+
+.pull-left[
+* Forgo chartjunk, including moiré vibration, the grid and the duck
+* The interior decoration of graphics generates a lot of ink that does not tell the viewer anything new.
+* The purpose of decoration varies — to make the graphic appear more scientific and precise, to enliven the display, to give the designer an opportunity to exercise artistic skills.
+* **All non-data- ink or redundant data-ink is often chartjunk.**
+]
+
+.pull-right[
+&lt;img src="img/chartjunk.png"&gt;
+]
+
+---
+
+## Multifunctioning Graphical Elements
+
+.pull-left[
+* **Mobilize every graphical element**, perhaps several times over, to show the data.
+* The graphical element that actually locates or plots the data is the data measure.
+* The complexity of multifunctioning elements can sometimes **turn data graphics into visual puzzles**, crypto- graphical mysteries **for the viewer to decode**.
+]
+
+.pull-right[
+&lt;img src="img/puzzle.png" height=400&gt;
+]
+
+---
+
+## Escaping Flatland
+
+.small[
+* Introduce **multiple dimensions on a two-space surface**
+* Focus more on the point than on the presentation, good design strategies are transparent.
+* Find **pattern**
+* Words may not be the most appealing to everyone but symbols are universal and understood by all
+* **More small images in sequence** allow more comparison with your eyes and a better understanding
+]
+
+.center[&lt;img src="img/shirts.png" width=600&gt;]
+
+
+---
+
+## Layering and Separation
+
+Would Tufte approve of this diagram?
+
+.center[&lt;img src="img/flags1.png"&gt;]
+
+---
+
+## Layering and Separation
+
+No! He would not. To make the visual depictions more effective, reduce them down, by using:
+* Macro annotation, which can help explain micro detail
+* Use light, color and space effectively
+* Remove the weight, avoid vibration
+
+.center[&lt;img src="img/flags2.png"&gt;]
+
+
+---
+
+
+class: inverse, middle, center
+
+# Bringing it Together
+
+---
+
+## So far you've learned about
+
+* **designing for an audience**
+
+--
+* **picking the right visualization**
+
+--
+* **making readable graphics**
+
+--
+
+## Now what?
+
+---
+
+## Practice, practice, practice
+
+.center[&lt;img src="https://media.giphy.com/media/Y2c1ZjXVHRdSr1YojF/giphy.gif"&gt;]
+
+
+---
+
+## You make awesome charts
+
+.center[&lt;img src="https://64.media.tumblr.com/602e8a73e8230d7bb91205342ea88a33/tumblr_qemlmmsPHe1sgh0voo1_1280.png" width=600&gt;]
+
+---
+
+## You are a Dataviz G.O.A.T. (greatest of all time)
+
+.center[&lt;img src="https://media1.giphy.com/media/rTfN2FHPPTABy/giphy.gif"&gt;]
+
+---
+
+class: inverse
+
+## nah!
+
+.center[&lt;img src="https://media2.giphy.com/media/W5YVAfSttCqre/giphy.gif"&gt;]
+
+---
+
+## You work with _MORE_ data!
+
+.center[&lt;img src="https://media1.giphy.com/media/mD4Z5Iz80f0Kv1vC5H/giphy.gif"&gt;]
+
+--
+* more _complexity_
+
+--
+* larger files
+
+--
+* missing values
+
+--
+* incorrect encodings
+
+---
+
+## Show something instead of showing everything
+
+.center[&lt;img src="https://flowingdata.com/wp-content/uploads/2019/06/Running-cities.png" width=600&gt;]
+
+.small[[Where people run](https://flowingdata.com/2014/02/05/where-people-run/)]
+
+---
+
+## Too much leads to overload
+
+.center[&lt;img src="https://flowingdata.com/wp-content/uploads/2019/11/kpi-overload-750x537.jpg" width=600&gt;]
+
+.small[[KPI Overload](https://marketoonist.com/2019/11/kpi-overload.html)]
+
+---
+
+## Start asking questions
+
+.center[#ASK -&gt; ANSWER -&gt; ASK NEW -&gt; ANSWER AGAIN -&gt; REPEAT]
+
+--
+* What does the data look like?
+* Does anything stand out?
+* What is the mean and median?
+
+** Start simple and work your way up to more complex questions**
+
+---
+
+class: inverse, center, middle
+
+# Break it down
+
+---
+
+## Highlighting specific parts of a dataset
+
+.center[&lt;img src="https://flowingdata.com/wp-content/uploads/2020/03/Screen-Shot-2020-02-07-at-12.01.56-PM-750x375.png" width=600&gt;]
+
+.small[[The Rich really pay lower taxes than you](https://www.nytimes.com/interactive/2019/10/06/opinion/income-tax-rate-wealthy.html)]
+
+---
+
+## Multiple charts
+
+.center[&lt;img src="https://flowingdata.com/wp-content/uploads/2020/03/obesity-rates-750x647.png"width = 500&gt;]
+
+.small[[Mapping the spread of obesity](https://flowingdata.com/2016/09/26/the-spread-of-obesity/)]
+
+---
+
+## Linked views (dynamic)
+
+.center[&lt;img src="https://flowingdata.com/wp-content/uploads/2020/03/linked-views-fivethirtyeight.gif"&gt;]
+
+.small[[How unpopular is Donald Trump](https://projects.fivethirtyeight.com/trump-approval-ratings/)]
+
+---
+
+class: inverse, center, middle
+
+# Build it up
+
+---
+
+## Follow the data
+
+.center[&lt;img src="https://flowingdata.com/wp-content/uploads/2020/03/follower-factor-animation.gif" width=500&gt;]
+
+.small[[The Follower Factory](https://www.nytimes.com/interactive/2018/01/27/technology/social-media-bots.html)]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "zenburn",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
