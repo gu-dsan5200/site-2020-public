@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Week 4 Activity: Intro to Tableau</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Vaisman &amp; Dasgupta" />
+    <meta name="date" content="2020-09-17" />
+    <link href="lab4-tableau_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../robot.css" type="text/css" />
+    <link rel="stylesheet" href="../robot-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="../sfah.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Week 4 Activity: Intro to Tableau
+## ANLY 503, Fall 2020
+### Vaisman &amp; Dasgupta
+### Georgetown University
+### September 17, 2020
+
+---
+
+
+
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Data Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+---
+
+### Start Page
+
+.center[&lt;img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572014674005-SZFEJOXDFGULUL5W5I50/ke17ZwdGBToddI8pDm48kHsubAL0fMgxwoeLWTjxfa17gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UfGLRhU7nEZ7QgQE18SFxtnEvAu0agU47F_tDJ_JvTPYP7cJNZlDXbgJNE9ef52e8w/Screenshot+%2860%29.png?format=1500w" width=800&gt;]
+
+
+.small[1 - Connecting to a File: This section on your start page indicates where you can connect to your data files saved on your computer]
+
+---
+
+### Start Page
+
+.center[&lt;img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572014674005-SZFEJOXDFGULUL5W5I50/ke17ZwdGBToddI8pDm48kHsubAL0fMgxwoeLWTjxfa17gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UfGLRhU7nEZ7QgQE18SFxtnEvAu0agU47F_tDJ_JvTPYP7cJNZlDXbgJNE9ef52e8w/Screenshot+%2860%29.png?format=1500w" width=800&gt;]
+
+.small[2 - Connecting to a Server: You’ll usually use this section if you’re working for a company that uses specific servers. Tableau can connect to multiple different servers such as Oracle, PostgreSQL, Azure, Dropbox, and more.]
+
+---
+
+### Start Page
+
+.center[&lt;img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572014674005-SZFEJOXDFGULUL5W5I50/ke17ZwdGBToddI8pDm48kHsubAL0fMgxwoeLWTjxfa17gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UfGLRhU7nEZ7QgQE18SFxtnEvAu0agU47F_tDJ_JvTPYP7cJNZlDXbgJNE9ef52e8w/Screenshot+%2860%29.png?format=1500w" width=800&gt;]
+
+.small[3 - Saved Data Sources: These are sample data sets that Tableau provides. When you download the software, Tableau also provides you a repository folder which also holds these clean sample data sets as excel files. When you click the samples, they will automatically load without you needing to find the files.]
+
+---
+
+### Start Page
+
+.center[&lt;img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572014674005-SZFEJOXDFGULUL5W5I50/ke17ZwdGBToddI8pDm48kHsubAL0fMgxwoeLWTjxfa17gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UfGLRhU7nEZ7QgQE18SFxtnEvAu0agU47F_tDJ_JvTPYP7cJNZlDXbgJNE9ef52e8w/Screenshot+%2860%29.png?format=1500w" width=800&gt;]
+
+.small[4 - Open a Workbook: This area is where you can find recent workbooks opened and quickly load them in if you want to work on them.]
+
+---
+
+### Start Page
+
+.center[&lt;img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572014674005-SZFEJOXDFGULUL5W5I50/ke17ZwdGBToddI8pDm48kHsubAL0fMgxwoeLWTjxfa17gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UfGLRhU7nEZ7QgQE18SFxtnEvAu0agU47F_tDJ_JvTPYP7cJNZlDXbgJNE9ef52e8w/Screenshot+%2860%29.png?format=1500w" width=800&gt;]
+
+
+.small[5 - Sample Workbooks: This section provides you with sample workbooks that you can open to play around in and see how they were built. Clicking on “More Samples” will lead you to a gallery of downloadable sample workbooks.]
+
+---
+
+### Start Page
+
+.center[&lt;img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572014674005-SZFEJOXDFGULUL5W5I50/ke17ZwdGBToddI8pDm48kHsubAL0fMgxwoeLWTjxfa17gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UfGLRhU7nEZ7QgQE18SFxtnEvAu0agU47F_tDJ_JvTPYP7cJNZlDXbgJNE9ef52e8w/Screenshot+%2860%29.png?format=1500w" width=800&gt;]
+
+.small[6 - Discover: The Discover side bar provides you with links to the Tableau training videos, blog, forums, and Tableau Prep (a data cleaning and prepping software).]
+
+---
+
+
+
+### Data Source and Page and Workspace
+
+.center[&lt;img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572017128543-XHS83425Q4Q51S3G7MTZ/ke17ZwdGBToddI8pDm48kKyTQBpq3Qy_LMRVUf13Vcd7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UT-oG3dRaqgHB-5QcirRlX_eIUWOvV38U9wZAFvg9GWt7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2859%29.png?format=1500w" width=800&gt;]
+
+.small[1 - This shows you the data file you loaded. Here you can rename your data source or edit your connection to the source.]
+
+---
+
+### Data Source and Page and Workspace
+
+.center[&lt;img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572017128543-XHS83425Q4Q51S3G7MTZ/ke17ZwdGBToddI8pDm48kKyTQBpq3Qy_LMRVUf13Vcd7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UT-oG3dRaqgHB-5QcirRlX_eIUWOvV38U9wZAFvg9GWt7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2859%29.png?format=1500w" width=800&gt;]
+
+.small[2 - The Data Interpreter is a built-in data cleaner that Tableau provides. If you choose to use it, it can identify potential areas to clean and will re-format them and provide a log of the changes they made.]
+
+---
+
+### Data Source and Page and Workspace
+
+.center[&lt;img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572017128543-XHS83425Q4Q51S3G7MTZ/ke17ZwdGBToddI8pDm48kKyTQBpq3Qy_LMRVUf13Vcd7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UT-oG3dRaqgHB-5QcirRlX_eIUWOvV38U9wZAFvg9GWt7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2859%29.png?format=1500w" width=800&gt;]
+
+.small[3 - This area shows the “sheets/tabs” that are in your data source]
+
+---
+
+### Data Source and Page and Workspace
+
+.center[&lt;img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572017128543-XHS83425Q4Q51S3G7MTZ/ke17ZwdGBToddI8pDm48kKyTQBpq3Qy_LMRVUf13Vcd7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UT-oG3dRaqgHB-5QcirRlX_eIUWOvV38U9wZAFvg9GWt7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2859%29.png?format=1500w" width=800&gt;]
+
+.small[4 - If you want to use multiple sheets, you can drag them into the main space here to make a join or union connection.]
+
+---
+
+### Data Source and Page and Workspace
+
+.center[&lt;img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572017128543-XHS83425Q4Q51S3G7MTZ/ke17ZwdGBToddI8pDm48kKyTQBpq3Qy_LMRVUf13Vcd7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UT-oG3dRaqgHB-5QcirRlX_eIUWOvV38U9wZAFvg9GWt7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2859%29.png?format=1500w" width=800&gt;]
+
+.small[5 - Here you can choose the data connection you want your workbook to have. In the simplest terms, _live_ connections have real-time updates when you’re connected to the database while an _extract_ provides a snapshot of the data which can be refreshed at will.]
+
+
+---
+
+### Data Source and Page and Workspace
+
+.center[&lt;img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572017128543-XHS83425Q4Q51S3G7MTZ/ke17ZwdGBToddI8pDm48kKyTQBpq3Qy_LMRVUf13Vcd7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UT-oG3dRaqgHB-5QcirRlX_eIUWOvV38U9wZAFvg9GWt7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2859%29.png?format=1500w" width=800&gt;]
+
+
+.small[6 - Here is where you can view your data which needs be in a tabular format, with clean headers. Tableau will analyze your data and automatically assign data types to them. You can change the data types. **Tableau does not change you original data source!**]
+
+---
+
+
+.center[&lt;img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572017758789-EG8P5KJSQWQOFH5ZAZFQ/ke17ZwdGBToddI8pDm48kKehM0I8xzydN9YO5Xh9Ys0UqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8N_N4V1vUb5AoIIIbLZhVYy7Mythp_T-mtop-vrsUOmeInPi9iDjx9w8K4ZfjXt2dkmDtqQIoln6nttjNWt0hLPk9cJ5l1LCKr-W3EXnmDZtCjLISwBs8eEdxAxTptZAUg/Screenshot+%2861%29.png?format=1500w"&gt;]
+
+.small[
+1. This little Tableau icon will bring you back to the start page.
+2. The holy grail of Tableau and probably the most used part of Tableau. These are unlimited undo and redo buttons!
+3. These icons here are the flip and sort buttons. The flip button will switch your columns and rows back and forth. The sort buttons will quickly sort your view (like a bar chart) in ascending or descending order
+4. This will fit your charts to either standard size, fit width, fit height, or fit entire view
+5. Show Me is a handy tool for beginners to help you build quick charts and graphs
+]
+
+---
+
+.center[&lt;img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572021219348-7KX19PGFYX5208CGUZUF/ke17ZwdGBToddI8pDm48kMStYa4uS_ApzfOmli4KDtR7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UeBR5C44GIyIfx7PfbXZvISLT8OQR_i86FcPSDBN2LYT7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2870%29.png?format=1500w" width=700&gt;]
+
+.small[6 - In the _data_ tab you can find all _measures_. In the _analytics_ tab you can supplement your views with reference bands, forecasts, trend lines, and more.]
+
+---
+
+.center[&lt;img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572021219348-7KX19PGFYX5208CGUZUF/ke17ZwdGBToddI8pDm48kMStYa4uS_ApzfOmli4KDtR7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UeBR5C44GIyIfx7PfbXZvISLT8OQR_i86FcPSDBN2LYT7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2870%29.png?format=1500w" width=700&gt;]
+
+
+.small[7 - This is a very handy little button that shows you a quick look into your data table. Instead of switching back and forth from your workspace to the Data Source page to look at your data, you can just click that button to quickly see your data.]
+
+---
+
+.center[&lt;img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572021219348-7KX19PGFYX5208CGUZUF/ke17ZwdGBToddI8pDm48kMStYa4uS_ApzfOmli4KDtR7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UeBR5C44GIyIfx7PfbXZvISLT8OQR_i86FcPSDBN2LYT7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2870%29.png?format=1500w" width=700&gt;]
+
+
+.small[8 - The Dimensions tab is where you can find all your categorical fields]
+
+---
+
+.center[&lt;img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572021219348-7KX19PGFYX5208CGUZUF/ke17ZwdGBToddI8pDm48kMStYa4uS_ApzfOmli4KDtR7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UeBR5C44GIyIfx7PfbXZvISLT8OQR_i86FcPSDBN2LYT7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2870%29.png?format=1500w" width=700&gt;]
+
+
+.small[9 - The Measures tab is where you can find all your numerical measures]
+
+---
+
+.center[&lt;img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572021219348-7KX19PGFYX5208CGUZUF/ke17ZwdGBToddI8pDm48kMStYa4uS_ApzfOmli4KDtR7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UeBR5C44GIyIfx7PfbXZvISLT8OQR_i86FcPSDBN2LYT7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2870%29.png?format=1500w" width=700&gt;]
+
+
+.small[10 - You can click these little tabs to open a new Sheet, Dashboard, or Story.]
+
+---
+
+.center[&lt;img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572021219348-7KX19PGFYX5208CGUZUF/ke17ZwdGBToddI8pDm48kMStYa4uS_ApzfOmli4KDtR7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UeBR5C44GIyIfx7PfbXZvISLT8OQR_i86FcPSDBN2LYT7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2870%29.png?format=1500w" width=700&gt;]
+
+
+.small[11 - The Filters card is where you can drag various fields to filter your view.]
+
+---
+
+.center[&lt;img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572021219348-7KX19PGFYX5208CGUZUF/ke17ZwdGBToddI8pDm48kMStYa4uS_ApzfOmli4KDtR7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UeBR5C44GIyIfx7PfbXZvISLT8OQR_i86FcPSDBN2LYT7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2870%29.png?format=1500w" width=700&gt;]
+
+
+.small[12 - This bar in the marks card is a drop down menu of different chart and graph types you can use, like bar, area, gantt, pie chart and more.]
+
+---
+
+.center[&lt;img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572021219348-7KX19PGFYX5208CGUZUF/ke17ZwdGBToddI8pDm48kMStYa4uS_ApzfOmli4KDtR7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UeBR5C44GIyIfx7PfbXZvISLT8OQR_i86FcPSDBN2LYT7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2870%29.png?format=1500w" width=700&gt;]
+
+
+.small[13 - These cards in the marks card is used if you want to add color, sizes, text, tooltips, or more to your visualizations.]
+
+---
+
+.center[&lt;img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572021219348-7KX19PGFYX5208CGUZUF/ke17ZwdGBToddI8pDm48kMStYa4uS_ApzfOmli4KDtR7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UeBR5C44GIyIfx7PfbXZvISLT8OQR_i86FcPSDBN2LYT7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2870%29.png?format=1500w" width=700&gt;]
+
+
+
+.small[14 - The Columns and Rows section is how you build your views. You can drag various fields to this area to make your visualizations.]
+
+---
+
+.center[&lt;img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572021219348-7KX19PGFYX5208CGUZUF/ke17ZwdGBToddI8pDm48kMStYa4uS_ApzfOmli4KDtR7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UeBR5C44GIyIfx7PfbXZvISLT8OQR_i86FcPSDBN2LYT7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2870%29.png?format=1500w" width=700&gt;]
+
+
+
+.small[15 - This is where your visualizations will appear. You can also drop fields there to let Tableau automatically choose how to visualize it.]
+
+---
+
+## Measures, Dimensions and Attributes
+
+Tableau uses these definitions:
+
+* According to Tableau’s Knowledge Base, a **measure** is a field that is a dependent variable; that is, its value is a function of one or more dimensions.
+Tableau treats any field containing numeric (quantitative) information as a **measure**. Measures can be aggregated.
+* According to Tableau’s Knowledge Base, a **dimension** is a field that can be considered an independent variable. By default, Tableau treats any field containing qualitative, categorical information as a **dimension**.
+* Another way to view a dimension is to treat it as an **Attribute**. Do this by choosing Attribute from the context menu for the dimension. The Attribute aggregation has several uses:
+  * It can ensure a consistent level of detail when blending multiple data sources.
+  * It can provide a way to aggregate dimensions when computing table calculations, which require an aggregate expression.
+  * It can improve query performance because it is computed locally.
+
+
+---
+
+## Meet the Palmer Penguins
+
+.center[&lt;img src="https://github.com/allisonhorst/palmerpenguins/raw/master/man/figures/lter_penguins.png" width=800&gt;]
+
+
+---
+
+## Palmer Penguin Data
+
+.pull-left[
+&lt;img src="https://github.com/allisonhorst/palmerpenguins/raw/master/man/figures/README-mass-flipper-1.png"&gt;
+]
+
+.pull-right[
+&lt;img src="https://github.com/allisonhorst/palmerpenguins/raw/master/man/figures/README-flipper-hist-1.png"&gt;
+]
+
+---
+
+## Palmer Penguin Data
+
+.center[&lt;img src="https://github.com/allisonhorst/palmerpenguins/raw/master/man/figures/culmen_depth.png" width=800&gt;]
+
+
+---
+
+class: middle, center, inverse
+
+# Let's use Tableau
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "zenburn",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

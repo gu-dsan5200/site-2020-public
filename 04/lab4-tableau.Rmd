@@ -1,0 +1,271 @@
+---
+title: "Week 4 Activity: Intro to Tableau"
+subtitle: "ANLY 503, Fall 2020"
+author: "Vaisman & Dasgupta"
+institute: "Georgetown University"
+date: "September 17, 2020"
+output:
+  xaringan::moon_reader:
+    css: [default, '../robot.css','../robot-fonts.css', '../sfah.css']
+    nature:
+      ratio: '16:9'
+      highlightStyle: zenburn
+      highlightLines: true
+      countIncrementalSlides: false
+      slideNumberFormat: "%current%"
+---
+
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+
+library(pacman)
+p_load(char = c('tidyverse', 'knitr', 'htmlwidgets', 'kableExtra'))
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  comment = NA,
+  cache = FALSE,
+  dpi = 300,
+  fig.align = "center",
+  out.width = "80%"
+)
+```
+
+layout: true
+
+<div class="my-header">
+<span>ANLY 503, Data Visualization</span>
+</div>
+
+---
+
+### Start Page
+
+.center[<img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572014674005-SZFEJOXDFGULUL5W5I50/ke17ZwdGBToddI8pDm48kHsubAL0fMgxwoeLWTjxfa17gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UfGLRhU7nEZ7QgQE18SFxtnEvAu0agU47F_tDJ_JvTPYP7cJNZlDXbgJNE9ef52e8w/Screenshot+%2860%29.png?format=1500w" width=800>]
+
+
+.small[1 - Connecting to a File: This section on your start page indicates where you can connect to your data files saved on your computer]
+
+---
+
+### Start Page
+
+.center[<img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572014674005-SZFEJOXDFGULUL5W5I50/ke17ZwdGBToddI8pDm48kHsubAL0fMgxwoeLWTjxfa17gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UfGLRhU7nEZ7QgQE18SFxtnEvAu0agU47F_tDJ_JvTPYP7cJNZlDXbgJNE9ef52e8w/Screenshot+%2860%29.png?format=1500w" width=800>]
+
+.small[2 - Connecting to a Server: You’ll usually use this section if you’re working for a company that uses specific servers. Tableau can connect to multiple different servers such as Oracle, PostgreSQL, Azure, Dropbox, and more.]
+
+---
+
+### Start Page
+
+.center[<img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572014674005-SZFEJOXDFGULUL5W5I50/ke17ZwdGBToddI8pDm48kHsubAL0fMgxwoeLWTjxfa17gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UfGLRhU7nEZ7QgQE18SFxtnEvAu0agU47F_tDJ_JvTPYP7cJNZlDXbgJNE9ef52e8w/Screenshot+%2860%29.png?format=1500w" width=800>]
+
+.small[3 - Saved Data Sources: These are sample data sets that Tableau provides. When you download the software, Tableau also provides you a repository folder which also holds these clean sample data sets as excel files. When you click the samples, they will automatically load without you needing to find the files.]
+
+---
+
+### Start Page
+
+.center[<img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572014674005-SZFEJOXDFGULUL5W5I50/ke17ZwdGBToddI8pDm48kHsubAL0fMgxwoeLWTjxfa17gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UfGLRhU7nEZ7QgQE18SFxtnEvAu0agU47F_tDJ_JvTPYP7cJNZlDXbgJNE9ef52e8w/Screenshot+%2860%29.png?format=1500w" width=800>]
+
+.small[4 - Open a Workbook: This area is where you can find recent workbooks opened and quickly load them in if you want to work on them.]
+
+---
+
+### Start Page
+
+.center[<img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572014674005-SZFEJOXDFGULUL5W5I50/ke17ZwdGBToddI8pDm48kHsubAL0fMgxwoeLWTjxfa17gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UfGLRhU7nEZ7QgQE18SFxtnEvAu0agU47F_tDJ_JvTPYP7cJNZlDXbgJNE9ef52e8w/Screenshot+%2860%29.png?format=1500w" width=800>]
+
+
+.small[5 - Sample Workbooks: This section provides you with sample workbooks that you can open to play around in and see how they were built. Clicking on “More Samples” will lead you to a gallery of downloadable sample workbooks.]
+
+---
+
+### Start Page
+
+.center[<img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572014674005-SZFEJOXDFGULUL5W5I50/ke17ZwdGBToddI8pDm48kHsubAL0fMgxwoeLWTjxfa17gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UfGLRhU7nEZ7QgQE18SFxtnEvAu0agU47F_tDJ_JvTPYP7cJNZlDXbgJNE9ef52e8w/Screenshot+%2860%29.png?format=1500w" width=800>]
+
+.small[6 - Discover: The Discover side bar provides you with links to the Tableau training videos, blog, forums, and Tableau Prep (a data cleaning and prepping software).]
+
+---
+
+
+
+### Data Source and Page and Workspace
+
+.center[<img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572017128543-XHS83425Q4Q51S3G7MTZ/ke17ZwdGBToddI8pDm48kKyTQBpq3Qy_LMRVUf13Vcd7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UT-oG3dRaqgHB-5QcirRlX_eIUWOvV38U9wZAFvg9GWt7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2859%29.png?format=1500w" width=800>]
+
+.small[1 - This shows you the data file you loaded. Here you can rename your data source or edit your connection to the source.]
+
+---
+
+### Data Source and Page and Workspace
+
+.center[<img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572017128543-XHS83425Q4Q51S3G7MTZ/ke17ZwdGBToddI8pDm48kKyTQBpq3Qy_LMRVUf13Vcd7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UT-oG3dRaqgHB-5QcirRlX_eIUWOvV38U9wZAFvg9GWt7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2859%29.png?format=1500w" width=800>]
+
+.small[2 - The Data Interpreter is a built-in data cleaner that Tableau provides. If you choose to use it, it can identify potential areas to clean and will re-format them and provide a log of the changes they made.]
+
+---
+
+### Data Source and Page and Workspace
+
+.center[<img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572017128543-XHS83425Q4Q51S3G7MTZ/ke17ZwdGBToddI8pDm48kKyTQBpq3Qy_LMRVUf13Vcd7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UT-oG3dRaqgHB-5QcirRlX_eIUWOvV38U9wZAFvg9GWt7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2859%29.png?format=1500w" width=800>]
+
+.small[3 - This area shows the “sheets/tabs” that are in your data source]
+
+---
+
+### Data Source and Page and Workspace
+
+.center[<img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572017128543-XHS83425Q4Q51S3G7MTZ/ke17ZwdGBToddI8pDm48kKyTQBpq3Qy_LMRVUf13Vcd7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UT-oG3dRaqgHB-5QcirRlX_eIUWOvV38U9wZAFvg9GWt7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2859%29.png?format=1500w" width=800>]
+
+.small[4 - If you want to use multiple sheets, you can drag them into the main space here to make a join or union connection.]
+
+---
+
+### Data Source and Page and Workspace
+
+.center[<img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572017128543-XHS83425Q4Q51S3G7MTZ/ke17ZwdGBToddI8pDm48kKyTQBpq3Qy_LMRVUf13Vcd7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UT-oG3dRaqgHB-5QcirRlX_eIUWOvV38U9wZAFvg9GWt7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2859%29.png?format=1500w" width=800>]
+
+.small[5 - Here you can choose the data connection you want your workbook to have. In the simplest terms, _live_ connections have real-time updates when you’re connected to the database while an _extract_ provides a snapshot of the data which can be refreshed at will.]
+
+
+---
+
+### Data Source and Page and Workspace
+
+.center[<img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572017128543-XHS83425Q4Q51S3G7MTZ/ke17ZwdGBToddI8pDm48kKyTQBpq3Qy_LMRVUf13Vcd7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UT-oG3dRaqgHB-5QcirRlX_eIUWOvV38U9wZAFvg9GWt7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2859%29.png?format=1500w" width=800>]
+
+
+.small[6 - Here is where you can view your data which needs be in a tabular format, with clean headers. Tableau will analyze your data and automatically assign data types to them. You can change the data types. **Tableau does not change you original data source!**]
+
+---
+
+
+.center[<img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572017758789-EG8P5KJSQWQOFH5ZAZFQ/ke17ZwdGBToddI8pDm48kKehM0I8xzydN9YO5Xh9Ys0UqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8N_N4V1vUb5AoIIIbLZhVYy7Mythp_T-mtop-vrsUOmeInPi9iDjx9w8K4ZfjXt2dkmDtqQIoln6nttjNWt0hLPk9cJ5l1LCKr-W3EXnmDZtCjLISwBs8eEdxAxTptZAUg/Screenshot+%2861%29.png?format=1500w">]
+
+.small[
+1. This little Tableau icon will bring you back to the start page.
+2. The holy grail of Tableau and probably the most used part of Tableau. These are unlimited undo and redo buttons!
+3. These icons here are the flip and sort buttons. The flip button will switch your columns and rows back and forth. The sort buttons will quickly sort your view (like a bar chart) in ascending or descending order
+4. This will fit your charts to either standard size, fit width, fit height, or fit entire view
+5. Show Me is a handy tool for beginners to help you build quick charts and graphs
+]
+
+---
+
+.center[<img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572021219348-7KX19PGFYX5208CGUZUF/ke17ZwdGBToddI8pDm48kMStYa4uS_ApzfOmli4KDtR7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UeBR5C44GIyIfx7PfbXZvISLT8OQR_i86FcPSDBN2LYT7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2870%29.png?format=1500w" width=700>]
+
+.small[6 - In the _data_ tab you can find all _measures_. In the _analytics_ tab you can supplement your views with reference bands, forecasts, trend lines, and more.]
+
+---
+
+.center[<img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572021219348-7KX19PGFYX5208CGUZUF/ke17ZwdGBToddI8pDm48kMStYa4uS_ApzfOmli4KDtR7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UeBR5C44GIyIfx7PfbXZvISLT8OQR_i86FcPSDBN2LYT7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2870%29.png?format=1500w" width=700>]
+
+
+.small[7 - This is a very handy little button that shows you a quick look into your data table. Instead of switching back and forth from your workspace to the Data Source page to look at your data, you can just click that button to quickly see your data.]
+
+---
+
+.center[<img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572021219348-7KX19PGFYX5208CGUZUF/ke17ZwdGBToddI8pDm48kMStYa4uS_ApzfOmli4KDtR7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UeBR5C44GIyIfx7PfbXZvISLT8OQR_i86FcPSDBN2LYT7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2870%29.png?format=1500w" width=700>]
+
+
+.small[8 - The Dimensions tab is where you can find all your categorical fields]
+
+---
+
+.center[<img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572021219348-7KX19PGFYX5208CGUZUF/ke17ZwdGBToddI8pDm48kMStYa4uS_ApzfOmli4KDtR7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UeBR5C44GIyIfx7PfbXZvISLT8OQR_i86FcPSDBN2LYT7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2870%29.png?format=1500w" width=700>]
+
+
+.small[9 - The Measures tab is where you can find all your numerical measures]
+
+---
+
+.center[<img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572021219348-7KX19PGFYX5208CGUZUF/ke17ZwdGBToddI8pDm48kMStYa4uS_ApzfOmli4KDtR7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UeBR5C44GIyIfx7PfbXZvISLT8OQR_i86FcPSDBN2LYT7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2870%29.png?format=1500w" width=700>]
+
+
+.small[10 - You can click these little tabs to open a new Sheet, Dashboard, or Story.]
+
+---
+
+.center[<img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572021219348-7KX19PGFYX5208CGUZUF/ke17ZwdGBToddI8pDm48kMStYa4uS_ApzfOmli4KDtR7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UeBR5C44GIyIfx7PfbXZvISLT8OQR_i86FcPSDBN2LYT7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2870%29.png?format=1500w" width=700>]
+
+
+.small[11 - The Filters card is where you can drag various fields to filter your view.]
+
+---
+
+.center[<img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572021219348-7KX19PGFYX5208CGUZUF/ke17ZwdGBToddI8pDm48kMStYa4uS_ApzfOmli4KDtR7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UeBR5C44GIyIfx7PfbXZvISLT8OQR_i86FcPSDBN2LYT7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2870%29.png?format=1500w" width=700>]
+
+
+.small[12 - This bar in the marks card is a drop down menu of different chart and graph types you can use, like bar, area, gantt, pie chart and more.]
+
+---
+
+.center[<img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572021219348-7KX19PGFYX5208CGUZUF/ke17ZwdGBToddI8pDm48kMStYa4uS_ApzfOmli4KDtR7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UeBR5C44GIyIfx7PfbXZvISLT8OQR_i86FcPSDBN2LYT7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2870%29.png?format=1500w" width=700>]
+
+
+.small[13 - These cards in the marks card is used if you want to add color, sizes, text, tooltips, or more to your visualizations.]
+
+---
+
+.center[<img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572021219348-7KX19PGFYX5208CGUZUF/ke17ZwdGBToddI8pDm48kMStYa4uS_ApzfOmli4KDtR7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UeBR5C44GIyIfx7PfbXZvISLT8OQR_i86FcPSDBN2LYT7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2870%29.png?format=1500w" width=700>]
+
+
+
+.small[14 - The Columns and Rows section is how you build your views. You can drag various fields to this area to make your visualizations.]
+
+---
+
+.center[<img src="https://images.squarespace-cdn.com/content/v1/5dae73e9629f887c6158e2f8/1572021219348-7KX19PGFYX5208CGUZUF/ke17ZwdGBToddI8pDm48kMStYa4uS_ApzfOmli4KDtR7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UeBR5C44GIyIfx7PfbXZvISLT8OQR_i86FcPSDBN2LYT7zs2yPjc1ECvpa5Zm_kMqw/Screenshot+%2870%29.png?format=1500w" width=700>]
+
+
+
+.small[15 - This is where your visualizations will appear. You can also drop fields there to let Tableau automatically choose how to visualize it.]
+
+---
+
+## Measures, Dimensions and Attributes
+
+Tableau uses these definitions:
+
+* According to Tableau’s Knowledge Base, a **measure** is a field that is a dependent variable; that is, its value is a function of one or more dimensions.
+Tableau treats any field containing numeric (quantitative) information as a **measure**. Measures can be aggregated.
+* According to Tableau’s Knowledge Base, a **dimension** is a field that can be considered an independent variable. By default, Tableau treats any field containing qualitative, categorical information as a **dimension**.
+* Another way to view a dimension is to treat it as an **Attribute**. Do this by choosing Attribute from the context menu for the dimension. The Attribute aggregation has several uses:
+  * It can ensure a consistent level of detail when blending multiple data sources.
+  * It can provide a way to aggregate dimensions when computing table calculations, which require an aggregate expression.
+  * It can improve query performance because it is computed locally.
+
+
+---
+
+## Meet the Palmer Penguins
+
+.center[<img src="https://github.com/allisonhorst/palmerpenguins/raw/master/man/figures/lter_penguins.png" width=800>]
+
+
+---
+
+## Palmer Penguin Data
+
+.pull-left[
+<img src="https://github.com/allisonhorst/palmerpenguins/raw/master/man/figures/README-mass-flipper-1.png">
+]
+
+.pull-right[
+<img src="https://github.com/allisonhorst/palmerpenguins/raw/master/man/figures/README-flipper-hist-1.png">
+]
+
+---
+
+## Palmer Penguin Data
+
+.center[<img src="https://github.com/allisonhorst/palmerpenguins/raw/master/man/figures/culmen_depth.png" width=800>]
+
+
+---
+
+class: middle, center, inverse
+
+# Let's use Tableau

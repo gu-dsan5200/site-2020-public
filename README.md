@@ -1,4 +1,4 @@
-**This syllabus is effective as of Wednesday, August 26, 2020 at 07:20
+**This syllabus is effective as of Thursday, August 27, 2020 at 05:05
 PM**
 
 ## Course Information
@@ -129,11 +129,12 @@ More details will be provided.
 
 You will create an R Markdown dashboard using the `flexdashboard`
 package to visualize data sets in at least 3 ways and to create a visual
-narrative., to show what your data looks like and what your analytic
+narrative, to show what your data looks like and what your analytic
 results look like. This dashboard will also be a part of the online
 portfolio, but it is an separate assignment.
 
-More details will be provided.
+We will provide information about datasets for the final project by week
+10.
 
 ### Grading
 

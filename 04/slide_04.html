@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Tools for Data Visualization</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Vaisman &amp; Dasgupta" />
+    <meta name="date" content="2020-09-17" />
+    <link href="slide_04_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../robot.css" type="text/css" />
+    <link rel="stylesheet" href="../robot-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="../sfah.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Tools for Data Visualization
+## Week 4
+### Vaisman &amp; Dasgupta
+### Georgetown University
+### 2020-09-17
+
+---
+
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+---
+class: middle, inverse, center
+
+
+
+# Tools of the trade
+
+---
+
+## What is the trade?
+
++ Data storage and ingestion
++ Data processing
++ Data visualization
++ Refine visualization
+
+You actually need tools for all of these to get a good data visualization done
+
+---
+
+## Two broad classes of tools
+
+.pull-left[
+![](https://media.giphy.com/media/hQidaBLsDmFXVSF9OU/giphy.gif)
+]
+.pull-right[
+![](https://media.giphy.com/media/B1uajA01vvL91Urtsp/giphy.gif)
+]
+
+---
+
+## Two broad classes of tools
+
+.pull-left[
+### Point and click
+
++ Excel / Google Sheets
++ SPSS
++ GraphPad Prism
++ Many more
+]
+.pull-right[
+### Scripting 
+
++ R
++ Python
++ SAS
++ Stata
++ Javascript
++ Java
++ C/C++/.NET
+]
+---
+
+## Two broad classes of tools
+
+### Point-and-click tools
+.pull-left[
+
+#### Pros
++ Easy and convenient
++ Widely available
++ Can gain reasonable expertise quickly
+]
+.pull-right[
+#### Cons 
++ Easier to make, harder to catch mistakes
++ Difficult to capture processes
++ Harder to automate
++ Harder to reproduce analyses
+]
+---
+
+## Two broad classes of tools
+
+### Scripting tools
+.pull-left[
+
+#### Pros
++ Flexibility and power
++ Customizability
++ Reproducibility 
++ Automation
++ Debugging/Version control
+]
+.pull-right[
+#### Cons 
++ Takes longer to become expert
++ Developer time
++ Have to think more about what you want to do
+    - Less cookie-cutter
+
+]
+
+---
+
+## A third class
+
+### Visual analytic tools
+
+.pull-left[
+This class of tools uses a graphical interface to create pipelines for analyses. 
+
+There is usually code underlying each pipeline that can be extracted and logged
+
+Exchange flexibility for convenience
+
+Can drop down to code to maintain some flexibility
+
+]
+.pull-right[
++ Tableau
++ SAS Enterprise Guide
++ Orange (Python)
++ KNIME
++ Weka
++ RapidMiner
+]
+---
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+## Data storage and ingestion
+
+---
+
+You learned some of this in 501 and 502
+
+.pull-left[
++ AWS, Azure, GCP
++ SQL-based databases
++ JSON-based storage (like NoSQL databases)
++ Excel or other spreadsheets
++ Text files
+]
+.pull-right[
+How do you get data out of these?
+
+How do you process the data?
+]
+---
+
+### Tools for ingestion
+
++ SQL-type databases can be accessed through ODBC pipes into various front ends or programming platforms
+    + DBI and related packages in R
+    + SQLAlchemy and related packages in Python
++ Spreadsheets hold the data themselves, or the data can be pretty easily ingested into programming environments
+    + **readxl** in R
+    + **xlrd** in Python
++ Text files can be pretty much universally read
+    + Have to be careful about formatting and unintended errors in conversion
+    
+---
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+## Data processing 
+
+---
+
+### A pre-requisite for data visualization
+
+Data processing is an essential piece of the data visualization puzzle
+
+It is rare that raw data is in the right condition to be visualized properly or well
+
+--
+
+.pull-left[
+.acid[Data cleaning]
+]
+.pull-right[
+.acid[Data munging]
+]
+
+
+---
+
+### Data conversions
+
++ It is not uncommon for data from the cloud or databases to be converted into spreadsheets or text files for further processing
++ Conversions can be beset with issues
+    + Conversion of dates 
+    + Auto-correct makes things worse 
+    + Conversion of data types with unintended consequences (_stringsAsFactors_ in R)
+
+-----
+
+Generally scripts work better at making sure things are correct through reproducibility and validation tools
+
+---
+
+### A note on Excel &lt;svg style="height:0.8em;top:.04em;position:relative;fill:steelblue;" viewBox="0 0 384 512"&gt;&lt;path d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm60.1 106.5L224 336l60.1 93.5c5.1 8-.6 18.5-10.1 18.5h-34.9c-4.4 0-8.5-2.4-10.6-6.3C208.9 405.5 192 373 192 373c-6.4 14.8-10 20-36.6 68.8-2.1 3.9-6.1 6.3-10.5 6.3H110c-9.5 0-15.2-10.5-10.1-18.5l60.3-93.5-60.3-93.5c-5.2-8 .6-18.5 10.1-18.5h34.8c4.4 0 8.5 2.4 10.6 6.3 26.1 48.8 20 33.6 36.6 68.5 0 0 6.1-11.7 36.6-68.5 2.1-3.9 6.2-6.3 10.6-6.3H274c9.5-.1 15.2 10.4 10.1 18.4zM384 121.9v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"/&gt;&lt;/svg&gt;
+
+.pull-left[
+   
+
+Excel is omnipresent, so it becomes the default data medium (specially in corporate)
+
+It is great for many things, including _quick-and-dirty_ analyses
+
+.heatinline[It can be error-prone]
+
+It needs to be backed up
+
+It has size limitations
+
+Takes a lot of effort to do complex analyses
+
+Known mathematical issues (division of numbers)
+]
+
+--
+
+.pull-right[
++ No way to reproduce analyses without macros
++ No way to document what you are doing
++ Excel has some nasty default behavior
+  - Guess what the `MAR1` gene gets recorded as?
++ Very hard to recover from errors
+  - Shift of one error (off by one row or column)
+  - Google _Duke Potti_ or _Reinhart Rogoff Herndon_
+]
+
+---
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+---
+## Workflows
+
+You want to start with data, and create a path to a final data set that can be used for visualization
+
+![:scale 70%](img/tableau-prep-2.png)
+---
+
+## Workflows
+
+You want to start with data, and create a path to a final data set that can be used for visualization
+
+![:scale 60%](img/sas-prep.png)
+
+---
+
+## Workflows
+
+You want to start with data, and create a path to a final data set that can be used for visualization
+
+![:scale 70%](img/orange-prep.png)
+
+---
+
+## Workflows
+
+You want to start with data, and create a path to a final data set that can be used for visualization
+
+.center[![:scale 80%](img/tidyverse.png)]
+
+
+---
+
+## Workflows
+
+You want to start with data, and create a path to a final data set that can be used for visualization
+
+
+```r
+baseline_rec &lt;- recipe(~., data = baseline) %&gt;%
+    update_role(ends_with('response'), new_role='outcome') %&gt;%
+    update_role(ends_with('w12'), new_role='outcome') %&gt;%
+    update_role(ends_with('w24'), new_role = 'outcome') %&gt;%
+    step_nzv(all_predictors()) %&gt;%
+    step_rm(basdai) %&gt;%
+    step_log(crp_mg_dl) %&gt;%
+    step_dummy(all_nominal(), -all_outcomes()) %&gt;%
+    step_knnimpute(all_predictors()) %&gt;%
+    step_center(age, bmi, crp_mg_dl, tjc, sjc) %&gt;%
+    step_scale(age, bmi, crp_mg_dl, tjc, sjc) %&gt;%
+    check_missing(all_predictors()) %&gt;%
+    prep(training = baseline)
+```
+
+---
+
+## Workflows
+
+You want to start with data, and create a path to a final data set that can be used for visualization
+
++ You can also create shell scripts that involve `awk`, `sed`, `cut`, `grep`, and other UNIX tools
++ These pipes can includes pieces of scripting languages like R, Python or Perl
++ You can make sure the workflows are reproducible using `make` and similar workflow management tools
+
+.pull-left[
+
+```makefile
+SUBDIRS := $(wildcard slides/lectures/week*)
+OUTDIR=docs
+
+
+lectures: $(SUBDIRS) ## Compile lecture slides
+$(SUBDIRS):
+        cp make_subdirs $@/Makefile; $(MAKE) -C $@
+
+
+slides_web: FORCE ## Create website for slides
+        Rscript -e "rmarkdown::render_site('slides')"
+        cp -r docs/slides_top/* docs/slides
+
+
+toplevel: FORCE ## Create top level website
+        Rscript -e "rmarkdown::render_site('.')"
+        cp -r docs/toplevel/* docs
+
+all: lectures slides_web toplevel
+```
+]
+.pull-right[
+
+```makefile
+OUTDIR = $(shell Rscript -e "fs::path(here::here('docs', fs::path_rel(getwd(), start=here::here())))")
+SLIDES := $(wildcard *.Rmd)
+SLIDES_OUT = $(patsubst %.Rmd, $(OUTDIR)/%.html, $(SLIDES))
+
+.PHONY: all
+all: $(SLIDES_OUT)
+
+$(OUTDIR)/%.html: %.Rmd _output.yml
+        Rscript -e "rmarkdown::render('$(*F).Rmd', output_dir='$(OUTDIR)')"
+```
+]
+---
+class: center, middle, inverse
+
+# Data visualization tools
+
+---
+
+## Scripting tools
+
+We have a bias towards scripting tools
+.pull-left[
++ Fits into data science workflow
++ Customizable
++ Reproducible
++ Can have good control over visual encodings
+
+-----
+
++ We do need some help so that the programming isn't too granular and tedious
+]
+.pull-right[
+![](img/scripts.png)
+]
+
+---
+
+## &lt;svg style="height:0.8em;top:.04em;position:relative;fill:steelblue;" viewBox="0 0 581 512"&gt;&lt;path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/&gt;&lt;/svg&gt; Tools
+
+The main engine for data visualization in R is **ggplot2**
+
+.pull-left[
++ Based on visual encodings and layering based on the Grammar of Graphics (Wilkinson)
++ Can pretty much translate everything we've learned so far in terms of encodings into a **ggplot2** pipe.
+
+]
+.pull-right[
+![](img/ggplot2_2.png)
+]
+
+---
+
+## &lt;svg style="height:0.8em;top:.04em;position:relative;fill:steelblue;" viewBox="0 0 581 512"&gt;&lt;path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/&gt;&lt;/svg&gt; Tools
+
+There is an [entire ecosystem](https://exts.ggplot2.tidyverse.org/gallery/) around **ggplot2**
+
+&lt;iframe src="https://exts.ggplot2.tidyverse.org/gallery/" width="80%" height="500"&gt;&lt;/iframe&gt;
+
+---
+
+## &lt;svg style="height:0.8em;top:.04em;position:relative;fill:steelblue;" viewBox="0 0 581 512"&gt;&lt;path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/&gt;&lt;/svg&gt; Tools
+
+.pull-left[
+
+```r
+library(datasauRus)
+ggplot(datasaurus_dozen, 
+       aes(x=x, y=y, colour=dataset))+
+    geom_point()+
+    theme_void()+
+    theme(legend.position = "none")+
+    facet_wrap(~dataset, ncol=3)+
+  labs(caption="Matejka &amp; Fitzmaurice, 2017")
+```
+
+You see the approach of encoding each element of data into particular aspects of the visualization, then adding geometries and themes
+]
+.pull-right[
+![](slide_04_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+]
+
+---
+
+## &lt;svg style="height:0.8em;top:.04em;position:relative;fill:steelblue;" viewBox="0 0 581 512"&gt;&lt;path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/&gt;&lt;/svg&gt; Tools
+
+There are other families of tools for static visualization in R
+
+.pull-left[
+
+```r
+x &lt;- runif(300,  min=-10, max=10) 
+y &lt;- 0.1*x^3 - 0.5 * x^2 - x + 10 + rnorm(length(x),0,8) 
+ 
+# plot of x and y :
+plot(x,y,col=rgb(0.4,0.4,0.8,0.6),pch=16 , cex=1.3) 
+```
+Base graphics gives you a lot more granular control at the expense of a poorer mental model and eventually a lot more code
+]
+.pull-right[
+![](slide_04_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+]
+
+---
+
+## &lt;svg style="height:0.8em;top:.04em;position:relative;fill:steelblue;" viewBox="0 0 581 512"&gt;&lt;path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/&gt;&lt;/svg&gt; Tools
+
+There are other families of tools for static visualization in R
+
+.pull-left[
+
+```r
+library(lattice)
+xyplot(Sepal.Length ~ Petal.Length,
+       data = iris,
+       type = c("p", "g", "smooth"),
+       xlab = "Miles/(US) gallons",
+       ylab = "Weight (1000lbs)")
+```
+The **lattice** package is a cousin of the **ggplot2** package in that it is also based on the Grammar of Graphics, but more loosely.
+
+It is often faster than **ggplot2**, but with a far less rich ecosystem
+]
+.pull-right[
+![](slide_04_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+]
+
+---
+
+## &lt;svg style="height:0.8em;top:.04em;position:relative;fill:steelblue;" viewBox="0 0 581 512"&gt;&lt;path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/&gt;&lt;/svg&gt; Tools
+
+### Dynamic graphics
+
+The main toolbox for dynamic graphics in R is [**htmlwidgets**](https://www.htmlwidgets.org/showcase_leaflet.html). This includes several R packages that wrap Javascript visualization packages.
+
+&lt;iframe src="https://www.htmlwidgets.org/showcase_leaflet.html" width='80%' height=500&gt;&lt;/iframe&gt;
+
+---
+
+## &lt;svg style="height:0.8em;top:.04em;position:relative;fill:steelblue;" viewBox="0 0 581 512"&gt;&lt;path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/&gt;&lt;/svg&gt; Tools
+
+### Dynamic graphics
+
+![:scale 40%](img/leaflet.png)
+
+---
+
+## &lt;svg style="height:0.8em;top:.04em;position:relative;fill:steelblue;" viewBox="0 0 581 512"&gt;&lt;path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/&gt;&lt;/svg&gt; Tools
+
+### Dynamic graphics
+
+![:scale 40%](img/highchart.png)
+
+---
+
+## &lt;svg style="height:0.8em;top:.04em;position:relative;fill:steelblue;" viewBox="0 0 581 512"&gt;&lt;path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/&gt;&lt;/svg&gt; Tools
+
+### Dynamic graphics
+
+![:scale 40%](img/plotly.png)
+---
+
+## &lt;svg style="height:0.8em;top:.04em;position:relative;fill:steelblue;" viewBox="0 0 581 512"&gt;&lt;path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/&gt;&lt;/svg&gt; Tools
+
+### Dynamic graphics
+
+![:scale 40%](img/networkd3.png)
+
+---
+
+## &lt;svg style="height:0.8em;top:.04em;position:relative;fill:steelblue;" viewBox="0 0 448 512"&gt;&lt;path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6zM286.2 404c11.1 0 20.1 9.1 20.1 20.3 0 11.3-9 20.4-20.1 20.4-11 0-20.1-9.2-20.1-20.4.1-11.3 9.1-20.3 20.1-20.3zM167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4zm-6.7-142.6c-11.1 0-20.1-9.1-20.1-20.3.1-11.3 9-20.4 20.1-20.4 11 0 20.1 9.2 20.1 20.4s-9 20.3-20.1 20.3z"/&gt;&lt;/svg&gt; Tools
+
+The main toolbox for static visualizations in Python is **matplotlib**. This was developed to be an open-source clone of the graphical capabilities of Matlab
+
+.pull-left[
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+ 
+# Create a dataset:
+df=pd.DataFrame({'x': range(1,101), 'y': np.random.randn(100)*15+range(1,101) })
+ 
+# plot
+plt.plot( 'x', 'y', data=df, linestyle='none', marker='o')
+plt.show()
+```
+
+**matplotlib** is like base R in that it provides granular control over your graphics, but that can make it tedious to program
+]
+.pull-right[
+&lt;img src="slide_04_files/figure-html/unnamed-chunk-7-1.png" width="672" /&gt;
+]
+
+
+---
+
+## &lt;svg style="height:0.8em;top:.04em;position:relative;fill:steelblue;" viewBox="0 0 448 512"&gt;&lt;path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6zM286.2 404c11.1 0 20.1 9.1 20.1 20.3 0 11.3-9 20.4-20.1 20.4-11 0-20.1-9.2-20.1-20.4.1-11.3 9.1-20.3 20.1-20.3zM167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4zm-6.7-142.6c-11.1 0-20.1-9.1-20.1-20.3.1-11.3 9-20.4 20.1-20.4 11 0 20.1 9.2 20.1 20.4s-9 20.3-20.1 20.3z"/&gt;&lt;/svg&gt; Tools
+
+A better choice is **seaborn**, which builds on top of **matplotlib**.
+
+.pull-left[
+
+```python
+import seaborn as sns
+df = sns.load_dataset('iris')
+ 
+# use the function regplot to make a scatterplot
+sns.regplot(x=df["sepal_length"], y=df["sepal_width"])
+plt.show()
+```
+]
+.pull-right[
+![](img/seaborn1.png)
+]
+
+---
+
+## &lt;svg style="height:0.8em;top:.04em;position:relative;fill:steelblue;" viewBox="0 0 448 512"&gt;&lt;path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6zM286.2 404c11.1 0 20.1 9.1 20.1 20.3 0 11.3-9 20.4-20.1 20.4-11 0-20.1-9.2-20.1-20.4.1-11.3 9.1-20.3 20.1-20.3zM167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4zm-6.7-142.6c-11.1 0-20.1-9.1-20.1-20.3.1-11.3 9-20.4 20.1-20.4 11 0 20.1 9.2 20.1 20.4s-9 20.3-20.1 20.3z"/&gt;&lt;/svg&gt; Tools
+
+You can also plot directly using **pandas**, which also provides a wrapper around **matplotlib**
+
+.pull-left[
+
+```python
+df.plot(x = 'sepal_length',y='sepal_width', 
+  kind='scatter')
+```
+]
+.pull-right[
+![](img/pandas.png)
+]
+
+---
+
+## &lt;svg style="height:0.8em;top:.04em;position:relative;fill:steelblue;" viewBox="0 0 448 512"&gt;&lt;path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6zM286.2 404c11.1 0 20.1 9.1 20.1 20.3 0 11.3-9 20.4-20.1 20.4-11 0-20.1-9.2-20.1-20.4.1-11.3 9.1-20.3 20.1-20.3zM167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4zm-6.7-142.6c-11.1 0-20.1-9.1-20.1-20.3.1-11.3 9-20.4 20.1-20.4 11 0 20.1 9.2 20.1 20.4s-9 20.3-20.1 20.3z"/&gt;&lt;/svg&gt; Tools
+
+### Dynamic graphics
+
+We will mainly work with **plotly** in this class
+
+**plotly** works with both &lt;svg style="height:0.8em;top:.04em;position:relative;" viewBox="0 0 581 512"&gt;&lt;path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/&gt;&lt;/svg&gt; and &lt;svg style="height:0.8em;top:.04em;position:relative;" viewBox="0 0 448 512"&gt;&lt;path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6zM286.2 404c11.1 0 20.1 9.1 20.1 20.3 0 11.3-9 20.4-20.1 20.4-11 0-20.1-9.2-20.1-20.4.1-11.3 9.1-20.3 20.1-20.3zM167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4zm-6.7-142.6c-11.1 0-20.1-9.1-20.1-20.3.1-11.3 9-20.4 20.1-20.4 11 0 20.1 9.2 20.1 20.4s-9 20.3-20.1 20.3z"/&gt;&lt;/svg&gt; to create dynamic graphics
+
+.pull-left[
+
+```python
+import plotly.express as px
+df = px.data.iris()
+fig = px.scatter(df, x="sepal_width", y="sepal_length", color="species")
+fig.show()
+```
+]
+.pull-right[
+![](img/plotly1.png)
+]
+.footnote[ [link](https://plotly.com/python/plotly-express/)]
+
+---
+
+## &lt;svg style="height:0.8em;top:.04em;position:relative;fill:steelblue;" viewBox="0 0 448 512"&gt;&lt;path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6zM286.2 404c11.1 0 20.1 9.1 20.1 20.3 0 11.3-9 20.4-20.1 20.4-11 0-20.1-9.2-20.1-20.4.1-11.3 9.1-20.3 20.1-20.3zM167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4zm-6.7-142.6c-11.1 0-20.1-9.1-20.1-20.3.1-11.3 9-20.4 20.1-20.4 11 0 20.1 9.2 20.1 20.4s-9 20.3-20.1 20.3z"/&gt;&lt;/svg&gt; Tools
+
+### Dynamic graphics
+
+Python also has other dynamic graphics libraries that have their own Javascript packages.
+
++ [bokeh](https://demo.bokeh.org/)
++ [Altair](https://altair-viz.github.io/gallery/index.html)
++ [Vega](https://vega.github.io/vega/examples/)
+
+---
+class: center, middle, inverse
+
+# Javascript graphics
+
+---
+
+## Javascript graphics
+
+Javascript graphics have become increasingly popular in the internet age
+
++ Client-side computations
++ Fast and light
++ Impressive quality
++ Interactivity
+
+---
+
+## D3.js
+
+[D3.js](https://d3js.org) was developed by Mike Bostock to visualize data. It stands for "Data-Driven Documents".
+
+&lt;iframe src="https://observablehq.com/@d3/gallery" width="80%" height=400&gt;&lt;/iframe&gt;
+
+---
+
+## D3.js
+
+D3.js is the basis of most data journalism graphics you see on the web. 
+
+It has also been brilliantly used for tutorials of difficult concepts ([link](http://www.r2d3.us/visual-intro-to-machine-learning-part-1/))
+
+However, it is very granular and requires complete specification of every encoding
+of data to visual geometry. So you have a job as as D3 programmer
+
+---
+
+## Other Javascript libraries 
+
+There are several other libraries that try to use the power of D3.js, but with an 
+easier user experience. 
+
+These include
+
++ [Chart.js](https://www.chartjs.org/)
++ [NVD3](https://nvd3.org/) (built on D3.js)
++ [Vega-Lite](https://vega.github.io/vega-lite/), which is wrapped in Python by Altair
+
+---
+class: center, middle, inverse
+
+# GUI-based tools
+
+---
+
+## Graphpad Prism
+
+Graphpad Prism is a menu-driven statistical program widely used in the life sciences for 
+data graphics
+
+![](img/prism.png)
+
+
+---
+
+## Gephi
+
+Gephi is a powerful program that is used for network visualization
+
+![](img/gephi.png)
+
+---
+class: middle, center, inverse
+
+# Cleaning things up
+
+---
+
+## Cleaning things up
+
+You can get pretty close to a final graphic using R and Python
+
+Sometimes, however, you do need to tweak things to make it perfect
+
+The strategy of scripting graphics and then finishing them in another software is common practice at NY Time, Guardian and other data journalism practices
+
+---
+
+## The tools
+
++ GIMP/ Adobe Photoshop: [GIMP](https://www.gimp.org) is a very powerful open-source alternative to Photoshop
++ Inkscape / Adobe Illustrator: [Inkscape](https://inkscape.org/) is an open-source alternative to Adobe illustrator for editing vector graphics like SVG
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="macros.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "zenburn",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

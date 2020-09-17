@@ -1,6 +1,6 @@
 ---
 title: "ANLY 503"
-subtitle: "Week 1"
+subtitle: "Week 3"
 author: "Vaisman & Dasgupta"
 institute: "Georgetown University"
 date: "`r Sys.Date()`"
@@ -36,8 +36,11 @@ opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, comment="",
 
 ---
 background-image: url(img/NBA_NYT.png)
-background-size: contain
+background-size: 60%,60%
 
+.left-column30[
+Proportion of players from different countries in the NBA
+]
 ---
 class: middle, center, inverse
 
@@ -56,9 +59,10 @@ class: center, middle, inverse
 >The standard bar chart is animated to show rankings and change over time. The alternative is a multi-line chart.
 ---
 
-<iframe src="https://bamatracker.com/race" width="90%" height="90%"></iframe>
+<iframe src="https://bamatracker.com/race" width="90%" height="100%"></iframe>
 .footnote[Alabama COVID-19 cases over time]
 
+[link](https://bamatracker.com/race)
 ---
 class: center, middle, inverse
 
@@ -106,9 +110,9 @@ background-size: contain
 ---
 class: middle, center, inverse
 
-# Box Plot
+# Bubble Chart
 
-> The classic chart of quartiles, median, minimum, and maximum shows a basic view of distributions.
+> Points are placed like in a scatter plot, but they are sized based on the radius being the  square root of data values.
 
 ---
 
