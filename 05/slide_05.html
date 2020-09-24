@@ -1,0 +1,6557 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Module 2 - Week 5: Data prep for visualization</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Vaisman &amp; Dasgupta" />
+    <meta name="date" content="2020-09-24" />
+    <link href="slide_05_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="slide_05_files/panelset-0.2.2/panelset.css" rel="stylesheet" />
+    <script src="slide_05_files/panelset-0.2.2/panelset.js"></script>
+    <link href="slide_05_files/tachyons-4.12.0/tachyons.min.css" rel="stylesheet" />
+    <link href="slide_05_files/xaringanExtra-extra-styles-0.2.2/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../robot.css" type="text/css" />
+    <link rel="stylesheet" href="../robot-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="../sfah.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Module 2 - Week 5: Data prep for visualization
+## ANLY 503, Fall 2020
+### Vaisman &amp; Dasgupta
+### Georgetown University
+### 2020-09-24
+
+---
+
+
+
+
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+## Data preparation
+
+---
+
+
+Raw data is rarely amenable to good graphics
+
+It's often messy, with missing data and errors in encoding
+
+&gt; The only clean data out there is in textbooks
+
+---
+
+Data munging is best done using scripts
+
++ Reproducible
++ Debuggable
++ Shareable
+
+We'll be using R and Python in parallel today
+
+---
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+## R vs Python
+
+---
+
+This is not a blood feud, nothing like Emacs vs Vim
+
+Both languages are reasonably similar, with strengths and weaknesses that can be complementary
+
+We'd like you to learn both
+
+---
+
+.pull-left[
+
+### R
+
++ Large ecosystem focused on statistical and data scientific goals
++ Large community of developers
++ Wide ranging capabilities for data science
+
+]
+.pull-right[
+
+### Python
+
++ Large ecosystem around various goals
++ Moderately large sub-ecosystem devoted to data science (PyData)
++ Smaller community of data science developers
++ General programming language, so easier to connect PyData to production
+]
+
+---
+
+.pull-left[
+
+### R
+
++ Many smaller, goal-focused packages
++ The idea of pipes makes programs cognitively easier
++ The `tidyverse` puts emphasis on easier coding semantics for the developer while maintaining functionality
++ Connects to many data sources and other programs
++ Trivial to implement parallel programs
+]
+.pull-right[
+
+### Python
+
++ Fewer monolithic, all-encompassing packages
++ Some improvements in coding semantics.
++ Connects to many data sources and other programs
++ Parallel programming needs some effort (GIL)
+]
+
+---
+
+Both languages are extensible using a package/module ecosystem
+
+.pull-left[
+### R
+
++ Packages stored in CRAN or Github (or Bioconductor)
++ Most packages are stored in binary form for Windows, compiled from source in Mac/Linux
++ Installation does dependency checking
+
+]
+.pull-right[
+### Python
+
++ Packages are stored on PyPi and (increasingly) conda-forge
++ Packages can be installed from source, but are typically packages using Python's packaging system
++ Through `conda`, similar installations across operating system (for Anaconda/Miniconda distributions)
++ `conda` installations do dependency checking
+
+]
+
+---
+
+.pull-left[
+### R
+
+```r
+install.packages('tidyverse')
+remotes::install('tidyverse/dplyr') # dev version
+```
+
+(within R)
+
++ Sandboxing and package version fixing are not easy, so most work is done on centrally installed packages
+    - Some progress using `packrat` and `renv` packages
+]
+.pull-right[
+### Python
+
+```bash
+conda install pandas
+conda install -c conda-forge xgboost
+```
+
+(within a shell)
+
++ A strong methodology for sandboxing and package version fixing on a per-project basis
+    - `virtualenv`
+    - `conda env`
+]
+
+---
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+## Running scripts
+
+---
+
+.pull-left[
+### R
+
+Start by loading packages into active session
+
+
+```r
+library(tidyverse) # No aliases
+```
+
+Can use functions from packages using `&lt;package&gt;::&lt;function&gt;`, e.g.
+
+
+```r
+janitor::clean_names(dat)
+```
+
+or by themselves once package is loaded
+
+
+```r
+library(janitor)
+clean_names(dat)
+```
+]
+.pull-right[
+### Python
+
+Start by loading packages into active  session
+
+
+```python
+import pandas as pd # (optional alias)
+```
+
+Functions must be called with reference to package
+
+
+```python
+pd.read_csv('datafile.csv')
+```
+
+You can use a function from a package by importing it separately
+
+
+```python
+from pandas import read_csv
+read_csv('datafile.csv')
+```
+
+]
+
+---
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+## A typical beginning
+
+---
+
+.pull-left[
+### R
+
+
+```r
+library(readr)   # Data ingestion
+library(tidyr)   # Data reshaping
+library(dplyr)   # Data manipulation
+library(ggplot2) # Graphs
+```
+
+These packages are all part of the **tidyverse** meta-package, so the following suffices
+
+
+```r
+library(tidyverse)
+```
+
+]
+.pull-right[
+### Python
+
+
+```python
+import pandas as pd             # Data read/manipulate
+import matplotlib.pyplot as plt # Graphs
+import seaborn as sns           # Graphs
+```
+]
+
+---
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+## A note on the tidyverse
+
+---
+
+&lt;div style="display:flex;font-size:20pt;font-family:'Roboto Slab',serif;width:100%;height:150px;background-color:wheat;text-align:left; border: 1px solid red; position: relative;"&gt;
+&lt;blockquote&gt;
+The tidyverse is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures
+&lt;/blockquote&gt;
+
+&lt;/div&gt;
+
+.pull-left[
+A set of R packages that:
+
+&lt;ul&gt;
+  &lt;li&gt; help make data more computer-friendly
+  &lt;li&gt;while making your code more human-friendly
+&lt;/ul&gt;
+]
+.pull-right[
+** Packages**
+
+readr, tidyr, dplyr, purrr, ggplot2, forcats, stringr, tibble
+
+]
+---
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+## A note on tidy data
+
+---
+
+![](img/tidy-1.png)
+.right[R for Data Science (Wickham and Grolemund)]
+
+The basic rules are
+
+1. Each variable must have its own column
+1. Each observation must have its own row
+1. Each value must have its own cell
+
+---
+
+**Tidy data** is a conceptual framework to structure data in a consistent, analyses-friendly manner
+
+It helps identify ways in which data are __not__ tidy. 
+
+The crucial question for a particular study is: what is a variable and what is an observational unit
+
+&gt; Your data consists of hospitalizations across a healthcare network. If you're interested in comparing hospitals, the hospital is the observational unit. If you're interested in readmissions, then the patient is the unit of observation. If you're interested in treatment and care, then the hospital visit is the unit of observation
+
+--
+
+-------
+
+This does not mean that the data set you create or get must be in tidy form. 
+
+Non-tidy structures are often useful for data collection, but are hard for data analyses
+
+This framework will be our guide as we move forward.
+
+
+---
+
+### WHy are we emphasizing tidy data?
+
+**Because graphical software generally demands it**
+
+**ggplot2**, **seaborn**, Tableau and Plotly all demand data be in tidy format. How do I know this?
+
+They all ask for particular columns for groups/colors/shapes/sizes. 
+
+This means that values in a column determine those visual attributes, not across multiple columns
+
+---
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+---
+class: center, middle, inverse
+
+# Getting our hands dirty
+
+---
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+## Ingesting data
+
+---
+
+Most data comes to us as rectangular tables, either as CSV or Excel files  
+
+The following table gives functions that result in rectangular data structures  
+(`tibble` in R and `DataFrame` in Python)
+
+
+| Format type | Description | pandas reader | R (tidyverse) |
+| ----------- | ----------- | ------------  | ------------- |
+| text        | CSV         | `read_csv`      | `readr::read_csv` |
+|             | Excel       | `read_excel`    | `readxl::read_excel` |
+| binary      | Feather     | `read_feather`  | `feather::read_feather` |
+| binary      | SAS         | `read_sas`      | `haven::read_sas` |
+
+
+&gt; There are several ways of directly querying SQL databases in both R and Python. The main packages are **SQLAlchemy** in Python and 
+**DBI** in R, with **dbplyr** providing a nicer, tidyverse-friendly interface
+
+&gt; Note the difference in philosophy: One Python package covers 5 R packages for this narrow purpose
+
+---
+
+.panelset[
+.panel[
+  .panel-name[R]
+  
+
+```r
+library(tidyverse)
+
+pew &lt;- read_csv('data/pew.csv')
+head(pew)
+```
+
+```
+# A tibble: 6 x 11
+  religion `&lt;$10k` `$10-20k` `$20-30k` `$30-40k` `$40-50k` `$50-75k` `$75-100k`
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+1 Agnostic      27        34        60        81        76       137        122
+2 Atheist       12        27        37        52        35        70         73
+3 Buddhist      27        21        30        34        33        58         62
+4 Catholic     418       617       732       670       638      1116        949
+5 Don’t k…      15        14        15        11        10        35         21
+6 Evangel…     575       869      1064       982       881      1486        949
+# … with 3 more variables: `$100-150k` &lt;dbl&gt;, `&gt;150k` &lt;dbl&gt;, `Don't
+#   know/refused` &lt;dbl&gt;
+```
+]
+.panel[.panel-name[Python]
+
+
+```python
+import pandas as pd
+
+pew = pd.read_csv('data/pew.csv')
+pew.head()
+```
+
+```
+             religion  &lt;$10k  $10-20k  ...  $100-150k  &gt;150k  Don't know/refused
+0            Agnostic     27       34  ...        109     84                  96
+1             Atheist     12       27  ...         59     74                  76
+2            Buddhist     27       21  ...         39     53                  54
+3            Catholic    418      617  ...        792    633                1489
+4  Don’t know/refused     15       14  ...         17     18                 116
+
+[5 rows x 11 columns]
+```
+]
+]
+
+&gt; Both create rectangular data objects where each column can be of a different data type (numeric, character/string, categorical, boolean)
+
+---
+
+Most API calls come as JSON
+
+There are several ways each of the languages addresses JSON files. Typically they are read into nested structures like nested dicts (Python) and nested lists (R). JSON data can be "fun" to normalize
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+mis &lt;- rjson::fromJSON(file='data/miserables.json')
+class(mis)
+```
+
+```
+[1] "list"
+```
+
+```r
+mis
+```
+
+```
+$nodes
+$nodes[[1]]
+$nodes[[1]]$id
+[1] "Myriel"
+
+$nodes[[1]]$group
+[1] 1
+
+
+$nodes[[2]]
+$nodes[[2]]$id
+[1] "Napoleon"
+
+$nodes[[2]]$group
+[1] 1
+
+
+$nodes[[3]]
+$nodes[[3]]$id
+[1] "Mlle.Baptistine"
+
+$nodes[[3]]$group
+[1] 1
+
+
+$nodes[[4]]
+$nodes[[4]]$id
+[1] "Mme.Magloire"
+
+$nodes[[4]]$group
+[1] 1
+
+
+$nodes[[5]]
+$nodes[[5]]$id
+[1] "CountessdeLo"
+
+$nodes[[5]]$group
+[1] 1
+
+
+$nodes[[6]]
+$nodes[[6]]$id
+[1] "Geborand"
+
+$nodes[[6]]$group
+[1] 1
+
+
+$nodes[[7]]
+$nodes[[7]]$id
+[1] "Champtercier"
+
+$nodes[[7]]$group
+[1] 1
+
+
+$nodes[[8]]
+$nodes[[8]]$id
+[1] "Cravatte"
+
+$nodes[[8]]$group
+[1] 1
+
+
+$nodes[[9]]
+$nodes[[9]]$id
+[1] "Count"
+
+$nodes[[9]]$group
+[1] 1
+
+
+$nodes[[10]]
+$nodes[[10]]$id
+[1] "OldMan"
+
+$nodes[[10]]$group
+[1] 1
+
+
+$nodes[[11]]
+$nodes[[11]]$id
+[1] "Labarre"
+
+$nodes[[11]]$group
+[1] 2
+
+
+$nodes[[12]]
+$nodes[[12]]$id
+[1] "Valjean"
+
+$nodes[[12]]$group
+[1] 2
+
+
+$nodes[[13]]
+$nodes[[13]]$id
+[1] "Marguerite"
+
+$nodes[[13]]$group
+[1] 3
+
+
+$nodes[[14]]
+$nodes[[14]]$id
+[1] "Mme.deR"
+
+$nodes[[14]]$group
+[1] 2
+
+
+$nodes[[15]]
+$nodes[[15]]$id
+[1] "Isabeau"
+
+$nodes[[15]]$group
+[1] 2
+
+
+$nodes[[16]]
+$nodes[[16]]$id
+[1] "Gervais"
+
+$nodes[[16]]$group
+[1] 2
+
+
+$nodes[[17]]
+$nodes[[17]]$id
+[1] "Tholomyes"
+
+$nodes[[17]]$group
+[1] 3
+
+
+$nodes[[18]]
+$nodes[[18]]$id
+[1] "Listolier"
+
+$nodes[[18]]$group
+[1] 3
+
+
+$nodes[[19]]
+$nodes[[19]]$id
+[1] "Fameuil"
+
+$nodes[[19]]$group
+[1] 3
+
+
+$nodes[[20]]
+$nodes[[20]]$id
+[1] "Blacheville"
+
+$nodes[[20]]$group
+[1] 3
+
+
+$nodes[[21]]
+$nodes[[21]]$id
+[1] "Favourite"
+
+$nodes[[21]]$group
+[1] 3
+
+
+$nodes[[22]]
+$nodes[[22]]$id
+[1] "Dahlia"
+
+$nodes[[22]]$group
+[1] 3
+
+
+$nodes[[23]]
+$nodes[[23]]$id
+[1] "Zephine"
+
+$nodes[[23]]$group
+[1] 3
+
+
+$nodes[[24]]
+$nodes[[24]]$id
+[1] "Fantine"
+
+$nodes[[24]]$group
+[1] 3
+
+
+$nodes[[25]]
+$nodes[[25]]$id
+[1] "Mme.Thenardier"
+
+$nodes[[25]]$group
+[1] 4
+
+
+$nodes[[26]]
+$nodes[[26]]$id
+[1] "Thenardier"
+
+$nodes[[26]]$group
+[1] 4
+
+
+$nodes[[27]]
+$nodes[[27]]$id
+[1] "Cosette"
+
+$nodes[[27]]$group
+[1] 5
+
+
+$nodes[[28]]
+$nodes[[28]]$id
+[1] "Javert"
+
+$nodes[[28]]$group
+[1] 4
+
+
+$nodes[[29]]
+$nodes[[29]]$id
+[1] "Fauchelevent"
+
+$nodes[[29]]$group
+[1] 0
+
+
+$nodes[[30]]
+$nodes[[30]]$id
+[1] "Bamatabois"
+
+$nodes[[30]]$group
+[1] 2
+
+
+$nodes[[31]]
+$nodes[[31]]$id
+[1] "Perpetue"
+
+$nodes[[31]]$group
+[1] 3
+
+
+$nodes[[32]]
+$nodes[[32]]$id
+[1] "Simplice"
+
+$nodes[[32]]$group
+[1] 2
+
+
+$nodes[[33]]
+$nodes[[33]]$id
+[1] "Scaufflaire"
+
+$nodes[[33]]$group
+[1] 2
+
+
+$nodes[[34]]
+$nodes[[34]]$id
+[1] "Woman1"
+
+$nodes[[34]]$group
+[1] 2
+
+
+$nodes[[35]]
+$nodes[[35]]$id
+[1] "Judge"
+
+$nodes[[35]]$group
+[1] 2
+
+
+$nodes[[36]]
+$nodes[[36]]$id
+[1] "Champmathieu"
+
+$nodes[[36]]$group
+[1] 2
+
+
+$nodes[[37]]
+$nodes[[37]]$id
+[1] "Brevet"
+
+$nodes[[37]]$group
+[1] 2
+
+
+$nodes[[38]]
+$nodes[[38]]$id
+[1] "Chenildieu"
+
+$nodes[[38]]$group
+[1] 2
+
+
+$nodes[[39]]
+$nodes[[39]]$id
+[1] "Cochepaille"
+
+$nodes[[39]]$group
+[1] 2
+
+
+$nodes[[40]]
+$nodes[[40]]$id
+[1] "Pontmercy"
+
+$nodes[[40]]$group
+[1] 4
+
+
+$nodes[[41]]
+$nodes[[41]]$id
+[1] "Boulatruelle"
+
+$nodes[[41]]$group
+[1] 6
+
+
+$nodes[[42]]
+$nodes[[42]]$id
+[1] "Eponine"
+
+$nodes[[42]]$group
+[1] 4
+
+
+$nodes[[43]]
+$nodes[[43]]$id
+[1] "Anzelma"
+
+$nodes[[43]]$group
+[1] 4
+
+
+$nodes[[44]]
+$nodes[[44]]$id
+[1] "Woman2"
+
+$nodes[[44]]$group
+[1] 5
+
+
+$nodes[[45]]
+$nodes[[45]]$id
+[1] "MotherInnocent"
+
+$nodes[[45]]$group
+[1] 0
+
+
+$nodes[[46]]
+$nodes[[46]]$id
+[1] "Gribier"
+
+$nodes[[46]]$group
+[1] 0
+
+
+$nodes[[47]]
+$nodes[[47]]$id
+[1] "Jondrette"
+
+$nodes[[47]]$group
+[1] 7
+
+
+$nodes[[48]]
+$nodes[[48]]$id
+[1] "Mme.Burgon"
+
+$nodes[[48]]$group
+[1] 7
+
+
+$nodes[[49]]
+$nodes[[49]]$id
+[1] "Gavroche"
+
+$nodes[[49]]$group
+[1] 8
+
+
+$nodes[[50]]
+$nodes[[50]]$id
+[1] "Gillenormand"
+
+$nodes[[50]]$group
+[1] 5
+
+
+$nodes[[51]]
+$nodes[[51]]$id
+[1] "Magnon"
+
+$nodes[[51]]$group
+[1] 5
+
+
+$nodes[[52]]
+$nodes[[52]]$id
+[1] "Mlle.Gillenormand"
+
+$nodes[[52]]$group
+[1] 5
+
+
+$nodes[[53]]
+$nodes[[53]]$id
+[1] "Mme.Pontmercy"
+
+$nodes[[53]]$group
+[1] 5
+
+
+$nodes[[54]]
+$nodes[[54]]$id
+[1] "Mlle.Vaubois"
+
+$nodes[[54]]$group
+[1] 5
+
+
+$nodes[[55]]
+$nodes[[55]]$id
+[1] "Lt.Gillenormand"
+
+$nodes[[55]]$group
+[1] 5
+
+
+$nodes[[56]]
+$nodes[[56]]$id
+[1] "Marius"
+
+$nodes[[56]]$group
+[1] 8
+
+
+$nodes[[57]]
+$nodes[[57]]$id
+[1] "BaronessT"
+
+$nodes[[57]]$group
+[1] 5
+
+
+$nodes[[58]]
+$nodes[[58]]$id
+[1] "Mabeuf"
+
+$nodes[[58]]$group
+[1] 8
+
+
+$nodes[[59]]
+$nodes[[59]]$id
+[1] "Enjolras"
+
+$nodes[[59]]$group
+[1] 8
+
+
+$nodes[[60]]
+$nodes[[60]]$id
+[1] "Combeferre"
+
+$nodes[[60]]$group
+[1] 8
+
+
+$nodes[[61]]
+$nodes[[61]]$id
+[1] "Prouvaire"
+
+$nodes[[61]]$group
+[1] 8
+
+
+$nodes[[62]]
+$nodes[[62]]$id
+[1] "Feuilly"
+
+$nodes[[62]]$group
+[1] 8
+
+
+$nodes[[63]]
+$nodes[[63]]$id
+[1] "Courfeyrac"
+
+$nodes[[63]]$group
+[1] 8
+
+
+$nodes[[64]]
+$nodes[[64]]$id
+[1] "Bahorel"
+
+$nodes[[64]]$group
+[1] 8
+
+
+$nodes[[65]]
+$nodes[[65]]$id
+[1] "Bossuet"
+
+$nodes[[65]]$group
+[1] 8
+
+
+$nodes[[66]]
+$nodes[[66]]$id
+[1] "Joly"
+
+$nodes[[66]]$group
+[1] 8
+
+
+$nodes[[67]]
+$nodes[[67]]$id
+[1] "Grantaire"
+
+$nodes[[67]]$group
+[1] 8
+
+
+$nodes[[68]]
+$nodes[[68]]$id
+[1] "MotherPlutarch"
+
+$nodes[[68]]$group
+[1] 9
+
+
+$nodes[[69]]
+$nodes[[69]]$id
+[1] "Gueulemer"
+
+$nodes[[69]]$group
+[1] 4
+
+
+$nodes[[70]]
+$nodes[[70]]$id
+[1] "Babet"
+
+$nodes[[70]]$group
+[1] 4
+
+
+$nodes[[71]]
+$nodes[[71]]$id
+[1] "Claquesous"
+
+$nodes[[71]]$group
+[1] 4
+
+
+$nodes[[72]]
+$nodes[[72]]$id
+[1] "Montparnasse"
+
+$nodes[[72]]$group
+[1] 4
+
+
+$nodes[[73]]
+$nodes[[73]]$id
+[1] "Toussaint"
+
+$nodes[[73]]$group
+[1] 5
+
+
+$nodes[[74]]
+$nodes[[74]]$id
+[1] "Child1"
+
+$nodes[[74]]$group
+[1] 10
+
+
+$nodes[[75]]
+$nodes[[75]]$id
+[1] "Child2"
+
+$nodes[[75]]$group
+[1] 10
+
+
+$nodes[[76]]
+$nodes[[76]]$id
+[1] "Brujon"
+
+$nodes[[76]]$group
+[1] 4
+
+
+$nodes[[77]]
+$nodes[[77]]$id
+[1] "Mme.Hucheloup"
+
+$nodes[[77]]$group
+[1] 8
+
+
+
+$links
+$links[[1]]
+$links[[1]]$source
+[1] "Napoleon"
+
+$links[[1]]$target
+[1] "Myriel"
+
+$links[[1]]$value
+[1] 1
+
+
+$links[[2]]
+$links[[2]]$source
+[1] "Mlle.Baptistine"
+
+$links[[2]]$target
+[1] "Myriel"
+
+$links[[2]]$value
+[1] 8
+
+
+$links[[3]]
+$links[[3]]$source
+[1] "Mme.Magloire"
+
+$links[[3]]$target
+[1] "Myriel"
+
+$links[[3]]$value
+[1] 10
+
+
+$links[[4]]
+$links[[4]]$source
+[1] "Mme.Magloire"
+
+$links[[4]]$target
+[1] "Mlle.Baptistine"
+
+$links[[4]]$value
+[1] 6
+
+
+$links[[5]]
+$links[[5]]$source
+[1] "CountessdeLo"
+
+$links[[5]]$target
+[1] "Myriel"
+
+$links[[5]]$value
+[1] 1
+
+
+$links[[6]]
+$links[[6]]$source
+[1] "Geborand"
+
+$links[[6]]$target
+[1] "Myriel"
+
+$links[[6]]$value
+[1] 1
+
+
+$links[[7]]
+$links[[7]]$source
+[1] "Champtercier"
+
+$links[[7]]$target
+[1] "Myriel"
+
+$links[[7]]$value
+[1] 1
+
+
+$links[[8]]
+$links[[8]]$source
+[1] "Cravatte"
+
+$links[[8]]$target
+[1] "Myriel"
+
+$links[[8]]$value
+[1] 1
+
+
+$links[[9]]
+$links[[9]]$source
+[1] "Count"
+
+$links[[9]]$target
+[1] "Myriel"
+
+$links[[9]]$value
+[1] 2
+
+
+$links[[10]]
+$links[[10]]$source
+[1] "OldMan"
+
+$links[[10]]$target
+[1] "Myriel"
+
+$links[[10]]$value
+[1] 1
+
+
+$links[[11]]
+$links[[11]]$source
+[1] "Valjean"
+
+$links[[11]]$target
+[1] "Labarre"
+
+$links[[11]]$value
+[1] 1
+
+
+$links[[12]]
+$links[[12]]$source
+[1] "Valjean"
+
+$links[[12]]$target
+[1] "Mme.Magloire"
+
+$links[[12]]$value
+[1] 3
+
+
+$links[[13]]
+$links[[13]]$source
+[1] "Valjean"
+
+$links[[13]]$target
+[1] "Mlle.Baptistine"
+
+$links[[13]]$value
+[1] 3
+
+
+$links[[14]]
+$links[[14]]$source
+[1] "Valjean"
+
+$links[[14]]$target
+[1] "Myriel"
+
+$links[[14]]$value
+[1] 5
+
+
+$links[[15]]
+$links[[15]]$source
+[1] "Marguerite"
+
+$links[[15]]$target
+[1] "Valjean"
+
+$links[[15]]$value
+[1] 1
+
+
+$links[[16]]
+$links[[16]]$source
+[1] "Mme.deR"
+
+$links[[16]]$target
+[1] "Valjean"
+
+$links[[16]]$value
+[1] 1
+
+
+$links[[17]]
+$links[[17]]$source
+[1] "Isabeau"
+
+$links[[17]]$target
+[1] "Valjean"
+
+$links[[17]]$value
+[1] 1
+
+
+$links[[18]]
+$links[[18]]$source
+[1] "Gervais"
+
+$links[[18]]$target
+[1] "Valjean"
+
+$links[[18]]$value
+[1] 1
+
+
+$links[[19]]
+$links[[19]]$source
+[1] "Listolier"
+
+$links[[19]]$target
+[1] "Tholomyes"
+
+$links[[19]]$value
+[1] 4
+
+
+$links[[20]]
+$links[[20]]$source
+[1] "Fameuil"
+
+$links[[20]]$target
+[1] "Tholomyes"
+
+$links[[20]]$value
+[1] 4
+
+
+$links[[21]]
+$links[[21]]$source
+[1] "Fameuil"
+
+$links[[21]]$target
+[1] "Listolier"
+
+$links[[21]]$value
+[1] 4
+
+
+$links[[22]]
+$links[[22]]$source
+[1] "Blacheville"
+
+$links[[22]]$target
+[1] "Tholomyes"
+
+$links[[22]]$value
+[1] 4
+
+
+$links[[23]]
+$links[[23]]$source
+[1] "Blacheville"
+
+$links[[23]]$target
+[1] "Listolier"
+
+$links[[23]]$value
+[1] 4
+
+
+$links[[24]]
+$links[[24]]$source
+[1] "Blacheville"
+
+$links[[24]]$target
+[1] "Fameuil"
+
+$links[[24]]$value
+[1] 4
+
+
+$links[[25]]
+$links[[25]]$source
+[1] "Favourite"
+
+$links[[25]]$target
+[1] "Tholomyes"
+
+$links[[25]]$value
+[1] 3
+
+
+$links[[26]]
+$links[[26]]$source
+[1] "Favourite"
+
+$links[[26]]$target
+[1] "Listolier"
+
+$links[[26]]$value
+[1] 3
+
+
+$links[[27]]
+$links[[27]]$source
+[1] "Favourite"
+
+$links[[27]]$target
+[1] "Fameuil"
+
+$links[[27]]$value
+[1] 3
+
+
+$links[[28]]
+$links[[28]]$source
+[1] "Favourite"
+
+$links[[28]]$target
+[1] "Blacheville"
+
+$links[[28]]$value
+[1] 4
+
+
+$links[[29]]
+$links[[29]]$source
+[1] "Dahlia"
+
+$links[[29]]$target
+[1] "Tholomyes"
+
+$links[[29]]$value
+[1] 3
+
+
+$links[[30]]
+$links[[30]]$source
+[1] "Dahlia"
+
+$links[[30]]$target
+[1] "Listolier"
+
+$links[[30]]$value
+[1] 3
+
+
+$links[[31]]
+$links[[31]]$source
+[1] "Dahlia"
+
+$links[[31]]$target
+[1] "Fameuil"
+
+$links[[31]]$value
+[1] 3
+
+
+$links[[32]]
+$links[[32]]$source
+[1] "Dahlia"
+
+$links[[32]]$target
+[1] "Blacheville"
+
+$links[[32]]$value
+[1] 3
+
+
+$links[[33]]
+$links[[33]]$source
+[1] "Dahlia"
+
+$links[[33]]$target
+[1] "Favourite"
+
+$links[[33]]$value
+[1] 5
+
+
+$links[[34]]
+$links[[34]]$source
+[1] "Zephine"
+
+$links[[34]]$target
+[1] "Tholomyes"
+
+$links[[34]]$value
+[1] 3
+
+
+$links[[35]]
+$links[[35]]$source
+[1] "Zephine"
+
+$links[[35]]$target
+[1] "Listolier"
+
+$links[[35]]$value
+[1] 3
+
+
+$links[[36]]
+$links[[36]]$source
+[1] "Zephine"
+
+$links[[36]]$target
+[1] "Fameuil"
+
+$links[[36]]$value
+[1] 3
+
+
+$links[[37]]
+$links[[37]]$source
+[1] "Zephine"
+
+$links[[37]]$target
+[1] "Blacheville"
+
+$links[[37]]$value
+[1] 3
+
+
+$links[[38]]
+$links[[38]]$source
+[1] "Zephine"
+
+$links[[38]]$target
+[1] "Favourite"
+
+$links[[38]]$value
+[1] 4
+
+
+$links[[39]]
+$links[[39]]$source
+[1] "Zephine"
+
+$links[[39]]$target
+[1] "Dahlia"
+
+$links[[39]]$value
+[1] 4
+
+
+$links[[40]]
+$links[[40]]$source
+[1] "Fantine"
+
+$links[[40]]$target
+[1] "Tholomyes"
+
+$links[[40]]$value
+[1] 3
+
+
+$links[[41]]
+$links[[41]]$source
+[1] "Fantine"
+
+$links[[41]]$target
+[1] "Listolier"
+
+$links[[41]]$value
+[1] 3
+
+
+$links[[42]]
+$links[[42]]$source
+[1] "Fantine"
+
+$links[[42]]$target
+[1] "Fameuil"
+
+$links[[42]]$value
+[1] 3
+
+
+$links[[43]]
+$links[[43]]$source
+[1] "Fantine"
+
+$links[[43]]$target
+[1] "Blacheville"
+
+$links[[43]]$value
+[1] 3
+
+
+$links[[44]]
+$links[[44]]$source
+[1] "Fantine"
+
+$links[[44]]$target
+[1] "Favourite"
+
+$links[[44]]$value
+[1] 4
+
+
+$links[[45]]
+$links[[45]]$source
+[1] "Fantine"
+
+$links[[45]]$target
+[1] "Dahlia"
+
+$links[[45]]$value
+[1] 4
+
+
+$links[[46]]
+$links[[46]]$source
+[1] "Fantine"
+
+$links[[46]]$target
+[1] "Zephine"
+
+$links[[46]]$value
+[1] 4
+
+
+$links[[47]]
+$links[[47]]$source
+[1] "Fantine"
+
+$links[[47]]$target
+[1] "Marguerite"
+
+$links[[47]]$value
+[1] 2
+
+
+$links[[48]]
+$links[[48]]$source
+[1] "Fantine"
+
+$links[[48]]$target
+[1] "Valjean"
+
+$links[[48]]$value
+[1] 9
+
+
+$links[[49]]
+$links[[49]]$source
+[1] "Mme.Thenardier"
+
+$links[[49]]$target
+[1] "Fantine"
+
+$links[[49]]$value
+[1] 2
+
+
+$links[[50]]
+$links[[50]]$source
+[1] "Mme.Thenardier"
+
+$links[[50]]$target
+[1] "Valjean"
+
+$links[[50]]$value
+[1] 7
+
+
+$links[[51]]
+$links[[51]]$source
+[1] "Thenardier"
+
+$links[[51]]$target
+[1] "Mme.Thenardier"
+
+$links[[51]]$value
+[1] 13
+
+
+$links[[52]]
+$links[[52]]$source
+[1] "Thenardier"
+
+$links[[52]]$target
+[1] "Fantine"
+
+$links[[52]]$value
+[1] 1
+
+
+$links[[53]]
+$links[[53]]$source
+[1] "Thenardier"
+
+$links[[53]]$target
+[1] "Valjean"
+
+$links[[53]]$value
+[1] 12
+
+
+$links[[54]]
+$links[[54]]$source
+[1] "Cosette"
+
+$links[[54]]$target
+[1] "Mme.Thenardier"
+
+$links[[54]]$value
+[1] 4
+
+
+$links[[55]]
+$links[[55]]$source
+[1] "Cosette"
+
+$links[[55]]$target
+[1] "Valjean"
+
+$links[[55]]$value
+[1] 31
+
+
+$links[[56]]
+$links[[56]]$source
+[1] "Cosette"
+
+$links[[56]]$target
+[1] "Tholomyes"
+
+$links[[56]]$value
+[1] 1
+
+
+$links[[57]]
+$links[[57]]$source
+[1] "Cosette"
+
+$links[[57]]$target
+[1] "Thenardier"
+
+$links[[57]]$value
+[1] 1
+
+
+$links[[58]]
+$links[[58]]$source
+[1] "Javert"
+
+$links[[58]]$target
+[1] "Valjean"
+
+$links[[58]]$value
+[1] 17
+
+
+$links[[59]]
+$links[[59]]$source
+[1] "Javert"
+
+$links[[59]]$target
+[1] "Fantine"
+
+$links[[59]]$value
+[1] 5
+
+
+$links[[60]]
+$links[[60]]$source
+[1] "Javert"
+
+$links[[60]]$target
+[1] "Thenardier"
+
+$links[[60]]$value
+[1] 5
+
+
+$links[[61]]
+$links[[61]]$source
+[1] "Javert"
+
+$links[[61]]$target
+[1] "Mme.Thenardier"
+
+$links[[61]]$value
+[1] 1
+
+
+$links[[62]]
+$links[[62]]$source
+[1] "Javert"
+
+$links[[62]]$target
+[1] "Cosette"
+
+$links[[62]]$value
+[1] 1
+
+
+$links[[63]]
+$links[[63]]$source
+[1] "Fauchelevent"
+
+$links[[63]]$target
+[1] "Valjean"
+
+$links[[63]]$value
+[1] 8
+
+
+$links[[64]]
+$links[[64]]$source
+[1] "Fauchelevent"
+
+$links[[64]]$target
+[1] "Javert"
+
+$links[[64]]$value
+[1] 1
+
+
+$links[[65]]
+$links[[65]]$source
+[1] "Bamatabois"
+
+$links[[65]]$target
+[1] "Fantine"
+
+$links[[65]]$value
+[1] 1
+
+
+$links[[66]]
+$links[[66]]$source
+[1] "Bamatabois"
+
+$links[[66]]$target
+[1] "Javert"
+
+$links[[66]]$value
+[1] 1
+
+
+$links[[67]]
+$links[[67]]$source
+[1] "Bamatabois"
+
+$links[[67]]$target
+[1] "Valjean"
+
+$links[[67]]$value
+[1] 2
+
+
+$links[[68]]
+$links[[68]]$source
+[1] "Perpetue"
+
+$links[[68]]$target
+[1] "Fantine"
+
+$links[[68]]$value
+[1] 1
+
+
+$links[[69]]
+$links[[69]]$source
+[1] "Simplice"
+
+$links[[69]]$target
+[1] "Perpetue"
+
+$links[[69]]$value
+[1] 2
+
+
+$links[[70]]
+$links[[70]]$source
+[1] "Simplice"
+
+$links[[70]]$target
+[1] "Valjean"
+
+$links[[70]]$value
+[1] 3
+
+
+$links[[71]]
+$links[[71]]$source
+[1] "Simplice"
+
+$links[[71]]$target
+[1] "Fantine"
+
+$links[[71]]$value
+[1] 2
+
+
+$links[[72]]
+$links[[72]]$source
+[1] "Simplice"
+
+$links[[72]]$target
+[1] "Javert"
+
+$links[[72]]$value
+[1] 1
+
+
+$links[[73]]
+$links[[73]]$source
+[1] "Scaufflaire"
+
+$links[[73]]$target
+[1] "Valjean"
+
+$links[[73]]$value
+[1] 1
+
+
+$links[[74]]
+$links[[74]]$source
+[1] "Woman1"
+
+$links[[74]]$target
+[1] "Valjean"
+
+$links[[74]]$value
+[1] 2
+
+
+$links[[75]]
+$links[[75]]$source
+[1] "Woman1"
+
+$links[[75]]$target
+[1] "Javert"
+
+$links[[75]]$value
+[1] 1
+
+
+$links[[76]]
+$links[[76]]$source
+[1] "Judge"
+
+$links[[76]]$target
+[1] "Valjean"
+
+$links[[76]]$value
+[1] 3
+
+
+$links[[77]]
+$links[[77]]$source
+[1] "Judge"
+
+$links[[77]]$target
+[1] "Bamatabois"
+
+$links[[77]]$value
+[1] 2
+
+
+$links[[78]]
+$links[[78]]$source
+[1] "Champmathieu"
+
+$links[[78]]$target
+[1] "Valjean"
+
+$links[[78]]$value
+[1] 3
+
+
+$links[[79]]
+$links[[79]]$source
+[1] "Champmathieu"
+
+$links[[79]]$target
+[1] "Judge"
+
+$links[[79]]$value
+[1] 3
+
+
+$links[[80]]
+$links[[80]]$source
+[1] "Champmathieu"
+
+$links[[80]]$target
+[1] "Bamatabois"
+
+$links[[80]]$value
+[1] 2
+
+
+$links[[81]]
+$links[[81]]$source
+[1] "Brevet"
+
+$links[[81]]$target
+[1] "Judge"
+
+$links[[81]]$value
+[1] 2
+
+
+$links[[82]]
+$links[[82]]$source
+[1] "Brevet"
+
+$links[[82]]$target
+[1] "Champmathieu"
+
+$links[[82]]$value
+[1] 2
+
+
+$links[[83]]
+$links[[83]]$source
+[1] "Brevet"
+
+$links[[83]]$target
+[1] "Valjean"
+
+$links[[83]]$value
+[1] 2
+
+
+$links[[84]]
+$links[[84]]$source
+[1] "Brevet"
+
+$links[[84]]$target
+[1] "Bamatabois"
+
+$links[[84]]$value
+[1] 1
+
+
+$links[[85]]
+$links[[85]]$source
+[1] "Chenildieu"
+
+$links[[85]]$target
+[1] "Judge"
+
+$links[[85]]$value
+[1] 2
+
+
+$links[[86]]
+$links[[86]]$source
+[1] "Chenildieu"
+
+$links[[86]]$target
+[1] "Champmathieu"
+
+$links[[86]]$value
+[1] 2
+
+
+$links[[87]]
+$links[[87]]$source
+[1] "Chenildieu"
+
+$links[[87]]$target
+[1] "Brevet"
+
+$links[[87]]$value
+[1] 2
+
+
+$links[[88]]
+$links[[88]]$source
+[1] "Chenildieu"
+
+$links[[88]]$target
+[1] "Valjean"
+
+$links[[88]]$value
+[1] 2
+
+
+$links[[89]]
+$links[[89]]$source
+[1] "Chenildieu"
+
+$links[[89]]$target
+[1] "Bamatabois"
+
+$links[[89]]$value
+[1] 1
+
+
+$links[[90]]
+$links[[90]]$source
+[1] "Cochepaille"
+
+$links[[90]]$target
+[1] "Judge"
+
+$links[[90]]$value
+[1] 2
+
+
+$links[[91]]
+$links[[91]]$source
+[1] "Cochepaille"
+
+$links[[91]]$target
+[1] "Champmathieu"
+
+$links[[91]]$value
+[1] 2
+
+
+$links[[92]]
+$links[[92]]$source
+[1] "Cochepaille"
+
+$links[[92]]$target
+[1] "Brevet"
+
+$links[[92]]$value
+[1] 2
+
+
+$links[[93]]
+$links[[93]]$source
+[1] "Cochepaille"
+
+$links[[93]]$target
+[1] "Chenildieu"
+
+$links[[93]]$value
+[1] 2
+
+
+$links[[94]]
+$links[[94]]$source
+[1] "Cochepaille"
+
+$links[[94]]$target
+[1] "Valjean"
+
+$links[[94]]$value
+[1] 2
+
+
+$links[[95]]
+$links[[95]]$source
+[1] "Cochepaille"
+
+$links[[95]]$target
+[1] "Bamatabois"
+
+$links[[95]]$value
+[1] 1
+
+
+$links[[96]]
+$links[[96]]$source
+[1] "Pontmercy"
+
+$links[[96]]$target
+[1] "Thenardier"
+
+$links[[96]]$value
+[1] 1
+
+
+$links[[97]]
+$links[[97]]$source
+[1] "Boulatruelle"
+
+$links[[97]]$target
+[1] "Thenardier"
+
+$links[[97]]$value
+[1] 1
+
+
+$links[[98]]
+$links[[98]]$source
+[1] "Eponine"
+
+$links[[98]]$target
+[1] "Mme.Thenardier"
+
+$links[[98]]$value
+[1] 2
+
+
+$links[[99]]
+$links[[99]]$source
+[1] "Eponine"
+
+$links[[99]]$target
+[1] "Thenardier"
+
+$links[[99]]$value
+[1] 3
+
+
+$links[[100]]
+$links[[100]]$source
+[1] "Anzelma"
+
+$links[[100]]$target
+[1] "Eponine"
+
+$links[[100]]$value
+[1] 2
+
+
+$links[[101]]
+$links[[101]]$source
+[1] "Anzelma"
+
+$links[[101]]$target
+[1] "Thenardier"
+
+$links[[101]]$value
+[1] 2
+
+
+$links[[102]]
+$links[[102]]$source
+[1] "Anzelma"
+
+$links[[102]]$target
+[1] "Mme.Thenardier"
+
+$links[[102]]$value
+[1] 1
+
+
+$links[[103]]
+$links[[103]]$source
+[1] "Woman2"
+
+$links[[103]]$target
+[1] "Valjean"
+
+$links[[103]]$value
+[1] 3
+
+
+$links[[104]]
+$links[[104]]$source
+[1] "Woman2"
+
+$links[[104]]$target
+[1] "Cosette"
+
+$links[[104]]$value
+[1] 1
+
+
+$links[[105]]
+$links[[105]]$source
+[1] "Woman2"
+
+$links[[105]]$target
+[1] "Javert"
+
+$links[[105]]$value
+[1] 1
+
+
+$links[[106]]
+$links[[106]]$source
+[1] "MotherInnocent"
+
+$links[[106]]$target
+[1] "Fauchelevent"
+
+$links[[106]]$value
+[1] 3
+
+
+$links[[107]]
+$links[[107]]$source
+[1] "MotherInnocent"
+
+$links[[107]]$target
+[1] "Valjean"
+
+$links[[107]]$value
+[1] 1
+
+
+$links[[108]]
+$links[[108]]$source
+[1] "Gribier"
+
+$links[[108]]$target
+[1] "Fauchelevent"
+
+$links[[108]]$value
+[1] 2
+
+
+$links[[109]]
+$links[[109]]$source
+[1] "Mme.Burgon"
+
+$links[[109]]$target
+[1] "Jondrette"
+
+$links[[109]]$value
+[1] 1
+
+
+$links[[110]]
+$links[[110]]$source
+[1] "Gavroche"
+
+$links[[110]]$target
+[1] "Mme.Burgon"
+
+$links[[110]]$value
+[1] 2
+
+
+$links[[111]]
+$links[[111]]$source
+[1] "Gavroche"
+
+$links[[111]]$target
+[1] "Thenardier"
+
+$links[[111]]$value
+[1] 1
+
+
+$links[[112]]
+$links[[112]]$source
+[1] "Gavroche"
+
+$links[[112]]$target
+[1] "Javert"
+
+$links[[112]]$value
+[1] 1
+
+
+$links[[113]]
+$links[[113]]$source
+[1] "Gavroche"
+
+$links[[113]]$target
+[1] "Valjean"
+
+$links[[113]]$value
+[1] 1
+
+
+$links[[114]]
+$links[[114]]$source
+[1] "Gillenormand"
+
+$links[[114]]$target
+[1] "Cosette"
+
+$links[[114]]$value
+[1] 3
+
+
+$links[[115]]
+$links[[115]]$source
+[1] "Gillenormand"
+
+$links[[115]]$target
+[1] "Valjean"
+
+$links[[115]]$value
+[1] 2
+
+
+$links[[116]]
+$links[[116]]$source
+[1] "Magnon"
+
+$links[[116]]$target
+[1] "Gillenormand"
+
+$links[[116]]$value
+[1] 1
+
+
+$links[[117]]
+$links[[117]]$source
+[1] "Magnon"
+
+$links[[117]]$target
+[1] "Mme.Thenardier"
+
+$links[[117]]$value
+[1] 1
+
+
+$links[[118]]
+$links[[118]]$source
+[1] "Mlle.Gillenormand"
+
+$links[[118]]$target
+[1] "Gillenormand"
+
+$links[[118]]$value
+[1] 9
+
+
+$links[[119]]
+$links[[119]]$source
+[1] "Mlle.Gillenormand"
+
+$links[[119]]$target
+[1] "Cosette"
+
+$links[[119]]$value
+[1] 2
+
+
+$links[[120]]
+$links[[120]]$source
+[1] "Mlle.Gillenormand"
+
+$links[[120]]$target
+[1] "Valjean"
+
+$links[[120]]$value
+[1] 2
+
+
+$links[[121]]
+$links[[121]]$source
+[1] "Mme.Pontmercy"
+
+$links[[121]]$target
+[1] "Mlle.Gillenormand"
+
+$links[[121]]$value
+[1] 1
+
+
+$links[[122]]
+$links[[122]]$source
+[1] "Mme.Pontmercy"
+
+$links[[122]]$target
+[1] "Pontmercy"
+
+$links[[122]]$value
+[1] 1
+
+
+$links[[123]]
+$links[[123]]$source
+[1] "Mlle.Vaubois"
+
+$links[[123]]$target
+[1] "Mlle.Gillenormand"
+
+$links[[123]]$value
+[1] 1
+
+
+$links[[124]]
+$links[[124]]$source
+[1] "Lt.Gillenormand"
+
+$links[[124]]$target
+[1] "Mlle.Gillenormand"
+
+$links[[124]]$value
+[1] 2
+
+
+$links[[125]]
+$links[[125]]$source
+[1] "Lt.Gillenormand"
+
+$links[[125]]$target
+[1] "Gillenormand"
+
+$links[[125]]$value
+[1] 1
+
+
+$links[[126]]
+$links[[126]]$source
+[1] "Lt.Gillenormand"
+
+$links[[126]]$target
+[1] "Cosette"
+
+$links[[126]]$value
+[1] 1
+
+
+$links[[127]]
+$links[[127]]$source
+[1] "Marius"
+
+$links[[127]]$target
+[1] "Mlle.Gillenormand"
+
+$links[[127]]$value
+[1] 6
+
+
+$links[[128]]
+$links[[128]]$source
+[1] "Marius"
+
+$links[[128]]$target
+[1] "Gillenormand"
+
+$links[[128]]$value
+[1] 12
+
+
+$links[[129]]
+$links[[129]]$source
+[1] "Marius"
+
+$links[[129]]$target
+[1] "Pontmercy"
+
+$links[[129]]$value
+[1] 1
+
+
+$links[[130]]
+$links[[130]]$source
+[1] "Marius"
+
+$links[[130]]$target
+[1] "Lt.Gillenormand"
+
+$links[[130]]$value
+[1] 1
+
+
+$links[[131]]
+$links[[131]]$source
+[1] "Marius"
+
+$links[[131]]$target
+[1] "Cosette"
+
+$links[[131]]$value
+[1] 21
+
+
+$links[[132]]
+$links[[132]]$source
+[1] "Marius"
+
+$links[[132]]$target
+[1] "Valjean"
+
+$links[[132]]$value
+[1] 19
+
+
+$links[[133]]
+$links[[133]]$source
+[1] "Marius"
+
+$links[[133]]$target
+[1] "Tholomyes"
+
+$links[[133]]$value
+[1] 1
+
+
+$links[[134]]
+$links[[134]]$source
+[1] "Marius"
+
+$links[[134]]$target
+[1] "Thenardier"
+
+$links[[134]]$value
+[1] 2
+
+
+$links[[135]]
+$links[[135]]$source
+[1] "Marius"
+
+$links[[135]]$target
+[1] "Eponine"
+
+$links[[135]]$value
+[1] 5
+
+
+$links[[136]]
+$links[[136]]$source
+[1] "Marius"
+
+$links[[136]]$target
+[1] "Gavroche"
+
+$links[[136]]$value
+[1] 4
+
+
+$links[[137]]
+$links[[137]]$source
+[1] "BaronessT"
+
+$links[[137]]$target
+[1] "Gillenormand"
+
+$links[[137]]$value
+[1] 1
+
+
+$links[[138]]
+$links[[138]]$source
+[1] "BaronessT"
+
+$links[[138]]$target
+[1] "Marius"
+
+$links[[138]]$value
+[1] 1
+
+
+$links[[139]]
+$links[[139]]$source
+[1] "Mabeuf"
+
+$links[[139]]$target
+[1] "Marius"
+
+$links[[139]]$value
+[1] 1
+
+
+$links[[140]]
+$links[[140]]$source
+[1] "Mabeuf"
+
+$links[[140]]$target
+[1] "Eponine"
+
+$links[[140]]$value
+[1] 1
+
+
+$links[[141]]
+$links[[141]]$source
+[1] "Mabeuf"
+
+$links[[141]]$target
+[1] "Gavroche"
+
+$links[[141]]$value
+[1] 1
+
+
+$links[[142]]
+$links[[142]]$source
+[1] "Enjolras"
+
+$links[[142]]$target
+[1] "Marius"
+
+$links[[142]]$value
+[1] 7
+
+
+$links[[143]]
+$links[[143]]$source
+[1] "Enjolras"
+
+$links[[143]]$target
+[1] "Gavroche"
+
+$links[[143]]$value
+[1] 7
+
+
+$links[[144]]
+$links[[144]]$source
+[1] "Enjolras"
+
+$links[[144]]$target
+[1] "Javert"
+
+$links[[144]]$value
+[1] 6
+
+
+$links[[145]]
+$links[[145]]$source
+[1] "Enjolras"
+
+$links[[145]]$target
+[1] "Mabeuf"
+
+$links[[145]]$value
+[1] 1
+
+
+$links[[146]]
+$links[[146]]$source
+[1] "Enjolras"
+
+$links[[146]]$target
+[1] "Valjean"
+
+$links[[146]]$value
+[1] 4
+
+
+$links[[147]]
+$links[[147]]$source
+[1] "Combeferre"
+
+$links[[147]]$target
+[1] "Enjolras"
+
+$links[[147]]$value
+[1] 15
+
+
+$links[[148]]
+$links[[148]]$source
+[1] "Combeferre"
+
+$links[[148]]$target
+[1] "Marius"
+
+$links[[148]]$value
+[1] 5
+
+
+$links[[149]]
+$links[[149]]$source
+[1] "Combeferre"
+
+$links[[149]]$target
+[1] "Gavroche"
+
+$links[[149]]$value
+[1] 6
+
+
+$links[[150]]
+$links[[150]]$source
+[1] "Combeferre"
+
+$links[[150]]$target
+[1] "Mabeuf"
+
+$links[[150]]$value
+[1] 2
+
+
+$links[[151]]
+$links[[151]]$source
+[1] "Prouvaire"
+
+$links[[151]]$target
+[1] "Gavroche"
+
+$links[[151]]$value
+[1] 1
+
+
+$links[[152]]
+$links[[152]]$source
+[1] "Prouvaire"
+
+$links[[152]]$target
+[1] "Enjolras"
+
+$links[[152]]$value
+[1] 4
+
+
+$links[[153]]
+$links[[153]]$source
+[1] "Prouvaire"
+
+$links[[153]]$target
+[1] "Combeferre"
+
+$links[[153]]$value
+[1] 2
+
+
+$links[[154]]
+$links[[154]]$source
+[1] "Feuilly"
+
+$links[[154]]$target
+[1] "Gavroche"
+
+$links[[154]]$value
+[1] 2
+
+
+$links[[155]]
+$links[[155]]$source
+[1] "Feuilly"
+
+$links[[155]]$target
+[1] "Enjolras"
+
+$links[[155]]$value
+[1] 6
+
+
+$links[[156]]
+$links[[156]]$source
+[1] "Feuilly"
+
+$links[[156]]$target
+[1] "Prouvaire"
+
+$links[[156]]$value
+[1] 2
+
+
+$links[[157]]
+$links[[157]]$source
+[1] "Feuilly"
+
+$links[[157]]$target
+[1] "Combeferre"
+
+$links[[157]]$value
+[1] 5
+
+
+$links[[158]]
+$links[[158]]$source
+[1] "Feuilly"
+
+$links[[158]]$target
+[1] "Mabeuf"
+
+$links[[158]]$value
+[1] 1
+
+
+$links[[159]]
+$links[[159]]$source
+[1] "Feuilly"
+
+$links[[159]]$target
+[1] "Marius"
+
+$links[[159]]$value
+[1] 1
+
+
+$links[[160]]
+$links[[160]]$source
+[1] "Courfeyrac"
+
+$links[[160]]$target
+[1] "Marius"
+
+$links[[160]]$value
+[1] 9
+
+
+$links[[161]]
+$links[[161]]$source
+[1] "Courfeyrac"
+
+$links[[161]]$target
+[1] "Enjolras"
+
+$links[[161]]$value
+[1] 17
+
+
+$links[[162]]
+$links[[162]]$source
+[1] "Courfeyrac"
+
+$links[[162]]$target
+[1] "Combeferre"
+
+$links[[162]]$value
+[1] 13
+
+
+$links[[163]]
+$links[[163]]$source
+[1] "Courfeyrac"
+
+$links[[163]]$target
+[1] "Gavroche"
+
+$links[[163]]$value
+[1] 7
+
+
+$links[[164]]
+$links[[164]]$source
+[1] "Courfeyrac"
+
+$links[[164]]$target
+[1] "Mabeuf"
+
+$links[[164]]$value
+[1] 2
+
+
+$links[[165]]
+$links[[165]]$source
+[1] "Courfeyrac"
+
+$links[[165]]$target
+[1] "Eponine"
+
+$links[[165]]$value
+[1] 1
+
+
+$links[[166]]
+$links[[166]]$source
+[1] "Courfeyrac"
+
+$links[[166]]$target
+[1] "Feuilly"
+
+$links[[166]]$value
+[1] 6
+
+
+$links[[167]]
+$links[[167]]$source
+[1] "Courfeyrac"
+
+$links[[167]]$target
+[1] "Prouvaire"
+
+$links[[167]]$value
+[1] 3
+
+
+$links[[168]]
+$links[[168]]$source
+[1] "Bahorel"
+
+$links[[168]]$target
+[1] "Combeferre"
+
+$links[[168]]$value
+[1] 5
+
+
+$links[[169]]
+$links[[169]]$source
+[1] "Bahorel"
+
+$links[[169]]$target
+[1] "Gavroche"
+
+$links[[169]]$value
+[1] 5
+
+
+$links[[170]]
+$links[[170]]$source
+[1] "Bahorel"
+
+$links[[170]]$target
+[1] "Courfeyrac"
+
+$links[[170]]$value
+[1] 6
+
+
+$links[[171]]
+$links[[171]]$source
+[1] "Bahorel"
+
+$links[[171]]$target
+[1] "Mabeuf"
+
+$links[[171]]$value
+[1] 2
+
+
+$links[[172]]
+$links[[172]]$source
+[1] "Bahorel"
+
+$links[[172]]$target
+[1] "Enjolras"
+
+$links[[172]]$value
+[1] 4
+
+
+$links[[173]]
+$links[[173]]$source
+[1] "Bahorel"
+
+$links[[173]]$target
+[1] "Feuilly"
+
+$links[[173]]$value
+[1] 3
+
+
+$links[[174]]
+$links[[174]]$source
+[1] "Bahorel"
+
+$links[[174]]$target
+[1] "Prouvaire"
+
+$links[[174]]$value
+[1] 2
+
+
+$links[[175]]
+$links[[175]]$source
+[1] "Bahorel"
+
+$links[[175]]$target
+[1] "Marius"
+
+$links[[175]]$value
+[1] 1
+
+
+$links[[176]]
+$links[[176]]$source
+[1] "Bossuet"
+
+$links[[176]]$target
+[1] "Marius"
+
+$links[[176]]$value
+[1] 5
+
+
+$links[[177]]
+$links[[177]]$source
+[1] "Bossuet"
+
+$links[[177]]$target
+[1] "Courfeyrac"
+
+$links[[177]]$value
+[1] 12
+
+
+$links[[178]]
+$links[[178]]$source
+[1] "Bossuet"
+
+$links[[178]]$target
+[1] "Gavroche"
+
+$links[[178]]$value
+[1] 5
+
+
+$links[[179]]
+$links[[179]]$source
+[1] "Bossuet"
+
+$links[[179]]$target
+[1] "Bahorel"
+
+$links[[179]]$value
+[1] 4
+
+
+$links[[180]]
+$links[[180]]$source
+[1] "Bossuet"
+
+$links[[180]]$target
+[1] "Enjolras"
+
+$links[[180]]$value
+[1] 10
+
+
+$links[[181]]
+$links[[181]]$source
+[1] "Bossuet"
+
+$links[[181]]$target
+[1] "Feuilly"
+
+$links[[181]]$value
+[1] 6
+
+
+$links[[182]]
+$links[[182]]$source
+[1] "Bossuet"
+
+$links[[182]]$target
+[1] "Prouvaire"
+
+$links[[182]]$value
+[1] 2
+
+
+$links[[183]]
+$links[[183]]$source
+[1] "Bossuet"
+
+$links[[183]]$target
+[1] "Combeferre"
+
+$links[[183]]$value
+[1] 9
+
+
+$links[[184]]
+$links[[184]]$source
+[1] "Bossuet"
+
+$links[[184]]$target
+[1] "Mabeuf"
+
+$links[[184]]$value
+[1] 1
+
+
+$links[[185]]
+$links[[185]]$source
+[1] "Bossuet"
+
+$links[[185]]$target
+[1] "Valjean"
+
+$links[[185]]$value
+[1] 1
+
+
+$links[[186]]
+$links[[186]]$source
+[1] "Joly"
+
+$links[[186]]$target
+[1] "Bahorel"
+
+$links[[186]]$value
+[1] 5
+
+
+$links[[187]]
+$links[[187]]$source
+[1] "Joly"
+
+$links[[187]]$target
+[1] "Bossuet"
+
+$links[[187]]$value
+[1] 7
+
+
+$links[[188]]
+$links[[188]]$source
+[1] "Joly"
+
+$links[[188]]$target
+[1] "Gavroche"
+
+$links[[188]]$value
+[1] 3
+
+
+$links[[189]]
+$links[[189]]$source
+[1] "Joly"
+
+$links[[189]]$target
+[1] "Courfeyrac"
+
+$links[[189]]$value
+[1] 5
+
+
+$links[[190]]
+$links[[190]]$source
+[1] "Joly"
+
+$links[[190]]$target
+[1] "Enjolras"
+
+$links[[190]]$value
+[1] 5
+
+
+$links[[191]]
+$links[[191]]$source
+[1] "Joly"
+
+$links[[191]]$target
+[1] "Feuilly"
+
+$links[[191]]$value
+[1] 5
+
+
+$links[[192]]
+$links[[192]]$source
+[1] "Joly"
+
+$links[[192]]$target
+[1] "Prouvaire"
+
+$links[[192]]$value
+[1] 2
+
+
+$links[[193]]
+$links[[193]]$source
+[1] "Joly"
+
+$links[[193]]$target
+[1] "Combeferre"
+
+$links[[193]]$value
+[1] 5
+
+
+$links[[194]]
+$links[[194]]$source
+[1] "Joly"
+
+$links[[194]]$target
+[1] "Mabeuf"
+
+$links[[194]]$value
+[1] 1
+
+
+$links[[195]]
+$links[[195]]$source
+[1] "Joly"
+
+$links[[195]]$target
+[1] "Marius"
+
+$links[[195]]$value
+[1] 2
+
+
+$links[[196]]
+$links[[196]]$source
+[1] "Grantaire"
+
+$links[[196]]$target
+[1] "Bossuet"
+
+$links[[196]]$value
+[1] 3
+
+
+$links[[197]]
+$links[[197]]$source
+[1] "Grantaire"
+
+$links[[197]]$target
+[1] "Enjolras"
+
+$links[[197]]$value
+[1] 3
+
+
+$links[[198]]
+$links[[198]]$source
+[1] "Grantaire"
+
+$links[[198]]$target
+[1] "Combeferre"
+
+$links[[198]]$value
+[1] 1
+
+
+$links[[199]]
+$links[[199]]$source
+[1] "Grantaire"
+
+$links[[199]]$target
+[1] "Courfeyrac"
+
+$links[[199]]$value
+[1] 2
+
+
+$links[[200]]
+$links[[200]]$source
+[1] "Grantaire"
+
+$links[[200]]$target
+[1] "Joly"
+
+$links[[200]]$value
+[1] 2
+
+
+$links[[201]]
+$links[[201]]$source
+[1] "Grantaire"
+
+$links[[201]]$target
+[1] "Gavroche"
+
+$links[[201]]$value
+[1] 1
+
+
+$links[[202]]
+$links[[202]]$source
+[1] "Grantaire"
+
+$links[[202]]$target
+[1] "Bahorel"
+
+$links[[202]]$value
+[1] 1
+
+
+$links[[203]]
+$links[[203]]$source
+[1] "Grantaire"
+
+$links[[203]]$target
+[1] "Feuilly"
+
+$links[[203]]$value
+[1] 1
+
+
+$links[[204]]
+$links[[204]]$source
+[1] "Grantaire"
+
+$links[[204]]$target
+[1] "Prouvaire"
+
+$links[[204]]$value
+[1] 1
+
+
+$links[[205]]
+$links[[205]]$source
+[1] "MotherPlutarch"
+
+$links[[205]]$target
+[1] "Mabeuf"
+
+$links[[205]]$value
+[1] 3
+
+
+$links[[206]]
+$links[[206]]$source
+[1] "Gueulemer"
+
+$links[[206]]$target
+[1] "Thenardier"
+
+$links[[206]]$value
+[1] 5
+
+
+$links[[207]]
+$links[[207]]$source
+[1] "Gueulemer"
+
+$links[[207]]$target
+[1] "Valjean"
+
+$links[[207]]$value
+[1] 1
+
+
+$links[[208]]
+$links[[208]]$source
+[1] "Gueulemer"
+
+$links[[208]]$target
+[1] "Mme.Thenardier"
+
+$links[[208]]$value
+[1] 1
+
+
+$links[[209]]
+$links[[209]]$source
+[1] "Gueulemer"
+
+$links[[209]]$target
+[1] "Javert"
+
+$links[[209]]$value
+[1] 1
+
+
+$links[[210]]
+$links[[210]]$source
+[1] "Gueulemer"
+
+$links[[210]]$target
+[1] "Gavroche"
+
+$links[[210]]$value
+[1] 1
+
+
+$links[[211]]
+$links[[211]]$source
+[1] "Gueulemer"
+
+$links[[211]]$target
+[1] "Eponine"
+
+$links[[211]]$value
+[1] 1
+
+
+$links[[212]]
+$links[[212]]$source
+[1] "Babet"
+
+$links[[212]]$target
+[1] "Thenardier"
+
+$links[[212]]$value
+[1] 6
+
+
+$links[[213]]
+$links[[213]]$source
+[1] "Babet"
+
+$links[[213]]$target
+[1] "Gueulemer"
+
+$links[[213]]$value
+[1] 6
+
+
+$links[[214]]
+$links[[214]]$source
+[1] "Babet"
+
+$links[[214]]$target
+[1] "Valjean"
+
+$links[[214]]$value
+[1] 1
+
+
+$links[[215]]
+$links[[215]]$source
+[1] "Babet"
+
+$links[[215]]$target
+[1] "Mme.Thenardier"
+
+$links[[215]]$value
+[1] 1
+
+
+$links[[216]]
+$links[[216]]$source
+[1] "Babet"
+
+$links[[216]]$target
+[1] "Javert"
+
+$links[[216]]$value
+[1] 2
+
+
+$links[[217]]
+$links[[217]]$source
+[1] "Babet"
+
+$links[[217]]$target
+[1] "Gavroche"
+
+$links[[217]]$value
+[1] 1
+
+
+$links[[218]]
+$links[[218]]$source
+[1] "Babet"
+
+$links[[218]]$target
+[1] "Eponine"
+
+$links[[218]]$value
+[1] 1
+
+
+$links[[219]]
+$links[[219]]$source
+[1] "Claquesous"
+
+$links[[219]]$target
+[1] "Thenardier"
+
+$links[[219]]$value
+[1] 4
+
+
+$links[[220]]
+$links[[220]]$source
+[1] "Claquesous"
+
+$links[[220]]$target
+[1] "Babet"
+
+$links[[220]]$value
+[1] 4
+
+
+$links[[221]]
+$links[[221]]$source
+[1] "Claquesous"
+
+$links[[221]]$target
+[1] "Gueulemer"
+
+$links[[221]]$value
+[1] 4
+
+
+$links[[222]]
+$links[[222]]$source
+[1] "Claquesous"
+
+$links[[222]]$target
+[1] "Valjean"
+
+$links[[222]]$value
+[1] 1
+
+
+$links[[223]]
+$links[[223]]$source
+[1] "Claquesous"
+
+$links[[223]]$target
+[1] "Mme.Thenardier"
+
+$links[[223]]$value
+[1] 1
+
+
+$links[[224]]
+$links[[224]]$source
+[1] "Claquesous"
+
+$links[[224]]$target
+[1] "Javert"
+
+$links[[224]]$value
+[1] 1
+
+
+$links[[225]]
+$links[[225]]$source
+[1] "Claquesous"
+
+$links[[225]]$target
+[1] "Eponine"
+
+$links[[225]]$value
+[1] 1
+
+
+$links[[226]]
+$links[[226]]$source
+[1] "Claquesous"
+
+$links[[226]]$target
+[1] "Enjolras"
+
+$links[[226]]$value
+[1] 1
+
+
+$links[[227]]
+$links[[227]]$source
+[1] "Montparnasse"
+
+$links[[227]]$target
+[1] "Javert"
+
+$links[[227]]$value
+[1] 1
+
+
+$links[[228]]
+$links[[228]]$source
+[1] "Montparnasse"
+
+$links[[228]]$target
+[1] "Babet"
+
+$links[[228]]$value
+[1] 2
+
+
+$links[[229]]
+$links[[229]]$source
+[1] "Montparnasse"
+
+$links[[229]]$target
+[1] "Gueulemer"
+
+$links[[229]]$value
+[1] 2
+
+
+$links[[230]]
+$links[[230]]$source
+[1] "Montparnasse"
+
+$links[[230]]$target
+[1] "Claquesous"
+
+$links[[230]]$value
+[1] 2
+
+
+$links[[231]]
+$links[[231]]$source
+[1] "Montparnasse"
+
+$links[[231]]$target
+[1] "Valjean"
+
+$links[[231]]$value
+[1] 1
+
+
+$links[[232]]
+$links[[232]]$source
+[1] "Montparnasse"
+
+$links[[232]]$target
+[1] "Gavroche"
+
+$links[[232]]$value
+[1] 1
+
+
+$links[[233]]
+$links[[233]]$source
+[1] "Montparnasse"
+
+$links[[233]]$target
+[1] "Eponine"
+
+$links[[233]]$value
+[1] 1
+
+
+$links[[234]]
+$links[[234]]$source
+[1] "Montparnasse"
+
+$links[[234]]$target
+[1] "Thenardier"
+
+$links[[234]]$value
+[1] 1
+
+
+$links[[235]]
+$links[[235]]$source
+[1] "Toussaint"
+
+$links[[235]]$target
+[1] "Cosette"
+
+$links[[235]]$value
+[1] 2
+
+
+$links[[236]]
+$links[[236]]$source
+[1] "Toussaint"
+
+$links[[236]]$target
+[1] "Javert"
+
+$links[[236]]$value
+[1] 1
+
+
+$links[[237]]
+$links[[237]]$source
+[1] "Toussaint"
+
+$links[[237]]$target
+[1] "Valjean"
+
+$links[[237]]$value
+[1] 1
+
+
+$links[[238]]
+$links[[238]]$source
+[1] "Child1"
+
+$links[[238]]$target
+[1] "Gavroche"
+
+$links[[238]]$value
+[1] 2
+
+
+$links[[239]]
+$links[[239]]$source
+[1] "Child2"
+
+$links[[239]]$target
+[1] "Gavroche"
+
+$links[[239]]$value
+[1] 2
+
+
+$links[[240]]
+$links[[240]]$source
+[1] "Child2"
+
+$links[[240]]$target
+[1] "Child1"
+
+$links[[240]]$value
+[1] 3
+
+
+$links[[241]]
+$links[[241]]$source
+[1] "Brujon"
+
+$links[[241]]$target
+[1] "Babet"
+
+$links[[241]]$value
+[1] 3
+
+
+$links[[242]]
+$links[[242]]$source
+[1] "Brujon"
+
+$links[[242]]$target
+[1] "Gueulemer"
+
+$links[[242]]$value
+[1] 3
+
+
+$links[[243]]
+$links[[243]]$source
+[1] "Brujon"
+
+$links[[243]]$target
+[1] "Thenardier"
+
+$links[[243]]$value
+[1] 3
+
+
+$links[[244]]
+$links[[244]]$source
+[1] "Brujon"
+
+$links[[244]]$target
+[1] "Gavroche"
+
+$links[[244]]$value
+[1] 1
+
+
+$links[[245]]
+$links[[245]]$source
+[1] "Brujon"
+
+$links[[245]]$target
+[1] "Eponine"
+
+$links[[245]]$value
+[1] 1
+
+
+$links[[246]]
+$links[[246]]$source
+[1] "Brujon"
+
+$links[[246]]$target
+[1] "Claquesous"
+
+$links[[246]]$value
+[1] 1
+
+
+$links[[247]]
+$links[[247]]$source
+[1] "Brujon"
+
+$links[[247]]$target
+[1] "Montparnasse"
+
+$links[[247]]$value
+[1] 1
+
+
+$links[[248]]
+$links[[248]]$source
+[1] "Mme.Hucheloup"
+
+$links[[248]]$target
+[1] "Bossuet"
+
+$links[[248]]$value
+[1] 1
+
+
+$links[[249]]
+$links[[249]]$source
+[1] "Mme.Hucheloup"
+
+$links[[249]]$target
+[1] "Joly"
+
+$links[[249]]$value
+[1] 1
+
+
+$links[[250]]
+$links[[250]]$source
+[1] "Mme.Hucheloup"
+
+$links[[250]]$target
+[1] "Grantaire"
+
+$links[[250]]$value
+[1] 1
+
+
+$links[[251]]
+$links[[251]]$source
+[1] "Mme.Hucheloup"
+
+$links[[251]]$target
+[1] "Bahorel"
+
+$links[[251]]$value
+[1] 1
+
+
+$links[[252]]
+$links[[252]]$source
+[1] "Mme.Hucheloup"
+
+$links[[252]]$target
+[1] "Courfeyrac"
+
+$links[[252]]$value
+[1] 1
+
+
+$links[[253]]
+$links[[253]]$source
+[1] "Mme.Hucheloup"
+
+$links[[253]]$target
+[1] "Gavroche"
+
+$links[[253]]$value
+[1] 1
+
+
+$links[[254]]
+$links[[254]]$source
+[1] "Mme.Hucheloup"
+
+$links[[254]]$target
+[1] "Enjolras"
+
+$links[[254]]$value
+[1] 1
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+import json
+with open('data/miserables.json','r') as f:
+    d = f.read()  # Typical way of reading a text file into Python
+mis = json.loads(d)
+type(mis)
+```
+
+```
+&lt;class 'dict'&gt;
+```
+
+```python
+mis
+```
+
+```
+{'nodes': [{'id': 'Myriel', 'group': 1}, {'id': 'Napoleon', 'group': 1}, {'id': 'Mlle.Baptistine', 'group': 1}, {'id': 'Mme.Magloire', 'group': 1}, {'id': 'CountessdeLo', 'group': 1}, {'id': 'Geborand', 'group': 1}, {'id': 'Champtercier', 'group': 1}, {'id': 'Cravatte', 'group': 1}, {'id': 'Count', 'group': 1}, {'id': 'OldMan', 'group': 1}, {'id': 'Labarre', 'group': 2}, {'id': 'Valjean', 'group': 2}, {'id': 'Marguerite', 'group': 3}, {'id': 'Mme.deR', 'group': 2}, {'id': 'Isabeau', 'group': 2}, {'id': 'Gervais', 'group': 2}, {'id': 'Tholomyes', 'group': 3}, {'id': 'Listolier', 'group': 3}, {'id': 'Fameuil', 'group': 3}, {'id': 'Blacheville', 'group': 3}, {'id': 'Favourite', 'group': 3}, {'id': 'Dahlia', 'group': 3}, {'id': 'Zephine', 'group': 3}, {'id': 'Fantine', 'group': 3}, {'id': 'Mme.Thenardier', 'group': 4}, {'id': 'Thenardier', 'group': 4}, {'id': 'Cosette', 'group': 5}, {'id': 'Javert', 'group': 4}, {'id': 'Fauchelevent', 'group': 0}, {'id': 'Bamatabois', 'group': 2}, {'id': 'Perpetue', 'group': 3}, {'id': 'Simplice', 'group': 2}, {'id': 'Scaufflaire', 'group': 2}, {'id': 'Woman1', 'group': 2}, {'id': 'Judge', 'group': 2}, {'id': 'Champmathieu', 'group': 2}, {'id': 'Brevet', 'group': 2}, {'id': 'Chenildieu', 'group': 2}, {'id': 'Cochepaille', 'group': 2}, {'id': 'Pontmercy', 'group': 4}, {'id': 'Boulatruelle', 'group': 6}, {'id': 'Eponine', 'group': 4}, {'id': 'Anzelma', 'group': 4}, {'id': 'Woman2', 'group': 5}, {'id': 'MotherInnocent', 'group': 0}, {'id': 'Gribier', 'group': 0}, {'id': 'Jondrette', 'group': 7}, {'id': 'Mme.Burgon', 'group': 7}, {'id': 'Gavroche', 'group': 8}, {'id': 'Gillenormand', 'group': 5}, {'id': 'Magnon', 'group': 5}, {'id': 'Mlle.Gillenormand', 'group': 5}, {'id': 'Mme.Pontmercy', 'group': 5}, {'id': 'Mlle.Vaubois', 'group': 5}, {'id': 'Lt.Gillenormand', 'group': 5}, {'id': 'Marius', 'group': 8}, {'id': 'BaronessT', 'group': 5}, {'id': 'Mabeuf', 'group': 8}, {'id': 'Enjolras', 'group': 8}, {'id': 'Combeferre', 'group': 8}, {'id': 'Prouvaire', 'group': 8}, {'id': 'Feuilly', 'group': 8}, {'id': 'Courfeyrac', 'group': 8}, {'id': 'Bahorel', 'group': 8}, {'id': 'Bossuet', 'group': 8}, {'id': 'Joly', 'group': 8}, {'id': 'Grantaire', 'group': 8}, {'id': 'MotherPlutarch', 'group': 9}, {'id': 'Gueulemer', 'group': 4}, {'id': 'Babet', 'group': 4}, {'id': 'Claquesous', 'group': 4}, {'id': 'Montparnasse', 'group': 4}, {'id': 'Toussaint', 'group': 5}, {'id': 'Child1', 'group': 10}, {'id': 'Child2', 'group': 10}, {'id': 'Brujon', 'group': 4}, {'id': 'Mme.Hucheloup', 'group': 8}], 'links': [{'source': 'Napoleon', 'target': 'Myriel', 'value': 1}, {'source': 'Mlle.Baptistine', 'target': 'Myriel', 'value': 8}, {'source': 'Mme.Magloire', 'target': 'Myriel', 'value': 10}, {'source': 'Mme.Magloire', 'target': 'Mlle.Baptistine', 'value': 6}, {'source': 'CountessdeLo', 'target': 'Myriel', 'value': 1}, {'source': 'Geborand', 'target': 'Myriel', 'value': 1}, {'source': 'Champtercier', 'target': 'Myriel', 'value': 1}, {'source': 'Cravatte', 'target': 'Myriel', 'value': 1}, {'source': 'Count', 'target': 'Myriel', 'value': 2}, {'source': 'OldMan', 'target': 'Myriel', 'value': 1}, {'source': 'Valjean', 'target': 'Labarre', 'value': 1}, {'source': 'Valjean', 'target': 'Mme.Magloire', 'value': 3}, {'source': 'Valjean', 'target': 'Mlle.Baptistine', 'value': 3}, {'source': 'Valjean', 'target': 'Myriel', 'value': 5}, {'source': 'Marguerite', 'target': 'Valjean', 'value': 1}, {'source': 'Mme.deR', 'target': 'Valjean', 'value': 1}, {'source': 'Isabeau', 'target': 'Valjean', 'value': 1}, {'source': 'Gervais', 'target': 'Valjean', 'value': 1}, {'source': 'Listolier', 'target': 'Tholomyes', 'value': 4}, {'source': 'Fameuil', 'target': 'Tholomyes', 'value': 4}, {'source': 'Fameuil', 'target': 'Listolier', 'value': 4}, {'source': 'Blacheville', 'target': 'Tholomyes', 'value': 4}, {'source': 'Blacheville', 'target': 'Listolier', 'value': 4}, {'source': 'Blacheville', 'target': 'Fameuil', 'value': 4}, {'source': 'Favourite', 'target': 'Tholomyes', 'value': 3}, {'source': 'Favourite', 'target': 'Listolier', 'value': 3}, {'source': 'Favourite', 'target': 'Fameuil', 'value': 3}, {'source': 'Favourite', 'target': 'Blacheville', 'value': 4}, {'source': 'Dahlia', 'target': 'Tholomyes', 'value': 3}, {'source': 'Dahlia', 'target': 'Listolier', 'value': 3}, {'source': 'Dahlia', 'target': 'Fameuil', 'value': 3}, {'source': 'Dahlia', 'target': 'Blacheville', 'value': 3}, {'source': 'Dahlia', 'target': 'Favourite', 'value': 5}, {'source': 'Zephine', 'target': 'Tholomyes', 'value': 3}, {'source': 'Zephine', 'target': 'Listolier', 'value': 3}, {'source': 'Zephine', 'target': 'Fameuil', 'value': 3}, {'source': 'Zephine', 'target': 'Blacheville', 'value': 3}, {'source': 'Zephine', 'target': 'Favourite', 'value': 4}, {'source': 'Zephine', 'target': 'Dahlia', 'value': 4}, {'source': 'Fantine', 'target': 'Tholomyes', 'value': 3}, {'source': 'Fantine', 'target': 'Listolier', 'value': 3}, {'source': 'Fantine', 'target': 'Fameuil', 'value': 3}, {'source': 'Fantine', 'target': 'Blacheville', 'value': 3}, {'source': 'Fantine', 'target': 'Favourite', 'value': 4}, {'source': 'Fantine', 'target': 'Dahlia', 'value': 4}, {'source': 'Fantine', 'target': 'Zephine', 'value': 4}, {'source': 'Fantine', 'target': 'Marguerite', 'value': 2}, {'source': 'Fantine', 'target': 'Valjean', 'value': 9}, {'source': 'Mme.Thenardier', 'target': 'Fantine', 'value': 2}, {'source': 'Mme.Thenardier', 'target': 'Valjean', 'value': 7}, {'source': 'Thenardier', 'target': 'Mme.Thenardier', 'value': 13}, {'source': 'Thenardier', 'target': 'Fantine', 'value': 1}, {'source': 'Thenardier', 'target': 'Valjean', 'value': 12}, {'source': 'Cosette', 'target': 'Mme.Thenardier', 'value': 4}, {'source': 'Cosette', 'target': 'Valjean', 'value': 31}, {'source': 'Cosette', 'target': 'Tholomyes', 'value': 1}, {'source': 'Cosette', 'target': 'Thenardier', 'value': 1}, {'source': 'Javert', 'target': 'Valjean', 'value': 17}, {'source': 'Javert', 'target': 'Fantine', 'value': 5}, {'source': 'Javert', 'target': 'Thenardier', 'value': 5}, {'source': 'Javert', 'target': 'Mme.Thenardier', 'value': 1}, {'source': 'Javert', 'target': 'Cosette', 'value': 1}, {'source': 'Fauchelevent', 'target': 'Valjean', 'value': 8}, {'source': 'Fauchelevent', 'target': 'Javert', 'value': 1}, {'source': 'Bamatabois', 'target': 'Fantine', 'value': 1}, {'source': 'Bamatabois', 'target': 'Javert', 'value': 1}, {'source': 'Bamatabois', 'target': 'Valjean', 'value': 2}, {'source': 'Perpetue', 'target': 'Fantine', 'value': 1}, {'source': 'Simplice', 'target': 'Perpetue', 'value': 2}, {'source': 'Simplice', 'target': 'Valjean', 'value': 3}, {'source': 'Simplice', 'target': 'Fantine', 'value': 2}, {'source': 'Simplice', 'target': 'Javert', 'value': 1}, {'source': 'Scaufflaire', 'target': 'Valjean', 'value': 1}, {'source': 'Woman1', 'target': 'Valjean', 'value': 2}, {'source': 'Woman1', 'target': 'Javert', 'value': 1}, {'source': 'Judge', 'target': 'Valjean', 'value': 3}, {'source': 'Judge', 'target': 'Bamatabois', 'value': 2}, {'source': 'Champmathieu', 'target': 'Valjean', 'value': 3}, {'source': 'Champmathieu', 'target': 'Judge', 'value': 3}, {'source': 'Champmathieu', 'target': 'Bamatabois', 'value': 2}, {'source': 'Brevet', 'target': 'Judge', 'value': 2}, {'source': 'Brevet', 'target': 'Champmathieu', 'value': 2}, {'source': 'Brevet', 'target': 'Valjean', 'value': 2}, {'source': 'Brevet', 'target': 'Bamatabois', 'value': 1}, {'source': 'Chenildieu', 'target': 'Judge', 'value': 2}, {'source': 'Chenildieu', 'target': 'Champmathieu', 'value': 2}, {'source': 'Chenildieu', 'target': 'Brevet', 'value': 2}, {'source': 'Chenildieu', 'target': 'Valjean', 'value': 2}, {'source': 'Chenildieu', 'target': 'Bamatabois', 'value': 1}, {'source': 'Cochepaille', 'target': 'Judge', 'value': 2}, {'source': 'Cochepaille', 'target': 'Champmathieu', 'value': 2}, {'source': 'Cochepaille', 'target': 'Brevet', 'value': 2}, {'source': 'Cochepaille', 'target': 'Chenildieu', 'value': 2}, {'source': 'Cochepaille', 'target': 'Valjean', 'value': 2}, {'source': 'Cochepaille', 'target': 'Bamatabois', 'value': 1}, {'source': 'Pontmercy', 'target': 'Thenardier', 'value': 1}, {'source': 'Boulatruelle', 'target': 'Thenardier', 'value': 1}, {'source': 'Eponine', 'target': 'Mme.Thenardier', 'value': 2}, {'source': 'Eponine', 'target': 'Thenardier', 'value': 3}, {'source': 'Anzelma', 'target': 'Eponine', 'value': 2}, {'source': 'Anzelma', 'target': 'Thenardier', 'value': 2}, {'source': 'Anzelma', 'target': 'Mme.Thenardier', 'value': 1}, {'source': 'Woman2', 'target': 'Valjean', 'value': 3}, {'source': 'Woman2', 'target': 'Cosette', 'value': 1}, {'source': 'Woman2', 'target': 'Javert', 'value': 1}, {'source': 'MotherInnocent', 'target': 'Fauchelevent', 'value': 3}, {'source': 'MotherInnocent', 'target': 'Valjean', 'value': 1}, {'source': 'Gribier', 'target': 'Fauchelevent', 'value': 2}, {'source': 'Mme.Burgon', 'target': 'Jondrette', 'value': 1}, {'source': 'Gavroche', 'target': 'Mme.Burgon', 'value': 2}, {'source': 'Gavroche', 'target': 'Thenardier', 'value': 1}, {'source': 'Gavroche', 'target': 'Javert', 'value': 1}, {'source': 'Gavroche', 'target': 'Valjean', 'value': 1}, {'source': 'Gillenormand', 'target': 'Cosette', 'value': 3}, {'source': 'Gillenormand', 'target': 'Valjean', 'value': 2}, {'source': 'Magnon', 'target': 'Gillenormand', 'value': 1}, {'source': 'Magnon', 'target': 'Mme.Thenardier', 'value': 1}, {'source': 'Mlle.Gillenormand', 'target': 'Gillenormand', 'value': 9}, {'source': 'Mlle.Gillenormand', 'target': 'Cosette', 'value': 2}, {'source': 'Mlle.Gillenormand', 'target': 'Valjean', 'value': 2}, {'source': 'Mme.Pontmercy', 'target': 'Mlle.Gillenormand', 'value': 1}, {'source': 'Mme.Pontmercy', 'target': 'Pontmercy', 'value': 1}, {'source': 'Mlle.Vaubois', 'target': 'Mlle.Gillenormand', 'value': 1}, {'source': 'Lt.Gillenormand', 'target': 'Mlle.Gillenormand', 'value': 2}, {'source': 'Lt.Gillenormand', 'target': 'Gillenormand', 'value': 1}, {'source': 'Lt.Gillenormand', 'target': 'Cosette', 'value': 1}, {'source': 'Marius', 'target': 'Mlle.Gillenormand', 'value': 6}, {'source': 'Marius', 'target': 'Gillenormand', 'value': 12}, {'source': 'Marius', 'target': 'Pontmercy', 'value': 1}, {'source': 'Marius', 'target': 'Lt.Gillenormand', 'value': 1}, {'source': 'Marius', 'target': 'Cosette', 'value': 21}, {'source': 'Marius', 'target': 'Valjean', 'value': 19}, {'source': 'Marius', 'target': 'Tholomyes', 'value': 1}, {'source': 'Marius', 'target': 'Thenardier', 'value': 2}, {'source': 'Marius', 'target': 'Eponine', 'value': 5}, {'source': 'Marius', 'target': 'Gavroche', 'value': 4}, {'source': 'BaronessT', 'target': 'Gillenormand', 'value': 1}, {'source': 'BaronessT', 'target': 'Marius', 'value': 1}, {'source': 'Mabeuf', 'target': 'Marius', 'value': 1}, {'source': 'Mabeuf', 'target': 'Eponine', 'value': 1}, {'source': 'Mabeuf', 'target': 'Gavroche', 'value': 1}, {'source': 'Enjolras', 'target': 'Marius', 'value': 7}, {'source': 'Enjolras', 'target': 'Gavroche', 'value': 7}, {'source': 'Enjolras', 'target': 'Javert', 'value': 6}, {'source': 'Enjolras', 'target': 'Mabeuf', 'value': 1}, {'source': 'Enjolras', 'target': 'Valjean', 'value': 4}, {'source': 'Combeferre', 'target': 'Enjolras', 'value': 15}, {'source': 'Combeferre', 'target': 'Marius', 'value': 5}, {'source': 'Combeferre', 'target': 'Gavroche', 'value': 6}, {'source': 'Combeferre', 'target': 'Mabeuf', 'value': 2}, {'source': 'Prouvaire', 'target': 'Gavroche', 'value': 1}, {'source': 'Prouvaire', 'target': 'Enjolras', 'value': 4}, {'source': 'Prouvaire', 'target': 'Combeferre', 'value': 2}, {'source': 'Feuilly', 'target': 'Gavroche', 'value': 2}, {'source': 'Feuilly', 'target': 'Enjolras', 'value': 6}, {'source': 'Feuilly', 'target': 'Prouvaire', 'value': 2}, {'source': 'Feuilly', 'target': 'Combeferre', 'value': 5}, {'source': 'Feuilly', 'target': 'Mabeuf', 'value': 1}, {'source': 'Feuilly', 'target': 'Marius', 'value': 1}, {'source': 'Courfeyrac', 'target': 'Marius', 'value': 9}, {'source': 'Courfeyrac', 'target': 'Enjolras', 'value': 17}, {'source': 'Courfeyrac', 'target': 'Combeferre', 'value': 13}, {'source': 'Courfeyrac', 'target': 'Gavroche', 'value': 7}, {'source': 'Courfeyrac', 'target': 'Mabeuf', 'value': 2}, {'source': 'Courfeyrac', 'target': 'Eponine', 'value': 1}, {'source': 'Courfeyrac', 'target': 'Feuilly', 'value': 6}, {'source': 'Courfeyrac', 'target': 'Prouvaire', 'value': 3}, {'source': 'Bahorel', 'target': 'Combeferre', 'value': 5}, {'source': 'Bahorel', 'target': 'Gavroche', 'value': 5}, {'source': 'Bahorel', 'target': 'Courfeyrac', 'value': 6}, {'source': 'Bahorel', 'target': 'Mabeuf', 'value': 2}, {'source': 'Bahorel', 'target': 'Enjolras', 'value': 4}, {'source': 'Bahorel', 'target': 'Feuilly', 'value': 3}, {'source': 'Bahorel', 'target': 'Prouvaire', 'value': 2}, {'source': 'Bahorel', 'target': 'Marius', 'value': 1}, {'source': 'Bossuet', 'target': 'Marius', 'value': 5}, {'source': 'Bossuet', 'target': 'Courfeyrac', 'value': 12}, {'source': 'Bossuet', 'target': 'Gavroche', 'value': 5}, {'source': 'Bossuet', 'target': 'Bahorel', 'value': 4}, {'source': 'Bossuet', 'target': 'Enjolras', 'value': 10}, {'source': 'Bossuet', 'target': 'Feuilly', 'value': 6}, {'source': 'Bossuet', 'target': 'Prouvaire', 'value': 2}, {'source': 'Bossuet', 'target': 'Combeferre', 'value': 9}, {'source': 'Bossuet', 'target': 'Mabeuf', 'value': 1}, {'source': 'Bossuet', 'target': 'Valjean', 'value': 1}, {'source': 'Joly', 'target': 'Bahorel', 'value': 5}, {'source': 'Joly', 'target': 'Bossuet', 'value': 7}, {'source': 'Joly', 'target': 'Gavroche', 'value': 3}, {'source': 'Joly', 'target': 'Courfeyrac', 'value': 5}, {'source': 'Joly', 'target': 'Enjolras', 'value': 5}, {'source': 'Joly', 'target': 'Feuilly', 'value': 5}, {'source': 'Joly', 'target': 'Prouvaire', 'value': 2}, {'source': 'Joly', 'target': 'Combeferre', 'value': 5}, {'source': 'Joly', 'target': 'Mabeuf', 'value': 1}, {'source': 'Joly', 'target': 'Marius', 'value': 2}, {'source': 'Grantaire', 'target': 'Bossuet', 'value': 3}, {'source': 'Grantaire', 'target': 'Enjolras', 'value': 3}, {'source': 'Grantaire', 'target': 'Combeferre', 'value': 1}, {'source': 'Grantaire', 'target': 'Courfeyrac', 'value': 2}, {'source': 'Grantaire', 'target': 'Joly', 'value': 2}, {'source': 'Grantaire', 'target': 'Gavroche', 'value': 1}, {'source': 'Grantaire', 'target': 'Bahorel', 'value': 1}, {'source': 'Grantaire', 'target': 'Feuilly', 'value': 1}, {'source': 'Grantaire', 'target': 'Prouvaire', 'value': 1}, {'source': 'MotherPlutarch', 'target': 'Mabeuf', 'value': 3}, {'source': 'Gueulemer', 'target': 'Thenardier', 'value': 5}, {'source': 'Gueulemer', 'target': 'Valjean', 'value': 1}, {'source': 'Gueulemer', 'target': 'Mme.Thenardier', 'value': 1}, {'source': 'Gueulemer', 'target': 'Javert', 'value': 1}, {'source': 'Gueulemer', 'target': 'Gavroche', 'value': 1}, {'source': 'Gueulemer', 'target': 'Eponine', 'value': 1}, {'source': 'Babet', 'target': 'Thenardier', 'value': 6}, {'source': 'Babet', 'target': 'Gueulemer', 'value': 6}, {'source': 'Babet', 'target': 'Valjean', 'value': 1}, {'source': 'Babet', 'target': 'Mme.Thenardier', 'value': 1}, {'source': 'Babet', 'target': 'Javert', 'value': 2}, {'source': 'Babet', 'target': 'Gavroche', 'value': 1}, {'source': 'Babet', 'target': 'Eponine', 'value': 1}, {'source': 'Claquesous', 'target': 'Thenardier', 'value': 4}, {'source': 'Claquesous', 'target': 'Babet', 'value': 4}, {'source': 'Claquesous', 'target': 'Gueulemer', 'value': 4}, {'source': 'Claquesous', 'target': 'Valjean', 'value': 1}, {'source': 'Claquesous', 'target': 'Mme.Thenardier', 'value': 1}, {'source': 'Claquesous', 'target': 'Javert', 'value': 1}, {'source': 'Claquesous', 'target': 'Eponine', 'value': 1}, {'source': 'Claquesous', 'target': 'Enjolras', 'value': 1}, {'source': 'Montparnasse', 'target': 'Javert', 'value': 1}, {'source': 'Montparnasse', 'target': 'Babet', 'value': 2}, {'source': 'Montparnasse', 'target': 'Gueulemer', 'value': 2}, {'source': 'Montparnasse', 'target': 'Claquesous', 'value': 2}, {'source': 'Montparnasse', 'target': 'Valjean', 'value': 1}, {'source': 'Montparnasse', 'target': 'Gavroche', 'value': 1}, {'source': 'Montparnasse', 'target': 'Eponine', 'value': 1}, {'source': 'Montparnasse', 'target': 'Thenardier', 'value': 1}, {'source': 'Toussaint', 'target': 'Cosette', 'value': 2}, {'source': 'Toussaint', 'target': 'Javert', 'value': 1}, {'source': 'Toussaint', 'target': 'Valjean', 'value': 1}, {'source': 'Child1', 'target': 'Gavroche', 'value': 2}, {'source': 'Child2', 'target': 'Gavroche', 'value': 2}, {'source': 'Child2', 'target': 'Child1', 'value': 3}, {'source': 'Brujon', 'target': 'Babet', 'value': 3}, {'source': 'Brujon', 'target': 'Gueulemer', 'value': 3}, {'source': 'Brujon', 'target': 'Thenardier', 'value': 3}, {'source': 'Brujon', 'target': 'Gavroche', 'value': 1}, {'source': 'Brujon', 'target': 'Eponine', 'value': 1}, {'source': 'Brujon', 'target': 'Claquesous', 'value': 1}, {'source': 'Brujon', 'target': 'Montparnasse', 'value': 1}, {'source': 'Mme.Hucheloup', 'target': 'Bossuet', 'value': 1}, {'source': 'Mme.Hucheloup', 'target': 'Joly', 'value': 1}, {'source': 'Mme.Hucheloup', 'target': 'Grantaire', 'value': 1}, {'source': 'Mme.Hucheloup', 'target': 'Bahorel', 'value': 1}, {'source': 'Mme.Hucheloup', 'target': 'Courfeyrac', 'value': 1}, {'source': 'Mme.Hucheloup', 'target': 'Gavroche', 'value': 1}, {'source': 'Mme.Hucheloup', 'target': 'Enjolras', 'value': 1}]}
+```
+]
+]
+
+---
+
+Most API calls come as JSON
+
+There are several ways each of the languages addresses JSON files. Typically they are read into nested structures like nested dicts (Python) and nested lists (R). JSON data can be "fun" to normalize
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+mis &lt;- jsonlite::fromJSON('data/miserables.json')
+class(mis)
+```
+
+```
+[1] "list"
+```
+
+```r
+head(mis$links)
+```
+
+```
+           source          target value
+1        Napoleon          Myriel     1
+2 Mlle.Baptistine          Myriel     8
+3    Mme.Magloire          Myriel    10
+4    Mme.Magloire Mlle.Baptistine     6
+5    CountessdeLo          Myriel     1
+6        Geborand          Myriel     1
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+import json
+with open('data/miserables.json','r') as f:
+    d = f.read()  # Typical way of reading a text file into Python
+mis = json.loads(d)
+type(mis)
+```
+
+```
+&lt;class 'dict'&gt;
+```
+
+```python
+mis
+```
+
+```
+{'nodes': [{'id': 'Myriel', 'group': 1}, {'id': 'Napoleon', 'group': 1}, {'id': 'Mlle.Baptistine', 'group': 1}, {'id': 'Mme.Magloire', 'group': 1}, {'id': 'CountessdeLo', 'group': 1}, {'id': 'Geborand', 'group': 1}, {'id': 'Champtercier', 'group': 1}, {'id': 'Cravatte', 'group': 1}, {'id': 'Count', 'group': 1}, {'id': 'OldMan', 'group': 1}, {'id': 'Labarre', 'group': 2}, {'id': 'Valjean', 'group': 2}, {'id': 'Marguerite', 'group': 3}, {'id': 'Mme.deR', 'group': 2}, {'id': 'Isabeau', 'group': 2}, {'id': 'Gervais', 'group': 2}, {'id': 'Tholomyes', 'group': 3}, {'id': 'Listolier', 'group': 3}, {'id': 'Fameuil', 'group': 3}, {'id': 'Blacheville', 'group': 3}, {'id': 'Favourite', 'group': 3}, {'id': 'Dahlia', 'group': 3}, {'id': 'Zephine', 'group': 3}, {'id': 'Fantine', 'group': 3}, {'id': 'Mme.Thenardier', 'group': 4}, {'id': 'Thenardier', 'group': 4}, {'id': 'Cosette', 'group': 5}, {'id': 'Javert', 'group': 4}, {'id': 'Fauchelevent', 'group': 0}, {'id': 'Bamatabois', 'group': 2}, {'id': 'Perpetue', 'group': 3}, {'id': 'Simplice', 'group': 2}, {'id': 'Scaufflaire', 'group': 2}, {'id': 'Woman1', 'group': 2}, {'id': 'Judge', 'group': 2}, {'id': 'Champmathieu', 'group': 2}, {'id': 'Brevet', 'group': 2}, {'id': 'Chenildieu', 'group': 2}, {'id': 'Cochepaille', 'group': 2}, {'id': 'Pontmercy', 'group': 4}, {'id': 'Boulatruelle', 'group': 6}, {'id': 'Eponine', 'group': 4}, {'id': 'Anzelma', 'group': 4}, {'id': 'Woman2', 'group': 5}, {'id': 'MotherInnocent', 'group': 0}, {'id': 'Gribier', 'group': 0}, {'id': 'Jondrette', 'group': 7}, {'id': 'Mme.Burgon', 'group': 7}, {'id': 'Gavroche', 'group': 8}, {'id': 'Gillenormand', 'group': 5}, {'id': 'Magnon', 'group': 5}, {'id': 'Mlle.Gillenormand', 'group': 5}, {'id': 'Mme.Pontmercy', 'group': 5}, {'id': 'Mlle.Vaubois', 'group': 5}, {'id': 'Lt.Gillenormand', 'group': 5}, {'id': 'Marius', 'group': 8}, {'id': 'BaronessT', 'group': 5}, {'id': 'Mabeuf', 'group': 8}, {'id': 'Enjolras', 'group': 8}, {'id': 'Combeferre', 'group': 8}, {'id': 'Prouvaire', 'group': 8}, {'id': 'Feuilly', 'group': 8}, {'id': 'Courfeyrac', 'group': 8}, {'id': 'Bahorel', 'group': 8}, {'id': 'Bossuet', 'group': 8}, {'id': 'Joly', 'group': 8}, {'id': 'Grantaire', 'group': 8}, {'id': 'MotherPlutarch', 'group': 9}, {'id': 'Gueulemer', 'group': 4}, {'id': 'Babet', 'group': 4}, {'id': 'Claquesous', 'group': 4}, {'id': 'Montparnasse', 'group': 4}, {'id': 'Toussaint', 'group': 5}, {'id': 'Child1', 'group': 10}, {'id': 'Child2', 'group': 10}, {'id': 'Brujon', 'group': 4}, {'id': 'Mme.Hucheloup', 'group': 8}], 'links': [{'source': 'Napoleon', 'target': 'Myriel', 'value': 1}, {'source': 'Mlle.Baptistine', 'target': 'Myriel', 'value': 8}, {'source': 'Mme.Magloire', 'target': 'Myriel', 'value': 10}, {'source': 'Mme.Magloire', 'target': 'Mlle.Baptistine', 'value': 6}, {'source': 'CountessdeLo', 'target': 'Myriel', 'value': 1}, {'source': 'Geborand', 'target': 'Myriel', 'value': 1}, {'source': 'Champtercier', 'target': 'Myriel', 'value': 1}, {'source': 'Cravatte', 'target': 'Myriel', 'value': 1}, {'source': 'Count', 'target': 'Myriel', 'value': 2}, {'source': 'OldMan', 'target': 'Myriel', 'value': 1}, {'source': 'Valjean', 'target': 'Labarre', 'value': 1}, {'source': 'Valjean', 'target': 'Mme.Magloire', 'value': 3}, {'source': 'Valjean', 'target': 'Mlle.Baptistine', 'value': 3}, {'source': 'Valjean', 'target': 'Myriel', 'value': 5}, {'source': 'Marguerite', 'target': 'Valjean', 'value': 1}, {'source': 'Mme.deR', 'target': 'Valjean', 'value': 1}, {'source': 'Isabeau', 'target': 'Valjean', 'value': 1}, {'source': 'Gervais', 'target': 'Valjean', 'value': 1}, {'source': 'Listolier', 'target': 'Tholomyes', 'value': 4}, {'source': 'Fameuil', 'target': 'Tholomyes', 'value': 4}, {'source': 'Fameuil', 'target': 'Listolier', 'value': 4}, {'source': 'Blacheville', 'target': 'Tholomyes', 'value': 4}, {'source': 'Blacheville', 'target': 'Listolier', 'value': 4}, {'source': 'Blacheville', 'target': 'Fameuil', 'value': 4}, {'source': 'Favourite', 'target': 'Tholomyes', 'value': 3}, {'source': 'Favourite', 'target': 'Listolier', 'value': 3}, {'source': 'Favourite', 'target': 'Fameuil', 'value': 3}, {'source': 'Favourite', 'target': 'Blacheville', 'value': 4}, {'source': 'Dahlia', 'target': 'Tholomyes', 'value': 3}, {'source': 'Dahlia', 'target': 'Listolier', 'value': 3}, {'source': 'Dahlia', 'target': 'Fameuil', 'value': 3}, {'source': 'Dahlia', 'target': 'Blacheville', 'value': 3}, {'source': 'Dahlia', 'target': 'Favourite', 'value': 5}, {'source': 'Zephine', 'target': 'Tholomyes', 'value': 3}, {'source': 'Zephine', 'target': 'Listolier', 'value': 3}, {'source': 'Zephine', 'target': 'Fameuil', 'value': 3}, {'source': 'Zephine', 'target': 'Blacheville', 'value': 3}, {'source': 'Zephine', 'target': 'Favourite', 'value': 4}, {'source': 'Zephine', 'target': 'Dahlia', 'value': 4}, {'source': 'Fantine', 'target': 'Tholomyes', 'value': 3}, {'source': 'Fantine', 'target': 'Listolier', 'value': 3}, {'source': 'Fantine', 'target': 'Fameuil', 'value': 3}, {'source': 'Fantine', 'target': 'Blacheville', 'value': 3}, {'source': 'Fantine', 'target': 'Favourite', 'value': 4}, {'source': 'Fantine', 'target': 'Dahlia', 'value': 4}, {'source': 'Fantine', 'target': 'Zephine', 'value': 4}, {'source': 'Fantine', 'target': 'Marguerite', 'value': 2}, {'source': 'Fantine', 'target': 'Valjean', 'value': 9}, {'source': 'Mme.Thenardier', 'target': 'Fantine', 'value': 2}, {'source': 'Mme.Thenardier', 'target': 'Valjean', 'value': 7}, {'source': 'Thenardier', 'target': 'Mme.Thenardier', 'value': 13}, {'source': 'Thenardier', 'target': 'Fantine', 'value': 1}, {'source': 'Thenardier', 'target': 'Valjean', 'value': 12}, {'source': 'Cosette', 'target': 'Mme.Thenardier', 'value': 4}, {'source': 'Cosette', 'target': 'Valjean', 'value': 31}, {'source': 'Cosette', 'target': 'Tholomyes', 'value': 1}, {'source': 'Cosette', 'target': 'Thenardier', 'value': 1}, {'source': 'Javert', 'target': 'Valjean', 'value': 17}, {'source': 'Javert', 'target': 'Fantine', 'value': 5}, {'source': 'Javert', 'target': 'Thenardier', 'value': 5}, {'source': 'Javert', 'target': 'Mme.Thenardier', 'value': 1}, {'source': 'Javert', 'target': 'Cosette', 'value': 1}, {'source': 'Fauchelevent', 'target': 'Valjean', 'value': 8}, {'source': 'Fauchelevent', 'target': 'Javert', 'value': 1}, {'source': 'Bamatabois', 'target': 'Fantine', 'value': 1}, {'source': 'Bamatabois', 'target': 'Javert', 'value': 1}, {'source': 'Bamatabois', 'target': 'Valjean', 'value': 2}, {'source': 'Perpetue', 'target': 'Fantine', 'value': 1}, {'source': 'Simplice', 'target': 'Perpetue', 'value': 2}, {'source': 'Simplice', 'target': 'Valjean', 'value': 3}, {'source': 'Simplice', 'target': 'Fantine', 'value': 2}, {'source': 'Simplice', 'target': 'Javert', 'value': 1}, {'source': 'Scaufflaire', 'target': 'Valjean', 'value': 1}, {'source': 'Woman1', 'target': 'Valjean', 'value': 2}, {'source': 'Woman1', 'target': 'Javert', 'value': 1}, {'source': 'Judge', 'target': 'Valjean', 'value': 3}, {'source': 'Judge', 'target': 'Bamatabois', 'value': 2}, {'source': 'Champmathieu', 'target': 'Valjean', 'value': 3}, {'source': 'Champmathieu', 'target': 'Judge', 'value': 3}, {'source': 'Champmathieu', 'target': 'Bamatabois', 'value': 2}, {'source': 'Brevet', 'target': 'Judge', 'value': 2}, {'source': 'Brevet', 'target': 'Champmathieu', 'value': 2}, {'source': 'Brevet', 'target': 'Valjean', 'value': 2}, {'source': 'Brevet', 'target': 'Bamatabois', 'value': 1}, {'source': 'Chenildieu', 'target': 'Judge', 'value': 2}, {'source': 'Chenildieu', 'target': 'Champmathieu', 'value': 2}, {'source': 'Chenildieu', 'target': 'Brevet', 'value': 2}, {'source': 'Chenildieu', 'target': 'Valjean', 'value': 2}, {'source': 'Chenildieu', 'target': 'Bamatabois', 'value': 1}, {'source': 'Cochepaille', 'target': 'Judge', 'value': 2}, {'source': 'Cochepaille', 'target': 'Champmathieu', 'value': 2}, {'source': 'Cochepaille', 'target': 'Brevet', 'value': 2}, {'source': 'Cochepaille', 'target': 'Chenildieu', 'value': 2}, {'source': 'Cochepaille', 'target': 'Valjean', 'value': 2}, {'source': 'Cochepaille', 'target': 'Bamatabois', 'value': 1}, {'source': 'Pontmercy', 'target': 'Thenardier', 'value': 1}, {'source': 'Boulatruelle', 'target': 'Thenardier', 'value': 1}, {'source': 'Eponine', 'target': 'Mme.Thenardier', 'value': 2}, {'source': 'Eponine', 'target': 'Thenardier', 'value': 3}, {'source': 'Anzelma', 'target': 'Eponine', 'value': 2}, {'source': 'Anzelma', 'target': 'Thenardier', 'value': 2}, {'source': 'Anzelma', 'target': 'Mme.Thenardier', 'value': 1}, {'source': 'Woman2', 'target': 'Valjean', 'value': 3}, {'source': 'Woman2', 'target': 'Cosette', 'value': 1}, {'source': 'Woman2', 'target': 'Javert', 'value': 1}, {'source': 'MotherInnocent', 'target': 'Fauchelevent', 'value': 3}, {'source': 'MotherInnocent', 'target': 'Valjean', 'value': 1}, {'source': 'Gribier', 'target': 'Fauchelevent', 'value': 2}, {'source': 'Mme.Burgon', 'target': 'Jondrette', 'value': 1}, {'source': 'Gavroche', 'target': 'Mme.Burgon', 'value': 2}, {'source': 'Gavroche', 'target': 'Thenardier', 'value': 1}, {'source': 'Gavroche', 'target': 'Javert', 'value': 1}, {'source': 'Gavroche', 'target': 'Valjean', 'value': 1}, {'source': 'Gillenormand', 'target': 'Cosette', 'value': 3}, {'source': 'Gillenormand', 'target': 'Valjean', 'value': 2}, {'source': 'Magnon', 'target': 'Gillenormand', 'value': 1}, {'source': 'Magnon', 'target': 'Mme.Thenardier', 'value': 1}, {'source': 'Mlle.Gillenormand', 'target': 'Gillenormand', 'value': 9}, {'source': 'Mlle.Gillenormand', 'target': 'Cosette', 'value': 2}, {'source': 'Mlle.Gillenormand', 'target': 'Valjean', 'value': 2}, {'source': 'Mme.Pontmercy', 'target': 'Mlle.Gillenormand', 'value': 1}, {'source': 'Mme.Pontmercy', 'target': 'Pontmercy', 'value': 1}, {'source': 'Mlle.Vaubois', 'target': 'Mlle.Gillenormand', 'value': 1}, {'source': 'Lt.Gillenormand', 'target': 'Mlle.Gillenormand', 'value': 2}, {'source': 'Lt.Gillenormand', 'target': 'Gillenormand', 'value': 1}, {'source': 'Lt.Gillenormand', 'target': 'Cosette', 'value': 1}, {'source': 'Marius', 'target': 'Mlle.Gillenormand', 'value': 6}, {'source': 'Marius', 'target': 'Gillenormand', 'value': 12}, {'source': 'Marius', 'target': 'Pontmercy', 'value': 1}, {'source': 'Marius', 'target': 'Lt.Gillenormand', 'value': 1}, {'source': 'Marius', 'target': 'Cosette', 'value': 21}, {'source': 'Marius', 'target': 'Valjean', 'value': 19}, {'source': 'Marius', 'target': 'Tholomyes', 'value': 1}, {'source': 'Marius', 'target': 'Thenardier', 'value': 2}, {'source': 'Marius', 'target': 'Eponine', 'value': 5}, {'source': 'Marius', 'target': 'Gavroche', 'value': 4}, {'source': 'BaronessT', 'target': 'Gillenormand', 'value': 1}, {'source': 'BaronessT', 'target': 'Marius', 'value': 1}, {'source': 'Mabeuf', 'target': 'Marius', 'value': 1}, {'source': 'Mabeuf', 'target': 'Eponine', 'value': 1}, {'source': 'Mabeuf', 'target': 'Gavroche', 'value': 1}, {'source': 'Enjolras', 'target': 'Marius', 'value': 7}, {'source': 'Enjolras', 'target': 'Gavroche', 'value': 7}, {'source': 'Enjolras', 'target': 'Javert', 'value': 6}, {'source': 'Enjolras', 'target': 'Mabeuf', 'value': 1}, {'source': 'Enjolras', 'target': 'Valjean', 'value': 4}, {'source': 'Combeferre', 'target': 'Enjolras', 'value': 15}, {'source': 'Combeferre', 'target': 'Marius', 'value': 5}, {'source': 'Combeferre', 'target': 'Gavroche', 'value': 6}, {'source': 'Combeferre', 'target': 'Mabeuf', 'value': 2}, {'source': 'Prouvaire', 'target': 'Gavroche', 'value': 1}, {'source': 'Prouvaire', 'target': 'Enjolras', 'value': 4}, {'source': 'Prouvaire', 'target': 'Combeferre', 'value': 2}, {'source': 'Feuilly', 'target': 'Gavroche', 'value': 2}, {'source': 'Feuilly', 'target': 'Enjolras', 'value': 6}, {'source': 'Feuilly', 'target': 'Prouvaire', 'value': 2}, {'source': 'Feuilly', 'target': 'Combeferre', 'value': 5}, {'source': 'Feuilly', 'target': 'Mabeuf', 'value': 1}, {'source': 'Feuilly', 'target': 'Marius', 'value': 1}, {'source': 'Courfeyrac', 'target': 'Marius', 'value': 9}, {'source': 'Courfeyrac', 'target': 'Enjolras', 'value': 17}, {'source': 'Courfeyrac', 'target': 'Combeferre', 'value': 13}, {'source': 'Courfeyrac', 'target': 'Gavroche', 'value': 7}, {'source': 'Courfeyrac', 'target': 'Mabeuf', 'value': 2}, {'source': 'Courfeyrac', 'target': 'Eponine', 'value': 1}, {'source': 'Courfeyrac', 'target': 'Feuilly', 'value': 6}, {'source': 'Courfeyrac', 'target': 'Prouvaire', 'value': 3}, {'source': 'Bahorel', 'target': 'Combeferre', 'value': 5}, {'source': 'Bahorel', 'target': 'Gavroche', 'value': 5}, {'source': 'Bahorel', 'target': 'Courfeyrac', 'value': 6}, {'source': 'Bahorel', 'target': 'Mabeuf', 'value': 2}, {'source': 'Bahorel', 'target': 'Enjolras', 'value': 4}, {'source': 'Bahorel', 'target': 'Feuilly', 'value': 3}, {'source': 'Bahorel', 'target': 'Prouvaire', 'value': 2}, {'source': 'Bahorel', 'target': 'Marius', 'value': 1}, {'source': 'Bossuet', 'target': 'Marius', 'value': 5}, {'source': 'Bossuet', 'target': 'Courfeyrac', 'value': 12}, {'source': 'Bossuet', 'target': 'Gavroche', 'value': 5}, {'source': 'Bossuet', 'target': 'Bahorel', 'value': 4}, {'source': 'Bossuet', 'target': 'Enjolras', 'value': 10}, {'source': 'Bossuet', 'target': 'Feuilly', 'value': 6}, {'source': 'Bossuet', 'target': 'Prouvaire', 'value': 2}, {'source': 'Bossuet', 'target': 'Combeferre', 'value': 9}, {'source': 'Bossuet', 'target': 'Mabeuf', 'value': 1}, {'source': 'Bossuet', 'target': 'Valjean', 'value': 1}, {'source': 'Joly', 'target': 'Bahorel', 'value': 5}, {'source': 'Joly', 'target': 'Bossuet', 'value': 7}, {'source': 'Joly', 'target': 'Gavroche', 'value': 3}, {'source': 'Joly', 'target': 'Courfeyrac', 'value': 5}, {'source': 'Joly', 'target': 'Enjolras', 'value': 5}, {'source': 'Joly', 'target': 'Feuilly', 'value': 5}, {'source': 'Joly', 'target': 'Prouvaire', 'value': 2}, {'source': 'Joly', 'target': 'Combeferre', 'value': 5}, {'source': 'Joly', 'target': 'Mabeuf', 'value': 1}, {'source': 'Joly', 'target': 'Marius', 'value': 2}, {'source': 'Grantaire', 'target': 'Bossuet', 'value': 3}, {'source': 'Grantaire', 'target': 'Enjolras', 'value': 3}, {'source': 'Grantaire', 'target': 'Combeferre', 'value': 1}, {'source': 'Grantaire', 'target': 'Courfeyrac', 'value': 2}, {'source': 'Grantaire', 'target': 'Joly', 'value': 2}, {'source': 'Grantaire', 'target': 'Gavroche', 'value': 1}, {'source': 'Grantaire', 'target': 'Bahorel', 'value': 1}, {'source': 'Grantaire', 'target': 'Feuilly', 'value': 1}, {'source': 'Grantaire', 'target': 'Prouvaire', 'value': 1}, {'source': 'MotherPlutarch', 'target': 'Mabeuf', 'value': 3}, {'source': 'Gueulemer', 'target': 'Thenardier', 'value': 5}, {'source': 'Gueulemer', 'target': 'Valjean', 'value': 1}, {'source': 'Gueulemer', 'target': 'Mme.Thenardier', 'value': 1}, {'source': 'Gueulemer', 'target': 'Javert', 'value': 1}, {'source': 'Gueulemer', 'target': 'Gavroche', 'value': 1}, {'source': 'Gueulemer', 'target': 'Eponine', 'value': 1}, {'source': 'Babet', 'target': 'Thenardier', 'value': 6}, {'source': 'Babet', 'target': 'Gueulemer', 'value': 6}, {'source': 'Babet', 'target': 'Valjean', 'value': 1}, {'source': 'Babet', 'target': 'Mme.Thenardier', 'value': 1}, {'source': 'Babet', 'target': 'Javert', 'value': 2}, {'source': 'Babet', 'target': 'Gavroche', 'value': 1}, {'source': 'Babet', 'target': 'Eponine', 'value': 1}, {'source': 'Claquesous', 'target': 'Thenardier', 'value': 4}, {'source': 'Claquesous', 'target': 'Babet', 'value': 4}, {'source': 'Claquesous', 'target': 'Gueulemer', 'value': 4}, {'source': 'Claquesous', 'target': 'Valjean', 'value': 1}, {'source': 'Claquesous', 'target': 'Mme.Thenardier', 'value': 1}, {'source': 'Claquesous', 'target': 'Javert', 'value': 1}, {'source': 'Claquesous', 'target': 'Eponine', 'value': 1}, {'source': 'Claquesous', 'target': 'Enjolras', 'value': 1}, {'source': 'Montparnasse', 'target': 'Javert', 'value': 1}, {'source': 'Montparnasse', 'target': 'Babet', 'value': 2}, {'source': 'Montparnasse', 'target': 'Gueulemer', 'value': 2}, {'source': 'Montparnasse', 'target': 'Claquesous', 'value': 2}, {'source': 'Montparnasse', 'target': 'Valjean', 'value': 1}, {'source': 'Montparnasse', 'target': 'Gavroche', 'value': 1}, {'source': 'Montparnasse', 'target': 'Eponine', 'value': 1}, {'source': 'Montparnasse', 'target': 'Thenardier', 'value': 1}, {'source': 'Toussaint', 'target': 'Cosette', 'value': 2}, {'source': 'Toussaint', 'target': 'Javert', 'value': 1}, {'source': 'Toussaint', 'target': 'Valjean', 'value': 1}, {'source': 'Child1', 'target': 'Gavroche', 'value': 2}, {'source': 'Child2', 'target': 'Gavroche', 'value': 2}, {'source': 'Child2', 'target': 'Child1', 'value': 3}, {'source': 'Brujon', 'target': 'Babet', 'value': 3}, {'source': 'Brujon', 'target': 'Gueulemer', 'value': 3}, {'source': 'Brujon', 'target': 'Thenardier', 'value': 3}, {'source': 'Brujon', 'target': 'Gavroche', 'value': 1}, {'source': 'Brujon', 'target': 'Eponine', 'value': 1}, {'source': 'Brujon', 'target': 'Claquesous', 'value': 1}, {'source': 'Brujon', 'target': 'Montparnasse', 'value': 1}, {'source': 'Mme.Hucheloup', 'target': 'Bossuet', 'value': 1}, {'source': 'Mme.Hucheloup', 'target': 'Joly', 'value': 1}, {'source': 'Mme.Hucheloup', 'target': 'Grantaire', 'value': 1}, {'source': 'Mme.Hucheloup', 'target': 'Bahorel', 'value': 1}, {'source': 'Mme.Hucheloup', 'target': 'Courfeyrac', 'value': 1}, {'source': 'Mme.Hucheloup', 'target': 'Gavroche', 'value': 1}, {'source': 'Mme.Hucheloup', 'target': 'Enjolras', 'value': 1}]}
+```
+]
+]
+
+---
+
+Both languages come with other options as well, but these are the most straightforward.
+
+.pull-left[
+#### R
+The function `data.table::fread` is probably the fastest way to read rectangular data into R. However it creates a `data.table` object, which can be treated as a data frame, but had different semantics. It is a faster structure for bigger data.
+
+There are Java-based packages for reading XLSX files, like **xlsx** and **XLConnect**. The R-Java interface is problematic
+
+The **rio** package wraps a whole slew of R packages for reading and writing. It simplifies things with `rio::import()`. See [here](https://www.rdocumentation.org/packages/rio/versions/0.5.16) for the kinds of files it imports
+
+
+]
+.pull-right[
+#### Python
+**pandas** tries to unify imports by wrapping several packages. 
+
+Finer control of Excel imports is available in the **xlrd** package
+
+Finer control of CSV imports is available using the **csv** package
+
+You can generally import any text file using the `open(&lt;filename&gt;, 'r')` method and 
+post-process it in Python
+]
+
+---
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+---
+class: middle, inverse, center
+
+# Tidying data
+
+---
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+## Tidying data
+
+---
+
+There are some typical problems in data sets that need to be tidied.
+
++ Column headers are values, not variable names.
++ Multiple variables are stored in one column.
++ Variables are stored in both rows and columns.
++ Multiple types of observational units are stored in the same table.
++ A single observational unit is stored in multiple tables.
+
+---
+
+There are three main operations you need for tidying data:
+
+1. Melting/unpivoting data (addresses data in column names)
+1. Widening/pivoting data (addresses multiple rows per observation)
+1. Separating or uniting columns of data (addresses compound columns)
+
+---
+
+.left-column70[
+1. `tidyr::pivot_longer`/`tidyr::gather`/`pd.melt` collects multiple columns into 2, and only 2 columns
+    - One column represents the data in the column headers
+    - One column represents the values in the column
+    - All other columns are repeated to keep all the data properly associated
+1. `tidyr::pivot_wider`/`tidyr::spread`/`pd.pivot` takes two columns and makes them multiple columns
+    - The values in one column form the headers to different new columns
+    - The values in the other column represent the values in the corresponding cells
+    - The other columns are repeated to start with, but reduce repetitions to make all associated data stay together
+]
+.right-column30[
+![](img/tidyr-spread-gather.gif)
+]
+
+---
+
+The pew dataset, below, has issues...
+
+.panelset[
+.panel[
+  .panel-name[R]
+  
+
+```r
+library(tidyverse)
+
+pew &lt;- read_csv('data/pew.csv')
+head(pew)
+```
+
+```
+# A tibble: 6 x 11
+  religion `&lt;$10k` `$10-20k` `$20-30k` `$30-40k` `$40-50k` `$50-75k` `$75-100k`
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+1 Agnostic      27        34        60        81        76       137        122
+2 Atheist       12        27        37        52        35        70         73
+3 Buddhist      27        21        30        34        33        58         62
+4 Catholic     418       617       732       670       638      1116        949
+5 Don’t k…      15        14        15        11        10        35         21
+6 Evangel…     575       869      1064       982       881      1486        949
+# … with 3 more variables: `$100-150k` &lt;dbl&gt;, `&gt;150k` &lt;dbl&gt;, `Don't
+#   know/refused` &lt;dbl&gt;
+```
+]
+.panel[.panel-name[Python]
+
+
+```python
+import pandas as pd
+
+pew = pd.read_csv('data/pew.csv')
+pew.head()
+```
+
+```
+             religion  &lt;$10k  $10-20k  ...  $100-150k  &gt;150k  Don't know/refused
+0            Agnostic     27       34  ...        109     84                  96
+1             Atheist     12       27  ...         59     74                  76
+2            Buddhist     27       21  ...         39     53                  54
+3            Catholic    418      617  ...        792    633                1489
+4  Don’t know/refused     15       14  ...         17     18                 116
+
+[5 rows x 11 columns]
+```
+]
+]
+
+---
+
+We need to melt this dataset to make it tidy
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+pew1 &lt;- pew %&gt;% 
+  pivot_longer(cols = c(-religion), names_to = 'income_groups', values_to = 'counts')
+head(pew1)
+```
+
+```
+# A tibble: 6 x 3
+  religion income_groups counts
+  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
+1 Agnostic &lt;$10k             27
+2 Agnostic $10-20k           34
+3 Agnostic $20-30k           60
+4 Agnostic $30-40k           81
+5 Agnostic $40-50k           76
+6 Agnostic $50-75k          137
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+pew1 = pew.melt(id_vars=["religion"], var_name = 'income_groups', value_name='counts')
+pew1.head()
+```
+
+```
+             religion income_groups  counts
+0            Agnostic         &lt;$10k      27
+1             Atheist         &lt;$10k      12
+2            Buddhist         &lt;$10k      27
+3            Catholic         &lt;$10k     418
+4  Don’t know/refused         &lt;$10k      15
+```
+]
+]
+
+&gt; There is a difference in row-order between the R and Python solutions. R sorts by the id variable(s), Python sorts on the column containing the old column headers. Analytically, this can be fixed, and is often not important for visualization.
+
+---
+
+We reverse this process by pivoting the data set
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+pew2 &lt;- pew1 %&gt;% 
+  pivot_wider(id_cols = c(religion), names_from = 'income_groups', values_from = 'counts')
+head(pew2,2)
+```
+
+```
+# A tibble: 2 x 11
+  religion `&lt;$10k` `$10-20k` `$20-30k` `$30-40k` `$40-50k` `$50-75k` `$75-100k`
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+1 Agnostic      27        34        60        81        76       137        122
+2 Atheist       12        27        37        52        35        70         73
+# … with 3 more variables: `$100-150k` &lt;dbl&gt;, `&gt;150k` &lt;dbl&gt;, `Don't
+#   know/refused` &lt;dbl&gt;
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+pew2 = (pew1.pivot_table(index="religion", columns = "income_groups", values="counts")
+    .reset_index()
+    .rename_axis(None, axis=1))
+
+pew2.head(2)
+```
+
+```
+   religion  $10-20k  $100-150k  ...  &lt;$10k  &gt;150k  Don't know/refused
+0  Agnostic       34        109  ...     27     84                  96
+1   Atheist       27         59  ...     12     74                  76
+
+[2 rows x 11 columns]
+```
+]
+]
+
+&gt; The `reset_index` bit is needed since **pandas** `DataFrame` objects have an `index` property, like row-names in R. The pivot operation makes the id columns into the index, which is usually not desirable. It also gives a name to the column headers, which we also don't want. `reset_index` makes the index values just the row numbers, and makes the index columns just normal columns in the dataset
+
+---
+
+Let's look at the issue of separating columns (the more common issue)
+
+We'll start with  a TB dataset
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+tb &lt;- read_csv('data/tb.csv')
+head(tb, 3)
+```
+
+```
+# A tibble: 3 x 16
+  iso2   year  m014 m1524 m2534 m3544 m4554 m5564   m65  f014 f1524 f2534 f3544
+  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 AF     2000    52   228   183   149   129    94    80    93   414   565   339
+2 AF     2001   129   379   349   274   204   139   103   146   799   888   586
+3 AF     2002    90   476   481   368   246   241   189   192  1119  1251   792
+# … with 3 more variables: f4554 &lt;dbl&gt;, f5564 &lt;dbl&gt;, f65 &lt;dbl&gt;
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+tb = pd.read_csv('data/tb.csv')
+tb.head(3)
+```
+
+```
+  iso2  year   m014  m1524  m2534  ...   f2534  f3544  f4554  f5564    f65
+0   AF  2000   52.0  228.0  183.0  ...   565.0  339.0  205.0   99.0   36.0
+1   AF  2001  129.0  379.0  349.0  ...   888.0  586.0  375.0  179.0   89.0
+2   AF  2002   90.0  476.0  481.0  ...  1251.0  792.0  526.0  320.0  218.0
+
+[3 rows x 16 columns]
+```
+]
+]
+
+&gt; We need to melt this data, and then separate gender and ages
+
+---
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+tb1 &lt;- tb %&gt;% pivot_longer(cols=m014:f65, names_to='demo', values_to='counts')
+head(tb1, 3)
+```
+
+```
+# A tibble: 3 x 4
+  iso2   year demo  counts
+  &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;
+1 AF     2000 m014      52
+2 AF     2000 m1524    228
+3 AF     2000 m2534    183
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+tb1 = tb.melt(id_vars = ['iso2','year'], var_name = 'demo', value_name='counts')
+tb1.head(3)
+```
+
+```
+  iso2  year  demo  counts
+0   AF  2000  m014    52.0
+1   AF  2001  m014   129.0
+2   AF  2002  m014    90.0
+```
+]
+]
+
+---
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+tb2 &lt;- tb1 %&gt;% separate(demo, c('gender','age'), sep = 1)
+head(tb2, 3)
+```
+
+```
+# A tibble: 3 x 5
+  iso2   year gender age   counts
+  &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;dbl&gt;
+1 AF     2000 m      014       52
+2 AF     2000 m      1524     228
+3 AF     2000 m      2534     183
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+tb2 = (tb1.assign(                               # create new columns
+  gender = lambda x: x.demo.str[0].astype(str),
+  age = lambda x: x.demo.str[1:].astype(str))
+  .drop('demo', axis=1)                           # Remove old column
+)
+tb2.head(3)
+```
+
+```
+  iso2  year  counts gender  age
+0   AF  2000    52.0      m  014
+1   AF  2001   129.0      m  014
+2   AF  2002    90.0      m  014
+```
+]
+]
+
+---
+
+Something a bit more complex
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+TB &lt;-  read_csv('data/tb1.csv') %&gt;% 
+  pivot_longer(cols = starts_with('new'),names_to='demo', values_to='counts')
+head(TB, 3)
+```
+
+```
+# A tibble: 3 x 6
+  country     iso2  iso3   year demo         counts
+  &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;
+1 Afghanistan AF    AFG    1980 new_sp_m014      NA
+2 Afghanistan AF    AFG    1980 new_sp_m1524     NA
+3 Afghanistan AF    AFG    1980 new_sp_m2534     NA
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+TB = pd.read_csv('data/tb1.csv').melt(id_vars=['country','iso2','iso3','year'], var_name='demo', value_name='counts')
+TB.head(3)
+```
+
+```
+       country iso2 iso3  year         demo  counts
+0  Afghanistan   AF  AFG  1980  new_sp_m014     NaN
+1  Afghanistan   AF  AFG  1981  new_sp_m014     NaN
+2  Afghanistan   AF  AFG  1982  new_sp_m014     NaN
+```
+]
+]
+
+---
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+TB1 &lt;- TB %&gt;% extract(demo, c('type','gender','age'),  regex = 'new[_]*([a-z]+)_([mf])([0-9]+$)')
+head(TB1)
+```
+
+```
+# A tibble: 6 x 8
+  country     iso2  iso3   year type  gender age   counts
+  &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;dbl&gt;
+1 Afghanistan AF    AFG    1980 sp    m      014       NA
+2 Afghanistan AF    AFG    1980 sp    m      1524      NA
+3 Afghanistan AF    AFG    1980 sp    m      2534      NA
+4 Afghanistan AF    AFG    1980 sp    m      3544      NA
+5 Afghanistan AF    AFG    1980 sp    m      4554      NA
+6 Afghanistan AF    AFG    1980 sp    m      5564      NA
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+tmp=TB.demo.str.split('new[_]*([a-z]+)_([mf])([0-9]+)', expand=True)
+tmp.columns = ['id','type','gender','age','v5']
+TB1 = pd.concat([TB.drop('demo', axis=1),tmp.iloc[:,1:4]], axis=1)
+TB1.head()
+```
+
+```
+       country iso2 iso3  year  counts type gender  age
+0  Afghanistan   AF  AFG  1980     NaN   sp      m  014
+1  Afghanistan   AF  AFG  1981     NaN   sp      m  014
+2  Afghanistan   AF  AFG  1982     NaN   sp      m  014
+3  Afghanistan   AF  AFG  1983     NaN   sp      m  014
+4  Afghanistan   AF  AFG  1984     NaN   sp      m  014
+```
+]
+]
+
+---
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+
+---
+class: middle, center, inverse
+
+# Data transformations
+
+---
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+## Data transformations
+
+---
+
+We'll consider four main transformations
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Verb (tidyverse) &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Functionality &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mutate &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Transform a column with some function &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; select &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Select some columns in the data &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; filter &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Keep only rows that meet some data criterion &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; arrange &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Order the data frame by values of a column(s) &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+These aren't explicity verbs in Python, but operationally they are similar to base R (non-tidyverse) manipulations
+
+---
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+mpg &lt;- read_csv('data/mpg.csv')
+head(mpg)
+```
+
+```
+# A tibble: 6 x 11
+  manufacturer model displ  year   cyl trans      drv     cty   hwy fl    class 
+  &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+1 audi         a4      1.8  1999     4 auto(l5)   f        18    29 p     compa…
+2 audi         a4      1.8  1999     4 manual(m5) f        21    29 p     compa…
+3 audi         a4      2    2008     4 manual(m6) f        20    31 p     compa…
+4 audi         a4      2    2008     4 auto(av)   f        21    30 p     compa…
+5 audi         a4      2.8  1999     6 auto(l5)   f        16    26 p     compa…
+6 audi         a4      2.8  1999     6 manual(m5) f        18    26 p     compa…
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+mpg = pd.read_csv('data/mpg.csv')
+mpg.head()
+```
+
+```
+  manufacturer model  displ  year  cyl       trans drv  cty  hwy fl    class
+0         audi    a4    1.8  1999    4    auto(l5)   f   18   29  p  compact
+1         audi    a4    1.8  1999    4  manual(m5)   f   21   29  p  compact
+2         audi    a4    2.0  2008    4  manual(m6)   f   20   31  p  compact
+3         audi    a4    2.0  2008    4    auto(av)   f   21   30  p  compact
+4         audi    a4    2.8  1999    6    auto(l5)   f   16   26  p  compact
+```
+]
+]
+
+---
+
+**mutate:** Convert the city and highway fuel efficiency to kn/l, and find average fuel efficiency
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+mpg &lt;- mpg %&gt;% 
+  mutate(cty = cty * 1.6/3.8,
+         hwy = hwy * 1.6/3.8, 
+         avg = (cty + hwy)/2)
+head(mpg)
+```
+
+```
+# A tibble: 6 x 12
+  manufacturer model displ  year   cyl trans drv     cty   hwy fl    class   avg
+  &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
+1 audi         a4      1.8  1999     4 auto… f      7.58  12.2 p     comp…  9.89
+2 audi         a4      1.8  1999     4 manu… f      8.84  12.2 p     comp… 10.5 
+3 audi         a4      2    2008     4 manu… f      8.42  13.1 p     comp… 10.7 
+4 audi         a4      2    2008     4 auto… f      8.84  12.6 p     comp… 10.7 
+5 audi         a4      2.8  1999     6 auto… f      6.74  10.9 p     comp…  8.84
+6 audi         a4      2.8  1999     6 manu… f      7.58  10.9 p     comp…  9.26
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+mpg['cty'] = mpg['cty'] * 1.6/3.8
+mpg['hwy'] = mpg['hwy'] * 1.6/3.8
+mpg['avg'] = (mpg.cty + mpg.hwy)/2
+mpg.head()
+```
+
+```
+  manufacturer model  displ  year  ...        hwy fl    class        avg
+0         audi    a4    1.8  1999  ...  12.210526  p  compact   9.894737
+1         audi    a4    1.8  1999  ...  12.210526  p  compact  10.526316
+2         audi    a4    2.0  2008  ...  13.052632  p  compact  10.736842
+3         audi    a4    2.0  2008  ...  12.631579  p  compact  10.736842
+4         audi    a4    2.8  1999  ...  10.947368  p  compact   8.842105
+
+[5 rows x 12 columns]
+```
+]
+]
+
+---
+
+**select:** Extract the _columns_ for year, manufacturer, and average fuel efficiency
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+mpg %&gt;% select(year, manufacturer, avg)
+```
+
+```
+# A tibble: 234 x 3
+    year manufacturer   avg
+   &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt;
+ 1  1999 audi          9.89
+ 2  1999 audi         10.5 
+ 3  2008 audi         10.7 
+ 4  2008 audi         10.7 
+ 5  1999 audi          8.84
+ 6  1999 audi          9.26
+ 7  2008 audi          9.47
+ 8  1999 audi          9.26
+ 9  1999 audi          8.63
+10  2008 audi         10.1 
+# … with 224 more rows
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+mpg[['year','manufacturer','avg']]
+```
+
+```
+     year manufacturer        avg
+0    1999         audi   9.894737
+1    1999         audi  10.526316
+2    2008         audi  10.736842
+3    2008         audi  10.736842
+4    1999         audi   8.842105
+..    ...          ...        ...
+229  2008   volkswagen   9.894737
+230  2008   volkswagen  10.526316
+231  1999   volkswagen   8.842105
+232  1999   volkswagen   9.263158
+233  2008   volkswagen   9.052632
+
+[234 rows x 3 columns]
+```
+]
+]
+
+---
+
+A bit more complicated: Extract columns starting with some character expression
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+weather &lt;- read_csv('data/weather.csv')
+weather %&gt;% select(starts_with('d'))
+```
+
+```
+# A tibble: 22 x 31
+      d1    d2    d3    d4    d5    d6    d7    d8 d9      d10   d11 d12     d13
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;
+ 1    NA  NA    NA      NA  NA      NA    NA    NA NA     NA    NA   NA       NA
+ 2    NA  NA    NA      NA  NA      NA    NA    NA NA     NA    NA   NA       NA
+ 3    NA  27.3  24.1    NA  NA      NA    NA    NA NA     NA    29.7 NA       NA
+ 4    NA  14.4  14.4    NA  NA      NA    NA    NA NA     NA    13.4 NA       NA
+ 5    NA  NA    NA      NA  32.1    NA    NA    NA NA     34.5  NA   NA       NA
+ 6    NA  NA    NA      NA  14.2    NA    NA    NA NA     16.8  NA   NA       NA
+ 7    NA  NA    NA      NA  NA      NA    NA    NA NA     NA    NA   NA       NA
+ 8    NA  NA    NA      NA  NA      NA    NA    NA NA     NA    NA   NA       NA
+ 9    NA  NA    NA      NA  NA      NA    NA    NA NA     NA    NA   NA       NA
+10    NA  NA    NA      NA  NA      NA    NA    NA NA     NA    NA   NA       NA
+# … with 12 more rows, and 18 more variables: d14 &lt;dbl&gt;, d15 &lt;dbl&gt;, d16 &lt;dbl&gt;,
+#   d17 &lt;dbl&gt;, d18 &lt;lgl&gt;, d19 &lt;lgl&gt;, d20 &lt;lgl&gt;, d21 &lt;lgl&gt;, d22 &lt;lgl&gt;,
+#   d23 &lt;dbl&gt;, d24 &lt;lgl&gt;, d25 &lt;dbl&gt;, d26 &lt;dbl&gt;, d27 &lt;dbl&gt;, d28 &lt;dbl&gt;,
+#   d29 &lt;dbl&gt;, d30 &lt;dbl&gt;, d31 &lt;dbl&gt;
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+weather = pd.read_csv('data/weather.csv')
+weather.filter(regex='^d', axis=1) # Using regular expressions is fast
+```
+
+```
+      d1    d2    d3    d4    d5    d6  ...   d26   d27   d28   d29   d30   d31
+0    NaN   NaN   NaN   NaN   NaN   NaN  ...   NaN   NaN   NaN   NaN  27.8   NaN
+1    NaN   NaN   NaN   NaN   NaN   NaN  ...   NaN   NaN   NaN   NaN  14.5   NaN
+2    NaN  27.3  24.1   NaN   NaN   NaN  ...   NaN   NaN   NaN   NaN   NaN   NaN
+3    NaN  14.4  14.4   NaN   NaN   NaN  ...   NaN   NaN   NaN   NaN   NaN   NaN
+4    NaN   NaN   NaN   NaN  32.1   NaN  ...   NaN   NaN   NaN   NaN   NaN   NaN
+5    NaN   NaN   NaN   NaN  14.2   NaN  ...   NaN   NaN   NaN   NaN   NaN   NaN
+6    NaN   NaN   NaN   NaN   NaN   NaN  ...   NaN  36.3   NaN   NaN   NaN   NaN
+7    NaN   NaN   NaN   NaN   NaN   NaN  ...   NaN  16.7   NaN   NaN   NaN   NaN
+8    NaN   NaN   NaN   NaN   NaN   NaN  ...   NaN  33.2   NaN   NaN   NaN   NaN
+9    NaN   NaN   NaN   NaN   NaN   NaN  ...   NaN  18.2   NaN   NaN   NaN   NaN
+10   NaN   NaN   NaN   NaN   NaN   NaN  ...   NaN   NaN   NaN  30.1   NaN   NaN
+11   NaN   NaN   NaN   NaN   NaN   NaN  ...   NaN   NaN   NaN  18.0   NaN   NaN
+12   NaN   NaN  28.6   NaN   NaN   NaN  ...   NaN   NaN   NaN   NaN   NaN   NaN
+13   NaN   NaN  17.5   NaN   NaN   NaN  ...   NaN   NaN   NaN   NaN   NaN   NaN
+14   NaN   NaN   NaN   NaN  29.6   NaN  ...   NaN   NaN   NaN  28.0   NaN  25.4
+15   NaN   NaN   NaN   NaN  15.8   NaN  ...   NaN   NaN   NaN  15.3   NaN  15.4
+16   NaN   NaN   NaN   NaN  27.0   NaN  ...   NaN   NaN  31.2   NaN   NaN   NaN
+17   NaN   NaN   NaN   NaN  14.0   NaN  ...   NaN   NaN  15.0   NaN   NaN   NaN
+18   NaN  31.3   NaN  27.2  26.3   NaN  ...  28.1  27.7   NaN   NaN   NaN   NaN
+19   NaN  16.3   NaN  12.0   7.9   NaN  ...  12.1  14.2   NaN   NaN   NaN   NaN
+20  29.9   NaN   NaN   NaN   NaN  27.8  ...   NaN   NaN   NaN   NaN   NaN   NaN
+21  13.8   NaN   NaN   NaN   NaN  10.5  ...   NaN   NaN   NaN   NaN   NaN   NaN
+
+[22 rows x 31 columns]
+```
+]
+]
+
+---
+
+**filter:** Extract only cars made by Audi
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+mpg %&gt;% filter(manufacturer=='audi')
+```
+
+```
+# A tibble: 18 x 12
+   manufacturer model displ  year   cyl trans drv     cty   hwy fl    class
+   &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
+ 1 audi         a4      1.8  1999     4 auto… f      7.58 12.2  p     comp…
+ 2 audi         a4      1.8  1999     4 manu… f      8.84 12.2  p     comp…
+ 3 audi         a4      2    2008     4 manu… f      8.42 13.1  p     comp…
+ 4 audi         a4      2    2008     4 auto… f      8.84 12.6  p     comp…
+ 5 audi         a4      2.8  1999     6 auto… f      6.74 10.9  p     comp…
+ 6 audi         a4      2.8  1999     6 manu… f      7.58 10.9  p     comp…
+ 7 audi         a4      3.1  2008     6 auto… f      7.58 11.4  p     comp…
+ 8 audi         a4 q…   1.8  1999     4 manu… 4      7.58 10.9  p     comp…
+ 9 audi         a4 q…   1.8  1999     4 auto… 4      6.74 10.5  p     comp…
+10 audi         a4 q…   2    2008     4 manu… 4      8.42 11.8  p     comp…
+11 audi         a4 q…   2    2008     4 auto… 4      8.   11.4  p     comp…
+12 audi         a4 q…   2.8  1999     6 auto… 4      6.32 10.5  p     comp…
+13 audi         a4 q…   2.8  1999     6 manu… 4      7.16 10.5  p     comp…
+14 audi         a4 q…   3.1  2008     6 auto… 4      7.16 10.5  p     comp…
+15 audi         a4 q…   3.1  2008     6 manu… 4      6.32 10.5  p     comp…
+16 audi         a6 q…   2.8  1999     6 auto… 4      6.32 10.1  p     mids…
+17 audi         a6 q…   3.1  2008     6 auto… 4      7.16 10.5  p     mids…
+18 audi         a6 q…   4.2  2008     8 auto… 4      6.74  9.68 p     mids…
+# … with 1 more variable: avg &lt;dbl&gt;
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+mpg[mpg.manufacturer=='audi']
+```
+
+```
+   manufacturer       model  displ  year  ...        hwy fl    class        avg
+0          audi          a4    1.8  1999  ...  12.210526  p  compact   9.894737
+1          audi          a4    1.8  1999  ...  12.210526  p  compact  10.526316
+2          audi          a4    2.0  2008  ...  13.052632  p  compact  10.736842
+3          audi          a4    2.0  2008  ...  12.631579  p  compact  10.736842
+4          audi          a4    2.8  1999  ...  10.947368  p  compact   8.842105
+5          audi          a4    2.8  1999  ...  10.947368  p  compact   9.263158
+6          audi          a4    3.1  2008  ...  11.368421  p  compact   9.473684
+7          audi  a4 quattro    1.8  1999  ...  10.947368  p  compact   9.263158
+8          audi  a4 quattro    1.8  1999  ...  10.526316  p  compact   8.631579
+9          audi  a4 quattro    2.0  2008  ...  11.789474  p  compact  10.105263
+10         audi  a4 quattro    2.0  2008  ...  11.368421  p  compact   9.684211
+11         audi  a4 quattro    2.8  1999  ...  10.526316  p  compact   8.421053
+12         audi  a4 quattro    2.8  1999  ...  10.526316  p  compact   8.842105
+13         audi  a4 quattro    3.1  2008  ...  10.526316  p  compact   8.842105
+14         audi  a4 quattro    3.1  2008  ...  10.526316  p  compact   8.421053
+15         audi  a6 quattro    2.8  1999  ...  10.105263  p  midsize   8.210526
+16         audi  a6 quattro    3.1  2008  ...  10.526316  p  midsize   8.842105
+17         audi  a6 quattro    4.2  2008  ...   9.684211  p  midsize   8.210526
+
+[18 rows x 12 columns]
+```
+]
+]
+
+---
+
+**arrange:** Arrange cars from highest to lowest fuel efficiency
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+mpg %&gt;% arrange(-avg)
+```
+
+```
+# A tibble: 234 x 12
+   manufacturer model displ  year   cyl trans drv     cty   hwy fl    class
+   &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
+ 1 volkswagen   new …   1.9  1999     4 manu… f      14.7  18.5 d     subc…
+ 2 volkswagen   jetta   1.9  1999     4 manu… f      13.9  18.5 d     comp…
+ 3 volkswagen   new …   1.9  1999     4 auto… f      12.2  17.3 d     subc…
+ 4 toyota       coro…   1.8  2008     4 manu… f      11.8  15.6 r     comp…
+ 5 honda        civic   1.6  1999     4 manu… f      11.8  13.9 r     subc…
+ 6 honda        civic   1.8  2008     4 auto… f      10.5  15.2 r     subc…
+ 7 toyota       coro…   1.8  1999     4 manu… f      10.9  14.7 r     comp…
+ 8 toyota       coro…   1.8  2008     4 auto… f      10.9  14.7 r     comp…
+ 9 honda        civic   1.8  2008     4 manu… f      10.9  14.3 r     subc…
+10 honda        civic   1.8  2008     4 auto… f      10.1  15.2 c     subc…
+# … with 224 more rows, and 1 more variable: avg &lt;dbl&gt;
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+mpg.sort_values(by=['avg'], ascending=False)
+```
+
+```
+    manufacturer                model  displ  ...  fl       class        avg
+221   volkswagen           new beetle    1.9  ...   d  subcompact  16.631579
+212   volkswagen                jetta    1.9  ...   d     compact  16.210526
+222   volkswagen           new beetle    1.9  ...   d  subcompact  14.736842
+196       toyota              corolla    1.8  ...   r     compact  13.684211
+99         honda                civic    1.6  ...   r  subcompact  12.842105
+..           ...                  ...    ...  ...  ..         ...        ...
+126         jeep   grand cherokee 4wd    4.7  ...   e         suv   4.421053
+59         dodge          durango 4wd    4.7  ...   e         suv   4.421053
+65         dodge  ram 1500 pickup 4wd    4.7  ...   e      pickup   4.421053
+69         dodge  ram 1500 pickup 4wd    4.7  ...   e      pickup   4.421053
+54         dodge    dakota pickup 4wd    4.7  ...   e      pickup   4.421053
+
+[234 rows x 12 columns]
+```
+]
+]
+
+---
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+---
+class: middle, center, inverse
+
+# Putting different data sets together
+
+---
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+## Joining datasets
+
+---
+
++ Quite often, data on individuals lie in different tables
+
+    - Clinical, demographic and bioinformatic data
+--
+    - Drug, procedure, and payment data (think Medicare)
+--
+    - Personal health data across different healthcare entities
+
+---
+
+The simplest case is when we just need to add more data to existing data 
+
+- New patients in study, with same protocol (add rows)
+- Adding pathology, imaging data for existing patients (add columns)
+
+---
+
+.pull-left[
+`cbind(x,y)` / `pd.concat(x,y, axis=1)`
+
+![](img/addcol.png)
+]
+.pull-right[
+`rbind(x,y)` / `pd.concat(x, y, axis = 0)`
+
+![](img/addrow.png)
+]
+
+---
+class: middle, center
+
+# Joins
+
+---
+
+.pull-left[
+We will talk about more general ways of joining two datasets
+
+We will assume:
+
+1. We have two rectangular data sets (so `data.frame` or `tibble`)
+1. There is at least one variable (column) in common, even if they have different names
+    - Patient ID number
+    - SSN (Social Security number)
+    - Identifiable information
+]
+
+.pull-right[
+![](img/merge.png)
+]
+
+---
+
+&lt;img width="100%" src="img/joins.png"/&gt;
+
+--
+
+&lt;table width="100%"&gt;
+&lt;tr&gt;
+&lt;td style="text-align:center;"&gt;inner_join&lt;/td&gt;
+&lt;td style="text-align:center;"&gt;left_join&lt;/td&gt;
+&lt;td style="text-align:center;"&gt;right_join&lt;/td&gt;
+&lt;td style="text-align:center;"&gt;outer_join&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+
+--
+
+The "join condition" are the common variables in the two datasets, i.e. rows are selected if the values of the common variables in the left dataset matches the values of the common variables in the right dataset
+
+---
+
+There are basically four kinds of joins:
+
+| pandas | R          | SQL         | Description                     |
+| ------ | ---------- | ----------- | ------------------------------- |
+| left   | left_join  | left outer  | keep all rows on left           |
+| right  | right_join | right outer | keep all rows on right          |
+| outer  | full_join | full outer  | keep all rows from both         |
+| inner  | inner_join | inner       | keep only rows with common keys |
+
+
+
+---
+
+.pull-left[
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+clinical &lt;- readxl::read_excel('data/BreastCancer_Clinical.xlsx')
+head(clinical)
+```
+
+```
+# A tibble: 6 x 30
+  `Complete TCGA … Gender `Age at Initial… `ER Status` `PR Status`
+  &lt;chr&gt;            &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;      
+1 TCGA-A2-A0T2     FEMALE               66 Negative    Negative   
+2 TCGA-A2-A0CM     FEMALE               40 Negative    Negative   
+3 TCGA-BH-A18V     FEMALE               48 Negative    Negative   
+4 TCGA-BH-A18Q     FEMALE               56 Negative    Negative   
+5 TCGA-BH-A0E0     FEMALE               38 Negative    Negative   
+6 TCGA-A7-A0CE     FEMALE               57 Negative    Negative   
+# … with 25 more variables: `HER2 Final Status` &lt;chr&gt;, Tumor &lt;chr&gt;, `Tumor--T1
+#   Coded` &lt;chr&gt;, Node &lt;chr&gt;, `Node-Coded` &lt;chr&gt;, Metastasis &lt;chr&gt;,
+#   `Metastasis-Coded` &lt;chr&gt;, `AJCC Stage` &lt;chr&gt;, `Converted Stage` &lt;chr&gt;,
+#   `Survival Data Form` &lt;chr&gt;, `Vital Status` &lt;chr&gt;, `Days to Date of Last
+#   Contact` &lt;dbl&gt;, `Days to date of Death` &lt;dbl&gt;, `OS event` &lt;dbl&gt;, `OS
+#   Time` &lt;dbl&gt;, `PAM50 mRNA` &lt;chr&gt;, `SigClust Unsupervised mRNA` &lt;dbl&gt;,
+#   `SigClust Intrinsic mRNA` &lt;dbl&gt;, `miRNA Clusters` &lt;dbl&gt;, `methylation
+#   Clusters` &lt;dbl&gt;, `RPPA Clusters` &lt;chr&gt;, `CN Clusters` &lt;dbl&gt;, `Integrated
+#   Clusters (with PAM50)` &lt;dbl&gt;, `Integrated Clusters (no exp)` &lt;dbl&gt;,
+#   `Integrated Clusters (unsup exp)` &lt;dbl&gt;
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+clinical=pd.read_excel('data/BreastCancer_Clinical.xlsx')
+clinical.head()
+```
+
+```
+  Complete TCGA ID  ... Integrated Clusters (unsup exp)
+0     TCGA-A2-A0T2  ...                               2
+1     TCGA-A2-A0CM  ...                               1
+2     TCGA-BH-A18V  ...                               2
+3     TCGA-BH-A18Q  ...                               2
+4     TCGA-BH-A0E0  ...                               2
+
+[5 rows x 30 columns]
+```
+]
+]
+
+]
+.pull-right[
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+proteome &lt;- readxl::read_excel('data/BreastCancer_Expression.xlsx')
+head(proteome)
+```
+
+```
+# A tibble: 6 x 11
+  TCGA_ID NP_958782 NP_958785 NP_958786 NP_000436 NP_958781 NP_958780 NP_958783
+  &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 TCGA-A…     1.10      1.11      1.11      1.11      1.12      1.11      1.11 
+2 TCGA-C…     2.61      2.65      2.65      2.65      2.65      2.65      2.65 
+3 TCGA-A…    -0.660    -0.649    -0.654    -0.632    -0.640    -0.654    -0.649
+4 TCGA-B…     0.195     0.215     0.215     0.205     0.215     0.215     0.215
+5 TCGA-C…    -0.494    -0.504    -0.501    -0.510    -0.504    -0.504    -0.501
+6 TCGA-C…     2.77      2.78      2.78      2.80      2.79      2.78      2.78 
+# … with 3 more variables: NP_958784 &lt;dbl&gt;, NP_112598 &lt;dbl&gt;, NP_001611 &lt;dbl&gt;
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+proteome = pd.read_excel('data/BreastCancer_Expression.xlsx')
+proteome.head()
+```
+
+```
+        TCGA_ID  NP_958782  NP_958785  ...  NP_958784  NP_112598  NP_001611
+0  TCGA-AO-A12D   1.096131   1.111370  ...   1.111370  -1.517390   0.482754
+1  TCGA-C8-A131   2.609943   2.650422  ...   2.650422   3.909313  -1.045294
+2  TCGA-AO-A12B  -0.659828  -0.648742  ...  -0.648742  -0.618256   1.222003
+3  TCGA-BH-A18Q   0.195341   0.215413  ...   0.215413  -1.035760  -0.517226
+4  TCGA-C8-A130  -0.494060  -0.503899  ...  -0.500619  -1.845366  -0.405503
+
+[5 rows x 11 columns]
+```
+]
+]
+]
+
+---
+
+### Inner join
+
+![](img/inner-join.gif)
+
+---
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+clinical %&gt;% inner_join(proteome, by = c('Complete TCGA ID' = 'TCGA_ID')) %&gt;% head()
+```
+
+```
+# A tibble: 6 x 40
+  `Complete TCGA … Gender `Age at Initial… `ER Status` `PR Status`
+  &lt;chr&gt;            &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;      
+1 TCGA-A2-A0CM     FEMALE               40 Negative    Negative   
+2 TCGA-BH-A18Q     FEMALE               56 Negative    Negative   
+3 TCGA-A7-A0CE     FEMALE               57 Negative    Negative   
+4 TCGA-D8-A142     FEMALE               74 Negative    Negative   
+5 TCGA-AO-A0J6     FEMALE               61 Negative    Negative   
+6 TCGA-A2-A0YM     FEMALE               67 Negative    Negative   
+# … with 35 more variables: `HER2 Final Status` &lt;chr&gt;, Tumor &lt;chr&gt;, `Tumor--T1
+#   Coded` &lt;chr&gt;, Node &lt;chr&gt;, `Node-Coded` &lt;chr&gt;, Metastasis &lt;chr&gt;,
+#   `Metastasis-Coded` &lt;chr&gt;, `AJCC Stage` &lt;chr&gt;, `Converted Stage` &lt;chr&gt;,
+#   `Survival Data Form` &lt;chr&gt;, `Vital Status` &lt;chr&gt;, `Days to Date of Last
+#   Contact` &lt;dbl&gt;, `Days to date of Death` &lt;dbl&gt;, `OS event` &lt;dbl&gt;, `OS
+#   Time` &lt;dbl&gt;, `PAM50 mRNA` &lt;chr&gt;, `SigClust Unsupervised mRNA` &lt;dbl&gt;,
+#   `SigClust Intrinsic mRNA` &lt;dbl&gt;, `miRNA Clusters` &lt;dbl&gt;, `methylation
+#   Clusters` &lt;dbl&gt;, `RPPA Clusters` &lt;chr&gt;, `CN Clusters` &lt;dbl&gt;, `Integrated
+#   Clusters (with PAM50)` &lt;dbl&gt;, `Integrated Clusters (no exp)` &lt;dbl&gt;,
+#   `Integrated Clusters (unsup exp)` &lt;dbl&gt;, NP_958782 &lt;dbl&gt;, NP_958785 &lt;dbl&gt;,
+#   NP_958786 &lt;dbl&gt;, NP_000436 &lt;dbl&gt;, NP_958781 &lt;dbl&gt;, NP_958780 &lt;dbl&gt;,
+#   NP_958783 &lt;dbl&gt;, NP_958784 &lt;dbl&gt;, NP_112598 &lt;dbl&gt;, NP_001611 &lt;dbl&gt;
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+clinical.merge(proteome, how='inner', left_on='Complete TCGA ID', right_on='TCGA_ID').head()
+```
+
+```
+  Complete TCGA ID  Gender  ...  NP_112598 NP_001611
+0     TCGA-A2-A0CM  FEMALE  ...  -2.652150 -0.984373
+1     TCGA-BH-A18Q  FEMALE  ...  -1.035760 -0.517226
+2     TCGA-A7-A0CE  FEMALE  ...   2.244584 -2.575065
+3     TCGA-D8-A142  FEMALE  ...  -0.148205  0.267490
+4     TCGA-AO-A0J6  FEMALE  ...  -0.967196  2.838370
+
+[5 rows x 41 columns]
+```
+]
+]
+
+---
+
+### left join
+
+![](img/left-join.gif)
+
+---
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+clinical %&gt;% left_join(proteome, by = c('Complete TCGA ID' = 'TCGA_ID')) %&gt;% head()
+```
+
+```
+# A tibble: 6 x 40
+  `Complete TCGA … Gender `Age at Initial… `ER Status` `PR Status`
+  &lt;chr&gt;            &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;      
+1 TCGA-A2-A0T2     FEMALE               66 Negative    Negative   
+2 TCGA-A2-A0CM     FEMALE               40 Negative    Negative   
+3 TCGA-BH-A18V     FEMALE               48 Negative    Negative   
+4 TCGA-BH-A18Q     FEMALE               56 Negative    Negative   
+5 TCGA-BH-A0E0     FEMALE               38 Negative    Negative   
+6 TCGA-A7-A0CE     FEMALE               57 Negative    Negative   
+# … with 35 more variables: `HER2 Final Status` &lt;chr&gt;, Tumor &lt;chr&gt;, `Tumor--T1
+#   Coded` &lt;chr&gt;, Node &lt;chr&gt;, `Node-Coded` &lt;chr&gt;, Metastasis &lt;chr&gt;,
+#   `Metastasis-Coded` &lt;chr&gt;, `AJCC Stage` &lt;chr&gt;, `Converted Stage` &lt;chr&gt;,
+#   `Survival Data Form` &lt;chr&gt;, `Vital Status` &lt;chr&gt;, `Days to Date of Last
+#   Contact` &lt;dbl&gt;, `Days to date of Death` &lt;dbl&gt;, `OS event` &lt;dbl&gt;, `OS
+#   Time` &lt;dbl&gt;, `PAM50 mRNA` &lt;chr&gt;, `SigClust Unsupervised mRNA` &lt;dbl&gt;,
+#   `SigClust Intrinsic mRNA` &lt;dbl&gt;, `miRNA Clusters` &lt;dbl&gt;, `methylation
+#   Clusters` &lt;dbl&gt;, `RPPA Clusters` &lt;chr&gt;, `CN Clusters` &lt;dbl&gt;, `Integrated
+#   Clusters (with PAM50)` &lt;dbl&gt;, `Integrated Clusters (no exp)` &lt;dbl&gt;,
+#   `Integrated Clusters (unsup exp)` &lt;dbl&gt;, NP_958782 &lt;dbl&gt;, NP_958785 &lt;dbl&gt;,
+#   NP_958786 &lt;dbl&gt;, NP_000436 &lt;dbl&gt;, NP_958781 &lt;dbl&gt;, NP_958780 &lt;dbl&gt;,
+#   NP_958783 &lt;dbl&gt;, NP_958784 &lt;dbl&gt;, NP_112598 &lt;dbl&gt;, NP_001611 &lt;dbl&gt;
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+clinical.merge(proteome, how='left', left_on='Complete TCGA ID', right_on='TCGA_ID').head()
+```
+
+```
+  Complete TCGA ID  Gender  ...  NP_112598 NP_001611
+0     TCGA-A2-A0T2  FEMALE  ...        NaN       NaN
+1     TCGA-A2-A0CM  FEMALE  ...   -2.65215 -0.984373
+2     TCGA-BH-A18V  FEMALE  ...        NaN       NaN
+3     TCGA-BH-A18Q  FEMALE  ...   -1.03576 -0.517226
+4     TCGA-BH-A0E0  FEMALE  ...        NaN       NaN
+
+[5 rows x 41 columns]
+```
+]
+]
+
+---
+
+### Full/outer join
+
+![](img/full-join.gif)
+
+---
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+clinical %&gt;% full_join(proteome, by = c('Complete TCGA ID' = 'TCGA_ID')) %&gt;% head()
+```
+
+```
+# A tibble: 6 x 40
+  `Complete TCGA … Gender `Age at Initial… `ER Status` `PR Status`
+  &lt;chr&gt;            &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;      
+1 TCGA-A2-A0T2     FEMALE               66 Negative    Negative   
+2 TCGA-A2-A0CM     FEMALE               40 Negative    Negative   
+3 TCGA-BH-A18V     FEMALE               48 Negative    Negative   
+4 TCGA-BH-A18Q     FEMALE               56 Negative    Negative   
+5 TCGA-BH-A0E0     FEMALE               38 Negative    Negative   
+6 TCGA-A7-A0CE     FEMALE               57 Negative    Negative   
+# … with 35 more variables: `HER2 Final Status` &lt;chr&gt;, Tumor &lt;chr&gt;, `Tumor--T1
+#   Coded` &lt;chr&gt;, Node &lt;chr&gt;, `Node-Coded` &lt;chr&gt;, Metastasis &lt;chr&gt;,
+#   `Metastasis-Coded` &lt;chr&gt;, `AJCC Stage` &lt;chr&gt;, `Converted Stage` &lt;chr&gt;,
+#   `Survival Data Form` &lt;chr&gt;, `Vital Status` &lt;chr&gt;, `Days to Date of Last
+#   Contact` &lt;dbl&gt;, `Days to date of Death` &lt;dbl&gt;, `OS event` &lt;dbl&gt;, `OS
+#   Time` &lt;dbl&gt;, `PAM50 mRNA` &lt;chr&gt;, `SigClust Unsupervised mRNA` &lt;dbl&gt;,
+#   `SigClust Intrinsic mRNA` &lt;dbl&gt;, `miRNA Clusters` &lt;dbl&gt;, `methylation
+#   Clusters` &lt;dbl&gt;, `RPPA Clusters` &lt;chr&gt;, `CN Clusters` &lt;dbl&gt;, `Integrated
+#   Clusters (with PAM50)` &lt;dbl&gt;, `Integrated Clusters (no exp)` &lt;dbl&gt;,
+#   `Integrated Clusters (unsup exp)` &lt;dbl&gt;, NP_958782 &lt;dbl&gt;, NP_958785 &lt;dbl&gt;,
+#   NP_958786 &lt;dbl&gt;, NP_000436 &lt;dbl&gt;, NP_958781 &lt;dbl&gt;, NP_958780 &lt;dbl&gt;,
+#   NP_958783 &lt;dbl&gt;, NP_958784 &lt;dbl&gt;, NP_112598 &lt;dbl&gt;, NP_001611 &lt;dbl&gt;
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+clinical.merge(proteome, how='outer', left_on='Complete TCGA ID', right_on='TCGA_ID').head()
+```
+
+```
+  Complete TCGA ID  Gender  ...  NP_112598 NP_001611
+0     TCGA-A2-A0T2  FEMALE  ...        NaN       NaN
+1     TCGA-A2-A0CM  FEMALE  ...   -2.65215 -0.984373
+2     TCGA-BH-A18V  FEMALE  ...        NaN       NaN
+3     TCGA-BH-A18Q  FEMALE  ...   -1.03576 -0.517226
+4     TCGA-BH-A0E0  FEMALE  ...        NaN       NaN
+
+[5 rows x 41 columns]
+```
+]
+]
+
+---
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+---
+class: middle, center, inverse
+
+# Split-apply-combine (a.k.a. MapReduce)
+
+---
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+## Split-apply-combine
+
+---
+
+![](img/split-apply-combine.png)
+
+---
+
+We'll play with the gapminder data set for this exercise
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+gap &lt;- read_csv('data/gapminder.csv')
+head(gap)
+```
+
+```
+# A tibble: 6 x 6
+  country     continent  year lifeExp      pop gdpPercap
+  &lt;chr&gt;       &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 Afghanistan Asia       1952    28.8  8425333      779.
+2 Afghanistan Asia       1957    30.3  9240934      821.
+3 Afghanistan Asia       1962    32.0 10267083      853.
+4 Afghanistan Asia       1967    34.0 11537966      836.
+5 Afghanistan Asia       1972    36.1 13079460      740.
+6 Afghanistan Asia       1977    38.4 14880372      786.
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+gap = pd.read_csv('data/gapminder.csv')
+gap.head()
+```
+
+```
+       country continent  year  lifeExp       pop   gdpPercap
+0  Afghanistan      Asia  1952   28.801   8425333  779.445314
+1  Afghanistan      Asia  1957   30.332   9240934  820.853030
+2  Afghanistan      Asia  1962   31.997  10267083  853.100710
+3  Afghanistan      Asia  1967   34.020  11537966  836.197138
+4  Afghanistan      Asia  1972   36.088  13079460  739.981106
+```
+]
+]
+
+---
+
+**Question** Find the average life expectancy by country
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+gap %&gt;% group_by(country) %&gt;% summarize(avgLifeExp = mean(lifeExp))
+```
+
+```
+# A tibble: 142 x 2
+   country     avgLifeExp
+   &lt;chr&gt;            &lt;dbl&gt;
+ 1 Afghanistan       37.5
+ 2 Albania           68.4
+ 3 Algeria           59.0
+ 4 Angola            37.9
+ 5 Argentina         69.1
+ 6 Australia         74.7
+ 7 Austria           73.1
+ 8 Bahrain           65.6
+ 9 Bangladesh        49.8
+10 Belgium           73.6
+# … with 132 more rows
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+gap.groupby('country')['lifeExp'].mean()
+```
+
+```
+country
+Afghanistan           37.478833
+Albania               68.432917
+Algeria               59.030167
+Angola                37.883500
+Argentina             69.060417
+                        ...    
+Vietnam               57.479500
+West Bank and Gaza    60.328667
+Yemen, Rep.           46.780417
+Zambia                45.996333
+Zimbabwe              52.663167
+Name: lifeExp, Length: 142, dtype: float64
+```
+]
+
+---
+
+**Question** Find the average life expectancy by continent and year
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+gap %&gt;% group_by(continent, year) %&gt;% summarize(mean(lifeExp))
+```
+
+```
+# A tibble: 60 x 3
+# Groups:   continent [5]
+   continent  year `mean(lifeExp)`
+   &lt;chr&gt;     &lt;dbl&gt;           &lt;dbl&gt;
+ 1 Africa     1952            39.1
+ 2 Africa     1957            41.3
+ 3 Africa     1962            43.3
+ 4 Africa     1967            45.3
+ 5 Africa     1972            47.5
+ 6 Africa     1977            49.6
+ 7 Africa     1982            51.6
+ 8 Africa     1987            53.3
+ 9 Africa     1992            53.6
+10 Africa     1997            53.6
+# … with 50 more rows
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+gap.groupby(['continent','year'])['lifeExp'].mean()
+```
+
+```
+continent  year
+Africa     1952    39.135500
+           1957    41.266346
+           1962    43.319442
+           1967    45.334538
+           1972    47.450942
+           1977    49.580423
+           1982    51.592865
+           1987    53.344788
+           1992    53.629577
+           1997    53.598269
+           2002    53.325231
+           2007    54.806038
+Americas   1952    53.279840
+           1957    55.960280
+           1962    58.398760
+           1967    60.410920
+           1972    62.394920
+           1977    64.391560
+           1982    66.228840
+           1987    68.090720
+           1992    69.568360
+           1997    71.150480
+           2002    72.422040
+           2007    73.608120
+Asia       1952    46.314394
+           1957    49.318544
+           1962    51.563223
+           1967    54.663640
+           1972    57.319269
+           1977    59.610556
+           1982    62.617939
+           1987    64.851182
+           1992    66.537212
+           1997    68.020515
+           2002    69.233879
+           2007    70.728485
+Europe     1952    64.408500
+           1957    66.703067
+           1962    68.539233
+           1967    69.737600
+           1972    70.775033
+           1977    71.937767
+           1982    72.806400
+           1987    73.642167
+           1992    74.440100
+           1997    75.505167
+           2002    76.700600
+           2007    77.648600
+Oceania    1952    69.255000
+           1957    70.295000
+           1962    71.085000
+           1967    71.310000
+           1972    71.910000
+           1977    72.855000
+           1982    74.290000
+           1987    75.320000
+           1992    76.945000
+           1997    78.190000
+           2002    79.740000
+           2007    80.719500
+Name: lifeExp, dtype: float64
+```
+]
+]
+]
+
+---
+
+### Computing multiple aggregates
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+gap %&gt;% group_by(year) %&gt;% summarize(means = mean(lifeExp), medians = median(lifeExp))
+```
+
+```
+# A tibble: 12 x 3
+    year means medians
+   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+ 1  1952  49.1    45.1
+ 2  1957  51.5    48.4
+ 3  1962  53.6    50.9
+ 4  1967  55.7    53.8
+ 5  1972  57.6    56.5
+ 6  1977  59.6    59.7
+ 7  1982  61.5    62.4
+ 8  1987  63.2    65.8
+ 9  1992  64.2    67.7
+10  1997  65.0    69.4
+11  2002  65.7    70.8
+12  2007  67.0    71.9
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+import numpy as np
+
+gap.groupby('year')['lifeExp'].agg([np.mean,np.median])
+```
+
+```
+           mean   median
+year                    
+1952  49.057620  45.1355
+1957  51.507401  48.3605
+1962  53.609249  50.8810
+1967  55.678290  53.8250
+1972  57.647386  56.5300
+1977  59.570157  59.6720
+1982  61.533197  62.4415
+1987  63.212613  65.8340
+1992  64.160338  67.7030
+1997  65.014676  69.3940
+2002  65.694923  70.8255
+2007  67.007423  71.9355
+```
+]
+]
+
+---
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+---
+class: middle, inverse, center
+
+# Transforming data types
+
+---
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+## Data types
+
+---
+
+Both R and Python have the same data types. The `Categorical` type below is unique to **pandas**
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; R &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Python &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; numeric &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; float &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; integer &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; int &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; character &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; str &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; factor &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; category &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+---
+  
+The basic conversion functions in R are of the form `as.*`.
+
+For Python, you use the method `astype` that is linked to the pandas `Series` or `DataFrame` object.
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+as.factor(gap$country)
+```
+
+```
+   [1] Afghanistan              Afghanistan             
+   [3] Afghanistan              Afghanistan             
+   [5] Afghanistan              Afghanistan             
+   [7] Afghanistan              Afghanistan             
+   [9] Afghanistan              Afghanistan             
+  [11] Afghanistan              Afghanistan             
+  [13] Albania                  Albania                 
+  [15] Albania                  Albania                 
+  [17] Albania                  Albania                 
+  [19] Albania                  Albania                 
+  [21] Albania                  Albania                 
+  [23] Albania                  Albania                 
+  [25] Algeria                  Algeria                 
+  [27] Algeria                  Algeria                 
+  [29] Algeria                  Algeria                 
+  [31] Algeria                  Algeria                 
+  [33] Algeria                  Algeria                 
+  [35] Algeria                  Algeria                 
+  [37] Angola                   Angola                  
+  [39] Angola                   Angola                  
+  [41] Angola                   Angola                  
+  [43] Angola                   Angola                  
+  [45] Angola                   Angola                  
+  [47] Angola                   Angola                  
+  [49] Argentina                Argentina               
+  [51] Argentina                Argentina               
+  [53] Argentina                Argentina               
+  [55] Argentina                Argentina               
+  [57] Argentina                Argentina               
+  [59] Argentina                Argentina               
+  [61] Australia                Australia               
+  [63] Australia                Australia               
+  [65] Australia                Australia               
+  [67] Australia                Australia               
+  [69] Australia                Australia               
+  [71] Australia                Australia               
+  [73] Austria                  Austria                 
+  [75] Austria                  Austria                 
+  [77] Austria                  Austria                 
+  [79] Austria                  Austria                 
+  [81] Austria                  Austria                 
+  [83] Austria                  Austria                 
+  [85] Bahrain                  Bahrain                 
+  [87] Bahrain                  Bahrain                 
+  [89] Bahrain                  Bahrain                 
+  [91] Bahrain                  Bahrain                 
+  [93] Bahrain                  Bahrain                 
+  [95] Bahrain                  Bahrain                 
+  [97] Bangladesh               Bangladesh              
+  [99] Bangladesh               Bangladesh              
+ [101] Bangladesh               Bangladesh              
+ [103] Bangladesh               Bangladesh              
+ [105] Bangladesh               Bangladesh              
+ [107] Bangladesh               Bangladesh              
+ [109] Belgium                  Belgium                 
+ [111] Belgium                  Belgium                 
+ [113] Belgium                  Belgium                 
+ [115] Belgium                  Belgium                 
+ [117] Belgium                  Belgium                 
+ [119] Belgium                  Belgium                 
+ [121] Benin                    Benin                   
+ [123] Benin                    Benin                   
+ [125] Benin                    Benin                   
+ [127] Benin                    Benin                   
+ [129] Benin                    Benin                   
+ [131] Benin                    Benin                   
+ [133] Bolivia                  Bolivia                 
+ [135] Bolivia                  Bolivia                 
+ [137] Bolivia                  Bolivia                 
+ [139] Bolivia                  Bolivia                 
+ [141] Bolivia                  Bolivia                 
+ [143] Bolivia                  Bolivia                 
+ [145] Bosnia and Herzegovina   Bosnia and Herzegovina  
+ [147] Bosnia and Herzegovina   Bosnia and Herzegovina  
+ [149] Bosnia and Herzegovina   Bosnia and Herzegovina  
+ [151] Bosnia and Herzegovina   Bosnia and Herzegovina  
+ [153] Bosnia and Herzegovina   Bosnia and Herzegovina  
+ [155] Bosnia and Herzegovina   Bosnia and Herzegovina  
+ [157] Botswana                 Botswana                
+ [159] Botswana                 Botswana                
+ [161] Botswana                 Botswana                
+ [163] Botswana                 Botswana                
+ [165] Botswana                 Botswana                
+ [167] Botswana                 Botswana                
+ [169] Brazil                   Brazil                  
+ [171] Brazil                   Brazil                  
+ [173] Brazil                   Brazil                  
+ [175] Brazil                   Brazil                  
+ [177] Brazil                   Brazil                  
+ [179] Brazil                   Brazil                  
+ [181] Bulgaria                 Bulgaria                
+ [183] Bulgaria                 Bulgaria                
+ [185] Bulgaria                 Bulgaria                
+ [187] Bulgaria                 Bulgaria                
+ [189] Bulgaria                 Bulgaria                
+ [191] Bulgaria                 Bulgaria                
+ [193] Burkina Faso             Burkina Faso            
+ [195] Burkina Faso             Burkina Faso            
+ [197] Burkina Faso             Burkina Faso            
+ [199] Burkina Faso             Burkina Faso            
+ [201] Burkina Faso             Burkina Faso            
+ [203] Burkina Faso             Burkina Faso            
+ [205] Burundi                  Burundi                 
+ [207] Burundi                  Burundi                 
+ [209] Burundi                  Burundi                 
+ [211] Burundi                  Burundi                 
+ [213] Burundi                  Burundi                 
+ [215] Burundi                  Burundi                 
+ [217] Cambodia                 Cambodia                
+ [219] Cambodia                 Cambodia                
+ [221] Cambodia                 Cambodia                
+ [223] Cambodia                 Cambodia                
+ [225] Cambodia                 Cambodia                
+ [227] Cambodia                 Cambodia                
+ [229] Cameroon                 Cameroon                
+ [231] Cameroon                 Cameroon                
+ [233] Cameroon                 Cameroon                
+ [235] Cameroon                 Cameroon                
+ [237] Cameroon                 Cameroon                
+ [239] Cameroon                 Cameroon                
+ [241] Canada                   Canada                  
+ [243] Canada                   Canada                  
+ [245] Canada                   Canada                  
+ [247] Canada                   Canada                  
+ [249] Canada                   Canada                  
+ [251] Canada                   Canada                  
+ [253] Central African Republic Central African Republic
+ [255] Central African Republic Central African Republic
+ [257] Central African Republic Central African Republic
+ [259] Central African Republic Central African Republic
+ [261] Central African Republic Central African Republic
+ [263] Central African Republic Central African Republic
+ [265] Chad                     Chad                    
+ [267] Chad                     Chad                    
+ [269] Chad                     Chad                    
+ [271] Chad                     Chad                    
+ [273] Chad                     Chad                    
+ [275] Chad                     Chad                    
+ [277] Chile                    Chile                   
+ [279] Chile                    Chile                   
+ [281] Chile                    Chile                   
+ [283] Chile                    Chile                   
+ [285] Chile                    Chile                   
+ [287] Chile                    Chile                   
+ [289] China                    China                   
+ [291] China                    China                   
+ [293] China                    China                   
+ [295] China                    China                   
+ [297] China                    China                   
+ [299] China                    China                   
+ [301] Colombia                 Colombia                
+ [303] Colombia                 Colombia                
+ [305] Colombia                 Colombia                
+ [307] Colombia                 Colombia                
+ [309] Colombia                 Colombia                
+ [311] Colombia                 Colombia                
+ [313] Comoros                  Comoros                 
+ [315] Comoros                  Comoros                 
+ [317] Comoros                  Comoros                 
+ [319] Comoros                  Comoros                 
+ [321] Comoros                  Comoros                 
+ [323] Comoros                  Comoros                 
+ [325] Congo, Dem. Rep.         Congo, Dem. Rep.        
+ [327] Congo, Dem. Rep.         Congo, Dem. Rep.        
+ [329] Congo, Dem. Rep.         Congo, Dem. Rep.        
+ [331] Congo, Dem. Rep.         Congo, Dem. Rep.        
+ [333] Congo, Dem. Rep.         Congo, Dem. Rep.        
+ [335] Congo, Dem. Rep.         Congo, Dem. Rep.        
+ [337] Congo, Rep.              Congo, Rep.             
+ [339] Congo, Rep.              Congo, Rep.             
+ [341] Congo, Rep.              Congo, Rep.             
+ [343] Congo, Rep.              Congo, Rep.             
+ [345] Congo, Rep.              Congo, Rep.             
+ [347] Congo, Rep.              Congo, Rep.             
+ [349] Costa Rica               Costa Rica              
+ [351] Costa Rica               Costa Rica              
+ [353] Costa Rica               Costa Rica              
+ [355] Costa Rica               Costa Rica              
+ [357] Costa Rica               Costa Rica              
+ [359] Costa Rica               Costa Rica              
+ [361] Cote d'Ivoire            Cote d'Ivoire           
+ [363] Cote d'Ivoire            Cote d'Ivoire           
+ [365] Cote d'Ivoire            Cote d'Ivoire           
+ [367] Cote d'Ivoire            Cote d'Ivoire           
+ [369] Cote d'Ivoire            Cote d'Ivoire           
+ [371] Cote d'Ivoire            Cote d'Ivoire           
+ [373] Croatia                  Croatia                 
+ [375] Croatia                  Croatia                 
+ [377] Croatia                  Croatia                 
+ [379] Croatia                  Croatia                 
+ [381] Croatia                  Croatia                 
+ [383] Croatia                  Croatia                 
+ [385] Cuba                     Cuba                    
+ [387] Cuba                     Cuba                    
+ [389] Cuba                     Cuba                    
+ [391] Cuba                     Cuba                    
+ [393] Cuba                     Cuba                    
+ [395] Cuba                     Cuba                    
+ [397] Czech Republic           Czech Republic          
+ [399] Czech Republic           Czech Republic          
+ [401] Czech Republic           Czech Republic          
+ [403] Czech Republic           Czech Republic          
+ [405] Czech Republic           Czech Republic          
+ [407] Czech Republic           Czech Republic          
+ [409] Denmark                  Denmark                 
+ [411] Denmark                  Denmark                 
+ [413] Denmark                  Denmark                 
+ [415] Denmark                  Denmark                 
+ [417] Denmark                  Denmark                 
+ [419] Denmark                  Denmark                 
+ [421] Djibouti                 Djibouti                
+ [423] Djibouti                 Djibouti                
+ [425] Djibouti                 Djibouti                
+ [427] Djibouti                 Djibouti                
+ [429] Djibouti                 Djibouti                
+ [431] Djibouti                 Djibouti                
+ [433] Dominican Republic       Dominican Republic      
+ [435] Dominican Republic       Dominican Republic      
+ [437] Dominican Republic       Dominican Republic      
+ [439] Dominican Republic       Dominican Republic      
+ [441] Dominican Republic       Dominican Republic      
+ [443] Dominican Republic       Dominican Republic      
+ [445] Ecuador                  Ecuador                 
+ [447] Ecuador                  Ecuador                 
+ [449] Ecuador                  Ecuador                 
+ [451] Ecuador                  Ecuador                 
+ [453] Ecuador                  Ecuador                 
+ [455] Ecuador                  Ecuador                 
+ [457] Egypt                    Egypt                   
+ [459] Egypt                    Egypt                   
+ [461] Egypt                    Egypt                   
+ [463] Egypt                    Egypt                   
+ [465] Egypt                    Egypt                   
+ [467] Egypt                    Egypt                   
+ [469] El Salvador              El Salvador             
+ [471] El Salvador              El Salvador             
+ [473] El Salvador              El Salvador             
+ [475] El Salvador              El Salvador             
+ [477] El Salvador              El Salvador             
+ [479] El Salvador              El Salvador             
+ [481] Equatorial Guinea        Equatorial Guinea       
+ [483] Equatorial Guinea        Equatorial Guinea       
+ [485] Equatorial Guinea        Equatorial Guinea       
+ [487] Equatorial Guinea        Equatorial Guinea       
+ [489] Equatorial Guinea        Equatorial Guinea       
+ [491] Equatorial Guinea        Equatorial Guinea       
+ [493] Eritrea                  Eritrea                 
+ [495] Eritrea                  Eritrea                 
+ [497] Eritrea                  Eritrea                 
+ [499] Eritrea                  Eritrea                 
+ [501] Eritrea                  Eritrea                 
+ [503] Eritrea                  Eritrea                 
+ [505] Ethiopia                 Ethiopia                
+ [507] Ethiopia                 Ethiopia                
+ [509] Ethiopia                 Ethiopia                
+ [511] Ethiopia                 Ethiopia                
+ [513] Ethiopia                 Ethiopia                
+ [515] Ethiopia                 Ethiopia                
+ [517] Finland                  Finland                 
+ [519] Finland                  Finland                 
+ [521] Finland                  Finland                 
+ [523] Finland                  Finland                 
+ [525] Finland                  Finland                 
+ [527] Finland                  Finland                 
+ [529] France                   France                  
+ [531] France                   France                  
+ [533] France                   France                  
+ [535] France                   France                  
+ [537] France                   France                  
+ [539] France                   France                  
+ [541] Gabon                    Gabon                   
+ [543] Gabon                    Gabon                   
+ [545] Gabon                    Gabon                   
+ [547] Gabon                    Gabon                   
+ [549] Gabon                    Gabon                   
+ [551] Gabon                    Gabon                   
+ [553] Gambia                   Gambia                  
+ [555] Gambia                   Gambia                  
+ [557] Gambia                   Gambia                  
+ [559] Gambia                   Gambia                  
+ [561] Gambia                   Gambia                  
+ [563] Gambia                   Gambia                  
+ [565] Germany                  Germany                 
+ [567] Germany                  Germany                 
+ [569] Germany                  Germany                 
+ [571] Germany                  Germany                 
+ [573] Germany                  Germany                 
+ [575] Germany                  Germany                 
+ [577] Ghana                    Ghana                   
+ [579] Ghana                    Ghana                   
+ [581] Ghana                    Ghana                   
+ [583] Ghana                    Ghana                   
+ [585] Ghana                    Ghana                   
+ [587] Ghana                    Ghana                   
+ [589] Greece                   Greece                  
+ [591] Greece                   Greece                  
+ [593] Greece                   Greece                  
+ [595] Greece                   Greece                  
+ [597] Greece                   Greece                  
+ [599] Greece                   Greece                  
+ [601] Guatemala                Guatemala               
+ [603] Guatemala                Guatemala               
+ [605] Guatemala                Guatemala               
+ [607] Guatemala                Guatemala               
+ [609] Guatemala                Guatemala               
+ [611] Guatemala                Guatemala               
+ [613] Guinea                   Guinea                  
+ [615] Guinea                   Guinea                  
+ [617] Guinea                   Guinea                  
+ [619] Guinea                   Guinea                  
+ [621] Guinea                   Guinea                  
+ [623] Guinea                   Guinea                  
+ [625] Guinea-Bissau            Guinea-Bissau           
+ [627] Guinea-Bissau            Guinea-Bissau           
+ [629] Guinea-Bissau            Guinea-Bissau           
+ [631] Guinea-Bissau            Guinea-Bissau           
+ [633] Guinea-Bissau            Guinea-Bissau           
+ [635] Guinea-Bissau            Guinea-Bissau           
+ [637] Haiti                    Haiti                   
+ [639] Haiti                    Haiti                   
+ [641] Haiti                    Haiti                   
+ [643] Haiti                    Haiti                   
+ [645] Haiti                    Haiti                   
+ [647] Haiti                    Haiti                   
+ [649] Honduras                 Honduras                
+ [651] Honduras                 Honduras                
+ [653] Honduras                 Honduras                
+ [655] Honduras                 Honduras                
+ [657] Honduras                 Honduras                
+ [659] Honduras                 Honduras                
+ [661] Hong Kong, China         Hong Kong, China        
+ [663] Hong Kong, China         Hong Kong, China        
+ [665] Hong Kong, China         Hong Kong, China        
+ [667] Hong Kong, China         Hong Kong, China        
+ [669] Hong Kong, China         Hong Kong, China        
+ [671] Hong Kong, China         Hong Kong, China        
+ [673] Hungary                  Hungary                 
+ [675] Hungary                  Hungary                 
+ [677] Hungary                  Hungary                 
+ [679] Hungary                  Hungary                 
+ [681] Hungary                  Hungary                 
+ [683] Hungary                  Hungary                 
+ [685] Iceland                  Iceland                 
+ [687] Iceland                  Iceland                 
+ [689] Iceland                  Iceland                 
+ [691] Iceland                  Iceland                 
+ [693] Iceland                  Iceland                 
+ [695] Iceland                  Iceland                 
+ [697] India                    India                   
+ [699] India                    India                   
+ [701] India                    India                   
+ [703] India                    India                   
+ [705] India                    India                   
+ [707] India                    India                   
+ [709] Indonesia                Indonesia               
+ [711] Indonesia                Indonesia               
+ [713] Indonesia                Indonesia               
+ [715] Indonesia                Indonesia               
+ [717] Indonesia                Indonesia               
+ [719] Indonesia                Indonesia               
+ [721] Iran                     Iran                    
+ [723] Iran                     Iran                    
+ [725] Iran                     Iran                    
+ [727] Iran                     Iran                    
+ [729] Iran                     Iran                    
+ [731] Iran                     Iran                    
+ [733] Iraq                     Iraq                    
+ [735] Iraq                     Iraq                    
+ [737] Iraq                     Iraq                    
+ [739] Iraq                     Iraq                    
+ [741] Iraq                     Iraq                    
+ [743] Iraq                     Iraq                    
+ [745] Ireland                  Ireland                 
+ [747] Ireland                  Ireland                 
+ [749] Ireland                  Ireland                 
+ [751] Ireland                  Ireland                 
+ [753] Ireland                  Ireland                 
+ [755] Ireland                  Ireland                 
+ [757] Israel                   Israel                  
+ [759] Israel                   Israel                  
+ [761] Israel                   Israel                  
+ [763] Israel                   Israel                  
+ [765] Israel                   Israel                  
+ [767] Israel                   Israel                  
+ [769] Italy                    Italy                   
+ [771] Italy                    Italy                   
+ [773] Italy                    Italy                   
+ [775] Italy                    Italy                   
+ [777] Italy                    Italy                   
+ [779] Italy                    Italy                   
+ [781] Jamaica                  Jamaica                 
+ [783] Jamaica                  Jamaica                 
+ [785] Jamaica                  Jamaica                 
+ [787] Jamaica                  Jamaica                 
+ [789] Jamaica                  Jamaica                 
+ [791] Jamaica                  Jamaica                 
+ [793] Japan                    Japan                   
+ [795] Japan                    Japan                   
+ [797] Japan                    Japan                   
+ [799] Japan                    Japan                   
+ [801] Japan                    Japan                   
+ [803] Japan                    Japan                   
+ [805] Jordan                   Jordan                  
+ [807] Jordan                   Jordan                  
+ [809] Jordan                   Jordan                  
+ [811] Jordan                   Jordan                  
+ [813] Jordan                   Jordan                  
+ [815] Jordan                   Jordan                  
+ [817] Kenya                    Kenya                   
+ [819] Kenya                    Kenya                   
+ [821] Kenya                    Kenya                   
+ [823] Kenya                    Kenya                   
+ [825] Kenya                    Kenya                   
+ [827] Kenya                    Kenya                   
+ [829] Korea, Dem. Rep.         Korea, Dem. Rep.        
+ [831] Korea, Dem. Rep.         Korea, Dem. Rep.        
+ [833] Korea, Dem. Rep.         Korea, Dem. Rep.        
+ [835] Korea, Dem. Rep.         Korea, Dem. Rep.        
+ [837] Korea, Dem. Rep.         Korea, Dem. Rep.        
+ [839] Korea, Dem. Rep.         Korea, Dem. Rep.        
+ [841] Korea, Rep.              Korea, Rep.             
+ [843] Korea, Rep.              Korea, Rep.             
+ [845] Korea, Rep.              Korea, Rep.             
+ [847] Korea, Rep.              Korea, Rep.             
+ [849] Korea, Rep.              Korea, Rep.             
+ [851] Korea, Rep.              Korea, Rep.             
+ [853] Kuwait                   Kuwait                  
+ [855] Kuwait                   Kuwait                  
+ [857] Kuwait                   Kuwait                  
+ [859] Kuwait                   Kuwait                  
+ [861] Kuwait                   Kuwait                  
+ [863] Kuwait                   Kuwait                  
+ [865] Lebanon                  Lebanon                 
+ [867] Lebanon                  Lebanon                 
+ [869] Lebanon                  Lebanon                 
+ [871] Lebanon                  Lebanon                 
+ [873] Lebanon                  Lebanon                 
+ [875] Lebanon                  Lebanon                 
+ [877] Lesotho                  Lesotho                 
+ [879] Lesotho                  Lesotho                 
+ [881] Lesotho                  Lesotho                 
+ [883] Lesotho                  Lesotho                 
+ [885] Lesotho                  Lesotho                 
+ [887] Lesotho                  Lesotho                 
+ [889] Liberia                  Liberia                 
+ [891] Liberia                  Liberia                 
+ [893] Liberia                  Liberia                 
+ [895] Liberia                  Liberia                 
+ [897] Liberia                  Liberia                 
+ [899] Liberia                  Liberia                 
+ [901] Libya                    Libya                   
+ [903] Libya                    Libya                   
+ [905] Libya                    Libya                   
+ [907] Libya                    Libya                   
+ [909] Libya                    Libya                   
+ [911] Libya                    Libya                   
+ [913] Madagascar               Madagascar              
+ [915] Madagascar               Madagascar              
+ [917] Madagascar               Madagascar              
+ [919] Madagascar               Madagascar              
+ [921] Madagascar               Madagascar              
+ [923] Madagascar               Madagascar              
+ [925] Malawi                   Malawi                  
+ [927] Malawi                   Malawi                  
+ [929] Malawi                   Malawi                  
+ [931] Malawi                   Malawi                  
+ [933] Malawi                   Malawi                  
+ [935] Malawi                   Malawi                  
+ [937] Malaysia                 Malaysia                
+ [939] Malaysia                 Malaysia                
+ [941] Malaysia                 Malaysia                
+ [943] Malaysia                 Malaysia                
+ [945] Malaysia                 Malaysia                
+ [947] Malaysia                 Malaysia                
+ [949] Mali                     Mali                    
+ [951] Mali                     Mali                    
+ [953] Mali                     Mali                    
+ [955] Mali                     Mali                    
+ [957] Mali                     Mali                    
+ [959] Mali                     Mali                    
+ [961] Mauritania               Mauritania              
+ [963] Mauritania               Mauritania              
+ [965] Mauritania               Mauritania              
+ [967] Mauritania               Mauritania              
+ [969] Mauritania               Mauritania              
+ [971] Mauritania               Mauritania              
+ [973] Mauritius                Mauritius               
+ [975] Mauritius                Mauritius               
+ [977] Mauritius                Mauritius               
+ [979] Mauritius                Mauritius               
+ [981] Mauritius                Mauritius               
+ [983] Mauritius                Mauritius               
+ [985] Mexico                   Mexico                  
+ [987] Mexico                   Mexico                  
+ [989] Mexico                   Mexico                  
+ [991] Mexico                   Mexico                  
+ [993] Mexico                   Mexico                  
+ [995] Mexico                   Mexico                  
+ [997] Mongolia                 Mongolia                
+ [999] Mongolia                 Mongolia                
+[1001] Mongolia                 Mongolia                
+[1003] Mongolia                 Mongolia                
+[1005] Mongolia                 Mongolia                
+[1007] Mongolia                 Mongolia                
+[1009] Montenegro               Montenegro              
+[1011] Montenegro               Montenegro              
+[1013] Montenegro               Montenegro              
+[1015] Montenegro               Montenegro              
+[1017] Montenegro               Montenegro              
+[1019] Montenegro               Montenegro              
+[1021] Morocco                  Morocco                 
+[1023] Morocco                  Morocco                 
+[1025] Morocco                  Morocco                 
+[1027] Morocco                  Morocco                 
+[1029] Morocco                  Morocco                 
+[1031] Morocco                  Morocco                 
+[1033] Mozambique               Mozambique              
+[1035] Mozambique               Mozambique              
+[1037] Mozambique               Mozambique              
+[1039] Mozambique               Mozambique              
+[1041] Mozambique               Mozambique              
+[1043] Mozambique               Mozambique              
+[1045] Myanmar                  Myanmar                 
+[1047] Myanmar                  Myanmar                 
+[1049] Myanmar                  Myanmar                 
+[1051] Myanmar                  Myanmar                 
+[1053] Myanmar                  Myanmar                 
+[1055] Myanmar                  Myanmar                 
+[1057] Namibia                  Namibia                 
+[1059] Namibia                  Namibia                 
+[1061] Namibia                  Namibia                 
+[1063] Namibia                  Namibia                 
+[1065] Namibia                  Namibia                 
+[1067] Namibia                  Namibia                 
+[1069] Nepal                    Nepal                   
+[1071] Nepal                    Nepal                   
+[1073] Nepal                    Nepal                   
+[1075] Nepal                    Nepal                   
+[1077] Nepal                    Nepal                   
+[1079] Nepal                    Nepal                   
+[1081] Netherlands              Netherlands             
+[1083] Netherlands              Netherlands             
+[1085] Netherlands              Netherlands             
+[1087] Netherlands              Netherlands             
+[1089] Netherlands              Netherlands             
+[1091] Netherlands              Netherlands             
+[1093] New Zealand              New Zealand             
+[1095] New Zealand              New Zealand             
+[1097] New Zealand              New Zealand             
+[1099] New Zealand              New Zealand             
+[1101] New Zealand              New Zealand             
+[1103] New Zealand              New Zealand             
+[1105] Nicaragua                Nicaragua               
+[1107] Nicaragua                Nicaragua               
+[1109] Nicaragua                Nicaragua               
+[1111] Nicaragua                Nicaragua               
+[1113] Nicaragua                Nicaragua               
+[1115] Nicaragua                Nicaragua               
+[1117] Niger                    Niger                   
+[1119] Niger                    Niger                   
+[1121] Niger                    Niger                   
+[1123] Niger                    Niger                   
+[1125] Niger                    Niger                   
+[1127] Niger                    Niger                   
+[1129] Nigeria                  Nigeria                 
+[1131] Nigeria                  Nigeria                 
+[1133] Nigeria                  Nigeria                 
+[1135] Nigeria                  Nigeria                 
+[1137] Nigeria                  Nigeria                 
+[1139] Nigeria                  Nigeria                 
+[1141] Norway                   Norway                  
+[1143] Norway                   Norway                  
+[1145] Norway                   Norway                  
+[1147] Norway                   Norway                  
+[1149] Norway                   Norway                  
+[1151] Norway                   Norway                  
+[1153] Oman                     Oman                    
+[1155] Oman                     Oman                    
+[1157] Oman                     Oman                    
+[1159] Oman                     Oman                    
+[1161] Oman                     Oman                    
+[1163] Oman                     Oman                    
+[1165] Pakistan                 Pakistan                
+[1167] Pakistan                 Pakistan                
+[1169] Pakistan                 Pakistan                
+[1171] Pakistan                 Pakistan                
+[1173] Pakistan                 Pakistan                
+[1175] Pakistan                 Pakistan                
+[1177] Panama                   Panama                  
+[1179] Panama                   Panama                  
+[1181] Panama                   Panama                  
+[1183] Panama                   Panama                  
+[1185] Panama                   Panama                  
+[1187] Panama                   Panama                  
+[1189] Paraguay                 Paraguay                
+[1191] Paraguay                 Paraguay                
+[1193] Paraguay                 Paraguay                
+[1195] Paraguay                 Paraguay                
+[1197] Paraguay                 Paraguay                
+[1199] Paraguay                 Paraguay                
+[1201] Peru                     Peru                    
+[1203] Peru                     Peru                    
+[1205] Peru                     Peru                    
+[1207] Peru                     Peru                    
+[1209] Peru                     Peru                    
+[1211] Peru                     Peru                    
+[1213] Philippines              Philippines             
+[1215] Philippines              Philippines             
+[1217] Philippines              Philippines             
+[1219] Philippines              Philippines             
+[1221] Philippines              Philippines             
+[1223] Philippines              Philippines             
+[1225] Poland                   Poland                  
+[1227] Poland                   Poland                  
+[1229] Poland                   Poland                  
+[1231] Poland                   Poland                  
+[1233] Poland                   Poland                  
+[1235] Poland                   Poland                  
+[1237] Portugal                 Portugal                
+[1239] Portugal                 Portugal                
+[1241] Portugal                 Portugal                
+[1243] Portugal                 Portugal                
+[1245] Portugal                 Portugal                
+[1247] Portugal                 Portugal                
+[1249] Puerto Rico              Puerto Rico             
+[1251] Puerto Rico              Puerto Rico             
+[1253] Puerto Rico              Puerto Rico             
+[1255] Puerto Rico              Puerto Rico             
+[1257] Puerto Rico              Puerto Rico             
+[1259] Puerto Rico              Puerto Rico             
+[1261] Reunion                  Reunion                 
+[1263] Reunion                  Reunion                 
+[1265] Reunion                  Reunion                 
+[1267] Reunion                  Reunion                 
+[1269] Reunion                  Reunion                 
+[1271] Reunion                  Reunion                 
+[1273] Romania                  Romania                 
+[1275] Romania                  Romania                 
+[1277] Romania                  Romania                 
+[1279] Romania                  Romania                 
+[1281] Romania                  Romania                 
+[1283] Romania                  Romania                 
+[1285] Rwanda                   Rwanda                  
+[1287] Rwanda                   Rwanda                  
+[1289] Rwanda                   Rwanda                  
+[1291] Rwanda                   Rwanda                  
+[1293] Rwanda                   Rwanda                  
+[1295] Rwanda                   Rwanda                  
+[1297] Sao Tome and Principe    Sao Tome and Principe   
+[1299] Sao Tome and Principe    Sao Tome and Principe   
+[1301] Sao Tome and Principe    Sao Tome and Principe   
+[1303] Sao Tome and Principe    Sao Tome and Principe   
+[1305] Sao Tome and Principe    Sao Tome and Principe   
+[1307] Sao Tome and Principe    Sao Tome and Principe   
+[1309] Saudi Arabia             Saudi Arabia            
+[1311] Saudi Arabia             Saudi Arabia            
+[1313] Saudi Arabia             Saudi Arabia            
+[1315] Saudi Arabia             Saudi Arabia            
+[1317] Saudi Arabia             Saudi Arabia            
+[1319] Saudi Arabia             Saudi Arabia            
+[1321] Senegal                  Senegal                 
+[1323] Senegal                  Senegal                 
+[1325] Senegal                  Senegal                 
+[1327] Senegal                  Senegal                 
+[1329] Senegal                  Senegal                 
+[1331] Senegal                  Senegal                 
+[1333] Serbia                   Serbia                  
+[1335] Serbia                   Serbia                  
+[1337] Serbia                   Serbia                  
+[1339] Serbia                   Serbia                  
+[1341] Serbia                   Serbia                  
+[1343] Serbia                   Serbia                  
+[1345] Sierra Leone             Sierra Leone            
+[1347] Sierra Leone             Sierra Leone            
+[1349] Sierra Leone             Sierra Leone            
+[1351] Sierra Leone             Sierra Leone            
+[1353] Sierra Leone             Sierra Leone            
+[1355] Sierra Leone             Sierra Leone            
+[1357] Singapore                Singapore               
+[1359] Singapore                Singapore               
+[1361] Singapore                Singapore               
+[1363] Singapore                Singapore               
+[1365] Singapore                Singapore               
+[1367] Singapore                Singapore               
+[1369] Slovak Republic          Slovak Republic         
+[1371] Slovak Republic          Slovak Republic         
+[1373] Slovak Republic          Slovak Republic         
+[1375] Slovak Republic          Slovak Republic         
+[1377] Slovak Republic          Slovak Republic         
+[1379] Slovak Republic          Slovak Republic         
+[1381] Slovenia                 Slovenia                
+[1383] Slovenia                 Slovenia                
+[1385] Slovenia                 Slovenia                
+[1387] Slovenia                 Slovenia                
+[1389] Slovenia                 Slovenia                
+[1391] Slovenia                 Slovenia                
+[1393] Somalia                  Somalia                 
+[1395] Somalia                  Somalia                 
+[1397] Somalia                  Somalia                 
+[1399] Somalia                  Somalia                 
+[1401] Somalia                  Somalia                 
+[1403] Somalia                  Somalia                 
+[1405] South Africa             South Africa            
+[1407] South Africa             South Africa            
+[1409] South Africa             South Africa            
+[1411] South Africa             South Africa            
+[1413] South Africa             South Africa            
+[1415] South Africa             South Africa            
+[1417] Spain                    Spain                   
+[1419] Spain                    Spain                   
+[1421] Spain                    Spain                   
+[1423] Spain                    Spain                   
+[1425] Spain                    Spain                   
+[1427] Spain                    Spain                   
+[1429] Sri Lanka                Sri Lanka               
+[1431] Sri Lanka                Sri Lanka               
+[1433] Sri Lanka                Sri Lanka               
+[1435] Sri Lanka                Sri Lanka               
+[1437] Sri Lanka                Sri Lanka               
+[1439] Sri Lanka                Sri Lanka               
+[1441] Sudan                    Sudan                   
+[1443] Sudan                    Sudan                   
+[1445] Sudan                    Sudan                   
+[1447] Sudan                    Sudan                   
+[1449] Sudan                    Sudan                   
+[1451] Sudan                    Sudan                   
+[1453] Swaziland                Swaziland               
+[1455] Swaziland                Swaziland               
+[1457] Swaziland                Swaziland               
+[1459] Swaziland                Swaziland               
+[1461] Swaziland                Swaziland               
+[1463] Swaziland                Swaziland               
+[1465] Sweden                   Sweden                  
+[1467] Sweden                   Sweden                  
+[1469] Sweden                   Sweden                  
+[1471] Sweden                   Sweden                  
+[1473] Sweden                   Sweden                  
+[1475] Sweden                   Sweden                  
+[1477] Switzerland              Switzerland             
+[1479] Switzerland              Switzerland             
+[1481] Switzerland              Switzerland             
+[1483] Switzerland              Switzerland             
+[1485] Switzerland              Switzerland             
+[1487] Switzerland              Switzerland             
+[1489] Syria                    Syria                   
+[1491] Syria                    Syria                   
+[1493] Syria                    Syria                   
+[1495] Syria                    Syria                   
+[1497] Syria                    Syria                   
+[1499] Syria                    Syria                   
+[1501] Taiwan                   Taiwan                  
+[1503] Taiwan                   Taiwan                  
+[1505] Taiwan                   Taiwan                  
+[1507] Taiwan                   Taiwan                  
+[1509] Taiwan                   Taiwan                  
+[1511] Taiwan                   Taiwan                  
+[1513] Tanzania                 Tanzania                
+[1515] Tanzania                 Tanzania                
+[1517] Tanzania                 Tanzania                
+[1519] Tanzania                 Tanzania                
+[1521] Tanzania                 Tanzania                
+[1523] Tanzania                 Tanzania                
+[1525] Thailand                 Thailand                
+[1527] Thailand                 Thailand                
+[1529] Thailand                 Thailand                
+[1531] Thailand                 Thailand                
+[1533] Thailand                 Thailand                
+[1535] Thailand                 Thailand                
+[1537] Togo                     Togo                    
+[1539] Togo                     Togo                    
+[1541] Togo                     Togo                    
+[1543] Togo                     Togo                    
+[1545] Togo                     Togo                    
+[1547] Togo                     Togo                    
+[1549] Trinidad and Tobago      Trinidad and Tobago     
+[1551] Trinidad and Tobago      Trinidad and Tobago     
+[1553] Trinidad and Tobago      Trinidad and Tobago     
+[1555] Trinidad and Tobago      Trinidad and Tobago     
+[1557] Trinidad and Tobago      Trinidad and Tobago     
+[1559] Trinidad and Tobago      Trinidad and Tobago     
+[1561] Tunisia                  Tunisia                 
+[1563] Tunisia                  Tunisia                 
+[1565] Tunisia                  Tunisia                 
+[1567] Tunisia                  Tunisia                 
+[1569] Tunisia                  Tunisia                 
+[1571] Tunisia                  Tunisia                 
+[1573] Turkey                   Turkey                  
+[1575] Turkey                   Turkey                  
+[1577] Turkey                   Turkey                  
+[1579] Turkey                   Turkey                  
+[1581] Turkey                   Turkey                  
+[1583] Turkey                   Turkey                  
+[1585] Uganda                   Uganda                  
+[1587] Uganda                   Uganda                  
+[1589] Uganda                   Uganda                  
+[1591] Uganda                   Uganda                  
+[1593] Uganda                   Uganda                  
+[1595] Uganda                   Uganda                  
+[1597] United Kingdom           United Kingdom          
+[1599] United Kingdom           United Kingdom          
+[1601] United Kingdom           United Kingdom          
+[1603] United Kingdom           United Kingdom          
+[1605] United Kingdom           United Kingdom          
+[1607] United Kingdom           United Kingdom          
+[1609] United States            United States           
+[1611] United States            United States           
+[1613] United States            United States           
+[1615] United States            United States           
+[1617] United States            United States           
+[1619] United States            United States           
+[1621] Uruguay                  Uruguay                 
+[1623] Uruguay                  Uruguay                 
+[1625] Uruguay                  Uruguay                 
+[1627] Uruguay                  Uruguay                 
+[1629] Uruguay                  Uruguay                 
+[1631] Uruguay                  Uruguay                 
+[1633] Venezuela                Venezuela               
+[1635] Venezuela                Venezuela               
+[1637] Venezuela                Venezuela               
+[1639] Venezuela                Venezuela               
+[1641] Venezuela                Venezuela               
+[1643] Venezuela                Venezuela               
+[1645] Vietnam                  Vietnam                 
+[1647] Vietnam                  Vietnam                 
+[1649] Vietnam                  Vietnam                 
+[1651] Vietnam                  Vietnam                 
+[1653] Vietnam                  Vietnam                 
+[1655] Vietnam                  Vietnam                 
+[1657] West Bank and Gaza       West Bank and Gaza      
+[1659] West Bank and Gaza       West Bank and Gaza      
+[1661] West Bank and Gaza       West Bank and Gaza      
+[1663] West Bank and Gaza       West Bank and Gaza      
+[1665] West Bank and Gaza       West Bank and Gaza      
+[1667] West Bank and Gaza       West Bank and Gaza      
+[1669] Yemen, Rep.              Yemen, Rep.             
+[1671] Yemen, Rep.              Yemen, Rep.             
+[1673] Yemen, Rep.              Yemen, Rep.             
+[1675] Yemen, Rep.              Yemen, Rep.             
+[1677] Yemen, Rep.              Yemen, Rep.             
+[1679] Yemen, Rep.              Yemen, Rep.             
+[1681] Zambia                   Zambia                  
+[1683] Zambia                   Zambia                  
+[1685] Zambia                   Zambia                  
+[1687] Zambia                   Zambia                  
+[1689] Zambia                   Zambia                  
+[1691] Zambia                   Zambia                  
+[1693] Zimbabwe                 Zimbabwe                
+[1695] Zimbabwe                 Zimbabwe                
+[1697] Zimbabwe                 Zimbabwe                
+[1699] Zimbabwe                 Zimbabwe                
+[1701] Zimbabwe                 Zimbabwe                
+[1703] Zimbabwe                 Zimbabwe                
+142 Levels: Afghanistan Albania Algeria Angola Argentina Australia ... Zimbabwe
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+gap.country.astype('category')
+```
+
+```
+0       Afghanistan
+1       Afghanistan
+2       Afghanistan
+3       Afghanistan
+4       Afghanistan
+           ...     
+1699       Zimbabwe
+1700       Zimbabwe
+1701       Zimbabwe
+1702       Zimbabwe
+1703       Zimbabwe
+Name: country, Length: 1704, dtype: category
+Categories (142, object): [Afghanistan, Albania, Algeria, Angola, ..., West Bank and Gaza, Yemen, Rep.,
+                           Zambia, Zimbabwe]
+```
+]
+]
+
+---
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+---
+class: center, middle
+
+# We'll continue discussing data munging and exploratory analyses next week.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="../js/macros.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "zenburn",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
