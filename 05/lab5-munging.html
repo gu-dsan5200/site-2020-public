@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Week 5 Activity: Making Tidy Data</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Vaisman &amp; Dasgupta" />
+    <meta name="date" content="2020-09-24" />
+    <link href="lab5-munging_files/tachyons-4.12.0/tachyons.min.css" rel="stylesheet" />
+    <link href="lab5-munging_files/xaringanExtra-extra-styles-0.2.3.9000/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Week 5 Activity: Making <em>Tidy</em> Data
+## ANLY 503, Fall 2020
+### Vaisman &amp; Dasgupta
+### Georgetown University
+### September 24, 2020
+
+---
+
+
+
+
+
+
+## Case study in genomics
+
+The [Gene Expression Dataset](http://www.molbiolcell.org/content/19/1/352.abstract)
+
+* This exercise is based on [David Robinson's blog post](http://varianceexplained.org/r/tidy-genomics/)  and updated with current code because it was written about five years ago when many of the `tidyverse` packages were still in early development
+* It uses a very interesting dataset that communicates both the concepts of tidy data and tells a biological story (today we focus on the data piece only.)
+
+---
+
+## Background
+
+* Through the process of gene regulation, a cell can control which genes are transcribed from DNA to RNA- what we call being _expressed_. 
+* A _gene expression microarray_ measures how much of each gene is expressed in a particular condition. This can used to figure out the function of a specific gene (based on when it turns on and off), or to get an overall picture of the cell’s activity.
+* Brauer 2008 used microarrays to test the effect of starvation and growth rate on baker’s yeast (S. cerevisiae). Basically, if you give yeast plenty of nutrients (a rich media), except that you sharply restrict its supply of one nutrient, you can control the growth rate to whatever level you desire (we do this with a tool called a chemostat). 
+    * For example, you could limit the yeast’s supply of glucose (sugar, which the cell metabolizes to get energy and carbon), of leucine (an essential amino acid), or of ammonium (a source of nitrogen).
+* _Starving_ the yeast of these nutrients lets us find genes that:
+  * Raise or lower their activity in response to growth rate. Growth-rate dependent expression patterns can tell us a lot about cell cycle control, and how the cell responds to stress.
+  * Respond differently when different nutrients are being limited. These genes may be involved in the transport or metabolism of those nutrients.
+
+
+---
+
+.bg-washed-green.b--dark-green.ba.bw2.br3.shadow-5.ph4.mt5[
+The more effort you put up front into tidying your data, the easier it will be to explore interactively. Since the analysis [and visualization] steps are where you will actually be answering questions about your data, _it's worth putting up this effort_!
+
+.tr[
+— David Robinson
+]]
+
+---
+
+## Load the dataset
+
+Read the dataset from a _tab-delmited_ file into a _tibble_.
+--
+
+```r
+library(readr)
+original &lt;- read_delim("data/dataset1.tds", 
+                       delim = "\t")
+```
+--
+Print the tibble to screen (shows only the first 10 lines).
+
+```r
+original
+```
+
+```
+# A tibble: 5,537 x 40
+   GID   YORF  NAME  GWEIGHT G0.05  G0.1 G0.15  G0.2 G0.25  G0.3 N0.05  N0.1 N0.15   N0.2
+   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+ 1 GENE… A_06… "SFB…       1 -0.24 -0.13 -0.21 -0.15 -0.05 -0.05  0.2   0.24 -0.2  -0.42 
+ 2 GENE… A_06… "   …       1  0.28  0.13 -0.4  -0.48 -0.11  0.17  0.31  0    -0.63 -0.44 
+ 3 GENE… A_06… "QRI…       1 -0.02 -0.27 -0.27 -0.02  0.24  0.25  0.23  0.06 -0.66 -0.4  
+ 4 GENE… A_06… "CFT…       1 -0.33 -0.41 -0.24 -0.03 -0.03  0     0.2  -0.25 -0.49 -0.49 
+ 5 GENE… A_06… "SSO…       1  0.05  0.02  0.4   0.34 -0.13 -0.14 -0.35 -0.09 -0.08 -0.580
+ 6 GENE… A_06… "PSP…       1 -0.69 -0.03  0.23  0.2   0    -0.27  0.17 -0.4  -0.54 -1.19 
+ 7 GENE… A_06… "RIB…       1 -0.55 -0.3  -0.12 -0.03 -0.16 -0.11  0.04  0    -0.63 -0.51 
+ 8 GENE… A_06… "VMA…       1 -0.75 -0.12 -0.07  0.02 -0.32 -0.41  0.11 -0.16 -0.26 -0.42 
+ 9 GENE… A_06… "EDC…       1 -0.24 -0.22  0.14  0.06  0    -0.13  0.3   0.07 -0.3  -0.01 
+10 GENE… A_06… "VPS…       1 -0.16 -0.38  0.05  0.14 -0.04 -0.01  0.39  0.2   0.27  0.19 
+# … with 5,527 more rows, and 26 more variables: N0.25 &lt;dbl&gt;, N0.3 &lt;dbl&gt;, P0.05 &lt;dbl&gt;,
+#   P0.1 &lt;dbl&gt;, P0.15 &lt;dbl&gt;, P0.2 &lt;dbl&gt;, P0.25 &lt;dbl&gt;, P0.3 &lt;dbl&gt;, S0.05 &lt;dbl&gt;, S0.1 &lt;dbl&gt;,
+#   S0.15 &lt;dbl&gt;, S0.2 &lt;dbl&gt;, S0.25 &lt;dbl&gt;, S0.3 &lt;dbl&gt;, L0.05 &lt;dbl&gt;, L0.1 &lt;dbl&gt;, L0.15 &lt;dbl&gt;,
+#   L0.2 &lt;dbl&gt;, L0.25 &lt;dbl&gt;, L0.3 &lt;dbl&gt;, U0.05 &lt;dbl&gt;, U0.1 &lt;dbl&gt;, U0.15 &lt;dbl&gt;, U0.2 &lt;dbl&gt;,
+#   U0.25 &lt;dbl&gt;, U0.3 &lt;dbl&gt;
+```
+
+---
+
+Use the `glimpse` function to see the contents of the tibble, one line by column
+
+
+```r
+original %&gt;% glimpse()
+```
+
+```
+Rows: 5,537
+Columns: 40
+$ GID     &lt;chr&gt; "GENE1331X", "GENE4924X", "GENE4690X", "GENE1177X", "GENE511X", "GENE2133X…
+$ YORF    &lt;chr&gt; "A_06_P5820", "A_06_P5866", "A_06_P1834", "A_06_P4928", "A_06_P5620", "A_0…
+$ NAME    &lt;chr&gt; "SFB2       || ER to Golgi transport || molecular function unknown || YNL0…
+$ GWEIGHT &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
+$ G0.05   &lt;dbl&gt; -0.24, 0.28, -0.02, -0.33, 0.05, -0.69, -0.55, -0.75, -0.24, -0.16, -0.22,…
+$ G0.1    &lt;dbl&gt; -0.13, 0.13, -0.27, -0.41, 0.02, -0.03, -0.30, -0.12, -0.22, -0.38, -0.18,…
+$ G0.15   &lt;dbl&gt; -0.21, -0.40, -0.27, -0.24, 0.40, 0.23, -0.12, -0.07, 0.14, 0.05, 0.27, 1.…
+$ G0.2    &lt;dbl&gt; -0.15, -0.48, -0.02, -0.03, 0.34, 0.20, -0.03, 0.02, 0.06, 0.14, 0.18, 1.3…
+$ G0.25   &lt;dbl&gt; -0.05, -0.11, 0.24, -0.03, -0.13, 0.00, -0.16, -0.32, 0.00, -0.04, 0.03, 0…
+$ G0.3    &lt;dbl&gt; -0.05, 0.17, 0.25, 0.00, -0.14, -0.27, -0.11, -0.41, -0.13, -0.01, -0.04, …
+$ N0.05   &lt;dbl&gt; 0.20, 0.31, 0.23, 0.20, -0.35, 0.17, 0.04, 0.11, 0.30, 0.39, 0.26, -0.59, …
+$ N0.1    &lt;dbl&gt; 0.24, 0.00, 0.06, -0.25, -0.09, -0.40, 0.00, -0.16, 0.07, 0.20, 0.15, -0.0…
+$ N0.15   &lt;dbl&gt; -0.20, -0.63, -0.66, -0.49, -0.08, -0.54, -0.63, -0.26, -0.30, 0.27, 0.04,…
+$ N0.2    &lt;dbl&gt; -0.42, -0.44, -0.40, -0.49, -0.58, -1.19, -0.51, -0.42, -0.01, 0.19, -0.07…
+$ N0.25   &lt;dbl&gt; -0.14, -0.26, -0.46, -0.43, -0.14, -0.42, -0.37, 0.18, 0.15, 0.20, 0.12, -…
+$ N0.3    &lt;dbl&gt; 0.09, 0.21, -0.43, -0.26, -0.12, 1.89, -0.24, 0.13, 0.13, 0.06, -0.08, -0.…
+$ P0.05   &lt;dbl&gt; -0.26, -0.09, 0.18, 0.05, -0.16, -0.32, -0.35, -0.19, -0.26, -0.23, -0.55,…
+$ P0.1    &lt;dbl&gt; -0.20, -0.04, 0.22, 0.04, 0.18, -0.06, -0.32, -0.25, -0.20, -0.20, -0.67, …
+$ P0.15   &lt;dbl&gt; -0.22, -0.10, 0.33, 0.03, 0.21, -0.62, -0.39, -0.25, -0.22, -0.07, -0.47, …
+$ P0.2    &lt;dbl&gt; -0.31, 0.15, 0.34, -0.04, 0.08, -0.50, -0.60, -0.47, -0.17, -0.13, -0.72, …
+$ P0.25   &lt;dbl&gt; 0.04, 0.20, 0.13, 0.08, 0.23, -0.37, -0.29, -0.24, -0.23, -0.14, -0.47, -0…
+$ P0.3    &lt;dbl&gt; 0.34, 0.63, 0.44, 0.21, -0.29, NA, -0.25, -0.49, -0.38, -0.42, -0.63, -0.8…
+$ S0.05   &lt;dbl&gt; -0.51, 0.53, 1.29, 0.41, -0.70, NA, -0.14, 0.09, -0.35, -0.38, 0.25, -0.08…
+$ S0.1    &lt;dbl&gt; -0.12, 0.15, -0.32, -0.43, 0.05, -0.20, -0.50, 0.13, -0.14, -0.14, 0.18, 0…
+$ S0.15   &lt;dbl&gt; 0.09, -0.01, -0.47, -0.21, 0.10, -0.09, -0.19, 0.15, 0.10, 0.00, 0.25, -0.…
+$ S0.2    &lt;dbl&gt; 0.09, 0.12, -0.50, -0.33, -0.07, 0.06, -0.13, -0.02, -0.04, -0.06, 0.04, 0…
+$ S0.25   &lt;dbl&gt; 0.20, -0.15, -0.42, -0.05, -0.10, -0.19, -0.01, 0.24, 0.22, 0.16, 0.25, -0…
+$ S0.3    &lt;dbl&gt; 0.08, 0.32, -0.33, -0.24, -0.32, -0.14, -0.04, -0.08, 0.02, -0.15, -0.29, …
+$ L0.05   &lt;dbl&gt; 0.18, 0.16, -0.30, -0.27, -0.59, -0.17, -0.02, -0.11, 0.12, -0.20, -0.10, …
+$ L0.1    &lt;dbl&gt; 0.18, 0.09, 0.02, -0.28, -0.13, -0.07, -0.05, -0.01, -0.01, -0.18, 0.11, -…
+$ L0.15   &lt;dbl&gt; 0.13, 0.02, -0.07, -0.05, 0.00, 0.25, 0.27, 0.15, 0.17, 0.11, -0.04, -0.35…
+$ L0.2    &lt;dbl&gt; 0.20, 0.04, -0.05, 0.02, -0.11, -0.21, 0.24, 0.15, 0.07, 0.00, -0.13, -0.2…
+$ L0.25   &lt;dbl&gt; 0.17, 0.03, -0.13, 0.00, 0.04, 0.12, 0.05, 0.00, 0.10, 0.02, -0.08, -0.07,…
+$ L0.3    &lt;dbl&gt; 0.11, 0.01, -0.04, 0.08, 0.01, -0.11, 0.19, 0.03, 0.11, 0.09, 0.10, -0.11,…
+$ U0.05   &lt;dbl&gt; -0.06, -1.02, -0.91, -0.53, -0.45, NA, 0.07, -0.40, 0.01, -0.26, -0.02, -1…
+$ U0.1    &lt;dbl&gt; -0.26, -0.91, -0.94, -0.51, -0.09, -0.65, -0.31, -0.02, -0.16, -0.13, 0.04…
+$ U0.15   &lt;dbl&gt; -0.05, -0.59, -0.42, -0.26, -0.13, 0.09, -0.08, 0.26, 0.07, -0.10, 0.16, 0…
+$ U0.2    &lt;dbl&gt; -0.28, -0.61, -0.36, 0.05, 0.02, 0.06, 0.12, 0.31, 0.20, 0.07, 0.02, 0.00,…
+$ U0.25   &lt;dbl&gt; -0.19, -0.17, -0.49, -0.14, -0.09, -0.07, 0.05, 0.14, 0.02, -0.04, -0.03, …
+$ U0.3    &lt;dbl&gt; 0.09, 0.18, -0.47, -0.01, -0.03, -0.10, 0.06, 0.11, 0.10, -0.12, -0.22, -0…
+```
+
+---
+## Let's examine the fields
+
+The details of each field name are not annotated in the paper, but they are relatively straightforward to figure out. **Pay close attention to the `NAME` column, as it contains a lot of information.**
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Field Name &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Description &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; GID &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Seems to be some kind of unique identifier per gene. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; YORF &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Seems to be another kind of identifier per gene. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; NAME &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; There is a lot of information contained in this field. The first row has this value: SFB2       || ER to Golgi transport || molecular function unknown || YNL049C || 1082129 where SBF2 is the name of a gene, ER to Golgi transport is a biological process, molecular function unknown indicates some kind of categorical value for molecular function, YNL049C is the a systematic identifier, and 1082129 seems to be yet another kind of identifier. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; GWEIGHT &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Unknow quantity, but the value in all rows is 1. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; G0.05... &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Each of those columns like G0.05, N0.3, etc., represents gene expression values for that sample, as measured by the microarray. The column titles show the condition: G0.05, for instance, means the limiting nutrient was glucose and the _growth rate_ was .05. A higher value means the gene was more expressed in that sample, lower means the gene was less expressed. In total the yeast was grown with six limiting nutrients and six growth rates, which makes 36 samples, and therefore 36 columns, of gene expression data. &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+## Is our dataset tidy?
+
+--
+.pull-left[
+Is every variable in it's own, single column?
+]
+--
+.pull-right[
+No. The column `NAME` contains many variables in a single field. Each of these variables should be in their own column.
+]
+--
+.pull-left[
+Is each observation in it's own row?
+]
+--
+.pull-right[
+No. There are columns for every combination of limiting nutrient and growth rate (`G0.05`, `N0.3`, etc.). Each of these should be in a single row. 
+]
+--
+.pull-left[
+Is every type of observational unit in a single table?
+]
+--
+.pull-right[
+Yes. 
+]
+
+---
+
+## Step 1: split the `NAME` column into multiple columns
+
+Task: Use `separate` to split the `NAME`
+--
+
+```r
+library(dplyr)
+tidy_gene &lt;- original %&gt;% 
+  separate(NAME, # the field to split
+          into = c("name", "bp", "mf", "systematic_name", "number"),
+          # the names of the new columns
+          sep = "\\|\\|" # the separator
+  )
+```
+
+--
+
+```r
+tidy_gene %&gt;% glimpse()
+```
+
+```
+Rows: 5,537
+Columns: 44
+$ GID             &lt;chr&gt; "GENE1331X", "GENE4924X", "GENE4690X", "GENE1177X", "GENE511X", "G…
+$ YORF            &lt;chr&gt; "A_06_P5820", "A_06_P5866", "A_06_P1834", "A_06_P4928", "A_06_P562…
+$ name            &lt;chr&gt; "SFB2       ", "          ", "QRI7       ", "CFT2       ", "SSO2  …
+$ bp              &lt;chr&gt; " ER to Golgi transport ", " biological process unknown ", " prote…
+$ mf              &lt;chr&gt; " molecular function unknown ", " molecular function unknown ", " …
+$ systematic_name &lt;chr&gt; " YNL049C ", " YNL095C ", " YDL104C ", " YLR115W ", " YMR183C ", "…
+$ number          &lt;chr&gt; " 1082129", " 1086222", " 1085955", " 1081958", " 1081214", " 1083…
+$ GWEIGHT         &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ G0.05           &lt;dbl&gt; -0.24, 0.28, -0.02, -0.33, 0.05, -0.69, -0.55, -0.75, -0.24, -0.16…
+$ G0.1            &lt;dbl&gt; -0.13, 0.13, -0.27, -0.41, 0.02, -0.03, -0.30, -0.12, -0.22, -0.38…
+$ G0.15           &lt;dbl&gt; -0.21, -0.40, -0.27, -0.24, 0.40, 0.23, -0.12, -0.07, 0.14, 0.05, …
+$ G0.2            &lt;dbl&gt; -0.15, -0.48, -0.02, -0.03, 0.34, 0.20, -0.03, 0.02, 0.06, 0.14, 0…
+$ G0.25           &lt;dbl&gt; -0.05, -0.11, 0.24, -0.03, -0.13, 0.00, -0.16, -0.32, 0.00, -0.04,…
+$ G0.3            &lt;dbl&gt; -0.05, 0.17, 0.25, 0.00, -0.14, -0.27, -0.11, -0.41, -0.13, -0.01,…
+$ N0.05           &lt;dbl&gt; 0.20, 0.31, 0.23, 0.20, -0.35, 0.17, 0.04, 0.11, 0.30, 0.39, 0.26,…
+$ N0.1            &lt;dbl&gt; 0.24, 0.00, 0.06, -0.25, -0.09, -0.40, 0.00, -0.16, 0.07, 0.20, 0.…
+$ N0.15           &lt;dbl&gt; -0.20, -0.63, -0.66, -0.49, -0.08, -0.54, -0.63, -0.26, -0.30, 0.2…
+$ N0.2            &lt;dbl&gt; -0.42, -0.44, -0.40, -0.49, -0.58, -1.19, -0.51, -0.42, -0.01, 0.1…
+$ N0.25           &lt;dbl&gt; -0.14, -0.26, -0.46, -0.43, -0.14, -0.42, -0.37, 0.18, 0.15, 0.20,…
+$ N0.3            &lt;dbl&gt; 0.09, 0.21, -0.43, -0.26, -0.12, 1.89, -0.24, 0.13, 0.13, 0.06, -0…
+$ P0.05           &lt;dbl&gt; -0.26, -0.09, 0.18, 0.05, -0.16, -0.32, -0.35, -0.19, -0.26, -0.23…
+$ P0.1            &lt;dbl&gt; -0.20, -0.04, 0.22, 0.04, 0.18, -0.06, -0.32, -0.25, -0.20, -0.20,…
+$ P0.15           &lt;dbl&gt; -0.22, -0.10, 0.33, 0.03, 0.21, -0.62, -0.39, -0.25, -0.22, -0.07,…
+$ P0.2            &lt;dbl&gt; -0.31, 0.15, 0.34, -0.04, 0.08, -0.50, -0.60, -0.47, -0.17, -0.13,…
+$ P0.25           &lt;dbl&gt; 0.04, 0.20, 0.13, 0.08, 0.23, -0.37, -0.29, -0.24, -0.23, -0.14, -…
+$ P0.3            &lt;dbl&gt; 0.34, 0.63, 0.44, 0.21, -0.29, NA, -0.25, -0.49, -0.38, -0.42, -0.…
+$ S0.05           &lt;dbl&gt; -0.51, 0.53, 1.29, 0.41, -0.70, NA, -0.14, 0.09, -0.35, -0.38, 0.2…
+$ S0.1            &lt;dbl&gt; -0.12, 0.15, -0.32, -0.43, 0.05, -0.20, -0.50, 0.13, -0.14, -0.14,…
+$ S0.15           &lt;dbl&gt; 0.09, -0.01, -0.47, -0.21, 0.10, -0.09, -0.19, 0.15, 0.10, 0.00, 0…
+$ S0.2            &lt;dbl&gt; 0.09, 0.12, -0.50, -0.33, -0.07, 0.06, -0.13, -0.02, -0.04, -0.06,…
+$ S0.25           &lt;dbl&gt; 0.20, -0.15, -0.42, -0.05, -0.10, -0.19, -0.01, 0.24, 0.22, 0.16, …
+$ S0.3            &lt;dbl&gt; 0.08, 0.32, -0.33, -0.24, -0.32, -0.14, -0.04, -0.08, 0.02, -0.15,…
+$ L0.05           &lt;dbl&gt; 0.18, 0.16, -0.30, -0.27, -0.59, -0.17, -0.02, -0.11, 0.12, -0.20,…
+$ L0.1            &lt;dbl&gt; 0.18, 0.09, 0.02, -0.28, -0.13, -0.07, -0.05, -0.01, -0.01, -0.18,…
+$ L0.15           &lt;dbl&gt; 0.13, 0.02, -0.07, -0.05, 0.00, 0.25, 0.27, 0.15, 0.17, 0.11, -0.0…
+$ L0.2            &lt;dbl&gt; 0.20, 0.04, -0.05, 0.02, -0.11, -0.21, 0.24, 0.15, 0.07, 0.00, -0.…
+$ L0.25           &lt;dbl&gt; 0.17, 0.03, -0.13, 0.00, 0.04, 0.12, 0.05, 0.00, 0.10, 0.02, -0.08…
+$ L0.3            &lt;dbl&gt; 0.11, 0.01, -0.04, 0.08, 0.01, -0.11, 0.19, 0.03, 0.11, 0.09, 0.10…
+$ U0.05           &lt;dbl&gt; -0.06, -1.02, -0.91, -0.53, -0.45, NA, 0.07, -0.40, 0.01, -0.26, -…
+$ U0.1            &lt;dbl&gt; -0.26, -0.91, -0.94, -0.51, -0.09, -0.65, -0.31, -0.02, -0.16, -0.…
+$ U0.15           &lt;dbl&gt; -0.05, -0.59, -0.42, -0.26, -0.13, 0.09, -0.08, 0.26, 0.07, -0.10,…
+$ U0.2            &lt;dbl&gt; -0.28, -0.61, -0.36, 0.05, 0.02, 0.06, 0.12, 0.31, 0.20, 0.07, 0.0…
+$ U0.25           &lt;dbl&gt; -0.19, -0.17, -0.49, -0.14, -0.09, -0.07, 0.05, 0.14, 0.02, -0.04,…
+$ U0.3            &lt;dbl&gt; 0.09, 0.18, -0.47, -0.01, -0.03, -0.10, 0.06, 0.11, 0.10, -0.12, -…
+```
+
+---
+
+## Step 2: Remove the _whitespace_ from the new fields.
+
+You have several columns to change at once, what do you do?
+
+--
+
+Use `across`.
+
+--
+
+```r
+tidy_gene &lt;- tidy_gene %&gt;% 
+  mutate(across(name:systematic_name, trimws)) 
+  # trim whitespace for these columns
+```
+
+--
+
+```r
+tidy_gene %&gt;% glimpse()
+```
+
+```
+Rows: 5,537
+Columns: 44
+$ GID             &lt;chr&gt; "GENE1331X", "GENE4924X", "GENE4690X", "GENE1177X", "GENE511X", "G…
+$ YORF            &lt;chr&gt; "A_06_P5820", "A_06_P5866", "A_06_P1834", "A_06_P4928", "A_06_P562…
+$ name            &lt;chr&gt; "SFB2", "", "QRI7", "CFT2", "SSO2", "PSP2", "RIB2", "VMA13", "EDC3…
+$ bp              &lt;chr&gt; "ER to Golgi transport", "biological process unknown", "proteolysi…
+$ mf              &lt;chr&gt; "molecular function unknown", "molecular function unknown", "metal…
+$ systematic_name &lt;chr&gt; "YNL049C", "YNL095C", "YDL104C", "YLR115W", "YMR183C", "YML017W", …
+$ number          &lt;chr&gt; " 1082129", " 1086222", " 1085955", " 1081958", " 1081214", " 1083…
+$ GWEIGHT         &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ G0.05           &lt;dbl&gt; -0.24, 0.28, -0.02, -0.33, 0.05, -0.69, -0.55, -0.75, -0.24, -0.16…
+$ G0.1            &lt;dbl&gt; -0.13, 0.13, -0.27, -0.41, 0.02, -0.03, -0.30, -0.12, -0.22, -0.38…
+$ G0.15           &lt;dbl&gt; -0.21, -0.40, -0.27, -0.24, 0.40, 0.23, -0.12, -0.07, 0.14, 0.05, …
+$ G0.2            &lt;dbl&gt; -0.15, -0.48, -0.02, -0.03, 0.34, 0.20, -0.03, 0.02, 0.06, 0.14, 0…
+$ G0.25           &lt;dbl&gt; -0.05, -0.11, 0.24, -0.03, -0.13, 0.00, -0.16, -0.32, 0.00, -0.04,…
+$ G0.3            &lt;dbl&gt; -0.05, 0.17, 0.25, 0.00, -0.14, -0.27, -0.11, -0.41, -0.13, -0.01,…
+$ N0.05           &lt;dbl&gt; 0.20, 0.31, 0.23, 0.20, -0.35, 0.17, 0.04, 0.11, 0.30, 0.39, 0.26,…
+$ N0.1            &lt;dbl&gt; 0.24, 0.00, 0.06, -0.25, -0.09, -0.40, 0.00, -0.16, 0.07, 0.20, 0.…
+$ N0.15           &lt;dbl&gt; -0.20, -0.63, -0.66, -0.49, -0.08, -0.54, -0.63, -0.26, -0.30, 0.2…
+$ N0.2            &lt;dbl&gt; -0.42, -0.44, -0.40, -0.49, -0.58, -1.19, -0.51, -0.42, -0.01, 0.1…
+$ N0.25           &lt;dbl&gt; -0.14, -0.26, -0.46, -0.43, -0.14, -0.42, -0.37, 0.18, 0.15, 0.20,…
+$ N0.3            &lt;dbl&gt; 0.09, 0.21, -0.43, -0.26, -0.12, 1.89, -0.24, 0.13, 0.13, 0.06, -0…
+$ P0.05           &lt;dbl&gt; -0.26, -0.09, 0.18, 0.05, -0.16, -0.32, -0.35, -0.19, -0.26, -0.23…
+$ P0.1            &lt;dbl&gt; -0.20, -0.04, 0.22, 0.04, 0.18, -0.06, -0.32, -0.25, -0.20, -0.20,…
+$ P0.15           &lt;dbl&gt; -0.22, -0.10, 0.33, 0.03, 0.21, -0.62, -0.39, -0.25, -0.22, -0.07,…
+$ P0.2            &lt;dbl&gt; -0.31, 0.15, 0.34, -0.04, 0.08, -0.50, -0.60, -0.47, -0.17, -0.13,…
+$ P0.25           &lt;dbl&gt; 0.04, 0.20, 0.13, 0.08, 0.23, -0.37, -0.29, -0.24, -0.23, -0.14, -…
+$ P0.3            &lt;dbl&gt; 0.34, 0.63, 0.44, 0.21, -0.29, NA, -0.25, -0.49, -0.38, -0.42, -0.…
+$ S0.05           &lt;dbl&gt; -0.51, 0.53, 1.29, 0.41, -0.70, NA, -0.14, 0.09, -0.35, -0.38, 0.2…
+$ S0.1            &lt;dbl&gt; -0.12, 0.15, -0.32, -0.43, 0.05, -0.20, -0.50, 0.13, -0.14, -0.14,…
+$ S0.15           &lt;dbl&gt; 0.09, -0.01, -0.47, -0.21, 0.10, -0.09, -0.19, 0.15, 0.10, 0.00, 0…
+$ S0.2            &lt;dbl&gt; 0.09, 0.12, -0.50, -0.33, -0.07, 0.06, -0.13, -0.02, -0.04, -0.06,…
+$ S0.25           &lt;dbl&gt; 0.20, -0.15, -0.42, -0.05, -0.10, -0.19, -0.01, 0.24, 0.22, 0.16, …
+$ S0.3            &lt;dbl&gt; 0.08, 0.32, -0.33, -0.24, -0.32, -0.14, -0.04, -0.08, 0.02, -0.15,…
+$ L0.05           &lt;dbl&gt; 0.18, 0.16, -0.30, -0.27, -0.59, -0.17, -0.02, -0.11, 0.12, -0.20,…
+$ L0.1            &lt;dbl&gt; 0.18, 0.09, 0.02, -0.28, -0.13, -0.07, -0.05, -0.01, -0.01, -0.18,…
+$ L0.15           &lt;dbl&gt; 0.13, 0.02, -0.07, -0.05, 0.00, 0.25, 0.27, 0.15, 0.17, 0.11, -0.0…
+$ L0.2            &lt;dbl&gt; 0.20, 0.04, -0.05, 0.02, -0.11, -0.21, 0.24, 0.15, 0.07, 0.00, -0.…
+$ L0.25           &lt;dbl&gt; 0.17, 0.03, -0.13, 0.00, 0.04, 0.12, 0.05, 0.00, 0.10, 0.02, -0.08…
+$ L0.3            &lt;dbl&gt; 0.11, 0.01, -0.04, 0.08, 0.01, -0.11, 0.19, 0.03, 0.11, 0.09, 0.10…
+$ U0.05           &lt;dbl&gt; -0.06, -1.02, -0.91, -0.53, -0.45, NA, 0.07, -0.40, 0.01, -0.26, -…
+$ U0.1            &lt;dbl&gt; -0.26, -0.91, -0.94, -0.51, -0.09, -0.65, -0.31, -0.02, -0.16, -0.…
+$ U0.15           &lt;dbl&gt; -0.05, -0.59, -0.42, -0.26, -0.13, 0.09, -0.08, 0.26, 0.07, -0.10,…
+$ U0.2            &lt;dbl&gt; -0.28, -0.61, -0.36, 0.05, 0.02, 0.06, 0.12, 0.31, 0.20, 0.07, 0.0…
+$ U0.25           &lt;dbl&gt; -0.19, -0.17, -0.49, -0.14, -0.09, -0.07, 0.05, 0.14, 0.02, -0.04,…
+$ U0.3            &lt;dbl&gt; 0.09, 0.18, -0.47, -0.01, -0.03, -0.10, 0.06, 0.11, 0.10, -0.12, -…
+```
+
+???
+
+name: gene name
+bp: biological process
+mf: molecular function
+
+
+
+---
+
+## Step 3: Keep the fields of interest
+
+Use `select`.
+
+--
+
+```r
+tidy_gene &lt;- tidy_gene %&gt;% 
+  select(-number, -GID, -YORF, -GWEIGHT) 
+  # select all columns except these. Note the - (negative) notation
+```
+
+--
+
+```r
+tidy_gene %&gt;% glimpse()
+```
+
+```
+Rows: 5,537
+Columns: 40
+$ name            &lt;chr&gt; "SFB2", "", "QRI7", "CFT2", "SSO2", "PSP2", "RIB2", "VMA13", "EDC3…
+$ bp              &lt;chr&gt; "ER to Golgi transport", "biological process unknown", "proteolysi…
+$ mf              &lt;chr&gt; "molecular function unknown", "molecular function unknown", "metal…
+$ systematic_name &lt;chr&gt; "YNL049C", "YNL095C", "YDL104C", "YLR115W", "YMR183C", "YML017W", …
+$ G0.05           &lt;dbl&gt; -0.24, 0.28, -0.02, -0.33, 0.05, -0.69, -0.55, -0.75, -0.24, -0.16…
+$ G0.1            &lt;dbl&gt; -0.13, 0.13, -0.27, -0.41, 0.02, -0.03, -0.30, -0.12, -0.22, -0.38…
+$ G0.15           &lt;dbl&gt; -0.21, -0.40, -0.27, -0.24, 0.40, 0.23, -0.12, -0.07, 0.14, 0.05, …
+$ G0.2            &lt;dbl&gt; -0.15, -0.48, -0.02, -0.03, 0.34, 0.20, -0.03, 0.02, 0.06, 0.14, 0…
+$ G0.25           &lt;dbl&gt; -0.05, -0.11, 0.24, -0.03, -0.13, 0.00, -0.16, -0.32, 0.00, -0.04,…
+$ G0.3            &lt;dbl&gt; -0.05, 0.17, 0.25, 0.00, -0.14, -0.27, -0.11, -0.41, -0.13, -0.01,…
+$ N0.05           &lt;dbl&gt; 0.20, 0.31, 0.23, 0.20, -0.35, 0.17, 0.04, 0.11, 0.30, 0.39, 0.26,…
+$ N0.1            &lt;dbl&gt; 0.24, 0.00, 0.06, -0.25, -0.09, -0.40, 0.00, -0.16, 0.07, 0.20, 0.…
+$ N0.15           &lt;dbl&gt; -0.20, -0.63, -0.66, -0.49, -0.08, -0.54, -0.63, -0.26, -0.30, 0.2…
+$ N0.2            &lt;dbl&gt; -0.42, -0.44, -0.40, -0.49, -0.58, -1.19, -0.51, -0.42, -0.01, 0.1…
+$ N0.25           &lt;dbl&gt; -0.14, -0.26, -0.46, -0.43, -0.14, -0.42, -0.37, 0.18, 0.15, 0.20,…
+$ N0.3            &lt;dbl&gt; 0.09, 0.21, -0.43, -0.26, -0.12, 1.89, -0.24, 0.13, 0.13, 0.06, -0…
+$ P0.05           &lt;dbl&gt; -0.26, -0.09, 0.18, 0.05, -0.16, -0.32, -0.35, -0.19, -0.26, -0.23…
+$ P0.1            &lt;dbl&gt; -0.20, -0.04, 0.22, 0.04, 0.18, -0.06, -0.32, -0.25, -0.20, -0.20,…
+$ P0.15           &lt;dbl&gt; -0.22, -0.10, 0.33, 0.03, 0.21, -0.62, -0.39, -0.25, -0.22, -0.07,…
+$ P0.2            &lt;dbl&gt; -0.31, 0.15, 0.34, -0.04, 0.08, -0.50, -0.60, -0.47, -0.17, -0.13,…
+$ P0.25           &lt;dbl&gt; 0.04, 0.20, 0.13, 0.08, 0.23, -0.37, -0.29, -0.24, -0.23, -0.14, -…
+$ P0.3            &lt;dbl&gt; 0.34, 0.63, 0.44, 0.21, -0.29, NA, -0.25, -0.49, -0.38, -0.42, -0.…
+$ S0.05           &lt;dbl&gt; -0.51, 0.53, 1.29, 0.41, -0.70, NA, -0.14, 0.09, -0.35, -0.38, 0.2…
+$ S0.1            &lt;dbl&gt; -0.12, 0.15, -0.32, -0.43, 0.05, -0.20, -0.50, 0.13, -0.14, -0.14,…
+$ S0.15           &lt;dbl&gt; 0.09, -0.01, -0.47, -0.21, 0.10, -0.09, -0.19, 0.15, 0.10, 0.00, 0…
+$ S0.2            &lt;dbl&gt; 0.09, 0.12, -0.50, -0.33, -0.07, 0.06, -0.13, -0.02, -0.04, -0.06,…
+$ S0.25           &lt;dbl&gt; 0.20, -0.15, -0.42, -0.05, -0.10, -0.19, -0.01, 0.24, 0.22, 0.16, …
+$ S0.3            &lt;dbl&gt; 0.08, 0.32, -0.33, -0.24, -0.32, -0.14, -0.04, -0.08, 0.02, -0.15,…
+$ L0.05           &lt;dbl&gt; 0.18, 0.16, -0.30, -0.27, -0.59, -0.17, -0.02, -0.11, 0.12, -0.20,…
+$ L0.1            &lt;dbl&gt; 0.18, 0.09, 0.02, -0.28, -0.13, -0.07, -0.05, -0.01, -0.01, -0.18,…
+$ L0.15           &lt;dbl&gt; 0.13, 0.02, -0.07, -0.05, 0.00, 0.25, 0.27, 0.15, 0.17, 0.11, -0.0…
+$ L0.2            &lt;dbl&gt; 0.20, 0.04, -0.05, 0.02, -0.11, -0.21, 0.24, 0.15, 0.07, 0.00, -0.…
+$ L0.25           &lt;dbl&gt; 0.17, 0.03, -0.13, 0.00, 0.04, 0.12, 0.05, 0.00, 0.10, 0.02, -0.08…
+$ L0.3            &lt;dbl&gt; 0.11, 0.01, -0.04, 0.08, 0.01, -0.11, 0.19, 0.03, 0.11, 0.09, 0.10…
+$ U0.05           &lt;dbl&gt; -0.06, -1.02, -0.91, -0.53, -0.45, NA, 0.07, -0.40, 0.01, -0.26, -…
+$ U0.1            &lt;dbl&gt; -0.26, -0.91, -0.94, -0.51, -0.09, -0.65, -0.31, -0.02, -0.16, -0.…
+$ U0.15           &lt;dbl&gt; -0.05, -0.59, -0.42, -0.26, -0.13, 0.09, -0.08, 0.26, 0.07, -0.10,…
+$ U0.2            &lt;dbl&gt; -0.28, -0.61, -0.36, 0.05, 0.02, 0.06, 0.12, 0.31, 0.20, 0.07, 0.0…
+$ U0.25           &lt;dbl&gt; -0.19, -0.17, -0.49, -0.14, -0.09, -0.07, 0.05, 0.14, 0.02, -0.04,…
+$ U0.3            &lt;dbl&gt; 0.09, 0.18, -0.47, -0.01, -0.03, -0.10, 0.06, 0.11, 0.10, -0.12, -…
+```
+
+
+
+---
+
+## Step 4: Pivot the nutrient and growth rate columns and make them rows
+
+Use `pivot_longer`.
+
+--
+
+```r
+tidy_gene &lt;- tidy_gene %&gt;% 
+  pivot_longer(G0.05:U0.3, names_to = "sample") 
+```
+
+The syntax above:
+- Pivots the `G0.05` through `U0.3` columns
+- Takes the column names and creates a column called `sample` where the value of that column is the name of the column. 
+- Takes the value of the "cell" being pivoted and places it into the corresponding row in the _value_ column that is created 
+
+--
+
+```r
+tidy_gene %&gt;% glimpse()
+```
+
+```
+Rows: 199,332
+Columns: 6
+$ name            &lt;chr&gt; "SFB2", "SFB2", "SFB2", "SFB2", "SFB2", "SFB2", "SFB2", "SFB2", "S…
+$ bp              &lt;chr&gt; "ER to Golgi transport", "ER to Golgi transport", "ER to Golgi tra…
+$ mf              &lt;chr&gt; "molecular function unknown", "molecular function unknown", "molec…
+$ systematic_name &lt;chr&gt; "YNL049C", "YNL049C", "YNL049C", "YNL049C", "YNL049C", "YNL049C", …
+$ sample          &lt;chr&gt; "G0.05", "G0.1", "G0.15", "G0.2", "G0.25", "G0.3", "N0.05", "N0.1"…
+$ value           &lt;dbl&gt; -0.24, -0.13, -0.21, -0.15, -0.05, -0.05, 0.20, 0.24, -0.20, -0.42…
+```
+
+---
+
+## Step 5: Split the _sample_ column into two: _nutrient_ and _rate_
+
+Use `separate` again.
+
+--
+
+```r
+tidy_gene &lt;- tidy_gene %&gt;% 
+  separate(sample, c("nutrient", "rate"), sep = 1, convert = T)
+```
+
+--
+
+```r
+tidy_gene %&gt;% glimpse()
+```
+
+```
+Rows: 199,332
+Columns: 7
+$ name            &lt;chr&gt; "SFB2", "SFB2", "SFB2", "SFB2", "SFB2", "SFB2", "SFB2", "SFB2", "S…
+$ bp              &lt;chr&gt; "ER to Golgi transport", "ER to Golgi transport", "ER to Golgi tra…
+$ mf              &lt;chr&gt; "molecular function unknown", "molecular function unknown", "molec…
+$ systematic_name &lt;chr&gt; "YNL049C", "YNL049C", "YNL049C", "YNL049C", "YNL049C", "YNL049C", …
+$ nutrient        &lt;chr&gt; "G", "G", "G", "G", "G", "G", "N", "N", "N", "N", "N", "N", "P", "…
+$ rate            &lt;dbl&gt; 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.05, 0.10, 0.15, 0.20, 0.25, …
+$ value           &lt;dbl&gt; -0.24, -0.13, -0.21, -0.15, -0.05, -0.05, 0.20, 0.24, -0.20, -0.42…
+```
+
+---
+
+# The code in a single pipeline
+
+
+```r
+tidy_data &lt;- original %&gt;% 
+  separate(NAME, 
+           c("name", "bp", "mf", "systematic_name", "number"),
+           sep = "\\|\\|") %&gt;% 
+  mutate(across(name:systematic_name, trimws)) %&gt;% 
+  select(-number, -GID, -YORF, -GWEIGHT) %&gt;% 
+  pivot_longer(G0.05:U0.3, names_to = "sample") %&gt;% 
+  separate(sample, c("nutrient", "rate"), sep = 1, convert = T)
+```
+
+
+---
+
+## Is our dataset tidy now?
+
+--
+.pull-left[
+Is every variable in it's own, single column?
+]
+--
+.pull-right[
+**Yes**
+]
+--
+.pull-left[
+Is each observation in it's own row?
+]
+--
+.pull-right[
+**Yes**
+]
+--
+.pull-left[
+Is every type of observational unit in a single table?
+]
+--
+.pull-right[
+**Yes** 
+]
+
+
+---
+
+# SUCCESS!
+
+.center[&lt;img src="https://media2.giphy.com/media/4xpB3eE00FfBm/giphy.gif?cid=ecf05e47rglc7snxlgmgmnhpms9ghlkxoximvceoo6883n5i&amp;rid=giphy.gif"&gt;]
+
+---
+
+## Tidyverse vs individual packages
+
+.center[&lt;img src="img/tidyverse-vs-individual.png" width=800&gt;]
+
+
+---
+
+## OK, so what about Python?
+
+[Blog post](https://stmorse.github.io/journal/tidyverse-style-pandas.html)
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; dplyr &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; pandas &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mutate &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; assign &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; select &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; filter &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; rename &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; rename &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; filter &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; query &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; arrange &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; sort_values &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; group_by &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; groupby &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; summarize &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; agg &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
