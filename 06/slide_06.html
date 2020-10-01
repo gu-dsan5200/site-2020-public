@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Module 2 – Week 6 Exploratory Data Analysis (EDA)</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Vaisman &amp; Dasgupta" />
+    <meta name="date" content="2020-10-01" />
+    <link href="slide_06_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="slide_06_files/panelset-0.2.2/panelset.css" rel="stylesheet" />
+    <script src="slide_06_files/panelset-0.2.2/panelset.js"></script>
+    <link href="slide_06_files/tachyons-4.12.0/tachyons.min.css" rel="stylesheet" />
+    <link href="slide_06_files/xaringanExtra-extra-styles-0.2.2/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <script src="slide_06_files/kePrint-0.0.1/kePrint.js"></script>
+    <link rel="stylesheet" href="../robot.css" type="text/css" />
+    <link rel="stylesheet" href="../robot-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="../sfah.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Module 2 – Week 6<br/>Exploratory Data Analysis (EDA)
+## ANLY 503, Fall 2020
+### Vaisman &amp; Dasgupta
+### Georgetown University
+### 2020-10-01
+
+---
+
+
+
+
+
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+
+---
+class: middle,center
+
+.bg-light-blue.b--blue.tl.ba.bw2.br3.shadow-5.ph4.mt5.f2.avenir[
+.i[An approach/philosophy for data analysis that employs a variety of techniques (mostly graphical) to maximize insight into a data set, uncover underlying structure, extract important variables, detect outliers and anomalies, test underlying assumptions, develop parsimonious models and determine optimal factor settings.]
+
+.right[U.S. National Institute of Standards and Technology]
+]
+
+---
+class: middle, center
+
+.bg-light-blue.b--blue.tl.ba.bw2.br3.shadow-5.ph4.mt5.f2.avenir[
+ .i[Exploratory data analysis can never be the whole story, but nothing else can serve as the foundation stone –- as the first step]
+ 
+ .right[John Tukey, 1977]
+ ]
+
+---
+ 
+## Main ideas
+ 
+1. Data structure
+1. Missing data and remedies
+1. Univariate distributions and summaries
+1. Data transformations
+1. Bivariate relationships
+
+---
+
+## Main ideas
+
+EDA requires a lot of data exploration.
+
+Visualizations make this process easier
+
+Today, we'll get a running start into **ggplot2**, with more details next week.
+---
+class: middle, center
+
+# A ggplot2 primer
+
+#### We'll deep-dive into various aspects of static graphics in R and Python next week
+
+---
+## What is ggplot2?
+
+- A second (and final) iteration of the ggplot
+- Implementation of Wilkerson's Grammar of Graphics in R
+- Conceptually, a way to layer different elements onto a canvas to create a data visualization
+- Started as Dr. Hadley Wickham's PhD thesis (with Dr. Dianne Cook)
+- Won the John M. Chambers Statistical Software Award in 2006
+
+- Mimicked in other software platforms
+  - `ggplot` and `seaborn` in Python
+  - Translated in `plotly`
+
+---
+
+## ggplot2 uses the __grammar__ of __graphics__
+
+.pull-left[
+### A grammar ...
+
+- compose and re-use small parts
+- build complex structures from simpler units
+
+]
+
+--
+
+.pull-right[
+### of graphics ...
+
+- Think of yourself as a painter
+- Build a visualization  using layers on a canvas
+- Draw layers on top of each other
+]
+
+---
+
+&lt;style type="text/css"&gt;
+.remark-code-line-highlighted { background-color: green; } /* modified */
+&lt;/style&gt;
+
+
+## Introduction to ggplot2
+
+The `ggplot2` package is a very flexible and (to me) intuitive way of visualizing data.
+It is based on the concept of layering elements on a canvas.
+
+&gt; This idea of layering graphics on a canvas is, to me, a nice way of building graphs
+
+You need:
+
++ A `data.frame` object
++ _Aesthetic mappings_ (aes) to say what data is used for what purpose in the viz
+    + x- and y-direction
+    + shapes, colors, lines
++ A _geometry object_ (geom) to say what to draw
+    + You can "layer" geoms on each other to build plots
+    
+---
+background-image: url(img/grammar-of-graphics.png)
+background-size: 80%,100%
+
+---
+
+
+
+## A dataset
+
+
+
+```r
+library(tidyverse)
+library(rio)
+beaches &lt;- import('data/sydneybeaches3.csv')
+```
+
+```
+        date year month day season rainfall temperature enterococci day_num month_num
+1 2013-01-02 2013     1   2      1      0.0        23.4         6.7       2         1
+2 2013-01-06 2013     1   6      1      0.0        30.3         2.0       6         1
+3 2013-01-12 2013     1  12      1      0.0        31.4        69.1      12         1
+4 2013-01-18 2013     1  18      1      0.0        46.4         9.0      18         1
+5 2013-01-24 2013     1  24      1      0.0        27.5        33.9      24         1
+6 2013-01-30 2013     1  30      1      0.6        26.6        26.5      30         1
+  month_name season_name
+1    January      Summer
+2    January      Summer
+3    January      Summer
+4    January      Summer
+5    January      Summer
+6    January      Summer
+```
+
+&lt;p align="right" style="font-size: 10pt;"&gt;Credit: D. J. Navarro&lt;/p&gt;
+
+.footnote[Download the `sydneybeaches3.csv` file from the website and save it in your project's data folder]
+
+
+---
+class: middle, center
+
+# Building a graph
+
+---
+
+.pull-left[
+### Start with a blank canvas
+
+
+```r
+ggplot()
+```
+]
+.pull-right[
+
+### 
+
+![](slide_06_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
+
+]
+
+---
+
+.pull-left[
+### Add a data set
+
+
+```r
+ggplot(
+* data = beaches # Tell ggplot the data you're using
+)
+```
+
+&gt; Nothing has really happened yet, since we haven't said what we want to plot from the data set
+
+&gt; The `#` symbol tells R that anything after it is a *comment* and should be ignored. We'll make a lot of use of comments in our code.
+]
+.pull-right[
+
+### 
+
+![](slide_06_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+
+
+]
+
+
+---
+
+.pull-left[
+### Add a mapping from data to elements
+
+
+```r
+ggplot(
+  data = beaches,
+* mapping = aes(
+*   x = temperature,
+*   y = rainfall
+  )
+)
+```
+
+What goes in 
+
+- the x and y axes
+- the color of markers
+- the shape of markers
+]
+.pull-right[
+
+### 
+
+![](slide_06_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+
+&gt; Now we've said what we want to plot, so axes get drawn. We haven't yet specified how we want to plot it
+
+]
+
+---
+
+.pull-left[
+### Add a geometry to draw
+
+
+```r
+ggplot(
+  data = beaches,
+  mapping = aes(
+    x = temperature,
+    y = rainfall
+  )
+) +
+* geom_point()
+```
+
+What to draw:
+
+- Points, lines
+- histogram, bars, pies
+]
+.pull-right[
+
+### 
+
+![](slide_06_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+
+&gt; Now we've said **how** we want to plot the things we want from the data
+]
+
+---
+
+.pull-left[
+### Add options for the geom
+
+
+```r
+ggplot(
+  data = beaches,
+  mapping = aes(
+    x = temperature,
+    y = rainfall
+  )
+) +
+* geom_point(size = 4)
+```
+
+&gt; Options pertaining to how we want things drawn are usually put in the function for the geometry, e.g. `geom_point`, `geom_line`, etc. If the option is based on any element from the dataset, we have to wrap it in a `aes()` function. We'll see this later
+]
+.pull-right[
+
+### 
+
+![](slide_06_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+
+]
+
+---
+
+.pull-left[
+### Add a mapping to modify the geom
+
+
+```r
+ggplot(
+  data = beaches,
+  mapping = aes(
+    x = temperature,
+    y = rainfall
+  )
+) +
+  geom_point(
+*   mapping = aes(color = season_name),
+    size = 4
+  )
+```
+
+&gt; Anything data-driven has to be a mapping, driven by the `aes` function
+
+]
+.pull-right[
+
+### 
+
+![](slide_06_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+
+]
+
+---
+class:middle, center
+
+# A side note on `aes`
+
+---
+
+## The `aes` function
+
+The `aes` function and when it needs to be used creates quite a bit of confusion initially. Let's start with the documentation for this function
+
+
+```r
+?aes
+```
+
+&gt; #### Description
+Aesthetic mappings describe how variables in the data are mapped to visual properties (aesthetics) of geoms. Aesthetic mappings can be set in ggplot2() and in individual layers.
+
+So, anytime we want to represent some aspect of the data on the plot in some form (color, shape, etc.), we have to use the `aes` function to *map* the data to the plot
+---
+
+## The `aes` function
+
+The `aes` function can occur in one of two places:
+
+.pull-left[
+Within the `ggplot` function:
+
+
+```r
+ggplot(
+  data=beaches,
+  mapping=aes(
+    x = temperature,
+    y = rainfall
+  )
+) + 
+  geom_point()
+```
+
+![](slide_06_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+
+]
+.pull-right[
+In the actual `geom` layer:
+
+
+```r
+ggplot(
+  data = beaches
+) +
+  geom_point(
+    mapping = aes(
+      x = temperature,
+      y = rainfall
+    )
+  )
+```
+
+![](slide_06_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+
+]
+
+---
+
+## The `aes` function
+
+The `aes` function can occur in one of two places:
+
+.pull-left[
+Within the `ggplot` function:
+
++ You do this if the same mapping will be common to **all** the subsequent geometry layers
+]
+.pull-right[
+In the actual `geom` layer:
+
++ You do this if the mapping will apply **only** to that layer
++ You do it if it makes more sense to put it in the `geom`. 
+]
+---
+class: middle, center
+
+# Facets / Trellis / Small multiples
+
+---
+.pull-left[
+### Split into facets
+
+
+```r
+ggplot(
+  data = beaches,
+  mapping = aes(
+    x = temperature,
+    y = rainfall
+  )
+) +
+  geom_point(
+    mapping = aes(color = season_name),
+    size = 4
+  ) +
+* facet_wrap( ~ season_name)
+```
+
+&gt; Create separate plots based on unique values of some variable (`season_name`) in your dataset
+
+&gt; Typically this variable should a few distinct values
+]
+.pull-right[
+
+### 
+
+![](slide_06_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
+
+]
+
+---
+
+.pull-left[
+### Remove the legend
+
+
+```r
+ggplot(
+  data = beaches,
+  mapping = aes(
+    x = temperature,
+    y = rainfall
+  )
+) +
+  geom_point(
+    mapping = aes(color = season_name),
+    size = 4,
+*   show.legend = FALSE
+  ) +
+  facet_wrap( ~ season_name) 
+```
+
+&gt; Now we're getting more into the look of the plot and how much information should be on it
+
+&gt; `show.legend` option is in `geom_point` here since it would be based on the colors of the points. If you had a different geometry like `geom_line`, you would put the `show.legend` option there if the legend was based on that geom.
+]
+.pull-right[
+
+### 
+
+![](slide_06_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+
+]
+
+---
+
+.pull-left[
+### Change the background
+
+
+```r
+ggplot(
+  data = beaches,
+  mapping = aes(
+    x = temperature,
+    y = rainfall
+  )
+) +
+  geom_point(
+    mapping = aes(color = season_name),
+    size = 4,
+    show.legend = FALSE
+  ) +
+  facet_wrap( ~ season_name) +
+* theme_bw()
+```
+
+&gt; Again, a look-and-feel choice
+
+&gt; In-built `ggplot` themes are described [here](https://ggplot2.tidyverse.org/reference/ggtheme.html). Other themes are availabe via packages [`ggthemes`](https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/) and others.
+
+]
+.pull-right[
+
+### 
+
+![](slide_06_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
+
+]
+
+---
+
+.pull-left[
+### Update the labels
+
+
+```r
+ggplot(
+  data = beaches,
+  mapping = aes(
+    x = temperature,
+    y = rainfall
+  )
+) +
+  geom_point(
+    mapping = aes(color = season_name),
+    size = 4,
+    show.legend = FALSE
+  ) +
+  facet_wrap( ~ season_name) +
+  theme_bw() +
+* labs(x = 'Temperature (C)', y = 'Rainfall (mm)')
+```
+
+&gt; This is **important**. Make sure the information in your plot is self-contained by putting appropriate labels and titles on it.
+]
+.pull-right[
+
+### 
+
+![](slide_06_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+
+]
+
+---
+
+.pull-left[
+### Add titles
+
+
+```r
+ggplot(
+  data = beaches,
+  mapping = aes(
+    x = temperature,
+    y = rainfall
+  )
+) +
+  geom_point(
+    mapping = aes(color = season_name),
+    size = 4,
+    show.legend = FALSE
+  ) +
+  facet_wrap( ~ season_name) +
+  theme_bw() +
+  labs(x = 'Temperature (C)', 
+       y = 'Rainfall (mm)',
+*      title = 'Sydney weather by season',
+*      subtitle = "Data from 2013 to 2018")
+```
+
+]
+.pull-right[
+
+### 
+
+![](slide_06_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
+
+]
+
+---
+
+.pull-left[
+### Customize
+
+
+```r
+ggplot(
+  data = beaches,
+  mapping = aes(
+    x = temperature,
+    y = rainfall
+  )
+) +
+  geom_point(
+    mapping = aes(color = season_name),
+    size = 4,
+    show.legend = FALSE
+  ) +
+  facet_wrap( ~ season_name) +
+  theme_bw() +
+  labs(x = 'Temperature (C)', 
+       y = 'Rainfall (mm)',
+       title = 'Sydney weather by season', 
+       subtitle = "Data from 2013 to 2018") +
+* theme(axis.title = element_text(size = 14),
+*       axis.text = element_text(size = 12),
+*       strip.text = element_text(size = 12))
+```
+
+]
+.pull-right[
+
+### 
+
+![](slide_06_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+
+&gt; Once again, a look-and-feel choice, but this is very useful for publications when the actual figure will be smaller but we need the labels to be legible.
+]
+
+---
+class: middle, center
+
+# Understanding the structure of ggplot
+
+---
+background-image: url(img/grammar.png)
+background-size: contain
+
+---
+
+## The grammar
+.left-column70[
+- Data
+- Aesthetics (or aesthetic mappings)
+- Geometries (as layers)
+- Facets
+- Themes
+- (Coordinates)
+- (Scales)
+]
+.right-column70[
+&gt; Data, Aesthetics and Geometries are **required** to actually create a plot
+]
+
+---
+background-image: url(img/ggplot_geoms.png)
+background-size: 50%,100%
+
+### Choices for aesthetics and geometries
+
+---
+background-image: url(img/ggplot_themes.png)
+background-size: 62%,100%
+
+### Choices in themes
+
+---
+
+## Themes
+
+&lt;img src="slide_06_files/figure-html/unnamed-chunk-18-1.png" width="80%" /&gt;
+
+---
+
+## Themes
+
+![](slide_06_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
+
+---
+class: middle, center
+
+# Peeking under the hood
+
+---
+.pull-left[
+### If I write...
+
+
+```r
+ggplot(
+  data = beaches,
+  aes(x = temperature,
+      y = rainfall)
+) + 
+  geom_point()+
+  geom_smooth()
+```
+
+]
+--
+.pull-right[
+### what's really run is ...
+
+
+```r
+ggplot(
+  data = beaches, 
+  mapping = aes(
+    x = temperature, y = rainfall)) + 
+layer(
+  geom = "point",
+  stat = "identity",
+  position = "identity") + 
+layer(
+  geom = GeomSmooth,
+  stat='smooth',
+  position='identity') + 
+)
+facet_null() +
+theme_grey() + 
+coord_cartesian() + 
+scale_x_continuous() + 
+scale_y_continuous()
+```
+
+]
+
+--
+
+A **layer** has five components: *mapping, data, geom, stat and position*; a **geom_* ** makes a shortcut
+
+*mapping* and *data* are usually inherited from the top `ggplot` call, unless it is specified in the geom.
+--
+
+### Each element can be adapted and tweaked to create graphs
+
+---
+background-image: url(img/ggplot_hh.png)
+background-size: contain
+
+---
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+---
+class: middle, center, inverse
+
+# EDA
+
+---
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+## EDA
+
+---
+
+### Main ideas
+ 
+1. Data structure
+1. Missing data and remedies
+1. Univariate distributions and summaries
+1. Data transformations
+1. Bivariate relationships
+
+
+#### We will assume that we have tidy data
+
+---
+
+&lt;table align="left"&gt;
+&lt;tr&gt;
+&lt;td&gt;.fl.w-100[![](https://media.giphy.com/media/QeVflwrx8cHzq/giphy.gif)]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt; .fl.w-100[![](https://media.giphy.com/media/129NVCr1UfsGTS/giphy.gif)] &lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+.pull-left[
+]
+
+
+.pull-right[.f2[Mammals sleep data, available as `ggplot2::msleep`]
+
+-----
+
+
+```r
+str(msleep)
+```
+
+```
+tibble [83 × 11] (S3: tbl_df/tbl/data.frame)
+ $ name        : chr [1:83] "Cheetah" "Owl monkey" "Mountain beaver" "Greater short-tailed shrew" ...
+ $ genus       : chr [1:83] "Acinonyx" "Aotus" "Aplodontia" "Blarina" ...
+ $ vore        : chr [1:83] "carni" "omni" "herbi" "omni" ...
+ $ order       : chr [1:83] "Carnivora" "Primates" "Rodentia" "Soricomorpha" ...
+ $ conservation: chr [1:83] "lc" NA "nt" "lc" ...
+ $ sleep_total : num [1:83] 12.1 17 14.4 14.9 4 14.4 8.7 7 10.1 3 ...
+ $ sleep_rem   : num [1:83] NA 1.8 2.4 2.3 0.7 2.2 1.4 NA 2.9 NA ...
+ $ sleep_cycle : num [1:83] NA NA NA 0.133 0.667 ...
+ $ awake       : num [1:83] 11.9 7 9.6 9.1 20 9.6 15.3 17 13.9 21 ...
+ $ brainwt     : num [1:83] NA 0.0155 NA 0.00029 0.423 NA NA NA 0.07 0.0982 ...
+ $ bodywt      : num [1:83] 50 0.48 1.35 0.019 600 ...
+```
+
+---
+
+### Data structure
+
+We can use `str` or `glimpse` to take a first look
+
+
+```r
+glimpse(msleep)
+```
+
+```
+Rows: 83
+Columns: 11
+$ name         &lt;chr&gt; "Cheetah", "Owl monkey", "Mountain beaver", "Greater short-tailed shrew", "Co…
+$ genus        &lt;chr&gt; "Acinonyx", "Aotus", "Aplodontia", "Blarina", "Bos", "Bradypus", "Callorhinus…
+$ vore         &lt;chr&gt; "carni", "omni", "herbi", "omni", "herbi", "herbi", "carni", NA, "carni", "he…
+$ order        &lt;chr&gt; "Carnivora", "Primates", "Rodentia", "Soricomorpha", "Artiodactyla", "Pilosa"…
+$ conservation &lt;chr&gt; "lc", NA, "nt", "lc", "domesticated", NA, "vu", NA, "domesticated", "lc", "lc…
+$ sleep_total  &lt;dbl&gt; 12.1, 17.0, 14.4, 14.9, 4.0, 14.4, 8.7, 7.0, 10.1, 3.0, 5.3, 9.4, 10.0, 12.5,…
+$ sleep_rem    &lt;dbl&gt; NA, 1.8, 2.4, 2.3, 0.7, 2.2, 1.4, NA, 2.9, NA, 0.6, 0.8, 0.7, 1.5, 2.2, 2.0, …
+$ sleep_cycle  &lt;dbl&gt; NA, NA, NA, 0.1333333, 0.6666667, 0.7666667, 0.3833333, NA, 0.3333333, NA, NA…
+$ awake        &lt;dbl&gt; 11.90, 7.00, 9.60, 9.10, 20.00, 9.60, 15.30, 17.00, 13.90, 21.00, 18.70, 14.6…
+$ brainwt      &lt;dbl&gt; NA, 0.01550, NA, 0.00029, 0.42300, NA, NA, NA, 0.07000, 0.09820, 0.11500, 0.0…
+$ bodywt       &lt;dbl&gt; 50.000, 0.480, 1.350, 0.019, 600.000, 3.850, 20.490, 0.045, 14.000, 14.800, 3…
+```
+
+
+
+---
+
+### Data viz gives me an easier look
+
+.pull-left[
+
+```r
+library(visdat)
+library(hrbrthemes)
+theme_set(theme_ipsum())
+vis_dat(msleep)
+```
+
+This plot is based on **ggplot2**
+
+.red[red] are characters  
+.blue[blue] are numeric
+
+.gray[gray] are missing
+
+There are many observations missing for sleep cycle and brain weight and conservation
+]
+.pull-right[
+.fr.w-100.mb9s[
+![](slide_06_files/figure-html/unnamed-chunk-26-1.png)&lt;!-- --&gt;
+]]
+
+---
+
+### A closer look at missing values
+
+.left-column30[
+
+```r
+library(naniar)
+gg_miss_var(msleep) # Proportion missing by variable
+```
+
+This gives the proportion of observations missing by variable, i.e., by columns
+
+]
+.right-column70[
+![](slide_06_files/figure-html/unnamed-chunk-27-1.png)&lt;!-- --&gt;
+]
+
+---
+
+### A closer look at missing values
+
+.left-column30[
+
+```r
+library(naniar)
+gg_miss_upset(msleep) # Missing data patterns
+```
+
+The vertical bars and dots give the sets of variables which are jointly missing values, and the top barplot gives their frequencies. 
+]
+.right-column70[
+![](slide_06_files/figure-html/unnamed-chunk-28-1.png)&lt;!-- --&gt;
+]
+
+---
+### Data summaries
+
+Base R provides a method that gets you information, but is not very good
+
+
+```r
+msleep %&gt;% select(vore, where(is.numeric)) %&gt;% 
+  mutate(vore = as.factor(vore)) %&gt;% 
+* summary()
+```
+
+```
+      vore     sleep_total      sleep_rem      sleep_cycle         awake          brainwt            bodywt        
+ carni  :19   Min.   : 1.90   Min.   :0.100   Min.   :0.1167   Min.   : 4.10   Min.   :0.00014   Min.   :   0.005  
+ herbi  :32   1st Qu.: 7.85   1st Qu.:0.900   1st Qu.:0.1833   1st Qu.:10.25   1st Qu.:0.00290   1st Qu.:   0.174  
+ insecti: 5   Median :10.10   Median :1.500   Median :0.3333   Median :13.90   Median :0.01240   Median :   1.670  
+ omni   :20   Mean   :10.43   Mean   :1.875   Mean   :0.4396   Mean   :13.57   Mean   :0.28158   Mean   : 166.136  
+ NA's   : 7   3rd Qu.:13.75   3rd Qu.:2.400   3rd Qu.:0.5792   3rd Qu.:16.15   3rd Qu.:0.12550   3rd Qu.:  41.750  
+              Max.   :19.90   Max.   :6.600   Max.   :1.5000   Max.   :22.10   Max.   :5.71200   Max.   :6654.000  
+                              NA's   :22      NA's   :51                       NA's   :27                          
+```
+
+---
+
+### Data summaries
+
+**skimr** provides a more attractive output
+
+
+```r
+library(skimr)
+skim(msleep) %&gt;% knit_print(render=knit_print)
+```
+
+![](img/skimr1.png)
+---
+
+### Data summaries
+
+You could do something similar yourself
+
+
+```r
+msleep %&gt;% select( where(is.numeric)) %&gt;% 
+  pivot_longer(names_to = 'Variable', values_to = 'value', cols=everything()) %&gt;% 
+  group_by(Variable) %&gt;% 
+  summarise(Mean = mean(value, na.rm=T),
+            Median = median(value, na.rm=T),
+            SD = sd(value, na.rm=T))
+```
+
+```
+# A tibble: 6 x 4
+  Variable       Mean  Median      SD
+  &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 awake        13.6   13.9      4.45 
+2 bodywt      166.     1.67   787.   
+3 brainwt       0.282  0.0124   0.976
+4 sleep_cycle   0.440  0.333    0.359
+5 sleep_rem     1.88   1.5      1.30 
+6 sleep_total  10.4   10.1      4.45 
+```
+
+---
+
+count: false
+ 
+### Data summaries
+.panel1-pivottrick-auto[
+
+```r
+*msleep %&gt;% select( where(is.numeric))
+```
+]
+ 
+.panel2-pivottrick-auto[
+
+```
+# A tibble: 83 x 6
+   sleep_total sleep_rem sleep_cycle awake   brainwt   bodywt
+         &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+ 1        12.1      NA        NA      11.9 NA          50    
+ 2        17         1.8      NA       7    0.0155      0.48 
+ 3        14.4       2.4      NA       9.6 NA           1.35 
+ 4        14.9       2.3       0.133   9.1  0.00029     0.019
+ 5         4         0.7       0.667  20    0.423     600    
+ 6        14.4       2.2       0.767   9.6 NA           3.85 
+ 7         8.7       1.4       0.383  15.3 NA          20.5  
+ 8         7        NA        NA      17   NA           0.045
+ 9        10.1       2.9       0.333  13.9  0.07       14    
+10         3        NA        NA      21    0.0982     14.8  
+11         5.3       0.6      NA      18.7  0.115      33.5  
+12         9.4       0.8       0.217  14.6  0.0055      0.728
+13        10         0.7      NA      14   NA           4.75 
+14        12.5       1.5       0.117  11.5  0.0064      0.42 
+15        10.3       2.2      NA      13.7  0.001       0.06 
+16         8.3       2        NA      15.7  0.0066      1    
+17         9.1       1.4       0.15   14.9  0.000140    0.005
+18        17.4       3.1       0.383   6.6  0.0108      3.5  
+19         5.3       0.5      NA      18.7  0.0123      2.95 
+20        18         4.9       0.333   6    0.0063      1.7  
+21         3.9      NA        NA      20.1  4.60     2547    
+22        19.7       3.9       0.117   4.3  0.000300    0.023
+23         2.9       0.6       1      21.1  0.655     521    
+24         3.1       0.4      NA      20.9  0.419     187    
+25        10.1       3.5       0.283  13.9  0.0035      0.77 
+26        10.9       1.1      NA      13.1  0.115      10    
+27        14.9      NA        NA       9.1 NA           0.071
+28        12.5       3.2       0.417  11.5  0.0256      3.3  
+29         9.8       1.1       0.55   14.2  0.005       0.2  
+30         1.9       0.4      NA      22.1 NA         900.   
+31         2.7       0.1      NA      21.4 NA         800    
+32         6.2       1.5      NA      17.8  0.325      85    
+33         6.3       0.6      NA      17.7  0.0123      2.62 
+34         8         1.9       1.5    16    1.32       62    
+35         9.5       0.9      NA      14.5 NA           1.67 
+36         3.3      NA        NA      20.7  5.71     6654    
+37        19.4       6.6      NA       4.6 NA           0.37 
+38        10.1       1.2       0.75   13.9  0.179       6.8  
+39        14.2       1.9      NA       9.8 NA           0.053
+40        14.3       3.1       0.2     9.7  0.001       0.12 
+41        12.8      NA        NA      11.2 NA           0.035
+42        12.5       1.4       0.183  11.5  0.0004      0.022
+43        19.9       2         0.2     4.1  0.00025     0.01 
+44        14.6      NA        NA       9.4 NA           0.266
+45        11        NA        NA      13    0.0125      1.4  
+46         7.7       0.9      NA      16.3 NA           0.21 
+47        14.5      NA        NA       9.5 NA           0.028
+48         8.4       0.9       0.417  15.6  0.0121      2.5  
+49         3.8       0.6      NA      20.2  0.175      55.5  
+50         9.7       1.4       1.42   14.3  0.44       52.2  
+51        15.8      NA        NA       8.2 NA         163.   
+52        10.4      NA        NA      13.6  0.157     100    
+53        13.5      NA        NA      10.5 NA         161.   
+54         9.4       1         0.667  14.6  0.18       25.2  
+55        10.3       2.7      NA      13.7  0.00240     0.55 
+56        11        NA        NA      13   NA           1.1  
+57        11.5      NA        NA      12.5 NA           0.021
+58        13.7       1.8      NA      10.3  0.0114      1.62 
+59         3.5       0.4      NA      20.5 NA          86    
+60         5.6      NA        NA      18.4 NA          53.2  
+61        11.1       1.5      NA      12.9 NA           1.1  
+62        18.1       6.1      NA       5.9  0.081      60    
+63         5.4       0.5      NA      18.6  0.021       3.6  
+64        13         2.4       0.183  11    0.0019      0.32 
+65         8.7      NA        NA      15.3 NA           0.044
+66         9.6       1.4      NA      14.4  0.02        0.743
+67         8.4       2.1       0.167  15.6  0.00120     0.075
+68        11.3       1.1       0.15   12.7  0.00118     0.148
+69        10.6       2.4      NA      13.4  0.003       0.122
+70        16.6      NA        NA       7.4  0.0057      0.92 
+71        13.8       3.4       0.217  10.2  0.004       0.101
+72        15.9       3        NA       8.1 NA           0.205
+73        12.8       2         0.183  11.2  0.00033     0.048
+74         9.1       2.4       0.5    14.9  0.18       86.2  
+75         8.6      NA        NA      15.4  0.025       4.5  
+76        15.8      NA        NA       8.2 NA           0.112
+77         4.4       1         0.9    19.6  0.169     208.   
+78        15.6       2.3      NA       8.4  0.0026      0.9  
+79         8.9       2.6       0.233  15.1  0.0025      0.104
+80         5.2      NA        NA      18.8 NA         173.   
+81         6.3       1.3      NA      17.7  0.0175      2    
+82        12.5      NA        NA      11.5  0.0445      3.38 
+83         9.8       2.4       0.35   14.2  0.0504      4.23 
+```
+]
+
+---
+count: false
+ 
+### Data summaries
+.panel1-pivottrick-auto[
+
+```r
+msleep %&gt;% select( where(is.numeric)) %&gt;%
+* pivot_longer(names_to = 'Variable', values_to = 'value', cols=everything())
+```
+]
+ 
+.panel2-pivottrick-auto[
+
+```
+# A tibble: 498 x 2
+   Variable    value
+   &lt;chr&gt;       &lt;dbl&gt;
+ 1 sleep_total  12.1
+ 2 sleep_rem    NA  
+ 3 sleep_cycle  NA  
+ 4 awake        11.9
+ 5 brainwt      NA  
+ 6 bodywt       50  
+ 7 sleep_total  17  
+ 8 sleep_rem     1.8
+ 9 sleep_cycle  NA  
+10 awake         7  
+# … with 488 more rows
+```
+]
+
+---
+count: false
+ 
+### Data summaries
+.panel1-pivottrick-auto[
+
+```r
+msleep %&gt;% select( where(is.numeric)) %&gt;%
+  pivot_longer(names_to = 'Variable', values_to = 'value', cols=everything()) %&gt;%
+* group_by(Variable)
+```
+]
+ 
+.panel2-pivottrick-auto[
+
+```
+# A tibble: 498 x 2
+# Groups:   Variable [6]
+   Variable    value
+   &lt;chr&gt;       &lt;dbl&gt;
+ 1 sleep_total  12.1
+ 2 sleep_rem    NA  
+ 3 sleep_cycle  NA  
+ 4 awake        11.9
+ 5 brainwt      NA  
+ 6 bodywt       50  
+ 7 sleep_total  17  
+ 8 sleep_rem     1.8
+ 9 sleep_cycle  NA  
+10 awake         7  
+# … with 488 more rows
+```
+]
+
+---
+count: false
+ 
+### Data summaries
+.panel1-pivottrick-auto[
+
+```r
+msleep %&gt;% select( where(is.numeric)) %&gt;%
+  pivot_longer(names_to = 'Variable', values_to = 'value', cols=everything()) %&gt;%
+  group_by(Variable) %&gt;%
+* summarise(Mean = mean(value, na.rm=T),
+*           Median = median(value, na.rm=T),
+*           SD = sd(value, na.rm=T))
+```
+]
+ 
+.panel2-pivottrick-auto[
+
+```
+# A tibble: 6 x 4
+  Variable       Mean  Median      SD
+  &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 awake        13.6   13.9      4.45 
+2 bodywt      166.     1.67   787.   
+3 brainwt       0.282  0.0124   0.976
+4 sleep_cycle   0.440  0.333    0.359
+5 sleep_rem     1.88   1.5      1.30 
+6 sleep_total  10.4   10.1      4.45 
+```
+]
+
+---
+count: false
+ 
+### Data summaries
+.panel1-pivottrick-auto[
+
+```r
+msleep %&gt;% select( where(is.numeric)) %&gt;%
+  pivot_longer(names_to = 'Variable', values_to = 'value', cols=everything()) %&gt;%
+  group_by(Variable) %&gt;%
+  summarise(Mean = mean(value, na.rm=T),
+            Median = median(value, na.rm=T),
+            SD = sd(value, na.rm=T))
+```
+]
+ 
+.panel2-pivottrick-auto[
+
+```
+# A tibble: 6 x 4
+  Variable       Mean  Median      SD
+  &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 awake        13.6   13.9      4.45 
+2 bodywt      166.     1.67   787.   
+3 brainwt       0.282  0.0124   0.976
+4 sleep_cycle   0.440  0.333    0.359
+5 sleep_rem     1.88   1.5      1.30 
+6 sleep_total  10.4   10.1      4.45 
+```
+]
+
+&lt;style&gt;
+.panel1-pivottrick-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-pivottrick-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-pivottrick-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+---
+
+
+
+```r
+msleep %&gt;% select(where(is.numeric)) %&gt;% 
+  pivot_longer(names_to = "Variable", values_to="value", cols=everything()) %&gt;% 
+  ggplot(aes(x = value)) + geom_histogram() + 
+* facet_wrap(~Variable)
+```
+
+&lt;img src="slide_06_files/figure-html/unnamed-chunk-31-1.png" width="100%" /&gt;
+
+---
+
+
+
+```r
+msleep %&gt;% select(where(is.numeric)) %&gt;% 
+  pivot_longer(names_to = "Variable", values_to="value", cols=everything()) %&gt;% 
+  ggplot(aes(x = value)) + geom_histogram() + 
+* facet_wrap(~Variable, scales='free')
+```
+
+&lt;img src="slide_06_files/figure-html/unnamed-chunk-32-1.png" width="100%" /&gt;
+
+---
+
+Indications are that we should transform the two weight variables, since they are both very skew and long-tailed. The usual transformation for this kind of distribution is a *log-transform*
+
+
+```r
+msleep1 &lt;- msleep %&gt;% 
+  select(vore, where(is.numeric)) %&gt;% 
+  mutate(across(ends_with('wt'), log10))
+```
+
+&lt;img src="slide_06_files/figure-html/unnamed-chunk-34-1.png" width="100%" /&gt;
+
+---
+### Grouped summaries
+
+
+```r
+library(tableone)
+
+msleep1 %&gt;% 
+  select(vore, where(is.numeric)) %&gt;% 
+  CreateTableOne(vars = setdiff(names(.), 'vore'),
+                 strata='vore') %&gt;% 
+  kableone()
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; carni &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; herbi &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; insecti &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; omni &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; p &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; test &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; n &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 19 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 32 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; sleep_total (mean (SD)) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 10.38 (4.67) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 9.51 (4.88) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14.94 (5.92) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 10.93 (2.95) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.091 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; sleep_rem (mean (SD)) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2.29 (1.86) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1.37 (0.92) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.52 (1.93) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1.96 (1.01) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; sleep_cycle (mean (SD)) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.37 (0.03) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.42 (0.32) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.16 (0.04) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.59 (0.47) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.276 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; awake (mean (SD)) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13.63 (4.68) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14.49 (4.88) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 9.06 (5.92) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13.07 (2.95) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.092 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; brainwt (mean (SD)) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; -1.37 (0.50) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; -1.49 (1.21) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; -2.55 (1.14) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; -1.86 (1.14) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.191 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; bodywt (mean (SD)) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1.16 (1.11) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.46 (1.55) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; -0.47 (1.62) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.04 (1.20) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.034 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+### Grouped summaries
+
+
+```r
+msleep1 %&gt;% 
+  select(vore, where(is.numeric)) %&gt;% 
+  pivot_longer(names_to = 'variables', values_to = 'values',cols = c(-vore)) %&gt;% 
+  group_by(vore, variables) %&gt;% 
+  summarize(M = mean(values, na.rm=T)) %&gt;% 
+  pivot_wider(names_from=vore, values_from = M) %&gt;% 
+  knitr::kable(digits=2) %&gt;% 
+  kable_styling()
+```
+
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; variables &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; carni &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; herbi &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; insecti &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; omni &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; NA &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; awake &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13.63 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14.49 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9.06 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13.07 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13.81 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; bodywt &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.46 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.47 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.04 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.68 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; brainwt &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.37 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.49 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2.55 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.86 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2.45 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; sleep_cycle &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.37 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.42 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.59 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; sleep_rem &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.29 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.37 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.52 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.96 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.88 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; sleep_total &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10.38 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9.51 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14.94 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10.93 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10.19 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+### Grouped summaries
+
+
+```r
+ggplot(msleep1, aes(sleep_total))+geom_density() + facet_wrap(~vore)
+```
+
+&lt;img src="slide_06_files/figure-html/unnamed-chunk-37-1.png" width="100%" /&gt;
+
+---
+
+### Bivariate relations
+
+The main two ways of looking at relationships between two numeric variables are through
+*correlation coefficients* and *scatter plots*. These can be seen in one visualization. 
+
+
+```r
+GGally::ggpairs(msleep1 %&gt;% select(starts_with('sleep')))
+```
+
+---
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+---
+
+&lt;img src="slide_06_files/figure-html/unnamed-chunk-39-1.png" width="100%" /&gt;
+
+---
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+## EDA
+
+---
+
+
+.pull-left[
+
+```r
+vis_cor(msleep1 %&gt;% select(-vore))
+```
+
+From this correlation map, we can see that there are two groups of variables which
+work synergistically
+]
+.pull-right[
+![](slide_06_files/figure-html/unnamed-chunk-41-1.png)&lt;!-- --&gt;
+]   
+
+---
+
+### Bivariate relations
+
+
+```r
+ggplot(msleep1, aes(x = bodywt, y = sleep_rem))+
+  geom_point() + 
+  geom_smooth()
+```
+
+&lt;img src="slide_06_files/figure-html/unnamed-chunk-42-1.png" width="100%" /&gt;
+
+
+---
+
+### Bivariate relations
+
+
+```r
+ggplot(msleep, aes(x = bodywt, y = sleep_rem))+
+  geom_point() + 
+  geom_smooth()
+```
+
+&lt;img src="slide_06_files/figure-html/unnamed-chunk-43-1.png" width="100%" /&gt;
+
+
+---
+
+### Relating a continuous to a categorical variable
+
+.panelset[
+.panel[.panel-name[Body weight]
+
+```r
+ggplot(msleep1, aes(x = vore, y = bodywt))+geom_boxplot()
+```
+
+&lt;img src="slide_06_files/figure-html/unnamed-chunk-44-1.png" width="100%" /&gt;
+]
+.panel[.panel-name[REM Sleep]
+
+```r
+ggplot(msleep1, aes(x = vore, y = sleep_rem ))+geom_boxplot()
+```
+
+&lt;img src="slide_06_files/figure-html/unnamed-chunk-45-1.png" width="100%" /&gt;
+
+]]
+
+---
+
+### Relating a continuous to a categorical variable
+
+
+```r
+ggplot(msleep, aes(x = vore, y = bodywt))+geom_boxplot() # Original scale
+```
+
+&lt;img src="slide_06_files/figure-html/unnamed-chunk-46-1.png" width="100%" /&gt;
+
+.footnote[It looks, on the original scale, as if there are outliers]
+
+---
+
+### Checking up on body weights
+
+
+```r
+msleep %&gt;% slice_max(bodywt, n=5)
+```
+
+```
+# A tibble: 5 x 11
+  name             genus         vore  order        conservation sleep_total sleep_rem sleep_cycle awake brainwt bodywt
+  &lt;chr&gt;            &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+1 African elephant Loxodonta     herbi Proboscidea  vu                   3.3      NA        NA      20.7   5.71   6654 
+2 Asian elephant   Elephas       herbi Proboscidea  en                   3.9      NA        NA      20.1   4.60   2547 
+3 Giraffe          Giraffa       herbi Artiodactyla cd                   1.9       0.4      NA      22.1  NA       900.
+4 Pilot whale      Globicephalus carni Cetacea      cd                   2.7       0.1      NA      21.4  NA       800 
+5 Cow              Bos           herbi Artiodactyla domesticated         4         0.7       0.667  20     0.423   600 
+```
+
+Things look OK
+
+---
+
+### Why are outliers important to detect?
+
+![](img/corr1.gif)
+
+![](https://graphworkflow.files.wordpress.com/2019/01/bulging_rule.png?w=381&amp;h=379)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="../js/macros.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "zenburn",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

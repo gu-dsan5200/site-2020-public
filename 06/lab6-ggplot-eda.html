@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Week 6 Activity: ggplot and EDA</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Vaisman &amp; Dasgupta" />
+    <meta name="date" content="2020-10-01" />
+    <link href="lab6-ggplot-eda_files/tachyons-4.12.0/tachyons.min.css" rel="stylesheet" />
+    <link href="lab6-ggplot-eda_files/xaringanExtra-extra-styles-0.2.3.9000/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Week 6 Activity: <em>ggplot</em> and EDA
+## ANLY 503, Fall 2020
+### Vaisman &amp; Dasgupta
+### Georgetown University
+### October 1, 2020
+
+---
+
+
+
+
+
+
+class: center, middle, inverse
+
+# `ggplot`
+
+---
+
+## `ggplot` syntax
+
+.center[&lt;img src="img/ggplot-template.png"&gt;]
+
+
+---
+
+Load this file
+
+
+```r
+unit_square &lt;- read_csv("data/unit_square_10k.csv")
+```
+
+```
+## Parsed with column specification:
+## cols(
+##   x = col_double(),
+##   y = col_double(),
+##   dist = col_double(),
+##   quadrant = col_character(),
+##   angle = col_double()
+## )
+```
+
+Examine the dataset
+
+
+```r
+unit_square %&gt;% glimpse()
+```
+
+```
+## Rows: 10,000
+## Columns: 5
+## $ x        &lt;dbl&gt; -0.468868318, 0.638036955, 0.829440455, 0.257822088, 0.88813…
+## $ y        &lt;dbl&gt; -0.60104433, 0.44497853, -0.29195588, 0.28659476, -0.2042881…
+## $ dist     &lt;dbl&gt; 0.7622938, 0.7778798, 0.8793234, 0.3854981, 0.9113257, 1.070…
+## $ quadrant &lt;chr&gt; "III", "I", "IV", "I", "IV", "IV", "I", "I", "IV", "II", "IV…
+## $ angle    &lt;dbl&gt; 232.04258, 34.89262, 340.60837, 48.02529, 347.04616, 324.186…
+```
+
+---
+
+.left-code[
+
+```r
+ggplot(unit_square) +
+  geom_point(aes(x = x, y = y))
+```
+]
+
+--
+
+.right-plot[
+&lt;img src="lab6-ggplot-eda_files/figure-html/unnamed-chunk-3-1.png" width="100%" /&gt;
+]
+
+---
+
+.left-code[
+
+```r
+ggplot(unit_square) +
+  geom_point(aes(x = x, y = y)) +
+  coord_equal()
+```
+]
+
+--
+
+.right-plot[
+&lt;img src="lab6-ggplot-eda_files/figure-html/unnamed-chunk-4-1.png" width="100%" /&gt;
+]
+
+
+---
+
+.left-code[
+
+```r
+unit_square %&gt;% 
+  mutate(in_circle = dist &lt;= 1) %&gt;% 
+  ggplot() +
+  geom_point(aes(x = x, y = y)) +
+  coord_equal()
+```
+]
+
+--
+
+.right-plot[
+&lt;img src="lab6-ggplot-eda_files/figure-html/unnamed-chunk-5-1.png" width="100%" /&gt;
+]
+
+
+---
+
+.left-code[
+
+```r
+unit_square %&gt;% 
+  mutate(in_circle = dist &lt;= 1) %&gt;% 
+  ggplot() +
+  geom_point(aes(x = x, 
+                 y = y,
+                 color = in_circle)) +
+  coord_equal()
+```
+]
+
+--
+
+.right-plot[
+&lt;img src="lab6-ggplot-eda_files/figure-html/unnamed-chunk-6-1.png" width="100%" /&gt;
+]
+
+---
+
+.left-code[
+
+```r
+unit_square %&gt;% 
+  mutate(in_circle = dist &lt;= 1) %&gt;% 
+  ggplot() +
+  geom_point(aes(x = x, 
+                 y = y,
+                 color = y)) +
+  coord_equal()
+```
+]
+
+--
+
+.right-plot[
+&lt;img src="lab6-ggplot-eda_files/figure-html/unnamed-chunk-7-1.png" width="100%" /&gt;
+]
+
+
+---
+
+.left-code[
+
+```r
+unit_square %&gt;% 
+  mutate(in_circle = dist &lt;= 1) %&gt;% 
+  ggplot() +
+  geom_point(aes(x = x, 
+                 y = y),
+             color = "orange") +
+  coord_equal()
+```
+]
+
+--
+
+.right-plot[
+&lt;img src="lab6-ggplot-eda_files/figure-html/unnamed-chunk-8-1.png" width="100%" /&gt;
+]
+
+
+---
+
+.left-code[
+
+```r
+unit_square %&gt;% 
+  mutate(in_circle = dist &lt;= 1) %&gt;% 
+  ggplot() +
+  geom_point(aes(x = x, 
+                 y = y,
+                 color = in_circle)) +
+  coord_equal()
+```
+]
+
+--
+
+.right-plot[
+&lt;img src="lab6-ggplot-eda_files/figure-html/unnamed-chunk-9-1.png" width="100%" /&gt;
+]
+
+
+---
+
+.left-code[
+
+```r
+unit_square %&gt;% 
+  mutate(in_circle = dist &lt;= 1) %&gt;% 
+  ggplot() +
+  geom_point(aes(x = x, 
+                 y = y,
+                 color = in_circle)) +
+  coord_equal() +
+  scale_colour_viridis_d()
+```
+]
+
+--
+
+.right-plot[
+&lt;img src="lab6-ggplot-eda_files/figure-html/unnamed-chunk-10-1.png" width="100%" /&gt;
+]
+
+
+---
+
+.left-code[
+
+```r
+unit_square %&gt;% 
+  mutate(in_circle = dist &lt;= 1) %&gt;% 
+  ggplot() +
+  geom_point(aes(x = x, 
+                 y = y,
+                 color = ifelse(!in_circle,
+                                "outside", 
+                                quadrant))) +
+  coord_equal() +
+  scale_colour_brewer(palette = "Set1")
+```
+]
+
+--
+
+.right-plot[
+&lt;img src="lab6-ggplot-eda_files/figure-html/unnamed-chunk-11-1.png" width="100%" /&gt;
+]
+
+
+---
+
+.left-code[
+
+```r
+unit_square %&gt;% 
+  mutate(in_circle = dist &lt;= 1) %&gt;% 
+  ggplot() +
+  geom_point(aes(x = x, 
+                 y = y,
+                 color = ifelse(!in_circle, 
+                                "outside",
+                                quadrant))) +
+  coord_equal() +
+  scale_colour_brewer(palette = "Set1", name = "Point Location") +
+  theme_bw() +
+  labs(x = 'X', 
+       y = 'Y',
+       title = 'Unit Circle')
+```
+]
+
+--
+
+.right-plot[
+&lt;img src="lab6-ggplot-eda_files/figure-html/unnamed-chunk-12-1.png" width="100%" /&gt;
+]
+
+
+---
+
+.left-code[
+
+```r
+unit_square %&gt;% 
+  filter(dist &lt;= 1, angle &gt;=30, angle &lt;= 330) %&gt;% 
+  ggplot() +
+  geom_point(aes(x = x, 
+                 y = y),
+             color = "#FFBF00"
+             ) +
+  geom_point(aes(x = 0.25, y = 0.6),
+             color = "black",
+             size = 15) +
+  coord_equal() +
+  theme_minimal() +
+  theme(axis.ticks = element_blank(),
+        axis.title = element_blank(),
+        axis.text = element_blank(),
+        panel.grid = element_blank())
+```
+]
+
+--
+
+.right-plot[
+&lt;img src="lab6-ggplot-eda_files/figure-html/unnamed-chunk-13-1.png" width="100%" /&gt;
+]
+
+---
+
+## _ggplot_ things to remember
+
+* You have great flexibility with _ggplot_. You can create your plot attributes before you plot, or define them within the layers
+* For a single dataset and/or group, having your data in wide format is fine. For facetting and/or comparing multuple datasets, your datasets must be in tidy (long) format
+* Layers usually inherit properties from the base graph
+* Geoms have default stats (and vice-versa!)
+* Geoms and stats have parameters.
+* Coordinates affect display of axes
+* Scales affect data mapping
+* Color mapping can be sometimes trick
+* [The online reference for ggplot]( is excellent, as is the book.
+
+Once you get the hang of it, you can do many things!
+
+
+---
+
+class: center, middle, inverse
+
+# EDA - Exploratory Data Analysis
+
+---
+
+## US Accident Dataset
+
+**Learn to love this dataset!**
+
+[https://smoosavi.org/datasets/us_accidents](https://smoosavi.org/datasets/us_accidents)
+
+[Associated paper](https://arxiv.org/abs/1906.05409)
+
+* Quantitative variables
+* Qualitative variables
+* Date/Time variables
+* Geolocation variables
+* Many subgroups
+* Relatively large (even though it fits on a single machine)
+
+Unzipped file here: [https://bigdatateaching.blob.core.windows.net/public/us-traffic-accidents/US_Accidents_June20.csv](https://bigdatateaching.blob.core.windows.net/public/us-traffic-accidents/US_Accidents_June20.csv)
+
+It's not in the repo because it's 1.33GB! You can download if you want, or you can read straight into R using `read_csv`.
+
+---
+
+Read in the file
+
+```r
+data_url &lt;- "https://bigdatateaching.blob.core.windows.net/public/us-traffic-accidents/US_Accidents_June20.csv"
+raw &lt;- read_csv(data_url)
+# data_url can be a local file
+```
+
+
+
+```r
+Parsed with column specification:
+cols(
+...
+)
+See spec(...) for full column specifications.
+|============================================================| 100% 1265 MB
+Warning: 2069844 parsing failures.
+    row     col           expected    actual                                  file
+2478819 End_Lat 1/0/T/F/TRUE/FALSE 40.11206  '~/Downloads/US_Accidents_June20.csv'
+2478819 End_Lng 1/0/T/F/TRUE/FALSE -83.03187 '~/Downloads/US_Accidents_June20.csv'
+2478820 End_Lat 1/0/T/F/TRUE/FALSE 39.86501  '~/Downloads/US_Accidents_June20.csv'
+2478820 End_Lng 1/0/T/F/TRUE/FALSE -84.04873 '~/Downloads/US_Accidents_June20.csv'
+2478821 End_Lat 1/0/T/F/TRUE/FALSE 39.10209  '~/Downloads/US_Accidents_June20.csv'
+....... ....... .................. ......... .....................................
+See problems(...) for more details.
+```
+
+---
+
+Set the column mapping (cut the `cols` object from the `read_csv` output)
+
+```r
+col_mapping &lt;- cols(
+  ...
+  Severity = col_double(),
+  ...
+  End_Lat = col_double(),
+  End_Lng = col_double(),
+)
+
+raw &lt;- read_csv(data_url, # or local file
+                col_types = col_mapping)
+```
+
+
+---
+
+Take a peek at the data
+
+```r
+&gt; raw %&gt;% glimpse()
+Rows: 3,513,740
+Columns: 49
+$ ID                    &lt;chr&gt; "A-1", "A-2", "A-3", "A-4", "A-5", "A-6", …
+$ Source                &lt;chr&gt; "MapQuest", "MapQuest", "MapQuest", "MapQu…
+$ TMC                   &lt;dbl&gt; 201, 201, 201, 201, 201, 201, 201, 201, 20…
+$ Severity              &lt;dbl&gt; 3, 2, 2, 3, 2, 3, 2, 3, 2, 3, 3, 3, 2, 2, …
+$ Start_Time            &lt;dttm&gt; 2016-02-08 05:46:00, 2016-02-08 06:07:59,…
+$ End_Time              &lt;dttm&gt; 2016-02-08 11:00:00, 2016-02-08 06:37:59,…
+$ Start_Lat             &lt;dbl&gt; 39.86515, 39.92806, 39.06315, 39.74775, 39…
+$ Start_Lng             &lt;dbl&gt; -84.05872, -82.83118, -84.03261, -84.20558…
+$ End_Lat               &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ End_Lng               &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ `Distance(mi)`        &lt;dbl&gt; 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.00, …
+$ Description           &lt;chr&gt; "Right lane blocked due to accident on I-7…
+$ Number                &lt;dbl&gt; NA, 2584, NA, NA, NA, NA, 376, NA, 99, NA,…
+$ Street                &lt;chr&gt; "I-70 E", "Brice Rd", "State Route 32", "I…
+$ Side                  &lt;chr&gt; "R", "L", "R", "R", "R", "R", "R", "R", "L…
+$ City                  &lt;chr&gt; "Dayton", "Reynoldsburg", "Williamsburg", …
+$ County                &lt;chr&gt; "Montgomery", "Franklin", "Clermont", "Mon…
+$ State                 &lt;chr&gt; "OH", "OH", "OH", "OH", "OH", "OH", "OH", …
+$ Zipcode               &lt;chr&gt; "45424", "43068-3402", "45176", "45417", "…
+$ Country               &lt;chr&gt; "US", "US", "US", "US", "US", "US", "US", …
+$ Timezone              &lt;chr&gt; "US/Eastern", "US/Eastern", "US/Eastern", …
+$ Airport_Code          &lt;chr&gt; "KFFO", "KCMH", "KI69", "KDAY", "KMGY", "K…
+$ Weather_Timestamp     &lt;dttm&gt; 2016-02-08 05:58:00, 2016-02-08 05:51:00,…
+$ `Temperature(F)`      &lt;dbl&gt; 36.9, 37.9, 36.0, 35.1, 36.0, 37.9, 34.0, …
+$ `Wind_Chill(F)`       &lt;dbl&gt; NA, NA, 33.3, 31.0, 33.3, 35.5, 31.0, 31.0…
+$ `Humidity(%)`         &lt;dbl&gt; 91, 100, 100, 96, 89, 97, 100, 100, 99, 10…
+$ `Pressure(in)`        &lt;dbl&gt; 29.68, 29.65, 29.67, 29.64, 29.65, 29.63, …
+$ `Visibility(mi)`      &lt;dbl&gt; 10, 10, 10, 9, 6, 7, 7, 7, 5, 3, 5, 3, 3, …
+$ Wind_Direction        &lt;chr&gt; "Calm", "Calm", "SW", "SW", "SW", "SSW", "…
+$ `Wind_Speed(mph)`     &lt;dbl&gt; NA, NA, 3.5, 4.6, 3.5, 3.5, 3.5, 3.5, 1.2,…
+$ `Precipitation(in)`   &lt;dbl&gt; 0.02, 0.00, NA, NA, NA, 0.03, NA, NA, NA, …
+$ Weather_Condition     &lt;chr&gt; "Light Rain", "Light Rain", "Overcast", "M…
+$ Amenity               &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, …
+$ Bump                  &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, …
+$ Crossing              &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, …
+$ Give_Way              &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, …
+$ Junction              &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, …
+$ No_Exit               &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, …
+$ Railway               &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, …
+$ Roundabout            &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, …
+$ Station               &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, …
+$ Stop                  &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, …
+$ Traffic_Calming       &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, …
+$ Traffic_Signal        &lt;lgl&gt; FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FA…
+$ Turning_Loop          &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, …
+$ Sunrise_Sunset        &lt;chr&gt; "Night", "Night", "Night", "Night", "Day",…
+$ Civil_Twilight        &lt;chr&gt; "Night", "Night", "Night", "Day", "Day", "…
+$ Nautical_Twilight     &lt;chr&gt; "Night", "Night", "Day", "Day", "Day", "Da…
+$ Astronomical_Twilight &lt;chr&gt; "Night", "Day", "Day", "Day", "Day", "Day"…
+```
+
+---
+
+Use the `clean_names` function from the `janitor` package to clean up the names
+
+```r
+library(janitor)
+acc &lt;- raw %&gt;% clean_names()   
+```
+
+* Read the raw data once, then create copy that you can manipulate
+
+---
+
+Use the `skim` function from the `skimr` package to profile the dataset
+
+```r
+library(skimr)
+skim_summary &lt;- skim(raw)
+```
+
+This creates a `skim_df` which is also a `tibble`, `data.frame`, etc.
+
+Print the output
+
+```r
+skim_summary
+```
+
+---
+
+After looking at the output of the `skimr`, we should change some variable types (tmc and severity should be categorical) and remove some variables from the summary that we know are not adding any value.
+
+```r
+acc &lt;- acc %&gt;% 
+  mutate(tmc = as.character(tmc),
+         severity = as.character(severity))
+
+skim_summary &lt;- acc %&gt;% 
+  select(-id, -tmc, -country, -turning_loop) %&gt;% 
+  skim()
+```
+
+---
+
+Since this is large-ish dataset the `naniar` and `visdat` functions are not too effective. 
+
+Lets build a bar plot ourselves to show the values of n_missing for all variables.
+
+
+```r
+skim_summary %&gt;% 
+  ggplot() +
+  geom_bar(aes(x = skim_variable,
+               y = n_missing))
+```
+
+--
+
+**ugh! an error... why?**
+
+---
+
+`geom_bar` has a default `stat` that tries to count stuff. Each record (variable) already has the data, so no need to aggregate.
+
+```r
+skim_summary %&gt;% 
+  arrange(desc(n_missing)) %&gt;% 
+  ggplot() +
+  geom_bar(aes(x = skim_variable, 
+               y = n_missing), 
+           stat = "identity")
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="../js/macros.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
