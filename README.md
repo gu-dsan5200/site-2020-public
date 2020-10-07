@@ -172,7 +172,7 @@ in advance.
 |    10 | 4 - Specialized Visuals | Oct 29 | Networks                                                  | Build and draw a network                        | \*       | A8 due Fri 10/31                                 |
 |    11 | 5 - Dynamic Visuals     | Nov 05 | Dynamic graphs 1                                          | Activity 11                                     | \*       | A9 due Fri 11/6                                  |
 |    12 | 5 - Dynamic Visuals     | Nov 12 | Dynamic graphs 2                                          | Activity 12                                     | \*       |                                                  |
-|    13 | 6 - ML                  | Nov 19 | Visualizing model dianostics and results                  | ML diagnostics                                  | \*       | A10 due Fri 11/20                                |
+|    13 | 6 - ML                  | Nov 19 | Visualizing model diagnostics and results                  | ML diagnostics                                  | \*       | A10 due Fri 11/20                                |
 |    14 |                         | Dec 03 | Wrapup                                                    |                                                 |          | Final Project and Online Portfolio due Fri 12/11 |
 
 Calendar notes:
