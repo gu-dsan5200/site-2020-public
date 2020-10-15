@@ -1,0 +1,382 @@
+```{r s1, include=F}
+library(tidyverse)
+```
+
+## R packages for working with geospatial data
+
+* Visualizing spatial and geographic data is a specialized area on its own
+
+* R has increasing capabilities in this regard, and its increasingly mature. Some of the 
+packages that we might need are
+
+.pull-left[
+**Geospatial data**
++ `sf`
++ `sp`
++ `raster`
++ `spData`
++ `rnaturalearthdata`
+]
+.pull-right[
+**Geospatial visualization**
++ `ggplot` + `ggmap` + `geom_sf`
++ `tmap`
++ `leaflet`
+]
+
+> Several parts of this lecture are inspired by [Chapter 8](https://geocompr.robinlovelace.net/adv-map.html) of
+Geocomputation with R by Lovelace, Nowosad and Muenchow (2019), also available on [Amazon](https://www.amazon.com/Geocomputation-Chapman-Hall-Robin-Lovelace/dp/1138304514/)
+---
+
+#### Toolset
+
+We'll start of loading the following packages
+
+```{r}
+library(ggplot2)
+library(sf)
+library(spData)
+```
+
+The **sf** package provides [simple features access](https://en.wikipedia.org/wiki/Simple_Features) for R, and helps to store and process geographic data within the tidyverse framework, while linking to several geospatial
+packages that are standard in the geography world.
+
+.pull-left[
+```{r, echo=FALSE, out.height="70%", out.width="70%",fig.pos='h'}
+knitr::include_graphics('img/sfcartoon.jpg')
+```
+
+<div style="font-size:12pt;">Illustration by Allison Horst</div>
+]
+.pull-right[To use **sf** you may need to install some additional software. At the very least you will need to install the R packages **rgdal** and **rgeos**. 
+
+Additional information is available [here](htps://r-spacial.github.io/sf/)
+
+]
+
+---
+
+## Chloropleth maps
+
+Chloropleth maps are maps with some geometries filled in to signify levels of some variable. 
+
+.pull-left[
+```{r, echo=FALSE, fig.caption='Smoking rates in USA in 2012 (NY Times, March 24, 2014)'}
+knitr::include_graphics('img/Smoking-rates.png')
+```
+
+.small[Smoking rates in USA in 2012 (NY Times, March 24, 2014)]
+]
+.pull-right[
+```{r, echo=FALSE, out.height="120%", out.width="120%"}
+knitr::include_graphics('img/Figure-1-1.png')
+```
+
+.small[Observed to Expected Ratios (OERs) for Rates of Primary Total Knee Arthroplasty Among White Medicare Beneficiaries by Health Referral Region [(Ward & Dasgupta, 2020)](https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2765054)]]
+
+---
+
+### A chloropleth of life expectancy
+
+.left-code[
+We'll start off with a world map
+
+There are several ways of getting map geometries, which are specifications of polygons.
+
+If you look at `world`, you'll see it's a data.frame, with one column named `geometry`. This column provides the shapes of the polygons, and what `geom_sf` looks for
+
+```{r e1, eval = T, echo = T}
+library(sf); library(spData)
+
+ggplot(data = world) + 
+  geom_sf() # a special geometry for plotting maps
+```
+]
+
+.right-plot[
+```{r, echo=FALSE, ref.label='e1'}
+```
+]
+
+
+
+---
+
+### A chloropleth of life expectancy
+
+.left-code[
+If you look at `world`, it also provides life expectancy estimates from 2014 (World Bank). The data set is tidy, with one row corresponding to one country. We'll use our known **ggplot2** way of filling things in.
+
+
+```{r cloro2, eval = F, echo = T}
+ggplot(data = spData::world) + 
+  geom_sf(aes(fill = lifeExp)) # a special geometry for plotting maps
+```
+]
+
+.right-plot[
+```{r, echo=FALSE, ref.label='cloro2'}
+```
+]
+
+
+
+---
+
+### A chloropleth of life expectancy
+
+.left-code[
+If you look at `world`, it also provides life expectancy estimates from 2014 (World Bank). The data set is tidy, with one row corresponding to one country. We'll use our known **ggplot2** way of filling things in.
+
+```{r cloro1, eval = F, echo = T}
+ggplot(data = spData::world) + 
+  geom_sf(aes(fill = lifeExp)) + # a special geometry for plotting maps
+  viridis::scale_fill_viridis('Life Exp', option='plasma', 
+                              trans='sqrt', labels = scales::label_number_si())
+```
+]
+
+
+.right-plot[
+```{r, echo=FALSE, ref.label='cloro1'}
+```
+]
+
+---
+
+## The electoral picture in Florida, 2000
+
+.left-code[
+```{r fl2000, echo=T, eval=F}
+library(spData, warn.conflicts = F, quietly = T)
+library(maps, warn.conflicts = F, quietly = T)
+states <- st_as_sf(maps::map('state', plot = F, 
+                             fill = T)) %>% 
+  cbind(st_coordinates(st_centroid(.))) %>% 
+  mutate(ID = str_to_title(ID))
+counties <- st_as_sf(maps::map('county', plot = F, 
+                               fill = T))
+counties <- counties %>% 
+  dplyr::filter(str_detect(ID, 'florida'))
+counties <- counties %>% 
+  separate(ID, c('State','County'), sep = ',') %>% 
+  mutate_at(vars(State:County), str_to_title)
+
+florida_election <- readRDS("data/florida_election.rds")
+election_by_county <- counties %>% 
+  left_join(florida_election)
+plt_map <- ggplot()+
+  geom_sf(data = us_states, fill = NA) + 
+  geom_sf(data = election_by_county, 
+          aes(fill=Gore_perc)) + 
+  geom_label(data = states %>% #<<
+               dplyr::filter(ID != 'Florida'), #<<
+             aes(X, Y, label = ID), #<<
+            size = 5) +
+  coord_sf(xlim = c(-88, -78), ylim = c(24.5, 33),  
+           expand = F) +
+  labs(x = '', y = '', fill = 'Percentage for Gore') + 
+  scale_fill_viridis_c(option = 'plasma')
+plt_map
+```
+]
+
+.right-plot[
+```{r, echo=FALSE, ref.label='fl2000'}
+```
+]
+
+---
+class: inverse, middle, center
+
+## Using tmap
+
+---
+
+## Using tmap
+
+
+.left-code[
+
+* The **tmap** package uses many synactical structures similar to **ggplot2**, butcan be nicer in some ways
+* It's more "publication-ready" by default
+* It makes some nice choices
+```{r tmap1, eval=F, echo=T}
+library(tmap)
+tm_shape(spData::world) + tm_polygons(col = "lifeExp", style='jenks',
+                                      title = 'Life expectancy')
+```
+
+]
+
+.right-plot[
+```{r, echo=FALSE, ref.label='tmap1'}
+```
+]
+
+---
+
+## tmap (interactive)
+
+.left-code[
+Just need one line of code for interactivity!
+
+It gains interactivity using **leaflet**, which we'll see in a bit
+```{r tmap2, eval = F, echo = T}
+tmap_mode('view')  #<<
+tm_shape(spData::world) + tm_polygons(col = 'pop', style='jenks',
+                              palette='Reds', title='Population',
+                              popup.vars = c('pop'), id='name_long')
+```
+]
+
+.right-plot[
+```{r, echo=FALSE, ref.label='tmap2'}
+```
+]
+
+---
+
+## Street maps
+
+The easiest ways to overlay data on street maps is with the  **leaflet** package.
+
+```{r, eval=TRUE, cache=FALSE}
+library(leaflet)
+library(leaflet.providers)
+load("data/exdata.rda")
+leaflet(gpx) %>% addTiles() %>% addCircleMarkers(~Longitude, ~Latitude, radius=1)
+```
+
+---
+
+## Street maps
+
+You can also use the **mapview** package, which calls **leaflet** and has a bit more compact syntax
+
+.left-code[
+```{r, echo=TRUE, eval=FALSE}
+load("data/exdata.rda")
+gpx <- sf::st_as_sf(gpx, 
+                coords=c("Longitude", "Latitude"), 
+                crs = 4267) # Need to make sf object
+mapview::mapview(gpx, color='blue', 
+                 map.type = 'OpenStreetMap.Mapnik', 
+                 cex = 0.2, # size of points
+                 legend=FALSE)
+```
+]
+
+.right-plot[
+<img src="img/run.png">
+]
+
+---
+
+## Street maps
+
+You can also use the **mapview** package, which calls **leaflet** and has a bit more compact syntax
+
+.left-code[
+```{r, echo=TRUE, eval=FALSE}
+load(file.path(here::here('slides','lectures','data', 'exdata.rda')))
+gpx <- st_as_sf(gpx, 
+                coords=c("Longitude", "Latitude"), 
+                crs = 4267) # Need to make sf object
+mapview::mapview(gpx, color='blue', 
+                 map.type = 'Stamen.Watercolor', #<<
+                 cex = 0.2, # size of points
+                 legend=FALSE)
+```
+
+You can also have some stylistic fun with maps.
+
+More possibilities at [http://leaflet-extras.github.io/leaflet-providers/preview/](http://leaflet-extras.github.io/leaflet-providers/preview/)
+]
+
+.right-plot[
+<img src="img/run2.png">]
+]
+
+---
+
+## Dot density maps
+
+.left-code[
+```{r dd2, eval = F, echo=T}
+library(ggmap, quietly = T, warn.conflicts = F)
+crime1 <- crime %>% 
+  filter(between(crime$lon, -95.4, -95.34) & 
+           between(crime$lat, 29.746, 29.784))
+
+qmplot(lon, lat, data=crime1, maptype='toner-lite', 
+       color = I('red'))
+```
+]
+
+
+.right-plot[
+```{r, echo=FALSE, ref.label='dd2'}
+```
+**ggmap** was built for Google Maps
+
+Google Maps requires a credit card now
+
+Better option is Stamen Maps, which uses OpenStreetMap data
+]
+
+
+
+---
+
+## Dot density maps
+
+.center[<img src="img/dot_density.png" width=700>]
+
+.small[Code is available [here](./dot_density.R) Based on [this blog](https://tarakc02.github.io/dot-density/) by Tarak Shah
+]
+---
+
+## Facetted maps
+
+.left-code[
+```{r qm1, eval=F, echo=TRUE}
+library(ggmap)
+crime1 <- crime1 %>% 
+  filter(!(offense %in% c('auto theft','theft',
+                          'burglary')))
+qmplot(lon, lat, data=crime1, 
+       maptype='toner-background', 
+       color = offense)+
+  facet_wrap(~offense)
+```
+]
+
+.right-plot[
+```{r, echo=FALSE, ref.label='qm1'}
+```
+
+]
+
+---
+
+## Facetted maps
+
+.left-code[
+```{r, eval=FALSE}
+library(tmap)
+world1 <- world %>% 
+  filter(continent %in% c('Europe','Asia',
+                          'North America',
+                          'South America')) %>% 
+  mutate(continent = fct_reorder(continent, 
+                                 lifeExp, na.rm=T))
+
+tm_shape(world1)+tm_polygons(col='lifeExp') + 
+  tm_facets(by='continent', ncol=2)
+```
+]
+
+.right-plot[
+<img src="img/tmap_facet.png">)
+]
