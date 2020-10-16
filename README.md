@@ -1,4 +1,4 @@
-**This syllabus is effective as of Thursday, August 27, 2020 at 05:05
+**This syllabus is effective as of Wednesday, October 14, 2020 at 08:41
 PM**
 
 ## Course Information
@@ -14,7 +14,8 @@ PM**
       - Class meets Thursdays 6:30-9:00pm
       - Recurring Zoom Link (GU credentials required):
         <https://georgetown.zoom.us/j/99864511820>
-      - Labs will breakout from the Lecture (no separate Zoom Link)
+      - Both sections will start together and break out from the main
+        Zoom session (no separate Zoom Link)
 
 ### Course Description
 
@@ -158,22 +159,22 @@ the letter grade will follow standard guidelines:
 This calendar is subject to change. We will make make any changes known
 in advance.
 
-| Class | Module                  | Date   | Topics                                                    | Activity                                        | Readings | What is Due                                      |
-| ----: | :---------------------- | :----- | :-------------------------------------------------------- | :---------------------------------------------- | :------- | :----------------------------------------------- |
-|     1 | 1 - Conceptual          | Aug 27 | History and purpose of dataviz, designing for an Audience | Setup environment                               |          |                                                  |
-|     2 | 1 - Conceptual          | Sep 03 | Picking the right visualization                           | Build an R Markdown website                     | \*       | A1 due Fri 9/4                                   |
-|     3 | 1 - Conceptual          | Sep 10 | Making readable graphics, putting it all together         | Activity 3                                      | \*       | A2 due Fri 9/11                                  |
-|     4 | 2 - Tools & Data        | Sep 17 | Tools overview                                            | Activity 4                                      | \*       | A3 due Fri 9/18                                  |
-|     5 | 2 - Tools & Data        | Sep 24 | Data prep for visualization                               | Wrangle/structure a complex dataset for dataviz | \*       |                                                  |
-|     6 | 2 - Tools & Data        | Oct 01 | EDA Visualization, naniar, outliers                       | Understand your data                            | \*       | A4 due Fri 10/2                                  |
-|     7 | 3 - Static Visuals      | Oct 08 | Static graphics with R - ggplot and ecosystem             | Make graphs with R                              | \*       | A5 due Fri 10/9                                  |
-|     8 | 3 - Static Visuals      | Oct 15 | Static graphics with Python - matplotlib                  | Make graphs with Python                         | \*       | A6 due Fri 10/16                                 |
-|     9 | 4 - Specialized Visuals | Oct 22 | Maps and geospatial data                                  | Cloropleth: mapping the FL 2000 election        | \*       | A7 due Fri 10/23                                 |
-|    10 | 4 - Specialized Visuals | Oct 29 | Networks                                                  | Build and draw a network                        | \*       | A8 due Fri 10/31                                 |
-|    11 | 5 - Dynamic Visuals     | Nov 05 | Dynamic graphs 1                                          | Activity 11                                     | \*       | A9 due Fri 11/6                                  |
-|    12 | 5 - Dynamic Visuals     | Nov 12 | Dynamic graphs 2                                          | Activity 12                                     | \*       |                                                  |
-|    13 | 6 - ML                  | Nov 19 | Visualizing model diagnostics and results                  | ML diagnostics                                  | \*       | A10 due Fri 11/20                                |
-|    14 |                         | Dec 03 | Wrapup                                                    |                                                 |          | Final Project and Online Portfolio due Fri 12/11 |
+| Class | Module                  | Date   | Topics                                                    | What is Due                                      |
+| ----: | :---------------------- | :----- | :-------------------------------------------------------- | :----------------------------------------------- |
+|     1 | 1 - Conceptual          | Aug 27 | History and purpose of dataviz, designing for an Audience |                                                  |
+|     2 | 1 - Conceptual          | Sep 03 | Picking the right visualization                           | A1 due Fri 9/4                                   |
+|     3 | 1 - Conceptual          | Sep 10 | Making readable graphics, putting it all together         | A2 due Fri 9/11                                  |
+|     4 | 2 - Tools & Data        | Sep 17 | Tools overview                                            | A3 due Fri 9/18                                  |
+|     5 | 2 - Tools & Data        | Sep 24 | Data prep for visualization                               |                                                  |
+|     6 | 3 - Static Visuals      | Oct 01 | EDA Visualization, Static graphics with R/Python          |                                                  |
+|     7 | 3 - Static Visuals      | Oct 08 | More Static graphics with R/Python                        | A4 due Fri 10/9                                  |
+|     8 | 4 - Specialized Visuals | Oct 15 | Maps and geospatial data                                  |                                                  |
+|     9 | 4 - Specialized Visuals | Oct 22 | Networks                                                  | A5 due Fri 10/23                                 |
+|    10 | 4 - Specialized Visuals | Oct 29 | Text data                                                 | A6 due Fri 10/31                                 |
+|    11 | 5 - Dynamic Visuals     | Nov 05 | Dynamic graphs 1                                          | A7 due Fri 11/6                                  |
+|    12 | 5 - Dynamic Visuals     | Nov 12 | Dynamic graphs 2                                          | A8 due Fri 11/13                                 |
+|    13 | 6 - ML                  | Nov 19 | Visualizing model dianostics and results                  | A9 due Fri 11/20                                 |
+|    14 |                         | Dec 03 | Wrapup                                                    | Final Project and Online Portfolio due Fri 12/11 |
 
 Calendar notes:
 

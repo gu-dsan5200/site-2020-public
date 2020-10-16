@@ -1,31 +1,27 @@
 ---
 title: "ANLY 503"
-subtitle: "Week 1"
+subtitle: "Week {n}"
 author: "Vaisman & Dasgupta"
 institute: "Georgetown University"
 date: "`r Sys.Date()`"
-output:
-  xaringan::moon_reader:
-    css: [default, '../robot.css','../robot-fonts.css', '../sfah.css']
-    nature:
-      ratio: '16:9'
-      highlightStyle: zenburn
-      highlightLines: true
-      countIncrementalSlides: false
----
-
-layout: true
-
-<div class="my-header">
-<span>ANLY 503, Scientific and Analytical Visualization</span>
-</div>
-
 ---
 
 ```{r setup, include=FALSE, message=FALSE, warning=FALSE}
 library(pacman)
-p_load(char = c('tidyverse','knitr', 'htmlwidgets', 'kableExtra'))
+p_load(char = c('tidyverse','knitr', 'htmlwidgets', 'kableExtra', 
+                'here', 'reticulate'))
+
 opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, comment="", 
                cache=FALSE)
+
+source(here('lib/R/update_header.R'))
 ```
+
+
+```{r, echo=FALSE, results='asis'}
+update_header()
+```
+
+---
+
 

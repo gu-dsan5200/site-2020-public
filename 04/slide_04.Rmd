@@ -588,43 +588,7 @@ df.plot(x = 'sepal_length',y='sepal_width',
 ![](img/pandas.png)
 ]
 
----
-
-## `r fa('python', fill='steelblue')` Tools
-
-### Dynamic graphics
-
-We will mainly work with **plotly** in this class
-
-**plotly** works with both `r fa('r-project')` and `r fa('python')` to create dynamic graphics
-
-.pull-left[
-```{python, echo=T, eval=F}
-import plotly.express as px
-df = px.data.iris()
-fig = px.scatter(df, x="sepal_width", y="sepal_length", color="species")
-fig.show()
-```
-]
-.pull-right[
-![](img/plotly1.png)
-]
-.footnote[ [link](https://plotly.com/python/plotly-express/)]
-
----
-
-## `r fa('python', fill='steelblue')` Tools
-
-### Dynamic graphics
-
-Python also has other dynamic graphics libraries that have their own Javascript packages.
-
-+ [bokeh](https://demo.bokeh.org/)
-+ [Altair](https://altair-viz.github.io/gallery/index.html)
-+ [Vega](https://vega.github.io/vega/examples/)
-
----
-class: center, middle, inverse
+---, inverse
 
 # Javascript graphics
 
@@ -715,4 +679,10 @@ The strategy of scripting graphics and then finishing them in another software i
 
 + GIMP/ Adobe Photoshop: [GIMP](https://www.gimp.org) is a very powerful open-source alternative to Photoshop
 + Inkscape / Adobe Illustrator: [Inkscape](https://inkscape.org/) is an open-source alternative to Adobe illustrator for editing vector graphics like SVG
+
+---
+class: middle, center, inverse
+
+# Tableau
+
 

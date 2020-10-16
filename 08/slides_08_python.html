@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>slides_08_python.utf8</title>
+    <meta charset="utf-8" />
+    <script src="slides_08_python_files/header-attrs-2.3/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="../custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+## geopandas
+
+Let's use some inbuilt data to do some maps
+
+
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+import geopandas as gp
+world = gp.read_file(gp.datasets.get_path('naturalearth_lowres'))
+world.head()
+```
+
+```
+##      pop_est  ...                                           geometry
+## 0     920938  ...  MULTIPOLYGON (((180.00000 -16.06713, 180.00000...
+## 1   53950935  ...  POLYGON ((33.90371 -0.95000, 34.07262 -1.05982...
+## 2     603253  ...  POLYGON ((-8.66559 27.65643, -8.66512 27.58948...
+## 3   35623680  ...  MULTIPOLYGON (((-122.84000 49.00000, -122.9742...
+## 4  326625791  ...  MULTIPOLYGON (((-122.84000 49.00000, -120.0000...
+## 
+## [5 rows x 6 columns]
+```
+
+```python
+world.columns
+```
+
+```
+## Index(['pop_est', 'continent', 'name', 'iso_a3', 'gdp_md_est', 'geometry'], dtype='object')
+```
+
+---
+
+## geopandas
+
+
+```python
+world['gdp_per_cap'] = world.gdp_md_est / world.pop_est
+
+fig, ax = plt.subplots(1,1)
+world.plot(column = 'pop_est', 
+  ax=ax, legend=True,
+  legend_kwds={'label': 'Population by Country',
+               'orientation': 'horizontal'})
+plt.show()
+```
+
+![](slides_08_python_files/figure-html/unnamed-chunk-3-1.png)
+
+---
+
+## geopandas
+
+### Changing projections
+
+
+
+```python
+world.crs
+```
+
+```
+## &lt;Geographic 2D CRS: EPSG:4326&gt;
+## Name: WGS 84
+## Axis Info [ellipsoidal]:
+## - Lat[north]: Geodetic latitude (degree)
+## - Lon[east]: Geodetic longitude (degree)
+## Area of Use:
+## - name: World
+## - bounds: (-180.0, -90.0, 180.0, 90.0)
+## Datum: World Geodetic System 1984
+## - Ellipsoid: WGS 84
+## - Prime Meridian: Greenwich
+```
+
+---
+
+## geopandas
+
+### Changing projections
+
+
+```python
+world1 = world.to_crs('EPSG:3395')
+fig, ax = plt.subplots(1,1)
+world1.plot(column = 'pop_est', 
+  ax=ax, legend=True,
+  legend_kwds={'label': 'Population by Country',
+               'orientation': 'horizontal'})
+plt.show()
+```
+]
+![](slides_08_python_files/figure-html/unnamed-chunk-5-1.png)
+---
+
+## Geocoding with geopandas
+
+`geopandas` can geocode using the functionality of the `geopy` package.
+
+
+```python
+boros = gp.read_file(gp.datasets.get_path('nybb'))
+boros.BoroName
+```
+
+```
+## 0    Staten Island
+## 1           Queens
+## 2         Brooklyn
+## 3        Manhattan
+## 4            Bronx
+## Name: BoroName, dtype: object
+```
+
+---
+
+## Geocoding with geopandas
+
+
+```python
+import geopy
+from geopy.extra.rate_limiter import RateLimiter
+locator = geopy.Nominatim(user_agent = 'MyGeocoder')
+geocode = RateLimiter(locator.geocode, min_delay_seconds=1)
+
+boros['location'] = boros['BoroName'].apply(geocode)
+boros.location[0]
+```
+
+```
+## Location(Staten Island, Richmond County, New York, United States of America, (40.5834557, -74.1496048, 0.0))
+```
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

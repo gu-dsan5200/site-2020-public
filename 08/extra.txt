@@ -1,0 +1,22 @@
+{sf}
+A package for vector data
+
+{raster}
+For working with raster data (obviously!)
+
+{tmap}
+For creating static (and interactive!) maps
+
+{mapview}
+For creating interactive maps
+
+{ggspatial} {leaflet} {concaveman} {cartography} {ggmap} {tidycensus} {rayshader} {rgrass7} {stars} {geogrid} {arcgisbridge}
+
+
+What function you use depends on the type of data
+Read vector data with the {sf} package Read raster data with the {raster} package
+
+There are more than a dozen high quality packages for fetching data
+{rnaturalearth} - country and sub-country boundaries, coastline, roads etc
+{FedData} - mostly US-focused, elevation, landcover, climate
+{tidycensus} - US only, census data and geography
