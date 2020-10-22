@@ -46,6 +46,7 @@ world.columns
 
 ## geopandas
 
+.pull-left[
 ```{python, eval=FALSE}
 world['gdp_per_cap'] = world.gdp_md_est / world.pop_est
 
@@ -56,8 +57,10 @@ world.plot(column = 'pop_est',
                'orientation': 'horizontal'})
 plt.show()
 ```
-
+]
+.pull-right[
 ![](slides_08_python_files/figure-html/unnamed-chunk-3-1.png)
+]
 
 ---
 
@@ -76,6 +79,7 @@ world.crs
 
 ### Changing projections
 
+.pull-left[
 ```{python, eval=FALSE}
 world1 = world.to_crs('EPSG:3395')
 fig, ax = plt.subplots(1,1)
@@ -86,7 +90,9 @@ world1.plot(column = 'pop_est',
 plt.show()
 ```
 ]
+.pull-right[
 ![](slides_08_python_files/figure-html/unnamed-chunk-5-1.png)
+]
 ---
 
 ## Geocoding with geopandas
@@ -111,4 +117,20 @@ geocode = RateLimiter(locator.geocode, min_delay_seconds=1)
 boros['location'] = boros['BoroName'].apply(geocode)
 boros.location[0]
 ```
+
+---
+
+## Coordinate reference systems (CRS)
+
+`geopandas` can accept various forms of CRS specifications
+
++ CRS WKT string
++ An authority string (i.e. “epsg:4326”)
++ An EPSG integer code (i.e. 4326)
++ A pyproj.CRS
++ An object with a to_wkt method.
++ PROJ string
++ Dictionary of PROJ parameters
++ PROJ keyword arguments for parameters
++ JSON string with PROJ parameters
 

@@ -28,13 +28,6 @@ acc_for_maps <- accidents %>%
 ## Plotting slices
 
 ### Choropleth of number of accidents by state
-theme_set(hrbrthemes::theme_ipsum())
-accidents_19 %>% count(state) %>% 
-  left_join(us_map, by=c('state'='state_abbr')) %>% 
-  ggplot()+
-  geom_sf(aes(fill=n, geometry=geometry))+
-  title('Number of accidents, 2019')+
-  scale_fill_viridis_c()
 
 accidents_19 %>% 
   count(state, month) %>% 
@@ -43,8 +36,10 @@ accidents_19 %>%
   ungroup() %>% 
   left_join(us_map, by=c('state'='state_abbr'))-> bl
 
-ggplot(bl %>% filter(month==1))+
-  geom_sf(aes(geometry=geometry, fill=prop))
+ggplot(bl %>% filter(month %in% c(1,4,9,12)))+
+  geom_sf(aes(geometry=geometry, fill=prop))+
+  facet_wrap(~month, ncol=2)+
+  scale_fill_viridis_c()
 
 ggplot(bl %>% filter(month==6))+
   geom_sf(aes(geometry=geometry, fill=prop))
@@ -66,7 +61,8 @@ accidents_19 %>%
            crs = 4326) -> acc_19_md
 ggplot(acc_19_md)+
   geom_sf(data=us_counties(states='MD'), aes(geometry=geometry))+
-  geom_sf(aes(geometry=geometry, color=severity, fill=severity), size=0.3, alpha=0.2)
+  geom_sf(aes(geometry=geometry, color=severity, fill=severity), 
+          size=0.2, alpha=0.4)
 
 
 counties2 <- sf::st_read('~/Downloads/tl_2019_us_county.shp')

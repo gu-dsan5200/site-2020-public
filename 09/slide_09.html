@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Module 4: Specialized Visualizations Graphs and Networks</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Vaisman &amp; Dasgupta" />
+    <meta name="date" content="2020-10-23" />
+    <link href="slide_09_files/tachyons-4.12.0/tachyons.min.css" rel="stylesheet" />
+    <link href="slide_09_files/xaringanExtra-extra-styles-0.2.3.9000/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="../custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Module 4: Specialized Visualizations<br/>Graphs and Networks
+## ANLY 503, Fall 2020
+### Vaisman &amp; Dasgupta
+### Georgetown University
+### October 23, 2020
+
+---
+
+
+
+
+
+
+class: center, middle, inverse
+
+# Graphs
+
+---
+
+&lt;img src="img/a-very-brief-intro-to-graph-theory.jpeg"&gt;
+
+---
+
+&lt;img src="img/def-graph-definition.jpeg"&gt;
+
+---
+
+&lt;img src="img/def-formally-defining-a-graph.jpeg"&gt;
+
+---
+
+.center[&lt;img src="img/edges-no-rules.jpeg"&gt;]
+
+---
+
+class: center, middle, inverse
+
+# Ways to express a graph
+
+---
+
+.center[&lt;img src="img/edge-list-definition.jpeg" width=700&gt;]
+
+
+---
+
+
+.center[&lt;img src="img/edge-types.jpeg"&gt;]
+
+
+---
+
+&lt;img src="img/adjacency-matrix-definition.jpeg"&gt;
+
+---
+
+&lt;img src="img/adjacency-list-definition.jpeg"&gt;
+
+
+---
+
+&lt;img src="img/adjacency-list.jpeg"&gt;
+---
+
+
+&lt;img src="img/adjacency-matrix-trouble.jpeg"&gt;
+
+
+---
+
+class: inverse, middle, center
+
+# What do you need to fully represent a graph?
+
+
+
+---
+
+class: inverse, middle, center
+
+# Directed graphs
+
+---
+
+&lt;img src="img/breakdown-directed-graph.png"&gt;
+
+---
+
+## Directed Edge List
+
+.pull-left[&lt;img src="img/breakdown-directed-graph.png"&gt;]
+
+.pull-right[&lt;img src="img/breakdown-directed-edge-list.png"&gt;]
+
+---
+
+
+## Directed Adjacency Matrix
+
+.pull-left[&lt;img src="img/breakdown-directed-graph.png"&gt;]
+
+.pull-right[&lt;img src="img/breakdown-directed-adjacency-matrix.png"&gt;]
+
+---
+
+## Directed Adjacency List
+
+.pull-left[&lt;img src="img/breakdown-directed-graph.png"&gt;]
+
+.piull-right[&lt;img src="img/breakdown-directed-adjacency-list.png"&gt;]
+
+---
+
+class: inverse, middle, center
+
+## Undirected Graphs
+
+---
+
+
+&lt;img src="img/breakdown-undirected-graph.png"&gt;
+
+
+---
+
+## Undirected Edge List
+
+.pull-left[&lt;img src="img/breakdown-undirected-graph.png"&gt;]
+
+.pull-right[&lt;img src="img/breakdown-undirected-edge-list.png"&gt;]
+
+
+---
+
+## Undirected Adjacency Matrix
+
+.pull-left[&lt;img src="img/breakdown-undirected-graph.png"&gt;]
+
+.pull-right[&lt;img src="img/breakdown-undirected-adjacency-matrix.png"&gt;]
+
+
+---
+
+## Undirected Adjacency List
+
+.pull-left[&lt;img src="img/breakdown-undirected-graph.png"&gt;]
+
+.pull-right[&lt;img src="img/breakdown-undirected-adjacency-list.png"&gt;]
+
+---
+
+## Trees vs. Graphs
+
+&lt;img src="img/tree-vs-graph.jpeg"&gt;
+
+---
+
+class: inverse, middle, center
+
+# Other graph attributes
+
+---
+
+## Node measurements
+
+.center[&lt;img src="img/vertex-degrees.jpeg" width=300&gt;]
+
+---
+
+## Edge weigths
+
+.center[&lt;img src="img/weighted-graph-2.png" width=800&gt;]
+
+
+---
+
+class: center, inverse, middle
+
+# Many ways to represent graphs
+
+---
+
+## Typical layout. There are many positioning algorithms.
+
+.center[&lt;img src="img/6ways-force-directed.jpg" width=500&gt;]
+
+
+---
+
+## Arc Diagram
+
+.center[&lt;img src="img/6ways-arc.jpg" width=800&gt;]
+
+---
+
+## Grouped Clusters
+
+.center[&lt;img src="img/6ways-group-in-a-box.jpg" width=800&gt;]
+
+
+---
+
+## Chord or Radial
+
+.center[&lt;img src="img/6ways-radial.jpg" width=550&gt;]
+
+---
+
+## Matrix
+
+.center[&lt;img src="img/6ways-matrix.jpg" width=550&gt;]
+
+---
+
+## Multimodal graphs
+
+.pull-left[&lt;img src="img/bipartite.png"&gt;]
+.pull-right[&lt;img src="img/tripartite.png"&gt;]
+
+---
+
+class: inverse, middle, center
+
+# Prepping your data for graphs
+
+---
+## Packages for working with and visualizing graphs
+
+.pull-left[
+**Prepping data, graph/network analysis**
+* `tidygraph`
+* `igraph`
+
+**Network analysis specific**
+* `sna`
+* `network`
+]
+
+.pull-right[
+**Visualizing**
+* `ggraph`
+* `igraph`
+* `networkD3`
+]
+
+---
+
+## Building your graph dataset
+
+The best practice for building an visualizing a graph is to have **two tabular datasets**:
+
+.pull-left[
+**An edge list (dataframe)** where the first two columns are `from` and `to` (required) and the values are the `id` of the nodes. You can have more fields in the edge list representing additional attributes of your edges.
+
+In a *directed* graph the `from` and the `to` matter. In an undirected graph the order does not.
+
+In graphs with multiple edges between nodes, you can set up the edge list in the following ways:
+* An individual record per edge
+* One record per unique edge with aggregated data for the edge
+]
+
+.pull-right[
+**A node/vertex list (dataframe)** where you have one record per every node (even if they don't have edges) and the first column is `id` which represents a unique `id` for the node. This `id` value is the same one that is utilized in the edge list.
+
+Your dataframe can also have more columns with different attributes for the node.
+]
+
+**Both dataframes are needed to represent a complete graph.**
+
+---
+
+
+class: center, middle, inverse
+# Layouts
+
+
+---
+
+
+class: center, middle, inverse
+# Subgraphs
+
+
+---
+
+class: center, middle, inverse
+# Networks
+
+
+---
+
+## References
+
+* https://miro.medium.com/max/1400/1*zAmHaDww1A31Esup-Rmr-w.jpeg
+* https://dev.to/vaidehijoshi/knigsberg-seven-small-bridges-one-giant-graph-problem
+* https://medium.com/basecs/from-theory-to-practice-representing-graphs-cfd782c5be38
+* https://medium.com/basecs/spinning-around-in-cycles-with-directed-acyclic-graphs-a233496d4688
+* https://www.twosixlabs.com/6-ways-visualize-graphs/
+* https://kateto.net/tutorials/
+* https://rviews.rstudio.com/2019/03/06/intro-to-graph-analysis/
+* https://ggraph.data-imaginist.com/reference/index.html
+* https://tidygraph.data-imaginist.com/
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

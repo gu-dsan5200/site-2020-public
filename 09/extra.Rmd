@@ -1,0 +1,111 @@
+---
+
+class: inverse, center, middle
+
+# Extra
+
+---
+
+<img src="img/6ways-semantic-substrate.jpg">
+
+
+
+---
+
+
+<img src="img/directed-and-undirected.jpg">
+
+
+---
+
+
+<img src="img/directed-graph-2.jpeg">
+
+
+---
+
+
+<img src="img/directed-graph-representation.jpeg">
+
+
+---
+
+
+<img src="img/directed-graph.jpeg">
+
+
+---
+
+
+<img src="img/directed.png">
+
+
+---
+
+
+<img src="img/eulerian-definition.jpeg">
+
+
+---
+
+
+<img src="img/how-to-walk-a-graph.jpeg">
+
+
+---
+
+
+<img src="img/representing-graphs-titile.jpeg">
+
+
+---
+
+
+<img src="img/seven-bridges-graph.jpeg">
+
+
+---
+
+
+<img src="img/seven-bridges-historical.jpeg">
+
+
+---
+
+
+<img src="img/traversing-theory.jpeg">
+
+
+---
+
+
+
+
+
+---
+
+
+
+
+
+---
+
+
+<img src="img/undirected-graph-representation.jpeg">
+
+
+---
+
+
+<img src="img/undirected-graph-social-network.jpeg">
+
+
+---
+
+
+<img src="img/uniderected.png">
+
+
+---
+
+<img src="img/1_cS26jONjjQ5ACImJmHhtqg.jpeg">
