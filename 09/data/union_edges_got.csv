@@ -1,0 +1,405 @@
+source,target,type,color,lty
+Lysa Arryn,Robert Arryn,mother,#7570B3,solid
+Jasper Arryn,Alys Arryn,father,#1B9E77,solid
+Jasper Arryn,Jon Arryn,father,#1B9E77,solid
+Jon Arryn,Robert Arryn,father,#1B9E77,solid
+Cersei Lannister,Tommen Baratheon,mother,#7570B3,solid
+Cersei Lannister,Joffrey Baratheon,mother,#7570B3,solid
+Cassana Baratheon,Stannis Baratheon,mother,#7570B3,solid
+Cersei Lannister,Myrcella Baratheon,mother,#7570B3,solid
+Selyse Florent,Shireen Baratheon,mother,#7570B3,solid
+Cassana Baratheon,Renly Baratheon,mother,#7570B3,solid
+Rhaelle Targaryen,Steffon Baratheon,mother,#7570B3,solid
+Cassana Baratheon,Robert Baratheon,mother,#7570B3,solid
+Robert Baratheon,Tommen Baratheon,father,#1B9E77,solid
+Robert Baratheon,Joffrey Baratheon,father,#1B9E77,solid
+Steffon Baratheon,Stannis Baratheon,father,#1B9E77,solid
+Robert Baratheon,Myrcella Baratheon,father,#1B9E77,solid
+Stannis Baratheon,Shireen Baratheon,father,#1B9E77,solid
+Steffon Baratheon,Renly Baratheon,father,#1B9E77,solid
+Ormund Baratheon,Steffon Baratheon,father,#1B9E77,solid
+Steffon Baratheon,Robert Baratheon,father,#1B9E77,solid
+Jaime Lannister,Tommen Baratheon,father,#1B9E77,dotted
+Jaime Lannister,Joffrey Baratheon,father,#1B9E77,dotted
+Jaime Lannister,Myrcella Baratheon,father,#1B9E77,dotted
+Mariya Darry,Walda Frey daughter of Merrett,mother,#7570B3,solid
+Genna Lannister,Walder Frey son of Emmon,mother,#7570B3,solid
+Mariya Darry,Walder Frey son of Merrett,mother,#7570B3,solid
+Bethany Rosby,Benfrey Frey,mother,#7570B3,solid
+Genna Lannister,Cleos Frey,mother,#7570B3,solid
+Genna Lannister,Lyonel Frey,mother,#7570B3,solid
+Mariya Darry,Marissa Frey,mother,#7570B3,solid
+Bethany Rosby,Olyvar Frey,mother,#7570B3,solid
+Bethany Rosby,Perwyn Frey,mother,#7570B3,solid
+Genna Lannister,Tion Frey,mother,#7570B3,solid
+Jeyne Darry,Tywin Frey,mother,#7570B3,solid
+Bethany Rosby,Willamen Frey,mother,#7570B3,solid
+Jeyne Darry,Willem Frey,mother,#7570B3,solid
+Mariya Darry,Amerei Frey,mother,#7570B3,solid
+Perra Royce,Emmon Frey,mother,#7570B3,solid
+Dorna Swyft,Lancel Lannister,mother,#7570B3,solid
+Amarei Crakehall,Merrett Frey,mother,#7570B3,solid
+Bethany Rosby,Roslin Frey,mother,#7570B3,solid
+Merrett Frey,Walda Frey daughter of Merrett,father,#1B9E77,solid
+Emmon Frey,Walder Frey son of Emmon,father,#1B9E77,solid
+Merrett Frey,Walder Frey son of Merrett,father,#1B9E77,solid
+Walder Frey,Benfrey Frey,father,#1B9E77,solid
+Emmon Frey,Cleos Frey,father,#1B9E77,solid
+Emmon Frey,Lyonel Frey,father,#1B9E77,solid
+Merrett Frey,Marissa Frey,father,#1B9E77,solid
+Walder Frey,Olyvar Frey,father,#1B9E77,solid
+Walder Frey,Perwyn Frey,father,#1B9E77,solid
+Emmon Frey,Tion Frey,father,#1B9E77,solid
+Cleos Frey,Tywin Frey,father,#1B9E77,solid
+Walder Frey,Willamen Frey,father,#1B9E77,solid
+Cleos Frey,Willem Frey,father,#1B9E77,solid
+Merrett Frey,Amerei Frey,father,#1B9E77,solid
+Walder Frey,Emmon Frey,father,#1B9E77,solid
+Kevan Lannister,Lancel Lannister,father,#1B9E77,solid
+Walder Frey,Merrett Frey,father,#1B9E77,solid
+Walder Frey,Roslin Frey,father,#1B9E77,solid
+Lady of House Stonetree,Quenton Greyjoy,mother,#7570B3,solid
+Lady of House Piper,Robin Greyjoy,mother,#7570B3,solid
+Lady of House Sunderly,Urrigon Greyjoy,mother,#7570B3,solid
+Lady of House Stonetree,Donel Greyjoy,mother,#7570B3,solid
+Lady of House Sunderly,Euron Greyjoy,mother,#7570B3,solid
+Lady of House Stonetree,Harlon Greyjoy,mother,#7570B3,solid
+Lady of House Sunderly,Aeron Greyjoy,mother,#7570B3,solid
+Alannys Harlaw,Asha (Yara) Greyjoy,mother,#7570B3,solid
+Lady of House Sunderly,Balon Greyjoy,mother,#7570B3,solid
+Alannys Harlaw,Maron Greyjoy,mother,#7570B3,solid
+Alannys Harlaw,Theon Greyjoy,mother,#7570B3,solid
+Lady of House Sunderly,Victarion Greyjoy,mother,#7570B3,solid
+Alannys Harlaw,Rodrik Greyjoy,mother,#7570B3,solid
+Quellon Greyjoy,Quenton Greyjoy,father,#1B9E77,solid
+Quellon Greyjoy,Robin Greyjoy,father,#1B9E77,solid
+Quellon Greyjoy,Urrigon Greyjoy,father,#1B9E77,solid
+Quellon Greyjoy,Donel Greyjoy,father,#1B9E77,solid
+Quellon Greyjoy,Euron Greyjoy,father,#1B9E77,solid
+Quellon Greyjoy,Harlon Greyjoy,father,#1B9E77,solid
+Quellon Greyjoy,Aeron Greyjoy,father,#1B9E77,solid
+Balon Greyjoy,Asha (Yara) Greyjoy,father,#1B9E77,solid
+Quellon Greyjoy,Balon Greyjoy,father,#1B9E77,solid
+Balon Greyjoy,Maron Greyjoy,father,#1B9E77,solid
+Balon Greyjoy,Theon Greyjoy,father,#1B9E77,solid
+Quellon Greyjoy,Victarion Greyjoy,father,#1B9E77,solid
+Balon Greyjoy,Rodrik Greyjoy,father,#1B9E77,solid
+Marla Prester,Stafford Lannister,mother,#7570B3,solid
+Alys Stackspear,Damon Lannister son of Jason,mother,#7570B3,solid
+Cerissa Brax,Gerold Lannister,mother,#7570B3,solid
+Marla Prester,Joanna Lannister,mother,#7570B3,solid
+Myranda Lefford,Cerenna Lannister,mother,#7570B3,solid
+Rohanne Webber,Jason Lannister,mother,#7570B3,solid
+Shiera Crakehall,Lanna Lannister,mother,#7570B3,solid
+Shiera Crakehall,Lucion Lannister,mother,#7570B3,solid
+Myranda Lefford,Myrielle Lannister,mother,#7570B3,solid
+Cerissa Brax,Tybolt Lannister,mother,#7570B3,solid
+Darlessa Marbrand,Tyrek Lannister,mother,#7570B3,solid
+Dorna Swyft,Willem Lannister,mother,#7570B3,solid
+Joanna Lannister,Cersei Lannister,mother,#7570B3,solid
+Myranda Lefford,Daven Lannister,mother,#7570B3,solid
+Jeyne Marbrand,Genna Lannister,mother,#7570B3,solid
+Jeyne Marbrand,Gerion Lannister,mother,#7570B3,solid
+Joanna Lannister,Jaime Lannister,mother,#7570B3,solid
+Jeyne Marbrand,Kevan Lannister,mother,#7570B3,solid
+Jeyne Marbrand,Tywin Lannister,mother,#7570B3,solid
+Joanna Lannister,Tyrion Lannister,mother,#7570B3,solid
+Ella Lannister,Damion Lannister,mother,#7570B3,solid
+Jeyne Marbrand,Tygett Lannister,mother,#7570B3,solid
+Jason Lannister,Stafford Lannister,father,#1B9E77,solid
+Jason Lannister,Damon Lannister son of Jason,father,#1B9E77,solid
+Damon Lannister,Gerold Lannister,father,#1B9E77,solid
+Jason Lannister,Joanna Lannister,father,#1B9E77,solid
+Stafford Lannister,Cerenna Lannister,father,#1B9E77,solid
+Gerold Lannister,Jason Lannister,father,#1B9E77,solid
+Damion Lannister,Lanna Lannister,father,#1B9E77,solid
+Damion Lannister,Lucion Lannister,father,#1B9E77,solid
+Stafford Lannister,Myrielle Lannister,father,#1B9E77,solid
+Damon Lannister,Tybolt Lannister,father,#1B9E77,solid
+Tygett Lannister,Tyrek Lannister,father,#1B9E77,solid
+Kevan Lannister,Willem Lannister,father,#1B9E77,solid
+Tywin Lannister,Cersei Lannister,father,#1B9E77,solid
+Stafford Lannister,Daven Lannister,father,#1B9E77,solid
+Tytos Lannister,Genna Lannister,father,#1B9E77,solid
+Tytos Lannister,Gerion Lannister,father,#1B9E77,solid
+Tywin Lannister,Jaime Lannister,father,#1B9E77,solid
+Tytos Lannister,Kevan Lannister,father,#1B9E77,solid
+Tytos Lannister,Tywin Lannister,father,#1B9E77,solid
+Tywin Lannister,Tyrion Lannister,father,#1B9E77,solid
+Damon Lannister son of Jason,Damion Lannister,father,#1B9E77,solid
+Tytos Lannister,Tygett Lannister,father,#1B9E77,solid
+Elia Martell,Rhaenys Targaryen daughter of Rhaegar,mother,#7570B3,solid
+Elia Martell,Aegon Targaryen son of Rhaegar,mother,#7570B3,solid
+Princess of Dorne,Mors Martell brother of Doran,mother,#7570B3,solid
+Ellaria Sand,Loreza Sand,mother,#7570B3,solid
+Princess of Dorne,Doran Martell,mother,#7570B3,solid
+Princess of Dorne,Oberyn Martell,mother,#7570B3,solid
+Ellaria Sand,Obella Sand,mother,#7570B3,solid
+Ellaria Sand,Elia Sand,mother,#7570B3,solid
+Princess of Dorne,Elia Martell,mother,#7570B3,solid
+Oberyn Martell,Loreza Sand,father,#1B9E77,solid
+Oberyn Martell,Nymeria Sand,father,#1B9E77,solid
+Oberyn Martell,Obella Sand,father,#1B9E77,solid
+Oberyn Martell,Dorea Sand,father,#1B9E77,solid
+Oberyn Martell,Elia Sand,father,#1B9E77,solid
+Oberyn Martell,Obara Sand,father,#1B9E77,solid
+Oberyn Martell,Tyene Sand,father,#1B9E77,solid
+Oberyn Martell,Sarella Sand,father,#1B9E77,solid
+Catelyn Stark,Robb Stark,mother,#7570B3,solid
+Lorra Royce,Rodrik Stark son of Beron,mother,#7570B3,solid
+Lynara Stark,Brandon Stark son of Cregan,mother,#7570B3,solid
+Lorra Royce,Artos Stark,mother,#7570B3,solid
+Alys Karstark,Beron Stark,mother,#7570B3,solid
+Gilliane Glover,Cregan Stark,mother,#7570B3,solid
+Melantha Blackwood,Edwyle Stark,mother,#7570B3,solid
+Lynara Stark,Jonnel Stark,mother,#7570B3,solid
+Alys Karstark,Rodwell Stark,mother,#7570B3,solid
+Lorra Royce,Willam Stark,mother,#7570B3,solid
+Catelyn Stark,Arya Stark,mother,#7570B3,solid
+Catelyn Stark,Bran Stark,mother,#7570B3,solid
+Lyarra Stark,Lyanna Stark,mother,#7570B3,solid
+Lyarra Stark,Benjen Stark,mother,#7570B3,solid
+Lyarra Stark,Eddard Stark,mother,#7570B3,solid
+Lyanna Stark,Jon Snow,mother,#7570B3,dotted
+Catelyn Stark,Sansa Stark,mother,#7570B3,solid
+Marna Locke,Rickard Stark,mother,#7570B3,solid
+Catelyn Stark,Rickon Stark,mother,#7570B3,solid
+Lyarra Stark,Brandon Stark,mother,#7570B3,solid
+Arya Flint,Lyarra Stark,mother,#7570B3,solid
+Eddard Stark,Robb Stark,father,#1B9E77,solid
+Beron Stark,Rodrik Stark son of Beron,father,#1B9E77,solid
+Brandon Stark,Brandon Stark Burner,father,#1B9E77,solid
+Cregan Stark,Brandon Stark son of Cregan,father,#1B9E77,solid
+Beron Stark,Artos Stark,father,#1B9E77,solid
+Brandon Stark son of Cregan,Beron Stark,father,#1B9E77,solid
+Rickon Stark son of Benjen,Cregan Stark,father,#1B9E77,solid
+Willam Stark,Edwyle Stark,father,#1B9E77,solid
+Cregan Stark,Jonnel Stark,father,#1B9E77,solid
+Brandon Stark son of Cregan,Rodwell Stark,father,#1B9E77,solid
+Beron Stark,Willam Stark,father,#1B9E77,solid
+Eddard Stark,Arya Stark,father,#1B9E77,solid
+Eddard Stark,Bran Stark,father,#1B9E77,solid
+Rickard Stark,Lyanna Stark,father,#1B9E77,solid
+Rickard Stark,Benjen Stark,father,#1B9E77,solid
+Rickard Stark,Eddard Stark,father,#1B9E77,solid
+Eddard Stark,Jon Snow,father,#1B9E77,solid
+Eddard Stark,Sansa Stark,father,#1B9E77,solid
+Edwyle Stark,Rickard Stark,father,#1B9E77,solid
+Eddard Stark,Rickon Stark,father,#1B9E77,solid
+Rickard Stark,Brandon Stark,father,#1B9E77,solid
+Rodrik Stark,Lyarra Stark,father,#1B9E77,solid
+Rhaegar Targaryen,Jon Snow,father/mother,#D95F02,dotted
+Shaera Targaryen,Aerys II Targaryen,mother,#7570B3,solid
+Betha Blackwood,Duncan Targaryen,mother,#7570B3,solid
+Betha Blackwood,Jaehaerys II Targaryen,mother,#7570B3,solid
+Dyanna Dayne,Aegon V Targaryen,mother,#7570B3,solid
+Rhaella Targaryen,Daenerys Targaryen,mother,#7570B3,solid
+Rhaella Targaryen,Viserys Targaryen,mother,#7570B3,solid
+Betha Blackwood,Rhaelle Targaryen,mother,#7570B3,solid
+Rhaella Targaryen,Rhaegar Targaryen,mother,#7570B3,solid
+Rhaegar Targaryen,Rhaenys Targaryen daughter of Rhaegar,father,#1B9E77,solid
+Rhaegar Targaryen,Aegon Targaryen son of Rhaegar,father,#1B9E77,solid
+Jaehaerys II Targaryen,Aerys II Targaryen,father,#1B9E77,solid
+Aegon V Targaryen,Duncan Targaryen,father,#1B9E77,solid
+Aegon V Targaryen,Jaehaerys II Targaryen,father,#1B9E77,solid
+Maekar I Targaryen,Aegon V Targaryen,father,#1B9E77,solid
+Aerys II Targaryen,Daenerys Targaryen,father,#1B9E77,solid
+Jaehaerys II Targaryen,Rhaella Targaryen,father,#1B9E77,solid
+Aerys II Targaryen,Viserys Targaryen,father,#1B9E77,solid
+Aegon V Targaryen,Rhaelle Targaryen,father,#1B9E77,solid
+Aerys II Targaryen,Rhaegar Targaryen,father,#1B9E77,solid
+Aegon V Targaryen,Shaera Targaryen,father,#1B9E77,solid
+Minisa Whent,Catelyn Stark,mother,#7570B3,solid
+Minisa Whent,Edmure Tully,mother,#7570B3,solid
+Minisa Whent,Lysa Arryn,mother,#7570B3,solid
+Hoster Tully,Catelyn Stark,father,#1B9E77,solid
+Hoster Tully,Edmure Tully,father,#1B9E77,solid
+Hoster Tully,Lysa Arryn,father,#1B9E77,solid
+Alerie Hightower,Margaery Tyrell,mother,#7570B3,solid
+Lia Serry,Luthor Tyrell son of Theodore,mother,#7570B3,solid
+Elyn Norridge,Medwick Tyrell,mother,#7570B3,solid
+Elyn Norridge,Olene Tyrell,mother,#7570B3,solid
+Lia Serry,Elinor Tyrell,mother,#7570B3,solid
+Mina Tyrell,Hobber Redwyne,mother,#7570B3,solid
+Mina Tyrell,Horas Redwyne,mother,#7570B3,solid
+Unknown mother Tyrell,Luthor Tyrell,mother,#7570B3,solid
+Olenna Redwyne,Mina Tyrell,mother,#7570B3,solid
+Unknown mother Tyrell,Moryn Tyrell,mother,#7570B3,solid
+Elyn Norridge,Theodore Tyrell,mother,#7570B3,solid
+Olenna Redwyne,Mace Tyrell,mother,#7570B3,solid
+Alerie Hightower,Garlan Tyrell,mother,#7570B3,solid
+Alerie Hightower,Willas Tyrell,mother,#7570B3,solid
+Alerie Hightower,Loras Tyrell,mother,#7570B3,solid
+Mace Tyrell,Margaery Tyrell,father,#1B9E77,solid
+Moryn Tyrell,Luthor Tyrell son of Moryn,father,#1B9E77,solid
+Theodore Tyrell,Luthor Tyrell son of Theodore,father,#1B9E77,solid
+Luthor Tyrell son of Moryn,Medwick Tyrell,father,#1B9E77,solid
+Luthor Tyrell son of Moryn,Olene Tyrell,father,#1B9E77,solid
+Theodore Tyrell,Elinor Tyrell,father,#1B9E77,solid
+Paxter Redwyne,Hobber Redwyne,father,#1B9E77,solid
+Paxter Redwyne,Horas Redwyne,father,#1B9E77,solid
+Unknown father Tyrell,Luthor Tyrell,father,#1B9E77,solid
+Luthor Tyrell,Mina Tyrell,father,#1B9E77,solid
+Unknown father Tyrell,Moryn Tyrell,father,#1B9E77,solid
+Luthor Tyrell son of Moryn,Theodore Tyrell,father,#1B9E77,solid
+Luthor Tyrell,Mace Tyrell,father,#1B9E77,solid
+Mace Tyrell,Garlan Tyrell,father,#1B9E77,solid
+Mace Tyrell,Willas Tyrell,father,#1B9E77,solid
+Mace Tyrell,Loras Tyrell,father,#1B9E77,solid
+Roose Bolton,Ramsay Bolton,father,#1B9E77,solid
+Alys Arryn,Elys Waynwood,spouse,#E7298A,solid
+Elys Waynwood,Alys Arryn,spouse,#E7298A,solid
+Jon Arryn,Jeyne Royce,spouse,#E7298A,solid
+Lysa Arryn,Jon Arryn,spouse,#E7298A,solid
+Jon Arryn,Lysa Arryn,spouse,#E7298A,solid
+Jon Arryn,Rowena Arryn,spouse,#E7298A,solid
+Tommen Baratheon,Margaery Tyrell,spouse,#E7298A,solid
+Joffrey Baratheon,Margaery Tyrell,spouse,#E7298A,solid
+Margaery Tyrell,Renly Baratheon,spouse,#E7298A,solid
+Cassana Baratheon,Steffon Baratheon,spouse,#E7298A,solid
+Cersei Lannister,Robert Baratheon,spouse,#E7298A,solid
+Renly Baratheon,Margaery Tyrell,spouse,#E7298A,solid
+Steffon Baratheon,Cassana Baratheon,spouse,#E7298A,solid
+Selyse Florent,Stannis Baratheon,spouse,#E7298A,solid
+Rhaelle Targaryen,Ormund Baratheon,spouse,#E7298A,solid
+Robert Baratheon,Cersei Lannister,spouse,#E7298A,solid
+Margaery Tyrell,Joffrey Baratheon,spouse,#E7298A,solid
+Margaery Tyrell,Tommen Baratheon,spouse,#E7298A,solid
+Walda Frey daughter of Merrett,Roose Bolton,spouse,#E7298A,solid
+Benfrey Frey,Jyanna Frey,spouse,#E7298A,solid
+Jeyne Darry,Cleos Frey,spouse,#E7298A,solid
+Jyanna Frey,Benfrey Frey,spouse,#E7298A,solid
+Cleos Frey,Jeyne Darry,spouse,#E7298A,solid
+Lyonel Frey,Melesa Crakehall,spouse,#E7298A,solid
+Mariya Darry,Merrett Frey,spouse,#E7298A,solid
+Melesa Crakehall,Lyonel Frey,spouse,#E7298A,solid
+Pate of the Blue Fork,Amerei Frey,spouse,#E7298A,solid
+Amerei Frey,Pate of the Blue Fork,spouse,#E7298A,solid
+Emmon Frey,Genna Lannister,spouse,#E7298A,solid
+Lancel Lannister,Amerei Frey,spouse,#E7298A,solid
+Merrett Frey,Mariya Darry,spouse,#E7298A,solid
+Edmure Tully,Roslin Frey,spouse,#E7298A,solid
+Genna Lannister,Emmon Frey,spouse,#E7298A,solid
+Roslin Frey,Edmure Tully,spouse,#E7298A,solid
+Perra Royce,Walder Frey,spouse,#E7298A,solid
+Amarei Crakehall,Walder Frey,spouse,#E7298A,solid
+Bethany Rosby,Walder Frey,spouse,#E7298A,solid
+Quellon Greyjoy,Lady of House Stonetree,spouse,#E7298A,solid
+Erik Ironmaker,Asha (Yara) Greyjoy,spouse,#E7298A,dotted
+Alannys Harlaw,Balon Greyjoy,spouse,#E7298A,solid
+Asha (Yara) Greyjoy,Erik Ironmaker,spouse,#E7298A,dotted
+Quellon Greyjoy,Lady of House Sunderly,spouse,#E7298A,solid
+Quellon Greyjoy,Lady of House Piper,spouse,#E7298A,solid
+Stafford Lannister,Myranda Lefford,spouse,#E7298A,solid
+Damon Lannister,Cerissa Brax,spouse,#E7298A,solid
+Damon Lannister son of Jason,Ella Lannister,spouse,#E7298A,solid
+Gerold Lannister,Alysanne Farman,spouse,#E7298A,solid
+Joanna Lannister,Tywin Lannister,spouse,#E7298A,solid
+Antario Jast,Lanna Lannister,spouse,#E7298A,solid
+Darlessa Marbrand,Tygett Lannister,spouse,#E7298A,solid
+Ermesande Hayford,Tyrek Lannister,spouse,#E7298A,solid
+Jason Lannister,Alys Stackspear,spouse,#E7298A,solid
+Lanna Lannister,Antario Jast,spouse,#E7298A,solid
+Shiera Crakehall,Damion Lannister,spouse,#E7298A,solid
+Tybolt Lannister,Teora Kyndall,spouse,#E7298A,solid
+Tyrek Lannister,Ermesande Hayford,spouse,#E7298A,solid
+Kevan Lannister,Dorna Swyft,spouse,#E7298A,solid
+Sansa Stark,Tyrion Lannister,spouse,#E7298A,solid
+Tywin Lannister,Joanna Lannister,spouse,#E7298A,solid
+Tysha,Tyrion Lannister,spouse,#E7298A,solid
+Tyrion Lannister,Tysha,spouse,#E7298A,solid
+Damion Lannister,Shiera Crakehall,spouse,#E7298A,solid
+Tygett Lannister,Darlessa Marbrand,spouse,#E7298A,solid
+Tytos Lannister,Jeyne Marbrand,spouse,#E7298A,solid
+Jason Lannister,Marla Prester,spouse,#E7298A,solid
+Gerold Lannister,Rohanne Webber,spouse,#E7298A,solid
+Doran Martell,Mellario of Norvos,spouse,#E7298A,solid
+Ellaria Sand,Oberyn Martell,spouse,#E7298A,solid
+Elia Martell,Rhaegar Targaryen,spouse,#E7298A,solid
+Rhaegar Targaryen,Elia Martell,spouse,#E7298A,solid
+Rodrik Stark son of Beron,Arya Flint,spouse,#E7298A,solid
+Brandon Stark son of Cregan,Alys Karstark,spouse,#E7298A,solid
+Catelyn Stark,Eddard Stark,spouse,#E7298A,solid
+Jeyne Westerling,Robb Stark,spouse,#E7298A,solid
+Artos Stark,Lysara Karstark,spouse,#E7298A,solid
+Beron Stark,Lorra Royce,spouse,#E7298A,solid
+Cregan Stark,Arra Norrey,spouse,#E7298A,solid
+Edwyle Stark,Marna Locke,spouse,#E7298A,solid
+Jonnel Stark,Robyn Ryswell,spouse,#E7298A,solid
+Rodwell Stark,Myriame Manderly,spouse,#E7298A,solid
+Willam Stark,Melantha Blackwood,spouse,#E7298A,solid
+Eddard Stark,Catelyn Stark,spouse,#E7298A,solid
+Rickard Stark,Lyarra Stark,spouse,#E7298A,solid
+Lyarra Stark,Rickard Stark,spouse,#E7298A,solid
+Willam Stark,Lyanna Glover,spouse,#E7298A,solid
+Sansa Stark,Ramsay Bolton,spouse,#E7298A,dotted
+Cregan Stark,Lynara Stark,spouse,#E7298A,solid
+Talisa Stark,Robb Stark,spouse,#E7298A,dotted
+Aerys II Targaryen,Rhaella Targaryen,spouse,#E7298A,solid
+Duncan Targaryen,Jenny of Oldstones,spouse,#E7298A,solid
+Maron Martell,Daenerys Targaryen,spouse,#E7298A,dotted
+Daenerys Targaryen,Drogo,spouse,#E7298A,solid
+Hizdahr zo Loraq,Daenerys Targaryen,spouse,#E7298A,solid
+Rhaella Targaryen,Aerys II Targaryen,spouse,#E7298A,solid
+Drogo,Daenerys Targaryen,spouse,#E7298A,solid
+Daenerys Targaryen,Hizdahr zo Loraq,spouse,#E7298A,solid
+Minisa Whent,Hoster Tully,spouse,#E7298A,solid
+Hoster Tully,Minisa Whent,spouse,#E7298A,solid
+Petyr Baelish,Lysa Arryn,spouse,#E7298A,solid
+Lysa Arryn,Petyr Baelish,spouse,#E7298A,solid
+Lia Serry,Theodore Tyrell,spouse,#E7298A,solid
+Luthor Tyrell son of Moryn,Elyn Norridge,spouse,#E7298A,solid
+Olene Tyrell,Leo Blackbar,spouse,#E7298A,solid
+Elyn Norridge,Luthor Tyrell son of Moryn,spouse,#E7298A,solid
+Leo Blackbar,Olene Tyrell,spouse,#E7298A,solid
+Leonette Fossoway,Garlan Tyrell,spouse,#E7298A,solid
+Luthor Tyrell,Olenna Redwyne,spouse,#E7298A,solid
+Mina Tyrell,Paxter Redwyne,spouse,#E7298A,solid
+Theodore Tyrell,Lia Serry,spouse,#E7298A,solid
+Mace Tyrell,Alerie Hightower,spouse,#E7298A,solid
+Olenna Redwyne,Luthor Tyrell,spouse,#E7298A,solid
+Paxter Redwyne,Mina Tyrell,spouse,#E7298A,solid
+Alerie Hightower,Mace Tyrell,spouse,#E7298A,solid
+Garlan Tyrell,Leonette Fossoway,spouse,#E7298A,solid
+Jeyne Royce,Jon Arryn,spouse,#E7298A,solid
+Rowena Arryn,Jon Arryn,spouse,#E7298A,solid
+Stannis Baratheon,Selyse Florent,spouse,#E7298A,solid
+Ormund Baratheon,Rhaelle Targaryen,spouse,#E7298A,solid
+Roose Bolton,Walda Frey daughter of Merrett,spouse,#E7298A,solid
+Amerei Frey,Lancel Lannister,spouse,#E7298A,solid
+Walder Frey,Perra Royce,spouse,#E7298A,solid
+Walder Frey,Amarei Crakehall,spouse,#E7298A,solid
+Walder Frey,Bethany Rosby,spouse,#E7298A,solid
+Lady of House Stonetree,Quellon Greyjoy,spouse,#E7298A,solid
+Balon Greyjoy,Alannys Harlaw,spouse,#E7298A,solid
+Lady of House Sunderly,Quellon Greyjoy,spouse,#E7298A,solid
+Lady of House Piper,Quellon Greyjoy,spouse,#E7298A,solid
+Myranda Lefford,Stafford Lannister,spouse,#E7298A,solid
+Cerissa Brax,Damon Lannister,spouse,#E7298A,solid
+Ella Lannister,Damon Lannister son of Jason,spouse,#E7298A,solid
+Alysanne Farman,Gerold Lannister,spouse,#E7298A,solid
+Alys Stackspear,Jason Lannister,spouse,#E7298A,solid
+Teora Kyndall,Tybolt Lannister,spouse,#E7298A,solid
+Dorna Swyft,Kevan Lannister,spouse,#E7298A,solid
+Tyrion Lannister,Sansa Stark,spouse,#E7298A,solid
+Jeyne Marbrand,Tytos Lannister,spouse,#E7298A,solid
+Marla Prester,Jason Lannister,spouse,#E7298A,solid
+Rohanne Webber,Gerold Lannister,spouse,#E7298A,solid
+Mellario of Norvos,Doran Martell,spouse,#E7298A,solid
+Oberyn Martell,Ellaria Sand,spouse,#E7298A,solid
+Arya Flint,Rodrik Stark son of Beron,spouse,#E7298A,solid
+Alys Karstark,Brandon Stark son of Cregan,spouse,#E7298A,solid
+Robb Stark,Jeyne Westerling,spouse,#E7298A,solid
+Lysara Karstark,Artos Stark,spouse,#E7298A,solid
+Lorra Royce,Beron Stark,spouse,#E7298A,solid
+Arra Norrey,Cregan Stark,spouse,#E7298A,solid
+Marna Locke,Edwyle Stark,spouse,#E7298A,solid
+Robyn Ryswell,Jonnel Stark,spouse,#E7298A,solid
+Myriame Manderly,Rodwell Stark,spouse,#E7298A,solid
+Melantha Blackwood,Willam Stark,spouse,#E7298A,solid
+Lyanna Glover,Willam Stark,spouse,#E7298A,solid
+Ramsay Bolton,Sansa Stark,spouse,#E7298A,dotted
+Lynara Stark,Cregan Stark,spouse,#E7298A,solid
+Robb Stark,Talisa Stark,spouse,#E7298A,dotted
+Jenny of Oldstones,Duncan Targaryen,spouse,#E7298A,solid
+Daenerys Targaryen,Maron Martell,spouse,#E7298A,dotted

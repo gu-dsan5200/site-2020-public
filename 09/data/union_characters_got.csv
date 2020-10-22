@@ -1,0 +1,209 @@
+name,male,culture,house,popularity,house2,color,shape
+Alys Arryn,0,NA,House Arryn,0.0802675585284281,NA,NA,circle
+Elys Waynwood,0,NA,House Waynwood,0.0702341137123745,NA,NA,circle
+Jasper Arryn,1,NA,House Arryn,0.0434782608695652,NA,NA,square
+Jeyne Royce,0,NA,House Royce,0,NA,NA,circle
+Jon Arryn,1,Valemen,House Arryn,0.836120401337792,NA,NA,square
+Lysa Arryn,0,NA,House Tully,0,House Tully,#F781BF,circle
+Robert Arryn,1,Valemen,House Arryn,0.321070234113712,NA,NA,square
+Rowena Arryn,0,NA,House Arryn,0,NA,NA,circle
+Cassana Baratheon,0,NA,House Baratheon,0,House Baratheon,#E41A1C,circle
+Cersei Lannister,0,Westerlands,House Lannister,1,House Lannister,#984EA3,circle
+Jaime Lannister,1,Westerlands,House Lannister,1,House Lannister,#984EA3,square
+Joffrey Baratheon,1,NA,House Baratheon,1,House Baratheon,#E41A1C,square
+Margaery Tyrell,0,Reach,House Tyrell,1,House Tyrell,#999999,circle
+Myrcella Baratheon,0,NA,House Baratheon,0.561872909698996,House Baratheon,#E41A1C,circle
+Ormund Baratheon,1,NA,House Baratheon,0,House Baratheon,#E41A1C,square
+Renly Baratheon,1,Stormlands,House Baratheon,1,House Baratheon,#E41A1C,square
+Rhaelle Targaryen,0,NA,House Targaryen,0.137123745819397,House Targaryen,#A65628,circle
+Robert Baratheon,1,NA,House Baratheon,0,House Baratheon,#E41A1C,square
+Selyse Florent,0,NA,House Florent,0.397993311036789,NA,NA,circle
+Shireen Baratheon,0,NA,House Baratheon,0.23076923076923,House Baratheon,#E41A1C,circle
+Stannis Baratheon,1,NA,House Baratheon,1,House Baratheon,#E41A1C,square
+Steffon Baratheon,1,NA,House Baratheon,0.371237458193979,House Baratheon,#E41A1C,square
+Tommen Baratheon,1,NA,House Baratheon,1,House Baratheon,#E41A1C,square
+Amarei Crakehall,0,NA,House Crakehall,0.153846153846153,NA,NA,circle
+Amerei Frey,0,NA,House Frey,0.237458193979933,House Frey,#377EB8,circle
+Benfrey Frey,1,NA,House Frey,0.0735785953177257,House Frey,#377EB8,square
+Bethany Rosby,0,NA,House Rosby,0.0668896321070234,NA,NA,circle
+Cleos Frey,1,NA,House Frey,0.247491638795986,House Frey,#377EB8,square
+Dorna Swyft,0,NA,House Swyft,0,NA,NA,circle
+Edmure Tully,1,Rivermen,House Tully,0.655518394648829,House Tully,#F781BF,square
+Emmon Frey,1,NA,House Frey,0.23076923076923,House Frey,#377EB8,square
+Genna Lannister,0,NA,House Lannister,0.217391304347826,House Lannister,#984EA3,circle
+Jeyne Darry,0,Westeros,House Darry,0.0769230769230769,NA,NA,circle
+Jyanna Frey,0,NA,House Frey,0.0501672240802675,House Frey,#377EB8,circle
+Kevan Lannister,1,NA,House Lannister,0.869565217391304,House Lannister,#984EA3,square
+Lancel Lannister,1,NA,House Lannister,0.478260869565217,House Lannister,#984EA3,square
+Lyonel Frey,0,NA,House Frey,0.0635451505016722,House Frey,#377EB8,circle
+Marissa Frey,0,NA,House Frey,0.160535117056856,House Frey,#377EB8,circle
+Mariya Darry,0,NA,House Darry,0.190635451505016,NA,NA,circle
+Melesa Crakehall,0,NA,House Crakehall,0.0501672240802675,NA,NA,circle
+Merrett Frey,1,Riverlands,House Frey,0.434782608695652,House Frey,#377EB8,square
+Olyvar Frey,1,NA,House Frey,0.0836120401337792,House Frey,#377EB8,square
+Pate of the Blue Fork,1,NA,House Frey,0.170568561872909,House Frey,#377EB8,square
+Perra Royce,0,NA,House Royce,0,NA,NA,circle
+Perwyn Frey,1,NA,House Frey,0.0836120401337792,House Frey,#377EB8,square
+Roose Bolton,1,Northmen,House Bolton,0.979933110367893,NA,NA,square
+Roslin Frey,1,Rivermen,House Frey,0.217391304347826,House Frey,#377EB8,square
+Tion Frey,1,NA,House Frey,0.120401337792642,House Frey,#377EB8,square
+Tywin Frey,1,NA,House Frey,0.0802675585284281,House Frey,#377EB8,square
+Walda Frey daughter of Merrett,0,NA,House Frey,0,House Frey,#377EB8,circle
+Walder Frey,1,Rivermen,House Frey,0.896321070234113,House Frey,#377EB8,square
+Walder Frey son of Emmon,0,NA,House Frey,0,House Frey,#377EB8,circle
+Walder Frey son of Merrett,1,NA,House Frey,0,House Frey,#377EB8,square
+Willamen Frey,1,NA,House Frey,0.0635451505016722,House Frey,#377EB8,square
+Willem Frey,1,NA,House Frey,0.0802675585284281,House Frey,#377EB8,square
+Aeron Greyjoy,1,Ironmen,House Greyjoy,0.45819397993311,House Greyjoy,#4DAF4A,square
+Alannys Harlaw,0,Ironborn,House Harlaw,0.237458193979933,NA,NA,circle
+Asha (Yara) Greyjoy,0,Ironborn,House Greyjoy,0.709030100334448,House Greyjoy,#4DAF4A,circle
+Balon Greyjoy,1,NA,House Greyjoy,0.739130434782608,House Greyjoy,#4DAF4A,square
+Donel Greyjoy,1,Ironborn,House Greyjoy,0.060200668896321,House Greyjoy,#4DAF4A,square
+Erik Ironmaker,1,Ironborn,House Ironmaker,0.0501672240802675,NA,NA,square
+Euron Greyjoy,1,Ironborn,House Greyjoy,0.739130434782608,House Greyjoy,#4DAF4A,square
+Harlon Greyjoy,1,Ironborn,House Greyjoy,0.0635451505016722,House Greyjoy,#4DAF4A,square
+Lady of House Piper,0,NA,House Piper,0,NA,NA,circle
+Lady of House Stonetree,0,NA,House Stonetree,0,NA,NA,circle
+Lady of House Sunderly,0,NA,House Sunderly,0,NA,NA,circle
+Maron Greyjoy,1,Ironborn,House Greyjoy,0.140468227424749,House Greyjoy,#4DAF4A,square
+Quellon Greyjoy,1,Ironborn,House Greyjoy,0.0903010033444816,House Greyjoy,#4DAF4A,square
+Quenton Greyjoy,1,Ironborn,House Greyjoy,0.060200668896321,House Greyjoy,#4DAF4A,square
+Robin Greyjoy,1,Ironborn,House Greyjoy,0.0635451505016722,House Greyjoy,#4DAF4A,square
+Rodrik Greyjoy,1,Ironborn,House Greyjoy,0.153846153846153,House Greyjoy,#4DAF4A,square
+Theon Greyjoy,1,Ironmen,House Greyjoy,1,House Greyjoy,#4DAF4A,square
+Urrigon Greyjoy,1,Ironborn,House Greyjoy,0.0735785953177257,House Greyjoy,#4DAF4A,square
+Victarion Greyjoy,1,Ironborn,House Greyjoy,0.705685618729097,House Greyjoy,#4DAF4A,square
+Alys Stackspear,0,NA,House Stackspear,0,NA,NA,circle
+Alysanne Farman,0,NA,House Farman,0,NA,NA,circle
+Antario Jast,1,NA,House Jast,0.0802675585284281,NA,NA,square
+Cerenna Lannister,0,NA,House Lannister,0.0702341137123745,House Lannister,#984EA3,circle
+Cerissa Brax,0,NA,House Brax,0,NA,NA,circle
+Damion Lannister,1,NA,House Lannister,0.0836120401337792,House Lannister,#984EA3,square
+Damon Lannister,1,Westerman,House Lannister,0,House Lannister,#984EA3,square
+Damon Lannister son of Jason,1,NA,House Lannister,0.060200668896321,House Lannister,#984EA3,square
+Darlessa Marbrand,0,NA,House Marbrand,0.0836120401337792,NA,NA,circle
+Daven Lannister,1,Westerman,House Lannister,0.207357859531772,House Lannister,#984EA3,square
+Ella Lannister,0,NA,House Lannister,0,House Lannister,#984EA3,circle
+Ermesande Hayford,0,NA,House Hayford,0.113712374581939,NA,NA,circle
+Gerion Lannister,1,NA,House Lannister,0.140468227424749,House Lannister,#984EA3,square
+Gerold Lannister,1,Westerman,House Lannister,0.0869565217391304,House Lannister,#984EA3,square
+Jason Lannister,1,NA,House Lannister,0.0468227424749163,House Lannister,#984EA3,square
+Jeyne Marbrand,0,NA,House Marbrand,0,NA,NA,circle
+Joanna Lannister,0,Westerman,House Lannister,0.23076923076923,House Lannister,#984EA3,circle
+Lanna Lannister,0,NA,House Lannister,0.0735785953177257,House Lannister,#984EA3,circle
+Lucion Lannister,0,NA,House Lannister,0.0668896321070234,House Lannister,#984EA3,circle
+Marla Prester,0,NA,House Prester,0,NA,NA,circle
+Myranda Lefford,0,NA,House Lefford,0,NA,NA,circle
+Myrielle Lannister,0,NA,House Lannister,0.0702341137123745,House Lannister,#984EA3,circle
+Rohanne Webber,0,NA,House Webber,0.170568561872909,NA,NA,circle
+Sansa Stark,0,Northmen,House Stark,1,House Stark,#FFFF33,circle
+Shiera Crakehall,0,NA,House Crakehall,0.0668896321070234,NA,NA,circle
+Stafford Lannister,1,Westerman,House Lannister,0.170568561872909,House Lannister,#984EA3,square
+Teora Kyndall,0,NA,House Kyndall,0,NA,NA,circle
+Tybolt Lannister,1,Westerman,House Lannister,0.0769230769230769,House Lannister,#984EA3,square
+Tygett Lannister,1,NA,House Lannister,0.110367892976588,House Lannister,#984EA3,square
+Tyrek Lannister,1,NA,House Lannister,0.133779264214046,House Lannister,#984EA3,square
+Tyrion Lannister,1,NA,House Lannister,1,House Lannister,#984EA3,square
+Tysha,1,NA,House Tysha,0.130434782608695,NA,NA,square
+Tytos Lannister,1,NA,House Lannister,0.210702341137123,House Lannister,#984EA3,square
+Tywin Lannister,1,NA,House Lannister,1,House Lannister,#984EA3,square
+Willem Lannister,1,NA,House Lannister,0.167224080267558,House Lannister,#984EA3,square
+Aegon Targaryen son of Rhaegar,1,Valyrian,House Targaryen,0,House Targaryen,#A65628,square
+Doran Martell,1,Dornish,House Martell,0.498327759197324,House Martell,#FF7F00,square
+Dorea Sand,0,Dornishmen,House Martell,0.103678929765886,House Martell,#FF7F00,circle
+Elia Martell,0,NA,House Martell,0.441471571906354,House Martell,#FF7F00,circle
+Elia Sand,0,Dornishmen,House Martell,0.11705685618729,House Martell,#FF7F00,circle
+Ellaria Sand,0,Dornish,House Uller,0.160535117056856,NA,NA,circle
+Loreza Sand,0,Dorne,House Martell,0.107023411371237,House Martell,#FF7F00,circle
+Mellario of Norvos,0,NA,House Norvos,0,NA,NA,circle
+Mors Martell brother of Doran,1,NA,House Martell,0.0668896321070234,House Martell,#FF7F00,square
+Nymeria Sand,0,Dornishmen,House Martell,0.377926421404682,House Martell,#FF7F00,circle
+Obara Sand,0,Dornish,House Martell,0.140468227424749,House Martell,#FF7F00,circle
+Obella Sand,0,Dornishmen,House Martell,0.103678929765886,House Martell,#FF7F00,circle
+Oberyn Martell,1,Dornishmen,House Martell,0.77257525083612,House Martell,#FF7F00,square
+Princess of Dorne,0,NA,House Dorne,0,NA,NA,circle
+Rhaegar Targaryen,1,Valyrian,House Targaryen,0.799331103678929,House Targaryen,#A65628,square
+Rhaenys Targaryen daughter of Rhaegar,0,NA,House Targaryen,0.244147157190635,House Targaryen,#A65628,circle
+Sarella Sand,0,Dornishmen,House Martell,0.103678929765886,House Martell,#FF7F00,circle
+Tyene Sand,0,Dornish,House Martell,0.137123745819397,House Martell,#FF7F00,circle
+Alys Karstark,0,Northmen,House Karstark,0.157190635451505,NA,NA,circle
+Arra Norrey,0,NA,House Norrey,0,NA,NA,circle
+Artos Stark,1,Northmen,House Stark,0.103678929765886,House Stark,#FFFF33,square
+Arya Flint,0,NA,House Flint,0,NA,NA,circle
+Arya Stark,0,Northmen,House Stark,1,House Stark,#FFFF33,circle
+Benjen Stark,1,Northmen,House Stark,0.40133779264214,House Stark,#FFFF33,square
+Beron Stark,1,Northmen,House Stark,0.234113712374581,House Stark,#FFFF33,square
+Bran Stark,1,Northmen,House Stark,1,House Stark,#FFFF33,square
+Brandon Stark,1,Northmen,House Stark,0.347826086956521,House Stark,#FFFF33,square
+Brandon Stark Burner,1,Northmen,House Stark,0.0334448160535117,House Stark,#FFFF33,square
+Brandon Stark son of Cregan,1,Northmen,House Stark,0.1438127090301,House Stark,#FFFF33,square
+Catelyn Stark,0,Rivermen,House Tully,0,House Tully,#F781BF,circle
+Cregan Stark,1,Northmen,House Stark,0.484949832775919,House Stark,#FFFF33,square
+Eddard Stark,1,Northmen,House Stark,1,House Stark,#FFFF33,square
+Edwyle Stark,1,Northmen,House Stark,0.107023411371237,House Stark,#FFFF33,square
+Gilliane Glover,0,NA,House Glover,0,NA,NA,circle
+Jeyne Westerling,0,Westermen,House Westerling,0.424749163879598,NA,NA,circle
+Jon Snow,1,Northmen,House Stark,1,House Stark,#FFFF33,square
+Jonnel Stark,1,NA,House Stark,0.127090301003344,House Stark,#FFFF33,square
+Lorra Royce,0,NA,House Royce,0,NA,NA,circle
+Lyanna Glover,0,NA,House Glover,0,NA,NA,circle
+Lyanna Stark,0,Northmen,House Stark,0.354515050167224,House Stark,#FFFF33,circle
+Lyarra Stark,0,NA,House Stark,0,House Stark,#FFFF33,circle
+Lynara Stark,0,NA,House Stark,0,House Stark,#FFFF33,circle
+Lysara Karstark,0,NA,House Karstark,0,NA,NA,circle
+Marna Locke,0,NA,House Locke,0,NA,NA,circle
+Melantha Blackwood,0,NA,House Blackwood,0,NA,NA,circle
+Myriame Manderly,0,NA,House Manderly,0,NA,NA,circle
+Ramsay Bolton,1,NA,House Bolton,0,NA,NA,square
+Rickard Stark,1,Northmen,House Stark,0.270903010033444,House Stark,#FFFF33,square
+Rickon Stark,1,Northmen,House Stark,0.551839464882943,House Stark,#FFFF33,square
+Rickon Stark son of Benjen,1,NA,House Stark,0,House Stark,#FFFF33,square
+Robb Stark,1,NA,House Stark,1,House Stark,#FFFF33,square
+Robyn Ryswell,0,NA,House Ryswell,0,NA,NA,circle
+Rodrik Stark,1,Northmen,House Stark,0.040133779264214,House Stark,#FFFF33,square
+Rodrik Stark son of Beron,1,Northmen,House Stark,0.100334448160535,House Stark,#FFFF33,square
+Rodwell Stark,1,Northmen,House Stark,0.130434782608695,House Stark,#FFFF33,square
+Talisa Stark,0,NA,House Stark,0,House Stark,#FFFF33,circle
+Willam Stark,1,Northmen,House Stark,0.11705685618729,House Stark,#FFFF33,square
+Aegon V Targaryen,1,NA,House Targaryen,0.695652173913043,House Targaryen,#A65628,square
+Aerys II Targaryen,1,NA,House Targaryen,1,House Targaryen,#A65628,square
+Betha Blackwood,0,NA,House Blackwood,0,NA,NA,circle
+Daenerys Targaryen,0,Valyrian,House Targaryen,1,House Targaryen,#A65628,circle
+Drogo,0,Dothraki,Dothraki,0.558528428093645,NA,NA,circle
+Duncan Targaryen,1,NA,House Targaryen,0.140468227424749,House Targaryen,#A65628,square
+Dyanna Dayne,0,NA,House Dayne,0,NA,NA,circle
+Hizdahr zo Loraq,1,Ghiscari,House Loraq,0.444816053511705,NA,NA,square
+Jaehaerys II Targaryen,1,NA,House Targaryen,0.494983277591973,House Targaryen,#A65628,square
+Jenny of Oldstones,0,NA,House Oldstones,0,NA,NA,circle
+Maekar I Targaryen,1,NA,House Targaryen,0,House Targaryen,#A65628,square
+Maron Martell,1,Dornish,House Martell,0.0367892976588628,House Martell,#FF7F00,square
+Rhaella Targaryen,0,Valyrian,House Targaryen,0.321070234113712,House Targaryen,#A65628,circle
+Shaera Targaryen,0,NA,House Targaryen,0.494983277591973,House Targaryen,#A65628,circle
+Viserys Targaryen,1,Valyrian,House Targaryen,0.622073578595317,House Targaryen,#A65628,square
+Hoster Tully,1,Rivermen,House Tully,0.331103678929765,House Tully,#F781BF,square
+Minisa Whent,0,Rivermen,House Whent,0.0434782608695652,NA,NA,circle
+Petyr Baelish,1,Valemen,House Baelish,1,NA,NA,square
+Alerie Hightower,0,NA,House Hightower,0.227424749163879,NA,NA,circle
+Elinor Tyrell,0,NA,House Tyrell,0.163879598662207,House Tyrell,#999999,circle
+Elyn Norridge,0,NA,House Norridge,0.127090301003344,NA,NA,circle
+Garlan Tyrell,1,NA,House Tyrell,0.327759197324414,House Tyrell,#999999,square
+Hobber Redwyne,1,Reach,House Redwyne,0.214046822742474,NA,NA,square
+Horas Redwyne,1,Reach,House Redwyne,0.217391304347826,NA,NA,square
+Leo Blackbar,1,NA,House Blackbar,0.127090301003344,NA,NA,square
+Leonette Fossoway,0,NA,House Fossoway,0.17391304347826,NA,NA,circle
+Lia Serry,0,NA,House Serry,0.137123745819397,NA,NA,circle
+Loras Tyrell,1,The Reach,House Tyrell,0.665551839464882,House Tyrell,#999999,square
+Luthor Tyrell,1,Reach,House Tyrell,0.170568561872909,House Tyrell,#999999,square
+Luthor Tyrell son of Moryn,1,NA,House Tyrell,0.130434782608695,House Tyrell,#999999,square
+Luthor Tyrell son of Theodore,1,NA,House Tyrell,0.137123745819397,House Tyrell,#999999,square
+Mace Tyrell,1,NA,House Tyrell,0.856187290969899,House Tyrell,#999999,square
+Medwick Tyrell,1,NA,House Tyrell,0.120401337792642,House Tyrell,#999999,square
+Mina Tyrell,0,NA,House Tyrell,0.163879598662207,House Tyrell,#999999,circle
+Moryn Tyrell,1,NA,House Tyrell,0.140468227424749,House Tyrell,#999999,square
+Olene Tyrell,0,NA,House Moryn,0.127090301003344,NA,NA,circle
+Olenna Redwyne,0,NA,House Redwyne,0.2876254180602,NA,NA,circle
+Paxter Redwyne,1,NA,House Redwyne,0.511705685618729,NA,NA,square
+Theodore Tyrell,1,NA,House Tyrell,0.137123745819397,House Tyrell,#999999,square
+Unknown father Tyrell,1,NA,House Tyrell,0,House Tyrell,#999999,square
+Unknown mother Tyrell,0,NA,House Tyrell,0,House Tyrell,#999999,circle
+Willas Tyrell,1,NA,House Tyrell,0.290969899665551,House Tyrell,#999999,square
