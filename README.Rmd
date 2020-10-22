@@ -29,7 +29,7 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
 - **Class Schedule:**
   - Class meets Thursdays 6:30-9:00pm 
   - Recurring Zoom Link (GU credentials required): https://georgetown.zoom.us/j/99864511820
-  - Labs will breakout from the Lecture (no separate Zoom Link)
+  - Both sections will start together and break out from the main Zoom session (no separate Zoom Link)
   
 ### Course Description
 
@@ -125,9 +125,9 @@ This calendar is subject to change. We will make make any changes known in advan
 ```{r, echo = FALSE, results="asis", warning = FALSE} 
 source("schedule.R")
 sched %>%
+  select(session, module, date, topics, due) %>% 
   knitr:::kable(., "markdown",
-                col.names = c("Class", "Module", "Date", "Topics", "Activity",
-                              "Readings", "What is Due")
+                col.names = c("Class", "Module", "Date", "Topics", "What is Due")
   )
 ``` 
 

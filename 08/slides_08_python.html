@@ -11,6 +11,25 @@
     <textarea id="source">
 
 
+## Toolsets
+
+- The traditional toolset for doing maps in Python was the [`Basemap`](https://matplotlib.org/basemap/index.html) matplotlib toolkit 
+- This has now been deprecated in favor of [`cartopy`](https://scitools.org.uk/cartopy/docs/latest/index.html)
+
+Both these toolsets basically provide transformations to make your data fit 
+various map projections and leave the actual graphing to `matplotlib`
+
+--
+
+The more useful way to map geospatial data in Python is [`geopandas`](https://geopandas.org/index.html). 
+
+- This works very similarly to the `sf` package in R
+    + All the data in one `pandas.DataFrame`-like object
+    + One column for the _simple features_ geometry specification (called `geometry`)
+    + Other columns for data about each geometry, that you can then represent within a map
+
+---
+
 ## geopandas
 
 Let's use some inbuilt data to do some maps
@@ -47,6 +66,7 @@ world.columns
 
 ## geopandas
 
+.pull-left[
 
 ```python
 world['gdp_per_cap'] = world.gdp_md_est / world.pop_est
@@ -58,8 +78,10 @@ world.plot(column = 'pop_est',
                'orientation': 'horizontal'})
 plt.show()
 ```
-
+]
+.pull-right[
 ![](slides_08_python_files/figure-html/unnamed-chunk-3-1.png)
+]
 
 ---
 
@@ -93,6 +115,7 @@ world.crs
 
 ### Changing projections
 
+.pull-left[
 
 ```python
 world1 = world.to_crs('EPSG:3395')
@@ -104,7 +127,9 @@ world1.plot(column = 'pop_est',
 plt.show()
 ```
 ]
+.pull-right[
 ![](slides_08_python_files/figure-html/unnamed-chunk-5-1.png)
+]
 ---
 
 ## Geocoding with geopandas
@@ -144,6 +169,22 @@ boros.location[0]
 ```
 ## Location(Staten Island, Richmond County, New York, United States of America, (40.5834557, -74.1496048, 0.0))
 ```
+
+---
+
+## Coordinate reference systems (CRS)
+
+`geopandas` can accept various forms of CRS specifications
+
++ CRS WKT string
++ An authority string (i.e. “epsg:4326”)
++ An EPSG integer code (i.e. 4326)
++ A pyproj.CRS
++ An object with a to_wkt method.
++ PROJ string
++ Dictionary of PROJ parameters
++ PROJ keyword arguments for parameters
++ JSON string with PROJ parameters
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>

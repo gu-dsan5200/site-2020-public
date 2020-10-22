@@ -326,7 +326,7 @@ class: inverse, center, middle
 
 ---
 
-## Results by county adjusted by population (cartrogram)
+## Results by county adjusted by population (cartogram)
 
 .center[<img src="http://www-personal.umich.edu/~mejn/election/2016/countycartrb1024.png" width=700>]
 

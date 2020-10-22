@@ -1,31 +1,322 @@
 ---
-title: "ANLY 503"
-subtitle: "Week 1"
+title: "Module 4: Specialized Visualizations<br/>Graphs and Networks"
+subtitle: "ANLY 503, Fall 2020"
 author: "Vaisman & Dasgupta"
 institute: "Georgetown University"
-date: "`r Sys.Date()`"
-output:
-  xaringan::moon_reader:
-    css: [default, '../robot.css','../robot-fonts.css', '../sfah.css']
-    nature:
-      ratio: '16:9'
-      highlightStyle: zenburn
-      highlightLines: true
-      countIncrementalSlides: false
----
-
-layout: true
-
-<div class="my-header">
-<span>ANLY 503, Scientific and Analytical Visualization</span>
-</div>
-
+date: "October 23, 2020"
 ---
 
 ```{r setup, include=FALSE, message=FALSE, warning=FALSE}
 library(pacman)
-p_load(char = c('tidyverse','knitr', 'htmlwidgets', 'kableExtra'))
-opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, comment="", 
-               cache=FALSE)
+p_load(char = c('tidyverse','knitr', 'htmlwidgets', 'kableExtra',
+                'here', 'reticulate', 'ggraph', 'igraph'))
+
+opts_chunk$set(
+  fig.retina=2, 
+  out.width="100%")
 ```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#035AA6", 
+  secondary_color = "#03A696",
+  header_font_google = google_font("Josefin Sans"),
+  text_font_google   = google_font("Montserrat"),
+  code_font_google   = google_font("Fira Mono")
+)
+xaringanExtra::use_tachyons()
+xaringanExtra::use_extra_styles(hover_code_line=TRUE, mute_unhighlighted_code = TRUE)
+```
+
+class: center, middle, inverse
+
+# Graphs
+
+---
+
+<img src="img/a-very-brief-intro-to-graph-theory.jpeg">
+
+---
+
+<img src="img/def-graph-definition.jpeg">
+
+---
+
+<img src="img/def-formally-defining-a-graph.jpeg">
+
+---
+
+.center[<img src="img/edges-no-rules.jpeg">]
+
+---
+
+class: center, middle, inverse
+
+# Ways to express a graph
+
+---
+
+.center[<img src="img/edge-list-definition.jpeg" width=700>]
+
+
+---
+
+
+.center[<img src="img/edge-types.jpeg">]
+
+
+---
+
+<img src="img/adjacency-matrix-definition.jpeg">
+
+---
+
+<img src="img/adjacency-list-definition.jpeg">
+
+
+---
+
+<img src="img/adjacency-list.jpeg">
+---
+
+
+<img src="img/adjacency-matrix-trouble.jpeg">
+
+
+---
+
+class: inverse, middle, center
+
+# What do you need to fully represent a graph?
+
+
+
+---
+
+class: inverse, middle, center
+
+# Directed graphs
+
+---
+
+<img src="img/breakdown-directed-graph.png">
+
+---
+
+## Directed Edge List
+
+.pull-left[<img src="img/breakdown-directed-graph.png">]
+
+.pull-right[<img src="img/breakdown-directed-edge-list.png">]
+
+---
+
+
+## Directed Adjacency Matrix
+
+.pull-left[<img src="img/breakdown-directed-graph.png">]
+
+.pull-right[<img src="img/breakdown-directed-adjacency-matrix.png">]
+
+---
+
+## Directed Adjacency List
+
+.pull-left[<img src="img/breakdown-directed-graph.png">]
+
+.piull-right[<img src="img/breakdown-directed-adjacency-list.png">]
+
+---
+
+class: inverse, middle, center
+
+## Undirected Graphs
+
+---
+
+
+<img src="img/breakdown-undirected-graph.png">
+
+
+---
+
+## Undirected Edge List
+
+.pull-left[<img src="img/breakdown-undirected-graph.png">]
+
+.pull-right[<img src="img/breakdown-undirected-edge-list.png">]
+
+
+---
+
+## Undirected Adjacency Matrix
+
+.pull-left[<img src="img/breakdown-undirected-graph.png">]
+
+.pull-right[<img src="img/breakdown-undirected-adjacency-matrix.png">]
+
+
+---
+
+## Undirected Adjacency List
+
+.pull-left[<img src="img/breakdown-undirected-graph.png">]
+
+.pull-right[<img src="img/breakdown-undirected-adjacency-list.png">]
+
+---
+
+## Trees vs. Graphs
+
+<img src="img/tree-vs-graph.jpeg">
+
+---
+
+class: inverse, middle, center
+
+# Other graph attributes
+
+---
+
+## Node measurements
+
+.center[<img src="img/vertex-degrees.jpeg" width=300>]
+
+---
+
+## Edge weigths
+
+.center[<img src="img/weighted-graph-2.png" width=800>]
+
+
+---
+
+class: center, inverse, middle
+
+# Many ways to represent graphs
+
+---
+
+## Typical layout. There are many positioning algorithms.
+
+.center[<img src="img/6ways-force-directed.jpg" width=500>]
+
+
+---
+
+## Arc Diagram
+
+.center[<img src="img/6ways-arc.jpg" width=800>]
+
+---
+
+## Grouped Clusters
+
+.center[<img src="img/6ways-group-in-a-box.jpg" width=800>]
+
+
+---
+
+## Chord or Radial
+
+.center[<img src="img/6ways-radial.jpg" width=550>]
+
+---
+
+## Matrix
+
+.center[<img src="img/6ways-matrix.jpg" width=550>]
+
+---
+
+## Multimodal graphs
+
+.pull-left[<img src="img/bipartite.png">]
+.pull-right[<img src="img/tripartite.png">]
+
+---
+
+class: inverse, middle, center
+
+# Prepping your data for graphs
+
+---
+## Packages for working with and visualizing graphs
+
+.pull-left[
+**Prepping data, graph/network analysis**
+* `tidygraph`
+* `igraph`
+
+**Network analysis specific**
+* `sna`
+* `network`
+]
+
+.pull-right[
+**Visualizing**
+* `ggraph`
+* `igraph`
+* `networkD3`
+]
+
+---
+
+## Building your graph dataset
+
+The best practice for building an visualizing a graph is to have **two tabular datasets**:
+
+.pull-left[
+**An edge list (dataframe)** where the first two columns are `from` and `to` (required) and the values are the `id` of the nodes. You can have more fields in the edge list representing additional attributes of your edges.
+
+In a *directed* graph the `from` and the `to` matter. In an undirected graph the order does not.
+
+In graphs with multiple edges between nodes, you can set up the edge list in the following ways:
+* An individual record per edge
+* One record per unique edge with aggregated data for the edge
+]
+
+.pull-right[
+**A node/vertex list (dataframe)** where you have one record per every node (even if they don't have edges) and the first column is `id` which represents a unique `id` for the node. This `id` value is the same one that is utilized in the edge list.
+
+Your dataframe can also have more columns with different attributes for the node.
+]
+
+**Both dataframes are needed to represent a complete graph.**
+
+---
+
+
+class: center, middle, inverse
+# Layouts
+
+
+---
+
+
+class: center, middle, inverse
+# Subgraphs
+
+
+---
+
+class: center, middle, inverse
+# Networks
+
+
+---
+
+## References
+
+* https://miro.medium.com/max/1400/1*zAmHaDww1A31Esup-Rmr-w.jpeg
+* https://dev.to/vaidehijoshi/knigsberg-seven-small-bridges-one-giant-graph-problem
+* https://medium.com/basecs/from-theory-to-practice-representing-graphs-cfd782c5be38
+* https://medium.com/basecs/spinning-around-in-cycles-with-directed-acyclic-graphs-a233496d4688
+* https://www.twosixlabs.com/6-ways-visualize-graphs/
+* https://kateto.net/tutorials/
+* https://rviews.rstudio.com/2019/03/06/intro-to-graph-analysis/
+* https://ggraph.data-imaginist.com/reference/index.html
+* https://tidygraph.data-imaginist.com/
+
 

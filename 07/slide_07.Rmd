@@ -1,31 +1,728 @@
 ---
-title: "ANLY 503"
-subtitle: "Week 1"
+title: "Module 2 -- Week 7<br/>Static Visualizations"
+subtitle: "ANLY 503, Fall 2020"
 author: "Vaisman & Dasgupta"
 institute: "Georgetown University"
 date: "`r Sys.Date()`"
-output:
-  xaringan::moon_reader:
-    css: [default, '../robot.css','../robot-fonts.css', '../sfah.css']
-    nature:
-      ratio: '16:9'
-      highlightStyle: zenburn
-      highlightLines: true
-      countIncrementalSlides: false
----
-
-layout: true
-
-<div class="my-header">
-<span>ANLY 503, Scientific and Analytical Visualization</span>
-</div>
-
 ---
 
 ```{r setup, include=FALSE, message=FALSE, warning=FALSE}
 library(pacman)
-p_load(char = c('tidyverse','knitr', 'htmlwidgets', 'kableExtra'))
-opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, comment="", 
-               cache=FALSE)
+p_load(char = c('tidyverse','knitr', 'htmlwidgets', 'kableExtra', 
+                'here', 'reticulate',
+                'xaringan','xaringanExtra', 'rio'))
+
+opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, comment="", 
+               cache=FALSE, fig.height = 3)
+
+use_condaenv('ds', required=TRUE)
+source(here('lib/R/update_header.R'))
+use_panelset()
+use_tachyons()
+use_extra_styles(hover_code_line=TRUE, 
+                 mute_unhighlighted_code = TRUE)
+library(palmerpenguins)
+library(ggpubr)
+library(cowplot)
+library(patchwork)
+theme_set(theme_classic()+theme(axis.text = element_text(size=14),
+                                axis.title = element_text(size=16),
+                                legend.text = element_text(size=14),
+                                legend.title = element_text(size=16),
+                                plot.title = element_text(size=18),
+                                plot.subtitle = element_text(size=16),
+                                plot.caption = element_text(size=12)))
+
 ```
+
+```{python, include=FALSE}
+import os
+os.environ["KMP_DUPLICATE_LIB_OK"] = 'True'
+```
+
+```{r, echo=FALSE, results='asis'}
+update_header()
+```
+
+
+---
+
+## Plotting in Python
+
+There are three main ways of plotting in Python
+
+1. `matplotlib`, which is granular (akin to base R)
+1. `seaborn`, which is higher level and makes some choices for you
+1. `pandas`
+
+The latter two are wrappers around `matplotlib`
+
+---
+
+## Plotting in Python
+
+A pathway to learning ([Chris Moffit](https://pbpython.com/effective-matplotlib.html))
+
+1. Learn the basic matplotlib terminology, specifically what is a Figure and an Axes .
+1. Always use the object-oriented interface. Get in the habit of using it from the start of your analysis. (not really getting into this, but basically don’t use the Matlab form I’ll show at the end, if you don’t have to)
+1. Start your visualizations with basic pandas plotting.
+1. Use seaborn for the more complex statistical visualizations.
+1. Use matplotlib to customize the pandas or seaborn visualization.
+
+
+---
+
+## Setup
+
+.panelset[ .panel[.panel-name[R]
+
+```{r}
+library(tidyverse)
+```
+
+] 
+.panel[.panel-name[Python]
+
+```{python, echo=TRUE}
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# In shell, `pip install rdatasets`
+from rdatasets import data, summary
+
+summary()
+```
+]]
+
+---
+
+## Setup
+
+.panelset[
+.panel[.panel-name[R]
+```{r}
+theme_set(theme_classic())
+```
+
+]
+.panel[.panel-name[Python]
+```{python}
+sns.set_style('white')
+```
+
+]
+]
+
+---
+
+## Histograms
+
+.panelset[
+.panel[.panel-name[R]
+```{r}
+mtcars %>% 
+  ggplot(aes(x = mpg))+
+  geom_histogram()
+```
+
+]
+.panel[.panel-name[pandas]
+```{python}
+mtcars = data('mtcars')
+mtcars.plot(y = 'mpg', kind = 'hist');
+# mtcars.plot.hist(y='mpg')
+# mtcars['mpg'].plot(kind='hist')
+
+plt.show()
+```
+
+]
+.panel[.panel-name[seaborn]
+```{python}
+mtcars = data('mtcars')
+sns.distplot(mtcars['mpg'], kde=False);
+plt.show()
+```
+
+]
+]
+
+---
+
+## Bar plot
+
+.panelset[
+.panel[.panel-name[R]
+```{r}
+diamonds %>% 
+  ggplot(aes(x = cut))+
+  geom_bar()
+```
+]
+.panel[.panel-name[Pandas]
+```{python}
+diamonds = data('ggplot2','diamonds')
+diamonds['cut'].value_counts().plot.bar();
+plt.show()
+```
+]
+.panel[.panel-name[Seaborn]
+```{python}
+sns.catplot(data = diamonds, x = 'cut', kind='count',
+  height=3, aspect=3 );
+plt.show()
+```
+]
+]
+
+---
+
+## Barplots
+
+Re-ordering bars
+
+.panelset[
+.panel[.panel-name[R]
+```{r}
+diamonds %>% 
+  ggplot(aes(x = fct_relevel(cut, 'Ideal','Premium')))
+```
+]
+.panel[.panel-name[Pandas]
+```{python}
+
+```
+]
+.panel[.panel-name[Seaborn]
+```{python bp2}
+category_order = ['Fair','Good', 'Very Good', 'Premium', 'Ideal']
+
+sns.catplot(x='cut', data=diamonds, kind='count', order=category_order, 
+height=3, aspect = 3);
+plt.show()
+```
+]
+]
+
+---
+
+## Density plot
+
+.panelset[
+.panel[.panel-name[R]
+```{r}
+mtcars %>% 
+  ggplot(aes(x = mpg))+
+  geom_density()
+```
+]
+.panel[.panel-name[Pandas]
+```{python}
+mtcars['mpg'].plot( kind = 'density');
+plt.show()
+```
+]
+.panel[.panel-name[Seaborn]
+```{python}
+sns.distplot(mtcars['mpg'], hist=False);
+plt.show()
+```
+]
+]
+
+---
+class: middle,center,inverse
+
+# Bivariate plots
+
+---
+
+## Scatter plots
+
+.panelset[
+.panel[.panel-name[R]
+```{r}
+diamonds %>% 
+  ggplot(aes(x = carat, y = price))+
+  geom_point()
+```
+]
+.panel[.panel-name[Pandas]
+```{python}
+diamonds.plot(x = 'carat', y = 'price', kind = 'scatter');
+plt.show()
+```
+]
+.panel[.panel-name[Seaborn]
+```{python}
+sns.scatterplot(data=diamonds, x = 'carat', y='price',
+  linewidth=0) # Prevents borders from blocking overlays
+plt.show()
+```
+]
+]
+
+---
+
+## Box plot
+
+.panelset[
+.panel[.panel-name[R]
+```{r}
+diamonds %>% 
+  ggplot(aes(x = cut, y = price))+
+  geom_boxplot()
+```
+]
+.panel[.panel-name[Pandas]
+```{python}
+diamonds.boxplot(column=['price'], by='cut');
+plt.show()
+```
+]
+.panel[.panel-name[Seaborn]
+```{python}
+diamonds.cut = diamonds.cut.astype('category').cat.reorder_categories(['Fair','Good','Very Good','Premium','Ideal'])
+sns.catplot(data=diamonds, x='cut', y='price', kind='box',
+  height=3, aspect=3);
+plt.show()
+```
+]
+]
+
+---
+
+## Violin plot
+
+.panelset[
+.panel[.panel-name[R]
+```{r}
+diamonds %>% 
+  ggplot(aes(x = color, y = price))+
+  geom_violin()
+```
+]
+.panel[.panel-name[Pandas]
+```{python}
+
+```
+]
+.panel[.panel-name[Seaborn]
+```{python}
+ordered_color = ['D','E','F','G','H','I','J']
+sns.catplot(data = diamonds, x = 'color', y = 'price', kind = 'violin', order = ordered_color, 
+height=3, aspect=3);
+plt.show()
+```
+]
+]
+
+---
+
+## Bar plot (categorical vs continuous)
+
+.panelset[
+.panel[.panel-name[R]
+```{r}
+diamonds %>% 
+  ggplot(aes(x = color, y = price))+
+  stat_summary(fun = mean, geom='bar')
+```
+]
+.panel[.panel-name[Pandas]
+```{python}
+
+```
+]
+.panel[.panel-name[Seaborn]
+```{python}
+ordered_colors = ['D','E','F','G','H','I']
+sns.barplot(data = diamonds, x = 'color', y = 'price', order = ordered_colors);
+plt.show()
+```
+]
+]
+
+---
+class: middle,center,inverse
+
+# Grouping
+
+---
+
+## Scatter plots
+
+.panelset[
+.panel[.panel-name[R]
+```{r}
+diamonds %>% 
+  ggplot(aes(x=carat, y=price, color = color))+
+  geom_point(alpha=0.3)
+```
+]
+.panel[.panel-name[Pandas]
+```{python}
+
+```
+]
+.panel[.panel-name[Seaborn]
+```{python}
+sns.scatterplot(data=diamonds, x = 'carat', y = 'price', hue = 'color', linewidth=0, 
+  hue_order=['D','E','F','G','H','I','J'], alpha = 0.3)
+```
+]
+]
+
+---
+
+## Line plot
+
+.panelset[
+.panel[.panel-name[R]
+```{r}
+fmri <- read_csv('data/fmri.csv')
+ggplot(fmri, aes(x = timepoint, y = signal, color = region, linetype=event))+
+  geom_line()
+```
+]
+.panel[.panel-name[Pandas]
+```{python}
+
+```
+]
+.panel[.panel-name[Seaborn]
+```{python}
+fmri = pd.read_csv('data/fmri.csv')
+sns.relplot(x = 'timepoint', y = 'signal', data = fmri, hue = 'region', 
+            style = 'event', kind = 'line');
+plt.show()
+```
+]
+]
+
+---
+class: middle,center,inverse
+
+# Facets
+
+---
+
+## Facets
+
+.panelset[
+.panel[.panel-name[R]
+```{r}
+iris %>% 
+  ggplot(aes(x = Sepal.Width, y = Sepal.Length, color = Species))+
+  geom_point()+
+  facet_grid(~Species)
+```
+]
+.panel[.panel-name[Pandas]
+```{python}
+
+```
+]
+.panel[.panel-name[Seaborn]
+```{python}
+iris = data('iris')
+sns.relplot(data = iris,x = 'Sepal.Width', y = 'Sepal.Length',  col = 'Species', hue = 'Species');
+plt.show()
+```
+]
+]
+
+---
+
+## Facets
+
+.panelset[
+.panel[.panel-name[R]
+```{r}
+fmri %>% 
+  ggplot(aes(x = timepoint, y = signal, color = subject))+
+  geom_line()+
+  facet_grid(event ~ region)
+```
+]
+.panel[.panel-name[Pandas]
+```{python}
+
+```
+]
+.panel[.panel-name[Seaborn]
+```{python}
+sns.relplot(x="timepoint", y="signal", hue="subject",
+            col="region", row="event", height=3,
+            kind="line", estimator=None, data=fmri);
+plt.show()
+```
+]
+]
+
+---
+
+## Facets
+
+.panelset[
+.panel[.panel-name[R]
+```{r}
+fmri %>% filter(region=='frontal') %>% 
+  ggplot(aes(x=timepoint, y = signal, color = event, linestyle = event))+
+  geom_line()+
+  facet_wrap(~subject, ncol=5)
+```
+]
+.panel[.panel-name[Pandas]
+```{python}
+
+```
+]
+.panel[.panel-name[Seaborn]
+```{python}
+sns.relplot(x="timepoint", y="signal", hue="event", style="event", col="subject", col_wrap=5,
+            height=3, aspect=.75, linewidth=2.5, kind="line", data=fmri.query("region == 'frontal'"));
+```
+]
+]
+
+---
+
+## Facets
+
+.panelset[
+.panel[.panel-name[R]
+```{r}
+diamonds %>% 
+  ggplot(aes(x = price))+
+  geom_density()+
+  facet_grid(color~.)
+```
+]
+.panel[.panel-name[Pandas]
+```{python}
+
+```
+]
+.panel[.panel-name[Seaborn]
+```{python}
+ordered_colors = ['E','F','G','H','I','J']
+g = sns.FacetGrid(data = diamonds, row = 'color', height = 1.7, 
+                  aspect = 4, row_order = ordered_colors);
+g.map(sns.kdeplot, 'price');
+plt.show()
+```
+]
+]
+
+---
+class: middle,center,inverse
+
+# Pairs plot    
+
+---
+
+## Pair plot
+
+.panelset[
+.panel[.panel-name[R]
+```{r}
+GGally::ggpairs(iris)
+```
+]
+.panel[.panel-name[Pandas]
+```{python}
+
+```
+]
+.panel[.panel-name[Seaborn]
+```{python}
+sns.pairplot(data=iris);
+plt.show()
+```
+]
+
+---
+class: middle,center,inverse
+
+# Themes
+
+---
+
+## Themes in seaborn
+
+There are several themes available in the modern matplotlib, some of which borrow from seaborn. You can see the available themes and play around.
+
+```{python}
+plt.style.available
+```
+
+]
+
+---
+
+## Themes in seaborn
+
+.pull-left[
+```{python sb1, eval = F, echo = T}
+plt.style.use('fivethirtyeight')
+sns.scatterplot(data=iris, x = 'Sepal.Width', y = 'Sepal.Length');
+plt.show()
+```
+]
+.pull-right[
+```{python, eval=T, echo = F, ref.label="sb1"}
+```
+]
+
+---
+
+## Themes in seaborn
+
+.pull-left[
+```{python sb2, eval = F, echo = T}
+plt.style.use('ggplot')
+sns.scatterplot(data=iris, x = 'Sepal.Width', y = 'Sepal.Length');
+plt.show()
+```
+]
+.pull-right[
+```{python, eval=T, echo = F, ref.label="sb2"}
+```
+]
+
+---
+
+## Theme customization in matplotlib
+
+![:scale 50%](https://www.araastat.com/BIOF085/graphs/matplotlib-anatomy.png)
+
+---
+class: middle, inverse
+
+# Putting plots together
+
+---
+class: middle,center,inverse
+
+# The R way
+
+---
+
+## The packages
+
+There are three excellent packages for putting separate `ggplot` graphs together in panels.
+
+1. **ggpubr**
+1. **cowplot**
+1. **patchwork**
+
+---
+
+## The graphs
+
+```{r, eval=T, results='hide'}
+plt1 <- ggplot(penguins, aes(x = species, y = body_mass_g, fill=species)) +
+  geom_boxplot()
+
+plt2 <- ggplot(penguins, aes(x = bill_length_mm, y = body_mass_g,
+                             color = species))+
+  geom_point()
+
+plt3 <- ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, 
+                             color = species))+
+  geom_smooth(se=F)
+```
+
+```{r, echo=FALSE, fig.width=15, fig.height=3}
+ggarrange(plt1,plt2, plt3, nrow=1)
+```
+
+---
+
+## ggpubr
+
+```{r, fig.height=6, fig.width=15, message=F}
+ggarrange(plt1, plt2, plt3, ncol = 2, nrow=2)
+```
+
+---
+
+## ggpubr
+
+```{r, fig.height=6, fig.width=15, message=F}
+ggarrange(plt1, plt2, plt3, ncol = 2, nrow=2, common.legend = TRUE)
+```
+
+---
+
+## cowplot
+
+```{r, fig.height=6, fig.width=15}
+cowplot::plot_grid(plt1, plt2, plt3, nrow = 2, ncol = 2)
+```
+
+---
+
+## cowplot
+
+```{r, fig.height=6, fig.width=15}
+cowplot::plot_grid(plt1, plt2, plt3, nrow = 2, ncol = 2, labels = c('A','B','C'))
+```
+
+---
+
+## cowplot
+
+```{r, fig.height=6, fig.width=15}
+grid1 = cowplot::plot_grid(plt1, plt2, nrow = 1, rel_widths=c(0.3, 0.7),
+                           labels=c('A','B'))
+cowplot::plot_grid(grid1, plt3, nrow=2, labels = c('', 'C'))
+
+
+```
+
+---
+
+## patchwork
+
+```{r,fig.height=6, fig.width=15}
+plt1 | plt2 / plt3
+```
+
+---
+
+## patchwork
+
+```{r,fig.height=6, fig.width=15}
+(plt1 | plt2) / plt3
+```
+
+---
+
+## patchwork
+
+```{r,fig.height=6, fig.width=15}
+plt1 + plt2 + plt3 + plot_layout(ncol = 2)
+```
+
+
+---
+
+## Further references
+
+ggpubr: [https://rpkgs.datanovia.com/ggpubr/](https://rpkgs.datanovia.com/ggpubr/)  
+cowplot: [https://wilkelab.org/cowplot/index.html](https://wilkelab.org/cowplot/index.html) and Fundamentals of Data Visualization  
+patchwork: [https://patchwork.data-imaginist.com/index.html](https://patchwork.data-imaginist.com/index.html)
+
+---
+class: middle,center,inverse
+
+# The Python way
+
+---
+
+## Figures and axes
+
 

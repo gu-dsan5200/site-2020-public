@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Module 2 – Week 7 Static Visualizations</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Vaisman &amp; Dasgupta" />
+    <meta name="date" content="2020-10-09" />
+    <script src="slide_07_files/header-attrs-2.3/header-attrs.js"></script>
+    <link href="slide_07_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="slide_07_files/panelset-0.2.2/panelset.css" rel="stylesheet" />
+    <script src="slide_07_files/panelset-0.2.2/panelset.js"></script>
+    <link href="slide_07_files/tachyons-4.12.0/tachyons.min.css" rel="stylesheet" />
+    <link href="slide_07_files/xaringanExtra-extra-styles-0.2.2/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../robot.css" type="text/css" />
+    <link rel="stylesheet" href="../robot-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="../sfah.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Module 2 – Week 7<br/>Static Visualizations
+## ANLY 503, Fall 2020
+### Vaisman &amp; Dasgupta
+### Georgetown University
+### 2020-10-09
+
+---
+
+
+
+
+
+
+layout: true
+
+&lt;div class="my-header"&gt;
+&lt;span&gt;ANLY 503, Scientific and Analytical Visualization&lt;/span&gt;
+&lt;/div&gt;
+
+
+---
+
+## Plotting in Python
+
+There are three main ways of plotting in Python
+
+1. `matplotlib`, which is granular (akin to base R)
+1. `seaborn`, which is higher level and makes some choices for you
+1. `pandas`
+
+The latter two are wrappers around `matplotlib`
+
+---
+
+## Plotting in Python
+
+A pathway to learning ([Chris Moffit](https://pbpython.com/effective-matplotlib.html))
+
+1. Learn the basic matplotlib terminology, specifically what is a Figure and an Axes .
+1. Always use the object-oriented interface. Get in the habit of using it from the start of your analysis. (not really getting into this, but basically don’t use the Matlab form I’ll show at the end, if you don’t have to)
+1. Start your visualizations with basic pandas plotting.
+1. Use seaborn for the more complex statistical visualizations.
+1. Use matplotlib to customize the pandas or seaborn visualization.
+
+
+---
+
+## Setup
+
+.panelset[ .panel[.panel-name[R]
+
+
+```r
+library(tidyverse)
+```
+
+] 
+.panel[.panel-name[Python]
+
+
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# In shell, `pip install rdatasets`
+from rdatasets import data, summary
+
+summary()
+```
+
+```
+     Package  ...                                                Doc
+0       boot  ...  https://raw.github.com/vincentarelbundock/Rdat...
+1       boot  ...  https://raw.github.com/vincentarelbundock/Rdat...
+2       boot  ...  https://raw.github.com/vincentarelbundock/Rdat...
+3       boot  ...  https://raw.github.com/vincentarelbundock/Rdat...
+4       boot  ...  https://raw.github.com/vincentarelbundock/Rdat...
+...      ...  ...                                                ...
+1340   Zelig  ...  https://raw.github.com/vincentarelbundock/Rdat...
+1341   Zelig  ...  https://raw.github.com/vincentarelbundock/Rdat...
+1342   Zelig  ...  https://raw.github.com/vincentarelbundock/Rdat...
+1343   Zelig  ...  https://raw.github.com/vincentarelbundock/Rdat...
+1344   Zelig  ...  https://raw.github.com/vincentarelbundock/Rdat...
+
+[1345 rows x 12 columns]
+```
+]]
+
+---
+
+## Setup
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+theme_set(theme_classic())
+```
+
+]
+.panel[.panel-name[Python]
+
+```python
+sns.set_style('white')
+```
+
+]
+]
+
+---
+
+## Histograms
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+mtcars %&gt;% 
+  ggplot(aes(x = mpg))+
+  geom_histogram()
+```
+
+![](slide_07_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+
+]
+.panel[.panel-name[pandas]
+
+```python
+mtcars = data('mtcars')
+mtcars.plot(y = 'mpg', kind = 'hist');
+# mtcars.plot.hist(y='mpg')
+# mtcars['mpg'].plot(kind='hist')
+
+plt.show()
+```
+
+&lt;img src="slide_07_files/figure-html/unnamed-chunk-8-1.png" width="672" /&gt;
+
+]
+.panel[.panel-name[seaborn]
+
+```python
+mtcars = data('mtcars')
+sns.distplot(mtcars['mpg'], kde=False);
+plt.show()
+```
+
+&lt;img src="slide_07_files/figure-html/unnamed-chunk-9-1.png" width="672" /&gt;
+
+]
+]
+
+---
+
+## Bar plot
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+diamonds %&gt;% 
+  ggplot(aes(x = cut))+
+  geom_bar()
+```
+
+![](slide_07_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+]
+.panel[.panel-name[Pandas]
+
+```python
+diamonds = data('ggplot2','diamonds')
+diamonds['cut'].value_counts().plot.bar();
+plt.show()
+```
+
+&lt;img src="slide_07_files/figure-html/unnamed-chunk-11-1.png" width="672" /&gt;
+]
+.panel[.panel-name[Seaborn]
+
+```python
+sns.catplot(data = diamonds, x = 'cut', kind='count',
+  height=3, aspect=3 );
+plt.show()
+```
+
+&lt;img src="slide_07_files/figure-html/unnamed-chunk-12-1.png" width="864" /&gt;
+]
+]
+
+---
+
+## Barplots
+
+Re-ordering bars
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+diamonds %&gt;% 
+  ggplot(aes(x = fct_relevel(cut, 'Ideal','Premium')))
+```
+
+![](slide_07_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+]
+.panel[.panel-name[Pandas]
+
+]
+.panel[.panel-name[Seaborn]
+
+```python
+category_order = ['Fair','Good', 'Very Good', 'Premium', 'Ideal']
+
+sns.catplot(x='cut', data=diamonds, kind='count', order=category_order, 
+height=3, aspect = 3);
+plt.show()
+```
+
+&lt;img src="slide_07_files/figure-html/bp2-1.png" width="864" /&gt;
+]
+]
+
+---
+
+## Density plot
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+mtcars %&gt;% 
+  ggplot(aes(x = mpg))+
+  geom_density()
+```
+
+![](slide_07_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+]
+.panel[.panel-name[Pandas]
+
+```python
+mtcars['mpg'].plot( kind = 'density');
+plt.show()
+```
+
+&lt;img src="slide_07_files/figure-html/unnamed-chunk-16-1.png" width="864" /&gt;
+]
+.panel[.panel-name[Seaborn]
+
+```python
+sns.distplot(mtcars['mpg'], hist=False);
+plt.show()
+```
+
+&lt;img src="slide_07_files/figure-html/unnamed-chunk-17-1.png" width="864" /&gt;
+]
+]
+
+---
+class: middle,center,inverse
+
+# Bivariate plots
+
+---
+
+## Scatter plots
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+diamonds %&gt;% 
+  ggplot(aes(x = carat, y = price))+
+  geom_point()
+```
+
+![](slide_07_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
+]
+.panel[.panel-name[Pandas]
+
+```python
+diamonds.plot(x = 'carat', y = 'price', kind = 'scatter');
+plt.show()
+```
+
+&lt;img src="slide_07_files/figure-html/unnamed-chunk-19-1.png" width="672" /&gt;
+]
+.panel[.panel-name[Seaborn]
+
+```python
+sns.scatterplot(data=diamonds, x = 'carat', y='price',
+  linewidth=0) # Prevents borders from blocking overlays
+plt.show()
+```
+
+&lt;img src="slide_07_files/figure-html/unnamed-chunk-20-1.png" width="672" /&gt;
+]
+]
+
+---
+
+## Box plot
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+diamonds %&gt;% 
+  ggplot(aes(x = cut, y = price))+
+  geom_boxplot()
+```
+
+![](slide_07_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
+]
+.panel[.panel-name[Pandas]
+
+```python
+diamonds.boxplot(column=['price'], by='cut');
+plt.show()
+```
+
+&lt;img src="slide_07_files/figure-html/unnamed-chunk-22-1.png" width="672" /&gt;
+]
+.panel[.panel-name[Seaborn]
+
+```python
+diamonds.cut = diamonds.cut.astype('category').cat.reorder_categories(['Fair','Good','Very Good','Premium','Ideal'])
+sns.catplot(data=diamonds, x='cut', y='price', kind='box',
+  height=3, aspect=3);
+plt.show()
+```
+
+&lt;img src="slide_07_files/figure-html/unnamed-chunk-23-1.png" width="864" /&gt;
+]
+]
+
+---
+
+## Violin plot
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+diamonds %&gt;% 
+  ggplot(aes(x = color, y = price))+
+  geom_violin()
+```
+
+![](slide_07_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
+]
+.panel[.panel-name[Pandas]
+
+]
+.panel[.panel-name[Seaborn]
+
+```python
+ordered_color = ['D','E','F','G','H','I','J']
+sns.catplot(data = diamonds, x = 'color', y = 'price', kind = 'violin', order = ordered_color, 
+height=3, aspect=3);
+plt.show()
+```
+
+&lt;img src="slide_07_files/figure-html/unnamed-chunk-26-1.png" width="864" /&gt;
+]
+]
+
+---
+
+## Bar plot (categorical vs continuous)
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+diamonds %&gt;% 
+  ggplot(aes(x = color, y = price))+
+  stat_summary(fun = mean, geom='bar')
+```
+
+![](slide_07_files/figure-html/unnamed-chunk-27-1.png)&lt;!-- --&gt;
+]
+.panel[.panel-name[Pandas]
+
+]
+.panel[.panel-name[Seaborn]
+
+```python
+ordered_colors = ['D','E','F','G','H','I']
+sns.barplot(data = diamonds, x = 'color', y = 'price', order = ordered_colors);
+plt.show()
+```
+
+&lt;img src="slide_07_files/figure-html/unnamed-chunk-29-1.png" width="864" /&gt;
+]
+]
+
+---
+class: middle,center,inverse
+
+# Grouping
+
+---
+
+## Scatter plots
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+diamonds %&gt;% 
+  ggplot(aes(x=carat, y=price, color = color))+
+  geom_point(alpha=0.3)
+```
+
+![](slide_07_files/figure-html/unnamed-chunk-30-1.png)&lt;!-- --&gt;
+]
+.panel[.panel-name[Pandas]
+
+]
+.panel[.panel-name[Seaborn]
+
+```python
+sns.scatterplot(data=diamonds, x = 'carat', y = 'price', hue = 'color', linewidth=0, 
+  hue_order=['D','E','F','G','H','I','J'], alpha = 0.3)
+```
+
+&lt;img src="slide_07_files/figure-html/unnamed-chunk-32-1.png" width="864" /&gt;
+]
+]
+
+---
+
+## Line plot
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+fmri &lt;- read_csv('data/fmri.csv')
+ggplot(fmri, aes(x = timepoint, y = signal, color = region, linetype=event))+
+  geom_line()
+```
+
+![](slide_07_files/figure-html/unnamed-chunk-33-1.png)&lt;!-- --&gt;
+]
+.panel[.panel-name[Pandas]
+
+]
+.panel[.panel-name[Seaborn]
+
+```python
+fmri = pd.read_csv('data/fmri.csv')
+sns.relplot(x = 'timepoint', y = 'signal', data = fmri, hue = 'region', 
+            style = 'event', kind = 'line');
+plt.show()
+```
+
+&lt;img src="slide_07_files/figure-html/unnamed-chunk-35-1.png" width="571" /&gt;
+]
+]
+
+---
+class: middle,center,inverse
+
+# Facets
+
+---
+
+## Facets
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+iris %&gt;% 
+  ggplot(aes(x = Sepal.Width, y = Sepal.Length, color = Species))+
+  geom_point()+
+  facet_grid(~Species)
+```
+
+![](slide_07_files/figure-html/unnamed-chunk-36-1.png)&lt;!-- --&gt;
+]
+.panel[.panel-name[Pandas]
+
+]
+.panel[.panel-name[Seaborn]
+
+```python
+iris = data('iris')
+sns.relplot(data = iris,x = 'Sepal.Width', y = 'Sepal.Length',  col = 'Species', hue = 'Species');
+plt.show()
+```
+
+&lt;img src="slide_07_files/figure-html/unnamed-chunk-38-1.png" width="1544" /&gt;
+]
+]
+
+---
+
+## Facets
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+fmri %&gt;% 
+  ggplot(aes(x = timepoint, y = signal, color = subject))+
+  geom_line()+
+  facet_grid(event ~ region)
+```
+
+![](slide_07_files/figure-html/unnamed-chunk-39-1.png)&lt;!-- --&gt;
+]
+.panel[.panel-name[Pandas]
+
+]
+.panel[.panel-name[Seaborn]
+
+```python
+sns.relplot(x="timepoint", y="signal", hue="subject",
+            col="region", row="event", height=3,
+            kind="line", estimator=None, data=fmri);
+plt.show()
+```
+
+&lt;img src="slide_07_files/figure-html/unnamed-chunk-41-1.png" width="665" /&gt;
+]
+]
+
+---
+
+## Facets
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+fmri %&gt;% filter(region=='frontal') %&gt;% 
+  ggplot(aes(x=timepoint, y = signal, color = event, linestyle = event))+
+  geom_line()+
+  facet_wrap(~subject, ncol=5)
+```
+
+![](slide_07_files/figure-html/unnamed-chunk-42-1.png)&lt;!-- --&gt;
+]
+.panel[.panel-name[Pandas]
+
+]
+.panel[.panel-name[Seaborn]
+
+```python
+sns.relplot(x="timepoint", y="signal", hue="event", style="event", col="subject", col_wrap=5,
+            height=3, aspect=.75, linewidth=2.5, kind="line", data=fmri.query("region == 'frontal'"));
+```
+]
+]
+
+---
+
+## Facets
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+diamonds %&gt;% 
+  ggplot(aes(x = price))+
+  geom_density()+
+  facet_grid(color~.)
+```
+
+![](slide_07_files/figure-html/unnamed-chunk-45-1.png)&lt;!-- --&gt;
+]
+.panel[.panel-name[Pandas]
+
+]
+.panel[.panel-name[Seaborn]
+
+```python
+ordered_colors = ['E','F','G','H','I','J']
+g = sns.FacetGrid(data = diamonds, row = 'color', height = 1.7, 
+                  aspect = 4, row_order = ordered_colors);
+g.map(sns.kdeplot, 'price');
+plt.show()
+```
+
+&lt;img src="slide_07_files/figure-html/unnamed-chunk-47-1.png" width="652" /&gt;
+]
+]
+
+---
+class: middle,center,inverse
+
+# Pairs plot    
+
+---
+
+## Pair plot
+
+.panelset[
+.panel[.panel-name[R]
+
+```r
+GGally::ggpairs(iris)
+```
+
+![](slide_07_files/figure-html/unnamed-chunk-48-1.png)&lt;!-- --&gt;
+]
+.panel[.panel-name[Pandas]
+
+]
+.panel[.panel-name[Seaborn]
+
+```python
+sns.pairplot(data=iris);
+plt.show()
+```
+
+&lt;img src="slide_07_files/figure-html/unnamed-chunk-50-1.png" width="960" /&gt;
+]
+
+---
+class: middle,center,inverse
+
+# Themes
+
+---
+
+## Themes in seaborn
+
+There are several themes available in the modern matplotlib, some of which borrow from seaborn. You can see the available themes and play around.
+
+
+```python
+plt.style.available
+```
+
+```
+['Solarize_Light2', '_classic_test_patch', 'bmh', 'classic', 'dark_background', 'fast', 'fivethirtyeight', 'ggplot', 'grayscale', 'seaborn', 'seaborn-bright', 'seaborn-colorblind', 'seaborn-dark', 'seaborn-dark-palette', 'seaborn-darkgrid', 'seaborn-deep', 'seaborn-muted', 'seaborn-notebook', 'seaborn-paper', 'seaborn-pastel', 'seaborn-poster', 'seaborn-talk', 'seaborn-ticks', 'seaborn-white', 'seaborn-whitegrid', 'tableau-colorblind10']
+```
+
+]
+
+---
+
+## Themes in seaborn
+
+.pull-left[
+
+```python
+plt.style.use('fivethirtyeight')
+sns.scatterplot(data=iris, x = 'Sepal.Width', y = 'Sepal.Length');
+plt.show()
+```
+]
+.pull-right[
+&lt;img src="slide_07_files/figure-html/unnamed-chunk-52-1.png" width="960" /&gt;
+]
+
+---
+
+## Themes in seaborn
+
+.pull-left[
+
+```python
+plt.style.use('ggplot')
+sns.scatterplot(data=iris, x = 'Sepal.Width', y = 'Sepal.Length');
+plt.show()
+```
+]
+.pull-right[
+&lt;img src="slide_07_files/figure-html/unnamed-chunk-53-1.png" width="960" /&gt;
+]
+
+---
+
+## Theme customization in matplotlib
+
+![:scale 50%](https://www.araastat.com/BIOF085/graphs/matplotlib-anatomy.png)
+
+---
+class: middle, inverse
+
+# Putting plots together
+
+---
+class: middle,center,inverse
+
+# The R way
+
+---
+
+## The packages
+
+There are three excellent packages for putting separate `ggplot` graphs together in panels.
+
+1. **ggpubr**
+1. **cowplot**
+1. **patchwork**
+
+---
+
+## The graphs
+
+
+```r
+plt1 &lt;- ggplot(penguins, aes(x = species, y = body_mass_g, fill=species)) +
+  geom_boxplot()
+
+plt2 &lt;- ggplot(penguins, aes(x = bill_length_mm, y = body_mass_g,
+                             color = species))+
+  geom_point()
+
+plt3 &lt;- ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, 
+                             color = species))+
+  geom_smooth(se=F)
+```
+
+![](slide_07_files/figure-html/unnamed-chunk-55-1.png)&lt;!-- --&gt;
+
+---
+
+## ggpubr
+
+
+```r
+ggarrange(plt1, plt2, plt3, ncol = 2, nrow=2)
+```
+
+![](slide_07_files/figure-html/unnamed-chunk-56-1.png)&lt;!-- --&gt;
+
+---
+
+## ggpubr
+
+
+```r
+ggarrange(plt1, plt2, plt3, ncol = 2, nrow=2, common.legend = TRUE)
+```
+
+![](slide_07_files/figure-html/unnamed-chunk-57-1.png)&lt;!-- --&gt;
+
+---
+
+## cowplot
+
+
+```r
+cowplot::plot_grid(plt1, plt2, plt3, nrow = 2, ncol = 2)
+```
+
+![](slide_07_files/figure-html/unnamed-chunk-58-1.png)&lt;!-- --&gt;
+
+---
+
+## cowplot
+
+
+```r
+cowplot::plot_grid(plt1, plt2, plt3, nrow = 2, ncol = 2, labels = c('A','B','C'))
+```
+
+![](slide_07_files/figure-html/unnamed-chunk-59-1.png)&lt;!-- --&gt;
+
+---
+
+## cowplot
+
+
+```r
+grid1 = cowplot::plot_grid(plt1, plt2, nrow = 1, rel_widths=c(0.3, 0.7),
+                           labels=c('A','B'))
+cowplot::plot_grid(grid1, plt3, nrow=2, labels = c('', 'C'))
+```
+
+![](slide_07_files/figure-html/unnamed-chunk-60-1.png)&lt;!-- --&gt;
+
+---
+
+## patchwork
+
+
+```r
+plt1 | plt2 / plt3
+```
+
+![](slide_07_files/figure-html/unnamed-chunk-61-1.png)&lt;!-- --&gt;
+
+---
+
+## patchwork
+
+
+```r
+(plt1 | plt2) / plt3
+```
+
+![](slide_07_files/figure-html/unnamed-chunk-62-1.png)&lt;!-- --&gt;
+
+---
+
+## patchwork
+
+
+```r
+plt1 + plt2 + plt3 + plot_layout(ncol = 2)
+```
+
+![](slide_07_files/figure-html/unnamed-chunk-63-1.png)&lt;!-- --&gt;
+
+
+---
+
+## Further references
+
+ggpubr: [https://rpkgs.datanovia.com/ggpubr/](https://rpkgs.datanovia.com/ggpubr/)  
+cowplot: [https://wilkelab.org/cowplot/index.html](https://wilkelab.org/cowplot/index.html) and Fundamentals of Data Visualization  
+patchwork: [https://patchwork.data-imaginist.com/index.html](https://patchwork.data-imaginist.com/index.html)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="../js/macros.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "zenburn",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

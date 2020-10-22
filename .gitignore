@@ -2,6 +2,10 @@
 *.Rproj
 .Rproj.user
 .DS_Store
-ignore/
+ignore/*
 
+07/data/*.feather
+07/data/*.rds
+*.feather
+*.rds
 
