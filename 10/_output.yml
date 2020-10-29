@@ -1,8 +1,8 @@
 xaringan::moon_reader:
-  css: [default, '../robot.css','../robot-fonts.css', '../sfah.css']
+  css: ["xaringan-themer.css", "../custom.css"]
   nature:
-    beforeInit: ../js/macros.js
-    ratio: '16:9'
-    highlightStyle: zenburn
+    ratio: "16:9"
+    highlightStyle: github
     highlightLines: true
     countIncrementalSlides: false
+    slideNumberFormat: "%current%"
