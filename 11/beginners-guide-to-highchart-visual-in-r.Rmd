@@ -1,0 +1,363 @@
+---
+title: "Interactive Visualizations with Highchart in R"
+output: 
+    html_document:
+        number_sections: true
+        toc: true
+        theme: cosmo
+        highlight: tango
+        code_folding: hide
+---
+
+```{r}
+knitr::opts_chunk$set(warning=FALSE, message=FALSE)
+
+```
+
+
+# Libraries
+```{r}
+library(tidyverse) #data Manipulation
+library(highcharter) #interactive visualization
+```
+
+# Reading Input dataset and Summary of it
+
+
+```{r}
+#https://bigdatateaching.blob.core.windows.net/public/survey_results_public.csv
+survey18 <- read_csv("https://bigdatateaching.blob.core.windows.net/public/survey_results_public.csv")
+#glimpse(survey18)
+```
+
+# Philosophy 
+
+This Kernel is purely aimed at helping a beginner with Interactive Visualizations using `highcharter` package in R.
+
+# About highcharter
+
+`highcharter` R package is a wrapper for the 'Highcharts' library including shortcut functions to plot R objects. 'Highcharts' <http://www.highcharts.com/> is a charting library offering numerous chart types with a simple configuration syntax.
+
+# API
+
+`highcharter` lets you plot using two different functions:
+
++ highchart()
++ hchart()
+
+## highchart()
+
+This function creates a Highchart chart using htmlwidgets. The widget can be rendered on HTML
+pages generated from R Markdown, Shiny, or other applications. If you are familiar with ``ggplot2`` package, this function is very similar to `ggplot()` of the package where a base ggplot object is defined upon which further geometric layers can be added. 
+
+Similarly, Once the `highchart()` function is defined further highchart elements can be added on top of it.
+
+## hchart()
+
+`hchart()` is a generic function to draw different charts on the fly.  The resulting chart is a highchart object so you can keep modifying with the implmented API. If you are familiar with ``ggplot2``, this function is similar to `qplot()` of it. 
+
+
+Let us begin our Interactive Visualization journey with the easy plots.
+
+# Icons Plot
+
+
+```{r}
+survey18 %>% 
+  select(Gender) %>% 
+  filter(!is.na(Gender)) %>% 
+  filter(Gender %in% c('Male','Female')) %>% 
+  count(Gender) %>% 
+  mutate(perc = round((n /sum(n))*100)) -> gender_icons
+  hciconarray(c('Female','Male'),gender_icons$perc,icons = c('male','female'))
+```
+
+# Bar
+
+## hchart - column
+
+Barplot is useful when you have comparable Categorical variables (factors). Let us look at what Years of Coding experience the respondents have got.  
+
+
+```{r}
+survey18 %>% 
+  count(YearsCoding) %>% 
+  hchart('column', hcaes(x = 'YearsCoding', y = 'n'))
+```
+
+As you can see in the above code, the chart type here is `column` that makes a vertical bar plot. Aesthetics are given using `hcaes()` (similar to `aes()` of `ggplot2`). 
+
+## hchart - bar
+
+Let us look at what people are hoping for five years. 
+
+```{r}
+survey18 %>% 
+  count(HopeFiveYears) %>% 
+  hchart('column', hcaes(x = 'HopeFiveYears', y = 'n'))
+```
+
+while the same column plot as above does the job, it can seen the large axis label have to be rotated and also cut - which may not be something fine always. Hence we will rotate the plot to make it a horizontal bar plot so large axis label can be accomodated. 
+
+
+
+```{r}
+survey18 %>% 
+  count(HopeFiveYears) %>% 
+  hchart('bar', hcaes(x = 'HopeFiveYears', y = 'n'))
+```
+
+The chart type here is `bar`. 
+
+
+## Grouped Bar
+
+Let us try to add one more dimension to our existing bar, by seeing how this hope for next five years varies based on their employement type.
+
+```{r}
+survey18 %>% 
+  count(Employment, HopeFiveYears) %>% 
+  hchart('bar', hcaes(x = 'HopeFiveYears', y = 'n', group = 'Employment'))
+```
+
+Now, this chart is as same as the above one except with the addition of grouped by Employement type. 
+
+But the grouping can be flipped to see the story from a different lens.
+
+```{r}
+survey18 %>% 
+  count(Employment, HopeFiveYears) %>% 
+  hchart('bar', hcaes(x = 'Employment', y = 'n', group = 'HopeFiveYears'))
+```
+
+
+# Line & Area
+
+
+## Line
+
+Line is particularly prefered when you have Time variable in x-axis but considering we don't have any Time variable in the given dataset, we can chart out categorical varaibles using Line graph.
+
+```{r}
+survey18 %>% 
+  count(YearsCoding) %>% 
+  hchart('line', hcaes(x = 'YearsCoding', y = 'n'))
+```
+
+## Grouped Line
+
+
+```{r}
+survey18 %>% 
+  count(YearsCoding, Employment) %>% 
+  hchart('line', hcaes(x = 'YearsCoding', y = 'n', group = "Employment"))
+```
+
+## Spline
+
+Line with Polynomial Interpolation.
+
+```{r}
+survey18 %>% 
+  count(YearsCoding) %>% 
+  hchart('spline', hcaes(x = 'YearsCoding', y = 'n'))
+```
+
+
+## Grouped Spline
+
+
+```{r}
+survey18 %>% 
+  count(YearsCoding, Employment) %>% 
+  hchart('spline', hcaes(x = 'YearsCoding', y = 'n', group = "Employment"))
+```
+
+
+## Area
+
+```{r}
+survey18 %>% 
+  count(YearsCoding) %>% 
+  hchart('area', hcaes(x = 'YearsCoding', y = 'n'))
+```
+
+## Grouped Area
+
+
+```{r}
+survey18 %>% 
+  count(YearsCoding, Employment) %>% 
+  hchart('area', hcaes(x = 'YearsCoding', y = 'n', group = "Employment"))
+```
+
+## Area Spline
+
+```{r}
+survey18 %>% 
+  count(YearsCoding) %>% 
+  hchart('areaspline', hcaes(x = 'YearsCoding', y = 'n'))
+```
+
+## Grouped Area Spline
+
+
+```{r}
+survey18 %>% 
+  count(YearsCoding, Employment) %>% 
+  hchart('areaspline', hcaes(x = 'YearsCoding', y = 'n', group = "Employment"))
+```
+
+
+As you can see in all the above plots, it's just the chart type changes and yet for the same data `hchart()` function is capable of managing to plot a different chart with the same data which makes this package really an easy way to make plots. 
+
+# Scatter Plot
+
+```{r}
+survey18 %>% 
+  filter(!is.na(Gender),
+         Gender %in% c('Male','Female')) %>% 
+  filter(Country %in% 'United Kingdom') %>% 
+  filter(!is.na(Age),
+         !is.na(ConvertedSalary),
+         ConvertedSalary > 0) %>% 
+  select(Gender, Country, Age, ConvertedSalary) %>% 
+  mutate(age_grp = parse_number(Age)) %>%
+  hchart('scatter',hcaes('ConvertedSalary',"age_grp")) 
+  
+```
+
+# Treemap
+
+## Boring 
+
+```{r}
+survey18 %>% 
+  filter(!is.na(Age)) %>% 
+  count(Age) %>% 
+  hchart('treemap', hcaes(x = 'Age', value = 'n', color = 'n')) 
+
+```
+
+## Less Boring
+
+
+```{r}
+survey18 %>% 
+  filter(!is.na(Age)) %>% 
+  count(Age) %>% 
+  hchart('treemap', hcaes(x = 'Age', value = 'n', color = 'n')) %>% 
+    hc_colorAxis(stops = color_stops(colors = viridis::inferno(10)))
+
+```
+
+
+# highchart() Type Charts
+
+## Bar
+
+Most of the charts above can reproduced using the other method of `highchart()` and building layers on top of it. To start with, we will explain how we can build a bar chart like that.
+
+```{r}
+
+survey18 %>% 
+  filter(!is.na(Gender)) %>% 
+  filter(Gender %in% c('Male','Female')) %>% 
+  count(Gender) -> Gender
+
+highchart() %>% 
+  hc_chart(type ="column") %>%
+  hc_xAxis(categories = Gender$Gender) %>% 
+  hc_add_series(data = Gender$n, name = "Gender")
+```
+
+## 3D-Bar 
+
+
+```{r}
+highchart() %>% 
+  hc_chart(type ="column",
+           options3d = list(enabled = TRUE, beta = 15, alpha = 15)) %>%
+  hc_xAxis(categories = Gender$Gender) %>% 
+  hc_add_series(data = Gender$n, name = "Gender")
+  
+```
+
+# Maps 
+
+
+## Nice but boring and incomplete
+```{r}
+data(worldgeojson, package = "highcharter")
+
+survey18 %>% 
+  filter(!is.na(Country)) %>% 
+  count(Country) -> countries
+
+highchart() %>%
+hc_add_series_map(worldgeojson, countries, value = "n", joinBy = c('name','Country'))  
+
+```
+
+## Colorful Map with Title and Subtitle - Complete
+
+```{r}
+data(worldgeojson, package = "highcharter")
+
+survey18 %>% 
+  filter(!is.na(Country)) %>% 
+  count(Country) -> countries
+
+highchart() %>%
+hc_add_series_map(worldgeojson, countries, value = "n", joinBy = c('name','Country'))  %>% 
+  #hc_colors(c("darkorange", "darkgray")) %>% 
+    hc_colorAxis(stops = color_stops()) %>% 
+    hc_title(text = "Countries in World Map") %>% 
+    hc_subtitle(text = "This is beauty")
+
+```
+
+# Themes
+
+`Highcharter` also lets you aesthetically improve your charts with many inbuilt themes with just one extra line of code. 
+
+### 538
+
+First the famous Five Thirty Eight Theme:
+
+```{r}
+
+survey18 %>% 
+  filter(!is.na(Employment)) %>% 
+  count(Employment) %>% 
+  hchart('column',hcaes('Employment','n')) %>% 
+  hc_title(text = "Employment Type") %>% 
+  hc_subtitle(text = "Source: Stack Overflow Dev Survey") %>% 
+  hc_add_theme(hc_theme_538())
+```
+
+### A dark theme
+
+
+```{r}
+
+survey18 %>% 
+  filter(!is.na(Employment)) %>% 
+  count(Employment) %>% 
+  hchart('column',hcaes('Employment','n')) %>% 
+  hc_title(text = "Employment Type") %>% 
+  hc_subtitle(text = "Source: Stack Overflow Dev Survey") %>% hc_add_theme(hc_theme_flatdark())
+```
+
+### Chalk Theme
+
+
+```{r}
+
+survey18 %>% 
+  filter(!is.na(Employment)) %>% 
+  count(Employment) %>% 
+  hchart('column',hcaes('Employment','n')) %>% 
+  hc_title(text = "Employment Type") %>% 
+  hc_subtitle(text = "Source: Stack Overflow Dev Survey") %>%  hc_add_theme(hc_theme_chalk())
+```

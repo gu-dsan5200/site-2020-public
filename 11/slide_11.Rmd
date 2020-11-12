@@ -1,27 +1,1119 @@
 ---
-title: "ANLY 503"
-subtitle: "Week {n}"
+title: "Module 5: Interactive Graphics"
+subtitle: "ANLY 503, Fall 2020"
 author: "Vaisman & Dasgupta"
 institute: "Georgetown University"
-date: "`r Sys.Date()`"
+date: "November 12, 2020"
 ---
 
 ```{r setup, include=FALSE, message=FALSE, warning=FALSE}
 library(pacman)
 p_load(char = c('tidyverse','knitr', 'htmlwidgets', 'kableExtra', 
-                'here', 'reticulate'))
+                'here', 'reticulate', 'plotly', 'networkD3','highcharter',
+                'dygraphs','leaflet', 'r2d3'))
 
-opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, comment="", 
+opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, comment="", 
                cache=FALSE)
 
-source(here('lib/R/update_header.R'))
+reticulate::use_condaenv('ds', required=TRUE)
+# source(here('lib/R/update_header.R'))
 ```
 
-
-```{r, echo=FALSE, results='asis'}
-update_header()
+```{r xaringan-themer, include=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#035AA6", 
+  secondary_color = "#03A696",
+  header_font_google = google_font("Josefin Sans"),
+  text_font_google   = google_font("Montserrat"),
+  code_font_google   = google_font("Fira Mono"),
+  base_font_size = "20px"
+)
+xaringanExtra::use_tachyons()
+xaringanExtra::use_panelset()
+xaringanExtra::use_extra_styles(hover_code_line=TRUE, mute_unhighlighted_code = TRUE)
+theme_set(theme_classic()+
+            theme(axis.title=element_text(size=16),
+                  axis.text = element_text(size=14),
+                  title = element_text(size=18),
+                  plot.margin = unit(c(0.05,0.05,0.05,0.05), 'npc')))
 ```
 
 ---
+class: middle,center,inverse
+
+# A change of canvas
+
+---
+layout: true
+
+## The web page, mouse clicks, and movement
+
+---
+
+.pull-left[
+## Traditional media
+
++ Journals
++ Magazines
++ Billboards
+
+Passive consumption of static content
+]
+.pull-right[
+
+## New media
+
++ web pages
++ digital paper
++ electronic billboards
+
+Potential for data updates and modifications, interaction, animation, real-time visualization
+
+Improved potential engagement with receiver
+
+Allows personalized, customizable data-driven visualization
+]
+
+---
+
+.bg-washed-blue.b--dark-blue.ba.bw2.br3.ph4.mt4.shadow-5.f1[
+Overview first, zoom & filter, then details on demand
+
+.tr[
+-- Ben Schneiderman, 1996
+]
+]
+
+---
+
+.f3.ba.bw3.br4.mt3.ph3.georgia.dark-blue[Interactive graphics allows you to add dimensions to your graph, while keeping the information organized and 
+accessible]
+
+.f4[Of course you can still implement all the graphical principles we've already learned 
+for making good visual encodings of data]
+
+.pull-left[
++ Colors
++ Shapes/markers
++ Ink ratio
++ Size
+]
+.pull-right[
+.orange[
++ Tooltips
++ On/off mechanisms
++ Panels (of time, for example)
++ Facets
+]
+]
+
+---
+
+## Kinds of interactions
+
+.ba.bg-washed-blue.b--dark-blue.bw2.w-60[
+1. Scroll and pan
+1. Zoom
+1. Open and close
+1. Sort and re-arrange
+1. Search and filter
+
+.center[*Jennifer Tidwell*]
+]
+
+--
+
+Once can also consider increasing dimensions through interaction
+
++ Time
++ Location
++ Meta-data
+
+---
+
+```{r, echo=FALSE}
+library(gapminder)
+col1 <- viridisLite::plasma(10)
+pl <- plot_ly(data = gapminder, x = ~gdpPercap, y = ~lifeExp,
+        frame = ~year, type = 'scatter', mode = 'markers', 
+        size = ~pop, group = ~country, color = ~continent,
+        text = ~country, 
+        colors = col1,
+        sizes = c(0, 1000),
+        # hoverinfo = 'color'
+        hovertemplate = paste('<b>Country: </b>', gapminder$country,
+                            '<br><b>Population:</b>',
+                            scales::label_number_si(acc=0.1)(gapminder$pop))
+        ) %>% 
+  layout(xaxis = list(type='log', title='GDP per capita (US $)'),
+         yaxis = list(title = 'Life expectancy (years)'),
+         autosize = FALSE, width=1100, height=400, 
+         margin = list(b=100, t=20, l=20,r=20)) %>% 
+  animation_opts(1000, easing='linear', redraw=FALSE) %>% 
+  animation_slider(currentvalue = list(prefix = 'Year ', font = list(color='red')))
+
+widgetframe::frameWidget(pl, width='100%', height='85%')
+```
+
+.footnote[Created using Plotly/R]
+
+---
+
+
+```{python, echo=F, results='hide'}
+import plotly.express as px
+import numpy as np
+df = px.data.gapminder().query("year == 2007")
+df["world"] = "world" # in order to have a single root node
+fig = px.treemap(df, path=['world', 'continent', 'country'], values='pop',
+                  color='lifeExp', 
+                  color_continuous_scale='RdBu',
+                  color_continuous_midpoint=np.average(df['lifeExp'], weights=df['pop']),
+                  title = 'Treemap of life expectancy in the 2007 Gapminder dataset',
+                  labels = {'world':'World', 'lifeExp':'Life expectancy',
+                  'gdpPercap': 'GDP ($)'}
+                  )
+fig.update_traces(customdata=df,hovertemplate="Life Expectancy: %{color:.1f}<br>Population: %{customdata[4]:.0f}<br>GDP($): %{customdata[5]:.2f}");
+
+fig.write_html('img/treemap.html')
+```
+
+<iframe src='img/treemap.html' width='100%', height='60%'></iframe>
+
+.footnote[Size is proportional to population<br>Created using Plotly/Python]
+
+---
+
+
++ [JHU coronavirus tracker](https://coronavirus.jhu.edu/map.html)
++ [FT coronavirus time trends](https://ig.ft.com/coronavirus-chart/)
++ [Flooding in the Midwest (NY Times)](https://www.nytimes.com/interactive/2019/03/19/us/midwest-flooding.html)
++ [A visual intro to machine learning](http://www.r2d3.us/visual-intro-to-machine-learning-part-1/)
++ [What's your pay gap? (WSJ)](http://graphics.wsj.com/gender-pay-gap/)
++ [The Refugee Project](https://www.therefugeeproject.org/#/2018/SDN)
++ [The wind map](http://hint.fm/wind/index.html)
++ [What the world eats (Nat Geo)](https://www.nationalgeographic.com/what-the-world-eats/)
+
+---
+
+.f3.bb.mt5.ph5.bw1.bg-washed-blue[Where do we see the advantages?]
+
+.f4[
++ Being able to look at complex data in a targeted manner
++ Being able to contextualize complex data
++ Being able to clearly see patterns over time or over geographies 
++ Being able to look at the full data while concentrating on a part
+]
+
+---
+layout: true
+
+# Toolsets
+
+---
+
+## Web technologies to the fore
+
+.center[
+![:scale 50%](img/htmlstack.jpeg)
+]
+
+---
+
+## Data-Driven Documents ([d3.js](https://d3js.org))
+
++ The premier library for creating interactive graphics from data
+    - Very granular
+    - Low-level programming
+    - Performant
+    
+--
+
+`r fontawesome::fa('r-project', fill='blue')` can directly interact with d3.js using the
+**r2d3** package. 
+
+d3.js code can also be edited in RStudio
+
+---
+
+## Data-Driven Documents ([d3.js](https://d3js.org))
+
+**A stacked barplot**
+```{r, echo=TRUE, fig.height=4, fig.width=7}
+library(r2d3)
+r2d3(script='stackedbars.js', d3_version=4)
+```
+
+---
+
+## Data-Driven Documents ([d3.js](https://d3js.org))
+
+**A network of characters from Les Miserable**
+
+```{r, echo=TRUE}
+r2d3(data = jsonlite::read_json('miserables.json'), d3_version=4, script='forcegraph.js')
+```
+
+---
+
+## Data-Driven Documents ([d3.js](https://d3js.org))
+
++ d3.js is granular and complicated for starting out
++ Fortunately there are several alternatives built upon d3.js to make life easier for people
+
+--
+
+.ba.br4.f3.b--dark-blue.bw2.mt4.ph4[It's better to have programs that are human-readable]
+
+--
+
+### Candidates
+.fl.w-50[
++ Vega and [Vega-lite](https://vega.github.io/vega-lite/)
+    - Interfaced in Python using [**Altair**](https://altair-viz.github.io/)
+        - which is interfaced in R using [**altair**](https://vegawidget.github.io/altair/)
++ [bokeh.js](https://bokeh.org)
+    - Python package
+    - Interfaced in R using **rbokeh**
+
+]
+.fl.w-50[
++ [plotly.js](https://www.plotly.com)
+    - Interfaces in both R (**plotly**) and Python (**plotly**)
+    - Good [documentation](https://plotly.com/graphing-libraries/)
++ [highcharts.js](https://www.highcharts.com/)
+    - Interfaced in R using [**highcharter**](https://jkunst.com/highcharter/)
+    - Not free for commercial use
+    
+]
+
+---
+
+## Data-Driven Documents ([d3.js](https://d3js.org))
+
++ d3.js is granular and complicated for starting out
++ Fortunately there are several alternatives built upon d3.js to make life easier for people
+
+
+
+.ba.br4.f3.b--dark-blue.bw2.mt4.ph4[It's better to have programs that are human-readable]
+
+
+
+### Candidates
+
+.fl.w-100.ba.br4.bw3.mt3.ph3.b--dark-blue[
+
+ #### [plotly.js](https://www.plotly.com)
+ 
+ - Interfaces in both R (**plotly**) and Python (**plotly**)
+ - Good [documentation](https://plotly.com/graphing-libraries/)
+]
+
+---
+layout: true
+
+# Plotly
+
+---
+class: middle,center,inverse
+
+
+
+---
+
+---
+
+### Plotly from R
+
+Plotly has an R-based API that covers most but not all of plotly's capabilities.
+
+However, what the **plotly** package in `r fontawesome::fa('r-project')` does provide
+is conversion of **ggplot2** plots to plotly using a single function, `ggplotly`
+
+---
+
+.pull-left[
+```{r, echo=F}
+library(gapminder)
+plt <- gapminder %>% 
+  filter(year == 2007) %>% 
+  ggplot(aes(gdpPercap, lifeExp, size=pop, color = continent))+
+  geom_point() + 
+  scale_x_log10() + 
+  labs(x='GDP per capita', y = 'Life expectancy', color = 'Continent', size = 'Population')+
+  scale_size('Population', labels = scales::label_number_si()) + 
+  scale_color_viridis_d() + theme_bw()
+plt
+```
+]
+.pull-right[
+```{r, echo=T}
+ggplotly(plt)
+```
+
+]
+---
+class: middle,center,inverse
+
+# Scatter plots
+
+---
+
+
+.pull-left[
+.panelset[
+.panel[.panel-name[R]
+```{r m1, eval=FALSE}
+library(palmerpenguins)
+df <- penguins
+plot_ly(df, 
+        x = ~bill_length_mm, 
+        y = ~body_mass_g,
+        type='scatter')
+```
+]
+.panel[.panel-name[Python]
+```{python, eval=FALSE}
+import seaborn as sns
+penguins = sns.load_dataset('penguins')
+
+fig = px.scatter(data_frame=penguins, 
+    x = 'bill_length_mm', 
+    y = 'body_mass_g') 
+```
+]
+]]
+.pull-right[
+```{r, ref.label='m1', echo=FALSE}
+
+```
+
+]
+
+---
+
+.pull-left[
+.panelset[
+.panel[.panel-name[R]
+```{r m2, eval=F}
+plot_ly(penguins, 
+        x=~bill_length_mm,
+        y = ~ body_mass_g, 
+        color = ~species,
+        type='scatter', mode='markers')
+```
+]
+.panel[.panel-name[Python]
+```{python, eval=FALSE}
+px.scatter(data_frame=penguins, 
+    x='bill_length_mm', 
+    y = 'body_mass_g', 
+    color = 'species')
+```
+]
+]]
+.pull-right[
+```{r, echo=F, ref.label='m2'}
+
+```
+
+]
+
+---
+
+.pull-left[
+.panelset[
+.panel[.panel-name[R]
+```{r m3}
+fig <- plot_ly(penguins,
+        x= ~bill_length_mm,
+        y= ~body_mass_g,
+        color = ~species,
+        type='scatter', mode='markers') %>% 
+  layout(
+    xaxis = list(title='Bill length (mm)'),
+    yaxis = list(title='Body mass (g)'),
+    title = 'Palmer Penguins'
+  )
+```
+]
+.panel[.panel-name[Python]
+```{python, eval=FALSE}
+px.scatter(data_frame=penguins, 
+    x='bill_length_mm', 
+    y = 'body_mass_g', 
+    color = 'species',
+    labels = dict(bill_length_mm="Bill length (mm)",
+                  body_mass_g = "Body mass (g)",
+                  species='Species'),
+    title = "Palmer Penguins")
+```
+]
+]
+Add annotations
+]
+.pull-right[
+```{r, echo=F}
+widgetframe::frameWidget(fig)
+```
+
+]
+
+---
+
+.pull-left[
+.panelset[
+.panel[.panel-name[R]
+```{r m4}
+fig <- plot_ly(penguins,
+        x= ~bill_length_mm,
+        y= ~body_mass_g,
+        color = ~species,
+        type='scatter', mode='markers',
+        hovertemplate = paste("Species:",penguins$species,'<br>Island: ',penguins$island,"<br>Sex:",penguins$sex)) %>% 
+  layout(
+    xaxis = list(title='Bill length (mm)'),
+    yaxis = list(title='Body mass (g)'),
+    title = 'Palmer Penguins')
+```
+]
+.panel[.panel-name[Python]
+```{python, eval=FALSE}
+fig =px.scatter(data_frame=penguins, 
+    x='bill_length_mm', 
+    y = 'body_mass_g', 
+    color = 'species',
+    labels = dict(bill_length_mm="Bill length (mm)",
+                  body_mass_g = "Body mass (g)",
+                  species='Species'),
+    title = "Palmer Penguins")
+fig.update_traces(customdata=penguins,
+  hovertemplate="Species: %{color}<br>Island: %{customdata[1]}<br>Sex: %{customdata[6]}")
+```
+]]
+
+You can customize the tooltip using the `hovertemplate` argument and a HTML-based template. Note that data
+currently not used in the figure can be used, but is 
+incorporated differently in `r fontawesome::fa('r-project')` and `r fontawesome::fa('python')`]
+.pull-right[
+```{r, echo=F}
+widgetframe::frameWidget(fig)
+```
+
+]
+---
+class: middle,center,inverse
+
+# Line plots and time series
+
+---
+
+.pull-left[
+.panelset[
+.panel[.panel-name[R]
+```{r, eval=T}
+library(gapminder)
+df <- filter(gapminder, continent=='Asia')
+fig <- plot_ly(df, x = ~year, y = ~lifeExp,
+               color = ~country, 
+               type='scatter', mode='lines',
+               hovertemplate=paste('<b>',df$country,'</b><br>Year=%{x}<br>Life Expectancy=%{y:.2f} yrs')) %>% 
+  layout(xaxis=list(title='Year'),
+         yaxis=list(title='Life Expectancy'),
+         showlegend=FALSE)
+```
+]
+.panel[.panel-name[Python]
+```{python, eval=FALSE}
+gap = px.data.gapminder()
+df = gap.query('continent=="Asia"')
+fig = px.line(df, 
+  x = 'year', 
+  y = 'lifeExp', 
+  color = 'country',
+  labels = dict(lifeExp = 'Life expectancy', 
+                year='Year'))
+fig.update_traces(customdata=df,
+  hovertemplate="<b>%{customdata[0]}</b><br>Year=%{x}<br>Life Expectancy=%{y}")
+fig.update_layout(showlegend=False)
+```
+]
+]
+]
+.pull-right[
+```{r, echo=F}
+widgetframe::frameWidget(fig)
+```
+
+]
+
+---
+
+.pull-left[
+.panelset[
+.panel[.panel-name[R]
+```{r}
+
+```
+]
+.panel[.panel-name[Python]
+```{python, eval=T, results='hide'}
+gap = px.data.gapminder()
+df = gap.query("continent != 'Asia'")
+fig = px.line(df, x = 'year', y = 'lifeExp', 
+  color = 'continent', 
+  line_group = 'country', 
+  hover_name='country', 
+  height=500, width=500,
+  template='presentation',
+  labels = dict(lifeExp = 'Life expectancy',
+                year='Year'))
+                
+fig.update_layout(showlegend=False)
+```
+]
+]
+]
+.pull-right[
+```{python, echo=F}
+fig.write_html('img/spagh1.html')
+```
+<iframe src='img/spagh1.html' width='550' height='550'></iframe>
+
+]
+---
+class: middle,center,inverse
+
+# Facets
+
+---
+
+```{python, eval=T}
+fig = px.line(data_frame = gap, x = 'year', y = 'lifeExp', 
+      color = 'country', facet_col='continent', facet_col_wrap=3,
+      labels = {'lifeExp': 'Life expectancy'},
+      width=1000,   
+      height=500).update_layout(showlegend=False)
+
+```
+```{python, echo=F}
+fig.write_html('img/facet.html')
+```
+
+<iframe src='img/facet.html' width=1000 height=500></iframe>
+
+---
+class: middle,center,inverse
+
+# Categorical variables
+
+---
+
+
+.pull-left[
+```{python b1, eval=F}
+tips = px.data.tips()
+px.bar(tips, x = 'day', y = 'total_bill',
+      width=500, height=500),
+      labels={'day': 'Day',
+              'total_bill': 'Total bill'}
+      )
+```
+]
+.pull-right[
+```{python, echo=F}
+tips = px.data.tips()
+fig=px.bar(tips, x = 'day', y = 'total_bill',
+      width=500, height=500,
+      labels={'day': 'Day',
+              'total_bill': 'Total bill'}
+      )
+fig.write_html('img/bar1.html')
+```
+<iframe src='img/bar1.html' height=550 width=550></iframe>
+
+]
+
+---
+
+.pull-left[
+```{python,eval=F}
+px.bar(tips, x = 'day', y = 'total_bill',
+       category_orders={
+           'day': ['Thur','Fri','Sat','Sun']
+       },
+      width=500, height=500),
+      labels={'day': 'Day',
+              'total_bill': 'Total bill'}
+      )
+```
+
+Re-order the bars in alphabetical order
+]
+.pull-right[
+```{python, echo=F}
+fig = px.bar(tips, x = 'day', y = 'total_bill',
+       category_orders={
+           'day': ['Thur','Fri','Sat','Sun']
+       },
+      width=500, height=500,
+      labels={'day': 'Day',
+              'total_bill': 'Total bill'}
+      )
+fig.write_html('img/bar2.html')
+```
+<iframe src='img/bar2.html' width=550 height=550></iframe.
+]
+
+---
+
+.pull-left[
+```{python,eval=F}
+px.bar(tips, x = 'day', y = 'total_bill', 
+    color='smoker', barmode='group',
+    category_orders={
+           'day': ['Thur','Fri','Sat','Sun']
+       },
+    width=500, height=500,
+    labels={'day': 'Day',
+            'total_bill': 'Total bill'})
+```
+
+Add a grouping variable
+]
+.pull-right[
+```{python, echo=F}
+fig = px.bar(tips, x = 'day', y = 'total_bill', 
+    color='smoker', barmode='group',
+    category_orders={
+           'day': ['Thur','Fri','Sat','Sun']
+       },
+    width=500, height=500,
+    labels={'day': 'Day',
+            'total_bill': 'Total bill'})
+fig.write_html('img/bar3.html')
+```
+<iframe src='img/bar3.html' width=550 height=550></iframe>
+]
+
+---
+
+Add facets
+
+```{python,eval=F}
+px.bar(tips, x = 'day', y = 'total_bill', color='smoker', barmode='group', 
+    facet_col='sex',
+    category_orders={
+           'day': ['Thur','Fri','Sat','Sun']
+       },
+    labels = {'day':'Day', 'total_bill': 'Total bill'},
+      width=1000, height=200)
+```
+```{python, echo=F}
+fig = px.bar(tips, x = 'day', y = 'total_bill', color='smoker', barmode='group', 
+    facet_col='sex',
+    category_orders={
+           'day': ['Thur','Fri','Sat','Sun']
+       },
+    labels = {'day':'Day', 'total_bill': 'Total bill'},
+      width=1000, height=200)
+fig.write_html('img/bar4.html')
+```
+<iframe src='img/bar4.html' width=1050 height=250></iframe>
+
+---
+
+Fix the order of faceting variables
+
+```{python,eval=F}
+px.bar(tips, x = 'day', y = 'total_bill', color='smoker', barmode='group', facet_col='sex',
+       category_orders={
+           'day': ['Thur','Fri','Sat','Sun'],
+           'sex': ['Male', 'Female'],
+           'smoker': ['Yes','No']
+       },
+      labels = {'day':'Day', 'total_bill': 'Total bill', 'smoker':'Smoker','sex':'Sex'},
+      width=1000, height=200)
+```
+```{python,echo=F}
+fig = px.bar(tips, x = 'day', y = 'total_bill', color='smoker', barmode='group', facet_col='sex',
+       category_orders={
+           'day': ['Thur','Fri','Sat','Sun'],
+           'sex': ['Male', 'Female'],
+           'smoker': ['Yes','No']
+       },
+      labels = {'day':'Day', 'total_bill': 'Total bill', 'smoker':'Smoker','sex':'Sex'},
+      width=1000, height=200)
+fig.write_html('img/bar5.html')
+```
+<iframe src='img/bar5.html' width=1050 height=250></iframe>
+
+---
+class: middle,center,inverse
+
+# Statistical plots
+
+---
+
+.pull-left[
+```{python,eval=F}
+tips = px.data.tips()
+px.histogram(tips, x='total_bill', nbins=100, 
+    histnorm='probability density',
+    color_discrete_sequence=['indianred'],
+    labels={'total_bill':'Total bill'},
+    width=400, height=400)
+```
+
+Histogram, calibrated to have area 1
+]
+.pull-right[
+```{python,echo=F}
+tips = px.data.tips()
+fig=px.histogram(tips, x='total_bill', nbins=100, 
+  histnorm='probability density',
+  color_discrete_sequence=['indianred'],
+  labels={'total_bill':'Total bill'},
+  width=400, height=400)
+fig.write_html('img/hist1.html')
+```
+<iframe src='img/hist1.html' width=450 height=450></iframe>
+]
+
+---
+
+.pull-left[
+```{python,eval=F}
+px.histogram(tips, x='total_bill', color='sex',
+  labels = {'total_bill':'Total bill'},
+  width=400, height=400)
+```
+Grouped histogram
+]
+.pull-right[
+```{python,echo=F}
+fig=px.histogram(tips, x='total_bill', color='sex',
+  labels = {'total_bill':'Total bill'},
+  width=400, height=400)
+fig.write_html('img/hist2.html')
+```
+<iframe src='img/hist2.html' width=450 height=450></iframe>
+]
+
+---
+
+.pull-left[
+```{python,eval=F}
+px.histogram(tips, x='total_bill', 
+  color='sex',
+  label={'total_bill':'Total bill'},
+  marginal='box', # or 'rug' or 'violin'
+  width=500, height=500)
+```
+]
+.pull-right[
+```{python,echo=F}
+fig=px.histogram(tips, x='total_bill', 
+  color='sex',
+  labels={'total_bill':'Total bill'},
+  marginal='box', # or 'rug' or 'violin'
+  width=500, height=500)
+fig.write_html('img/hist3.html')
+```
+<iframe src='img/hist3.html' width=550 height=550></iframe>
+
+]
+
+---
+
+.pull-left[
+```{python,eval=F}
+px.histogram(tips, x='day',
+    category_orders={'day':['Thur','Fri','Sat','Sun']},
+    width=400, height=400)
+```
+
+The histogram, applied to a categorical variable, produces a frequency bar plot
+]
+.pull-right[
+```{python,echo=F}
+fig=px.histogram(tips, x='day',
+    category_orders={'day':['Thur','Fri','Sat','Sun']},
+    width=400, height=400)
+fig.write_html('img/freq1.html')
+```
+<iframe src='img/freq1.html' width=450 height=450></iframe>
+]
+
+---
+
+.pull-left[
+```{python,eval=F}
+(px.histogram(tips, x='day',
+            width=400, height=400)
+ .update_xaxes(
+   categoryorder='total ascending')) # This part is from the low-level API
+```
+
+You can also order by value
+]
+.pull-right[
+```{python,echo=F}
+fig = (px.histogram(tips, x='day',
+            width=400, height=400)
+ .update_xaxes(
+   categoryorder='total ascending')) # This part is from the low-level API
+fig.write_html('img/freq2.html')
+```
+<iframe src='img/freq2.html' width=450 height=450></iframe>
+]
+
+---
+
+.pull-left[
+```{python,eval=F}
+(px.histogram(tips, x='day', y='tip', histfunc='avg',
+             width=400, height=400)
+  .update_xaxes(categoryorder='total ascending')
+  .update_layout(yaxis_tickformat='$'))
+```
+Bar plots of values of one variable grouped by categories of another
+]
+.pull-right[
+```{python,echo=F}
+fig = (px.histogram(tips, x='day', y='tip', histfunc='avg',
+             width=400, height=400)
+  .update_xaxes(categoryorder='total ascending')
+  .update_layout(yaxis_tickformat='$'))
+fig.write_html('img/freq3.html')
+```
+<iframe src='img/freq3.html' width=450 height=450></iframe>
+]
+
+---
+class: middle,center,inverse
+
+# Continuous vs categorical variable
+
+---
+
+.pull-left[
+```{python,eval=F}
+px.box(tips, x='day', y = 'total_bill',
+  labels = {'total_bill':'Total bill'},
+  width=400, height=400)
+```
+
+You can similarly do violin and strip plots
+]
+.pull-right[
+```{python,echo=F}
+fig = px.box(tips, x='day', y = 'total_bill',
+  labels = {'total_bill':'Total bill'},
+  width=400, height=400)
+fig.write_html('img/box.html')
+```
+<iframe src='img/box.html' width=450 height=450></iframe>
+]
+
+---
+class: middle,center,inverse
+
+# 2-d and marginal plots
+
+---
+
+.pull-left[
+```{python, eval=F}
+px.scatter(tips,
+  x='total_bill',
+  y='tip',
+  marginal_x='histogram',
+  marginal_y='histogram',
+  labels = dict(total_bill='Total bill',
+                tip = 'Tip'),
+  title = 'Tips vs Total bill',
+  width=400, height=400)
+```
+We can put marginal histograms or boxplots or violin plots quite easily
+]
+.pull-right[
+```{python, echo=F}
+fig = px.scatter(tips,
+  x='total_bill',
+  y='tip',
+  marginal_x='histogram',
+  marginal_y='histogram',
+  labels = dict(total_bill='Total bill',
+                tip = 'Tip'),
+  title = 'Tips vs Total bill',
+  width=400, height=400,
+  color_continuous_scale=px.colors.sequential.Viridis)
+fig.write_html('img/marg.html')
+```
+<iframe src='img/marg.html' width=450 height=450></iframe>
+]
+
+---
+
+.pull-left[
+```{python,eval=F}
+px.density_heatmap(tips, 
+  x='total_bill', y = 'tip',
+  marginal_x='histogram', marginal_y='histogram',
+  color_continuous_scale=px.colors.sequential.Viridis,nbinsx=50, nbinsy=50,
+  labels=dict(total_bill='Total bill', tip='Tip'),
+  title = 'Joint distribution of tip and total bill',
+  width=400, height=400)
+```
+If you have too many points, you can consider using a 2-d density plot. If you have lots more points, like millions, you can use a Python package called **datashader**
+]
+.pull-right[
+```{python,echo=F}
+fig=px.density_heatmap(tips, 
+  x='total_bill', y = 'tip',
+  marginal_x='histogram', marginal_y='histogram',
+  color_continuous_scale=px.colors.sequential.Viridis,nbinsx=50, nbinsy=50,
+  labels=dict(total_bill='Total bill', tip='Tip'),
+  title = 'Joint distribution of tip and total bill',
+  width=400, height=400)
+fig.write_html('img/dens2d.html')
+```
+<iframe src='img/dens2d.html' width=450 height=450></iframe>
+]
+
+---
+
+## Scatterplot matrix
+
+```{python,eval=F}
+penguin = sns.load_dataset('penguins')
+px.scatter_matrix(penguin, width=600, height=400)
+```
+```{python,echo=F}
+import seaborn as sns
+penguin = sns.load_dataset('penguins')
+fig=px.scatter_matrix(penguin, width=600, height=400)
+fig.write_html('img/splom.html')
+```
+<iframe src='img/splom.html' width=450 height=650></iframe>
+
+---
+
+### A more specified example
+
+```{python,eval=F}
+(px.scatter_matrix(penguin,
+    dimensions = ['bill_length_mm','bill_depth_mm','flipper_length_mm','body_mass_g'],
+    color='species',
+    width=1000, height=1000,
+    labels = dict(bill_length_mm='Bill length (mm)',
+                  bill_depth_mm = 'Bill depth (mm)',
+                  flipper_length_mm = 'Flipper length (mm)',
+                  body_mass_g = 'Body mass (g)'))
+    .update_traces(diagonal_visible=False))
+```
+
+---
+
+## A more specified example
+
+```{python,echo=F}
+fig=(px.scatter_matrix(penguin,
+    dimensions = ['bill_length_mm','bill_depth_mm','flipper_length_mm','body_mass_g'],
+    color='species',
+    width=1000, height=1000,
+    labels = dict(bill_length_mm='Bill length (mm)',
+                  bill_depth_mm = 'Bill depth (mm)',
+                  flipper_length_mm = 'Flipper length (mm)',
+                  body_mass_g = 'Body mass (g)'))
+    .update_traces(diagonal_visible=False))
+fig.write_html('img/splom2.html')
+```
+<iframe src='img/splom2.html' width=1050 height=1050></iframe>
+
+---
+class: middle,center,inverse
+
+# Parallel coordinates
+
+---
+
+
+```{python,eval=F}
+penguin['species'] = penguin.species.astype('category')
+penguin['species_id']=penguin.species.cat.codes
+px.parallel_coordinates(penguin,
+                        color='species_id',
+            color_continuous_scale=px.colors.diverging.Tealrose,
+            height=300, width=1000)
+```
+```{python,echo=F}
+penguin['species'] = penguin.species.astype('category')
+penguin['species_id']=penguin.species.cat.codes
+fig=px.parallel_coordinates(penguin,
+                        color='species_id',
+            color_continuous_scale=px.colors.diverging.Tealrose,
+            height=300, width=1000)
+fig.write_html('img/parallel.html')
+```
+<iframe src='img/parallel.html' width=1000, height=340></iframe>
+
+---
+class: middle,center,inverse
+
+# Maps
+
+---
+
+
+The most mature library for maps is `leaflet.js`
+
+- `r fontawesome::fa('r-project', fill='blue')`: **leaflet**, **tmap**, **plotly**
+- `r fontawesome::fa('python', fill='blue')`: **folium**, **plotly**
+
+---
+
+```{python,eval=T, echo=F}
+import pandas as pd
+from urllib.request import urlopen
+import json
+with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
+    counties = json.load(response)
+df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv",
+                   dtype={"fips": str})
+```
+
+.pull-left[
+```{python,eval=FALSE}
+px.choropleth(df, 
+  geojson=counties, 
+  locations='fips', 
+  color='unemp', 
+  color_continuous_scale=px.colors.sequential.Viridis, 
+  range_color=(0,12), 
+  scope='usa', 
+  labels = {'unemp': 'Unemployment rate'})
+```
+Unemployment rates in 2016
+]
+.pull-right[
+```{python,eval=FALSE}
+fig=px.choropleth(df, 
+  geojson=counties, 
+  locations='fips', 
+  color='unemp', 
+  color_continuous_scale=px.colors.sequential.Viridis, 
+  range_color=(0,12), 
+  scope='usa', 
+  labels = {'unemp': 'Unemployment rate'},
+  width=400, height=400)
+fig.write_html('img/map.html')
+```
+<iframe src='img/map.html' width=450 height=450></iframe>
+]
+
 
 

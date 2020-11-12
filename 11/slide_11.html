@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Module 5: Interactive Graphics</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Vaisman &amp; Dasgupta" />
+    <meta name="date" content="2020-11-12" />
+    <script src="slide_11_files/header-attrs-2.5/header-attrs.js"></script>
+    <link href="slide_11_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+    <script src="slide_11_files/anchor-sections-1.0/anchor-sections.js"></script>
+    <link href="slide_11_files/tachyons-4.12.0/tachyons.min.css" rel="stylesheet" />
+    <link href="slide_11_files/panelset-0.2.3.9000/panelset.css" rel="stylesheet" />
+    <script src="slide_11_files/panelset-0.2.3.9000/panelset.js"></script>
+    <link href="slide_11_files/xaringanExtra-extra-styles-0.2.3.9000/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <script src="slide_11_files/htmlwidgets-1.5.2/htmlwidgets.js"></script>
+    <script src="slide_11_files/pymjs-1.3.2/pym.v1.js"></script>
+    <script src="slide_11_files/widgetframe-binding-0.3.1/widgetframe.js"></script>
+    <script src="slide_11_files/r2d3-render-0.1.0/r2d3-render.js"></script>
+    <script src="slide_11_files/webcomponents-2.0.0/webcomponents.js"></script>
+    <script src="slide_11_files/r2d3-binding-0.2.3/r2d3.js"></script>
+    <script src="slide_11_files/d3v4-4.13.0/d3.min.js"></script>
+    <script src="slide_11_files/plotly-binding-4.9.2.1/plotly.js"></script>
+    <script src="slide_11_files/typedarray-0.1/typedarray.min.js"></script>
+    <script src="slide_11_files/jquery-1.11.3/jquery.min.js"></script>
+    <link href="slide_11_files/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+    <script src="slide_11_files/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+    <link href="slide_11_files/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+    <script src="slide_11_files/plotly-main-1.52.2/plotly-latest.min.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="../custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Module 5: Interactive Graphics
+## ANLY 503, Fall 2020
+### Vaisman &amp; Dasgupta
+### Georgetown University
+### November 12, 2020
+
+---
+
+
+
+
+
+
+---
+class: middle,center,inverse
+
+# A change of canvas
+
+---
+layout: true
+
+## The web page, mouse clicks, and movement
+
+---
+
+.pull-left[
+## Traditional media
+
++ Journals
++ Magazines
++ Billboards
+
+Passive consumption of static content
+]
+.pull-right[
+
+## New media
+
++ web pages
++ digital paper
++ electronic billboards
+
+Potential for data updates and modifications, interaction, animation, real-time visualization
+
+Improved potential engagement with receiver
+
+Allows personalized, customizable data-driven visualization
+]
+
+---
+
+.bg-washed-blue.b--dark-blue.ba.bw2.br3.ph4.mt4.shadow-5.f1[
+Overview first, zoom &amp; filter, then details on demand
+
+.tr[
+-- Ben Schneiderman, 1996
+]
+]
+
+---
+
+.f3.ba.bw3.br4.mt3.ph3.georgia.dark-blue[Interactive graphics allows you to add dimensions to your graph, while keeping the information organized and 
+accessible]
+
+.f4[Of course you can still implement all the graphical principles we've already learned 
+for making good visual encodings of data]
+
+.pull-left[
++ Colors
++ Shapes/markers
++ Ink ratio
++ Size
+]
+.pull-right[
+.orange[
++ Tooltips
++ On/off mechanisms
++ Panels (of time, for example)
++ Facets
+]
+]
+
+---
+
+## Kinds of interactions
+
+.ba.bg-washed-blue.b--dark-blue.bw2.w-60[
+1. Scroll and pan
+1. Zoom
+1. Open and close
+1. Sort and re-arrange
+1. Search and filter
+
+.center[*Jennifer Tidwell*]
+]
+
+--
+
+Once can also consider increasing dimensions through interaction
+
++ Time
++ Location
++ Meta-data
+
+---
+
+<div id="htmlwidget-2812701c185dcd9785a0" style="width:100%;height:85%;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2812701c185dcd9785a0">{"x":{"url":"slide_11_files/figure-html//widgets/widget_unnamed-chunk-1.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+
+.footnote[Created using Plotly/R]
+
+---
+
+
+
+
+&lt;iframe src='img/treemap.html' width='100%', height='60%'&gt;&lt;/iframe&gt;
+
+.footnote[Size is proportional to population&lt;br&gt;Created using Plotly/Python]
+
+---
+
+
++ [JHU coronavirus tracker](https://coronavirus.jhu.edu/map.html)
++ [FT coronavirus time trends](https://ig.ft.com/coronavirus-chart/)
++ [Flooding in the Midwest (NY Times)](https://www.nytimes.com/interactive/2019/03/19/us/midwest-flooding.html)
++ [A visual intro to machine learning](http://www.r2d3.us/visual-intro-to-machine-learning-part-1/)
++ [What's your pay gap? (WSJ)](http://graphics.wsj.com/gender-pay-gap/)
++ [The Refugee Project](https://www.therefugeeproject.org/#/2018/SDN)
++ [The wind map](http://hint.fm/wind/index.html)
++ [What the world eats (Nat Geo)](https://www.nationalgeographic.com/what-the-world-eats/)
+
+---
+
+.f3.bb.mt5.ph5.bw1.bg-washed-blue[Where do we see the advantages?]
+
+.f4[
++ Being able to look at complex data in a targeted manner
++ Being able to contextualize complex data
++ Being able to clearly see patterns over time or over geographies 
++ Being able to look at the full data while concentrating on a part
+]
+
+---
+layout: true
+
+# Toolsets
+
+---
+
+## Web technologies to the fore
+
+.center[
+![:scale 50%](img/htmlstack.jpeg)
+]
+
+---
+
+## Data-Driven Documents ([d3.js](https://d3js.org))
+
++ The premier library for creating interactive graphics from data
+    - Very granular
+    - Low-level programming
+    - Performant
+    
+--
+
+&lt;svg style="height:0.8em;top:.04em;position:relative;fill:blue;" viewBox="0 0 581 512"&gt;&lt;path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/&gt;&lt;/svg&gt; can directly interact with d3.js using the
+**r2d3** package. 
+
+d3.js code can also be edited in RStudio
+
+---
+
+## Data-Driven Documents ([d3.js](https://d3js.org))
+
+**A stacked barplot**
+
+```r
+library(r2d3)
+r2d3(script='stackedbars.js', d3_version=4)
+```
+
+<div id="htmlwidget-7fa74e859a680fa9d718" style="width:504px;height:288px;" class="r2d3 html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7fa74e859a680fa9d718">{"x":{"data":null,"type":"NULL","container":"svg","options":null,"script":"var d3Script = function(d3, r2d3, data, svg, width, height, options, theme, console) {\nthis.d3 = d3;\n\nsvg = d3.select(svg.node());\n/* R2D3 Source File:  stackedbars.js */\n// !preview r2d3 data=c(0.3, 0.6, 0.8, 0.95, 0.40, 0.20)\n//\n// r2d3: https://rstudio.github.io/r2d3\n//\n\n// !preview r2d3 d3_version = 4\n\n// Based on: http://bl.ocks.org/mbostock/3943967\n\nvar n = 4, // The number of series.\n    m = 58; // The number of values per series.\n\n// The xz array has m elements, representing the x-values shared by all series.\n// The yz array has n elements, representing the y-values of each of the n series.\n// Each yz[i] is an array of m non-negative numbers representing a y-value for xz[i].\n// The y01z array has the same structure as yz, but with stacked [y₀, y₁] instead of y.\nvar xz = d3.range(m),\n    yz = d3.range(n).map(function() { return bumps(m); }),\n    y01z = d3.stack().keys(d3.range(n))(d3.transpose(yz)),\n    yMax = d3.max(yz, function(y) { return d3.max(y); }),\n    y1Max = d3.max(y01z, function(y) { return d3.max(y, function(d) { return d[1]; }); });\n\nvar margin = {top: 40, right: 10, bottom: 20, left: 10},\n    width = width - margin.left - margin.right,\n    height = height - margin.top - margin.bottom,\n    g = svg.append(\"g\").attr(\"transform\", \"translate(\" + margin.left + \",\" + margin.top + \")\");\n\nvar x = d3.scaleBand()\n    .domain(xz)\n    .rangeRound([0, width])\n    .padding(0.08);\n\nvar y = d3.scaleLinear()\n    .domain([0, y1Max])\n    .range([height, 0]);\n\nvar color = d3.scaleOrdinal()\n    .domain(d3.range(n))\n    .range(d3.schemeCategory20c);\n\nvar series = g.selectAll(\".series\")\n  .data(y01z)\n  .enter().append(\"g\")\n    .attr(\"fill\", function(d, i) { return color(i); });\n\nvar rect = series.selectAll(\"rect\")\n  .data(function(d) { return d; })\n  .enter().append(\"rect\")\n    .attr(\"x\", function(d, i) { return x(i); })\n    .attr(\"y\", height)\n    .attr(\"width\", x.bandwidth())\n    .attr(\"height\", 0);\n\nrect.transition()\n    .delay(function(d, i) { return i * 10; })\n    .attr(\"y\", function(d) { return y(d[1]); })\n    .attr(\"height\", function(d) { return y(d[0]) - y(d[1]); });\n\ng.append(\"g\")\n    .attr(\"class\", \"axis axis--x\")\n    .attr(\"transform\", \"translate(0,\" + height + \")\")\n    .style(\"font-size\", Math.min(width, height * 2) / 90)\n    .call(d3.axisBottom(x)\n        .tickSize(0)\n        .tickPadding(6));\n\nd3.selectAll(\"input\")\n    .on(\"change\", changed);\n\nvar timeout = d3.timeout(function() {\n  d3.select(\"input[value=\\\"grouped\\\"]\")\n      .property(\"checked\", true)\n      .dispatch(\"change\");\n}, 2000);\n\nfunction changed() {\n  timeout.stop();\n  if (this.value === \"grouped\") transitionGrouped();\n  else transitionStacked();\n}\n\nfunction transitionGrouped() {\n  y.domain([0, yMax]);\n\n  rect.transition()\n      .duration(500)\n      .delay(function(d, i) { return i * 10; })\n      .attr(\"x\", function(d, i) { return x(i) + x.bandwidth() / n * this.parentNode.__data__.key; })\n      .attr(\"width\", x.bandwidth() / n)\n    .transition()\n      .attr(\"y\", function(d) { return y(d[1] - d[0]); })\n      .attr(\"height\", function(d) { return y(0) - y(d[1] - d[0]); });\n}\n\nfunction transitionStacked() {\n  y.domain([0, y1Max]);\n\n  rect.transition()\n      .duration(500)\n      .delay(function(d, i) { return i * 10; })\n      .attr(\"y\", function(d) { return y(d[1]); })\n      .attr(\"height\", function(d) { return y(d[0]) - y(d[1]); })\n    .transition()\n      .attr(\"x\", function(d, i) { return x(i); })\n      .attr(\"width\", x.bandwidth());\n}\n\n// Returns an array of m psuedorandom, smoothly-varying non-negative numbers.\n// Inspired by Lee Byron’s test data generator.\n// http://leebyron.com/streamgraph/\nfunction bumps(m) {\n  var values = [], i, j, w, x, y, z;\n\n  // Initialize with uniform random values in [0.1, 0.2).\n  for (i = 0; i < m; ++i) {\n    values[i] = 0.1 + 0.1 * Math.random();\n  }\n\n  // Add five random bumps.\n  for (j = 0; j < 5; ++j) {\n    x = 1 / (0.1 + Math.random());\n    y = 2 * Math.random() - 0.5;\n    z = 10 / (0.1 + Math.random());\n    for (i = 0; i < m; i++) {\n      w = (i / m - y) * z;\n      values[i] += x * Math.exp(-w * w);\n    }\n  }\n\n  // Ensure all values are positive.\n  for (i = 0; i < m; ++i) {\n    values[i] = Math.max(0, values[i]);\n  }\n\n  return values;\n}\n};","style":null,"version":4,"theme":{"default":{"background":"#FFFFFF","foreground":"#000000"},"runtime":null},"useShadow":true},"evals":[],"jsHooks":[]}</script>
+
+---
+
+## Data-Driven Documents ([d3.js](https://d3js.org))
+
+**A network of characters from Les Miserable**
+
+
+```r
+r2d3(data = jsonlite::read_json('miserables.json'), d3_version=4, script='forcegraph.js')
+```
+
+<div id="htmlwidget-3ce0302c738e38ff87c0" style="width:504px;height:504px;" class="r2d3 html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3ce0302c738e38ff87c0">{"x":{"data":{"nodes":[{"id":"Myriel","group":1},{"id":"Napoleon","group":1},{"id":"Mlle.Baptistine","group":1},{"id":"Mme.Magloire","group":1},{"id":"CountessdeLo","group":1},{"id":"Geborand","group":1},{"id":"Champtercier","group":1},{"id":"Cravatte","group":1},{"id":"Count","group":1},{"id":"OldMan","group":1},{"id":"Labarre","group":2},{"id":"Valjean","group":2},{"id":"Marguerite","group":3},{"id":"Mme.deR","group":2},{"id":"Isabeau","group":2},{"id":"Gervais","group":2},{"id":"Tholomyes","group":3},{"id":"Listolier","group":3},{"id":"Fameuil","group":3},{"id":"Blacheville","group":3},{"id":"Favourite","group":3},{"id":"Dahlia","group":3},{"id":"Zephine","group":3},{"id":"Fantine","group":3},{"id":"Mme.Thenardier","group":4},{"id":"Thenardier","group":4},{"id":"Cosette","group":5},{"id":"Javert","group":4},{"id":"Fauchelevent","group":0},{"id":"Bamatabois","group":2},{"id":"Perpetue","group":3},{"id":"Simplice","group":2},{"id":"Scaufflaire","group":2},{"id":"Woman1","group":2},{"id":"Judge","group":2},{"id":"Champmathieu","group":2},{"id":"Brevet","group":2},{"id":"Chenildieu","group":2},{"id":"Cochepaille","group":2},{"id":"Pontmercy","group":4},{"id":"Boulatruelle","group":6},{"id":"Eponine","group":4},{"id":"Anzelma","group":4},{"id":"Woman2","group":5},{"id":"MotherInnocent","group":0},{"id":"Gribier","group":0},{"id":"Jondrette","group":7},{"id":"Mme.Burgon","group":7},{"id":"Gavroche","group":8},{"id":"Gillenormand","group":5},{"id":"Magnon","group":5},{"id":"Mlle.Gillenormand","group":5},{"id":"Mme.Pontmercy","group":5},{"id":"Mlle.Vaubois","group":5},{"id":"Lt.Gillenormand","group":5},{"id":"Marius","group":8},{"id":"BaronessT","group":5},{"id":"Mabeuf","group":8},{"id":"Enjolras","group":8},{"id":"Combeferre","group":8},{"id":"Prouvaire","group":8},{"id":"Feuilly","group":8},{"id":"Courfeyrac","group":8},{"id":"Bahorel","group":8},{"id":"Bossuet","group":8},{"id":"Joly","group":8},{"id":"Grantaire","group":8},{"id":"MotherPlutarch","group":9},{"id":"Gueulemer","group":4},{"id":"Babet","group":4},{"id":"Claquesous","group":4},{"id":"Montparnasse","group":4},{"id":"Toussaint","group":5},{"id":"Child1","group":10},{"id":"Child2","group":10},{"id":"Brujon","group":4},{"id":"Mme.Hucheloup","group":8}],"links":[{"source":"Napoleon","target":"Myriel","value":1},{"source":"Mlle.Baptistine","target":"Myriel","value":8},{"source":"Mme.Magloire","target":"Myriel","value":10},{"source":"Mme.Magloire","target":"Mlle.Baptistine","value":6},{"source":"CountessdeLo","target":"Myriel","value":1},{"source":"Geborand","target":"Myriel","value":1},{"source":"Champtercier","target":"Myriel","value":1},{"source":"Cravatte","target":"Myriel","value":1},{"source":"Count","target":"Myriel","value":2},{"source":"OldMan","target":"Myriel","value":1},{"source":"Valjean","target":"Labarre","value":1},{"source":"Valjean","target":"Mme.Magloire","value":3},{"source":"Valjean","target":"Mlle.Baptistine","value":3},{"source":"Valjean","target":"Myriel","value":5},{"source":"Marguerite","target":"Valjean","value":1},{"source":"Mme.deR","target":"Valjean","value":1},{"source":"Isabeau","target":"Valjean","value":1},{"source":"Gervais","target":"Valjean","value":1},{"source":"Listolier","target":"Tholomyes","value":4},{"source":"Fameuil","target":"Tholomyes","value":4},{"source":"Fameuil","target":"Listolier","value":4},{"source":"Blacheville","target":"Tholomyes","value":4},{"source":"Blacheville","target":"Listolier","value":4},{"source":"Blacheville","target":"Fameuil","value":4},{"source":"Favourite","target":"Tholomyes","value":3},{"source":"Favourite","target":"Listolier","value":3},{"source":"Favourite","target":"Fameuil","value":3},{"source":"Favourite","target":"Blacheville","value":4},{"source":"Dahlia","target":"Tholomyes","value":3},{"source":"Dahlia","target":"Listolier","value":3},{"source":"Dahlia","target":"Fameuil","value":3},{"source":"Dahlia","target":"Blacheville","value":3},{"source":"Dahlia","target":"Favourite","value":5},{"source":"Zephine","target":"Tholomyes","value":3},{"source":"Zephine","target":"Listolier","value":3},{"source":"Zephine","target":"Fameuil","value":3},{"source":"Zephine","target":"Blacheville","value":3},{"source":"Zephine","target":"Favourite","value":4},{"source":"Zephine","target":"Dahlia","value":4},{"source":"Fantine","target":"Tholomyes","value":3},{"source":"Fantine","target":"Listolier","value":3},{"source":"Fantine","target":"Fameuil","value":3},{"source":"Fantine","target":"Blacheville","value":3},{"source":"Fantine","target":"Favourite","value":4},{"source":"Fantine","target":"Dahlia","value":4},{"source":"Fantine","target":"Zephine","value":4},{"source":"Fantine","target":"Marguerite","value":2},{"source":"Fantine","target":"Valjean","value":9},{"source":"Mme.Thenardier","target":"Fantine","value":2},{"source":"Mme.Thenardier","target":"Valjean","value":7},{"source":"Thenardier","target":"Mme.Thenardier","value":13},{"source":"Thenardier","target":"Fantine","value":1},{"source":"Thenardier","target":"Valjean","value":12},{"source":"Cosette","target":"Mme.Thenardier","value":4},{"source":"Cosette","target":"Valjean","value":31},{"source":"Cosette","target":"Tholomyes","value":1},{"source":"Cosette","target":"Thenardier","value":1},{"source":"Javert","target":"Valjean","value":17},{"source":"Javert","target":"Fantine","value":5},{"source":"Javert","target":"Thenardier","value":5},{"source":"Javert","target":"Mme.Thenardier","value":1},{"source":"Javert","target":"Cosette","value":1},{"source":"Fauchelevent","target":"Valjean","value":8},{"source":"Fauchelevent","target":"Javert","value":1},{"source":"Bamatabois","target":"Fantine","value":1},{"source":"Bamatabois","target":"Javert","value":1},{"source":"Bamatabois","target":"Valjean","value":2},{"source":"Perpetue","target":"Fantine","value":1},{"source":"Simplice","target":"Perpetue","value":2},{"source":"Simplice","target":"Valjean","value":3},{"source":"Simplice","target":"Fantine","value":2},{"source":"Simplice","target":"Javert","value":1},{"source":"Scaufflaire","target":"Valjean","value":1},{"source":"Woman1","target":"Valjean","value":2},{"source":"Woman1","target":"Javert","value":1},{"source":"Judge","target":"Valjean","value":3},{"source":"Judge","target":"Bamatabois","value":2},{"source":"Champmathieu","target":"Valjean","value":3},{"source":"Champmathieu","target":"Judge","value":3},{"source":"Champmathieu","target":"Bamatabois","value":2},{"source":"Brevet","target":"Judge","value":2},{"source":"Brevet","target":"Champmathieu","value":2},{"source":"Brevet","target":"Valjean","value":2},{"source":"Brevet","target":"Bamatabois","value":1},{"source":"Chenildieu","target":"Judge","value":2},{"source":"Chenildieu","target":"Champmathieu","value":2},{"source":"Chenildieu","target":"Brevet","value":2},{"source":"Chenildieu","target":"Valjean","value":2},{"source":"Chenildieu","target":"Bamatabois","value":1},{"source":"Cochepaille","target":"Judge","value":2},{"source":"Cochepaille","target":"Champmathieu","value":2},{"source":"Cochepaille","target":"Brevet","value":2},{"source":"Cochepaille","target":"Chenildieu","value":2},{"source":"Cochepaille","target":"Valjean","value":2},{"source":"Cochepaille","target":"Bamatabois","value":1},{"source":"Pontmercy","target":"Thenardier","value":1},{"source":"Boulatruelle","target":"Thenardier","value":1},{"source":"Eponine","target":"Mme.Thenardier","value":2},{"source":"Eponine","target":"Thenardier","value":3},{"source":"Anzelma","target":"Eponine","value":2},{"source":"Anzelma","target":"Thenardier","value":2},{"source":"Anzelma","target":"Mme.Thenardier","value":1},{"source":"Woman2","target":"Valjean","value":3},{"source":"Woman2","target":"Cosette","value":1},{"source":"Woman2","target":"Javert","value":1},{"source":"MotherInnocent","target":"Fauchelevent","value":3},{"source":"MotherInnocent","target":"Valjean","value":1},{"source":"Gribier","target":"Fauchelevent","value":2},{"source":"Mme.Burgon","target":"Jondrette","value":1},{"source":"Gavroche","target":"Mme.Burgon","value":2},{"source":"Gavroche","target":"Thenardier","value":1},{"source":"Gavroche","target":"Javert","value":1},{"source":"Gavroche","target":"Valjean","value":1},{"source":"Gillenormand","target":"Cosette","value":3},{"source":"Gillenormand","target":"Valjean","value":2},{"source":"Magnon","target":"Gillenormand","value":1},{"source":"Magnon","target":"Mme.Thenardier","value":1},{"source":"Mlle.Gillenormand","target":"Gillenormand","value":9},{"source":"Mlle.Gillenormand","target":"Cosette","value":2},{"source":"Mlle.Gillenormand","target":"Valjean","value":2},{"source":"Mme.Pontmercy","target":"Mlle.Gillenormand","value":1},{"source":"Mme.Pontmercy","target":"Pontmercy","value":1},{"source":"Mlle.Vaubois","target":"Mlle.Gillenormand","value":1},{"source":"Lt.Gillenormand","target":"Mlle.Gillenormand","value":2},{"source":"Lt.Gillenormand","target":"Gillenormand","value":1},{"source":"Lt.Gillenormand","target":"Cosette","value":1},{"source":"Marius","target":"Mlle.Gillenormand","value":6},{"source":"Marius","target":"Gillenormand","value":12},{"source":"Marius","target":"Pontmercy","value":1},{"source":"Marius","target":"Lt.Gillenormand","value":1},{"source":"Marius","target":"Cosette","value":21},{"source":"Marius","target":"Valjean","value":19},{"source":"Marius","target":"Tholomyes","value":1},{"source":"Marius","target":"Thenardier","value":2},{"source":"Marius","target":"Eponine","value":5},{"source":"Marius","target":"Gavroche","value":4},{"source":"BaronessT","target":"Gillenormand","value":1},{"source":"BaronessT","target":"Marius","value":1},{"source":"Mabeuf","target":"Marius","value":1},{"source":"Mabeuf","target":"Eponine","value":1},{"source":"Mabeuf","target":"Gavroche","value":1},{"source":"Enjolras","target":"Marius","value":7},{"source":"Enjolras","target":"Gavroche","value":7},{"source":"Enjolras","target":"Javert","value":6},{"source":"Enjolras","target":"Mabeuf","value":1},{"source":"Enjolras","target":"Valjean","value":4},{"source":"Combeferre","target":"Enjolras","value":15},{"source":"Combeferre","target":"Marius","value":5},{"source":"Combeferre","target":"Gavroche","value":6},{"source":"Combeferre","target":"Mabeuf","value":2},{"source":"Prouvaire","target":"Gavroche","value":1},{"source":"Prouvaire","target":"Enjolras","value":4},{"source":"Prouvaire","target":"Combeferre","value":2},{"source":"Feuilly","target":"Gavroche","value":2},{"source":"Feuilly","target":"Enjolras","value":6},{"source":"Feuilly","target":"Prouvaire","value":2},{"source":"Feuilly","target":"Combeferre","value":5},{"source":"Feuilly","target":"Mabeuf","value":1},{"source":"Feuilly","target":"Marius","value":1},{"source":"Courfeyrac","target":"Marius","value":9},{"source":"Courfeyrac","target":"Enjolras","value":17},{"source":"Courfeyrac","target":"Combeferre","value":13},{"source":"Courfeyrac","target":"Gavroche","value":7},{"source":"Courfeyrac","target":"Mabeuf","value":2},{"source":"Courfeyrac","target":"Eponine","value":1},{"source":"Courfeyrac","target":"Feuilly","value":6},{"source":"Courfeyrac","target":"Prouvaire","value":3},{"source":"Bahorel","target":"Combeferre","value":5},{"source":"Bahorel","target":"Gavroche","value":5},{"source":"Bahorel","target":"Courfeyrac","value":6},{"source":"Bahorel","target":"Mabeuf","value":2},{"source":"Bahorel","target":"Enjolras","value":4},{"source":"Bahorel","target":"Feuilly","value":3},{"source":"Bahorel","target":"Prouvaire","value":2},{"source":"Bahorel","target":"Marius","value":1},{"source":"Bossuet","target":"Marius","value":5},{"source":"Bossuet","target":"Courfeyrac","value":12},{"source":"Bossuet","target":"Gavroche","value":5},{"source":"Bossuet","target":"Bahorel","value":4},{"source":"Bossuet","target":"Enjolras","value":10},{"source":"Bossuet","target":"Feuilly","value":6},{"source":"Bossuet","target":"Prouvaire","value":2},{"source":"Bossuet","target":"Combeferre","value":9},{"source":"Bossuet","target":"Mabeuf","value":1},{"source":"Bossuet","target":"Valjean","value":1},{"source":"Joly","target":"Bahorel","value":5},{"source":"Joly","target":"Bossuet","value":7},{"source":"Joly","target":"Gavroche","value":3},{"source":"Joly","target":"Courfeyrac","value":5},{"source":"Joly","target":"Enjolras","value":5},{"source":"Joly","target":"Feuilly","value":5},{"source":"Joly","target":"Prouvaire","value":2},{"source":"Joly","target":"Combeferre","value":5},{"source":"Joly","target":"Mabeuf","value":1},{"source":"Joly","target":"Marius","value":2},{"source":"Grantaire","target":"Bossuet","value":3},{"source":"Grantaire","target":"Enjolras","value":3},{"source":"Grantaire","target":"Combeferre","value":1},{"source":"Grantaire","target":"Courfeyrac","value":2},{"source":"Grantaire","target":"Joly","value":2},{"source":"Grantaire","target":"Gavroche","value":1},{"source":"Grantaire","target":"Bahorel","value":1},{"source":"Grantaire","target":"Feuilly","value":1},{"source":"Grantaire","target":"Prouvaire","value":1},{"source":"MotherPlutarch","target":"Mabeuf","value":3},{"source":"Gueulemer","target":"Thenardier","value":5},{"source":"Gueulemer","target":"Valjean","value":1},{"source":"Gueulemer","target":"Mme.Thenardier","value":1},{"source":"Gueulemer","target":"Javert","value":1},{"source":"Gueulemer","target":"Gavroche","value":1},{"source":"Gueulemer","target":"Eponine","value":1},{"source":"Babet","target":"Thenardier","value":6},{"source":"Babet","target":"Gueulemer","value":6},{"source":"Babet","target":"Valjean","value":1},{"source":"Babet","target":"Mme.Thenardier","value":1},{"source":"Babet","target":"Javert","value":2},{"source":"Babet","target":"Gavroche","value":1},{"source":"Babet","target":"Eponine","value":1},{"source":"Claquesous","target":"Thenardier","value":4},{"source":"Claquesous","target":"Babet","value":4},{"source":"Claquesous","target":"Gueulemer","value":4},{"source":"Claquesous","target":"Valjean","value":1},{"source":"Claquesous","target":"Mme.Thenardier","value":1},{"source":"Claquesous","target":"Javert","value":1},{"source":"Claquesous","target":"Eponine","value":1},{"source":"Claquesous","target":"Enjolras","value":1},{"source":"Montparnasse","target":"Javert","value":1},{"source":"Montparnasse","target":"Babet","value":2},{"source":"Montparnasse","target":"Gueulemer","value":2},{"source":"Montparnasse","target":"Claquesous","value":2},{"source":"Montparnasse","target":"Valjean","value":1},{"source":"Montparnasse","target":"Gavroche","value":1},{"source":"Montparnasse","target":"Eponine","value":1},{"source":"Montparnasse","target":"Thenardier","value":1},{"source":"Toussaint","target":"Cosette","value":2},{"source":"Toussaint","target":"Javert","value":1},{"source":"Toussaint","target":"Valjean","value":1},{"source":"Child1","target":"Gavroche","value":2},{"source":"Child2","target":"Gavroche","value":2},{"source":"Child2","target":"Child1","value":3},{"source":"Brujon","target":"Babet","value":3},{"source":"Brujon","target":"Gueulemer","value":3},{"source":"Brujon","target":"Thenardier","value":3},{"source":"Brujon","target":"Gavroche","value":1},{"source":"Brujon","target":"Eponine","value":1},{"source":"Brujon","target":"Claquesous","value":1},{"source":"Brujon","target":"Montparnasse","value":1},{"source":"Mme.Hucheloup","target":"Bossuet","value":1},{"source":"Mme.Hucheloup","target":"Joly","value":1},{"source":"Mme.Hucheloup","target":"Grantaire","value":1},{"source":"Mme.Hucheloup","target":"Bahorel","value":1},{"source":"Mme.Hucheloup","target":"Courfeyrac","value":1},{"source":"Mme.Hucheloup","target":"Gavroche","value":1},{"source":"Mme.Hucheloup","target":"Enjolras","value":1}]},"type":"list","container":"svg","options":null,"script":"var d3Script = function(d3, r2d3, data, svg, width, height, options, theme, console) {\nthis.d3 = d3;\n\nsvg = d3.select(svg.node());\n/* R2D3 Source File:  forcegraph.js */\n// !preview r2d3 data = jsonlite::read_json(\"miserables.json\"), d3_version = 4\n\n// Based on: https://bl.ocks.org/mbostock/4063570\n\nvar color = d3.scaleOrdinal(d3.schemeCategory20);\nvar radius = 5;\n\nvar simulation = d3.forceSimulation()\n    .force(\"link\", d3.forceLink().id(function(d) { return d.id; }))\n    .force(\"charge\", d3.forceManyBody())\n    .force(\"center\", d3.forceCenter(width / 2, height / 2));\n\nr2d3.onRender(function(graph, svg, width, height, options) {\n  var link = svg.append(\"g\")\n      .attr(\"class\", \"links\")\n    .selectAll(\"line\")\n    .data(graph.links)\n    .enter().append(\"line\")\n      .attr(\"stroke-width\", function(d) { return Math.sqrt(d.value); });\n\n  var node = svg.append(\"g\")\n      .attr(\"class\", \"nodes\")\n    .selectAll(\"circle\")\n    .data(graph.nodes)\n    .enter().append(\"circle\")\n      .attr(\"r\", radius)\n      .attr(\"fill\", function(d) { return color(d.group); })\n      .call(d3.drag()\n          .on(\"start\", dragstarted)\n          .on(\"drag\", dragged)\n          .on(\"end\", dragended));\n\n  node.append(\"title\")\n      .text(function(d) { return d.id; });\n\n  simulation\n      .nodes(graph.nodes)\n      .on(\"tick\", ticked);\n\n  simulation.force(\"link\")\n      .links(graph.links);\n\n  function ticked() {\n    //constrains the nodes to be within a box\n    node\n      .attr(\"cx\", function(d) { return d.x = Math.max(radius, Math.min(width - radius, d.x)); })\n      .attr(\"cy\", function(d) { return d.y = Math.max(radius, Math.min(height - radius, d.y)); });\n      \n    link\n        .attr(\"x1\", function(d) { return d.source.x; })\n        .attr(\"y1\", function(d) { return d.source.y; })\n        .attr(\"x2\", function(d) { return d.target.x; })\n        .attr(\"y2\", function(d) { return d.target.y; });\n\n    node\n        .attr(\"cx\", function(d) { return d.x; })\n        .attr(\"cy\", function(d) { return d.y; });\n  }\n});\n\nfunction dragstarted(d) {\n  if (!d3.event.active) simulation.alphaTarget(0.3).restart();\n  d.fx = d.x;\n  d.fy = d.y;\n}\n\nfunction dragged(d) {\n  d.fx = d3.event.x;\n  d.fy = d3.event.y;\n}\n\nfunction dragended(d) {\n  if (!d3.event.active) simulation.alphaTarget(0);\n  d.fx = null;\n  d.fy = null;\n}\n\n};","style":"/* R2D3 Source File:  forcegraph.css */\n.links line {\n  stroke: #999;\n  stroke-opacity: 0.6;\n}\n\n.nodes circle {\n  stroke: #fff;\n  stroke-width: 1.5px;\n}","version":4,"theme":{"default":{"background":"#FFFFFF","foreground":"#000000"},"runtime":null},"useShadow":true},"evals":[],"jsHooks":[]}</script>
+
+---
+
+## Data-Driven Documents ([d3.js](https://d3js.org))
+
++ d3.js is granular and complicated for starting out
++ Fortunately there are several alternatives built upon d3.js to make life easier for people
+
+--
+
+.ba.br4.f3.b--dark-blue.bw2.mt4.ph4[It's better to have programs that are human-readable]
+
+--
+
+### Candidates
+.fl.w-50[
++ Vega and [Vega-lite](https://vega.github.io/vega-lite/)
+    - Interfaced in Python using [**Altair**](https://altair-viz.github.io/)
+        - which is interfaced in R using [**altair**](https://vegawidget.github.io/altair/)
++ [bokeh.js](https://bokeh.org)
+    - Python package
+    - Interfaced in R using **rbokeh**
+
+]
+.fl.w-50[
++ [plotly.js](https://www.plotly.com)
+    - Interfaces in both R (**plotly**) and Python (**plotly**)
+    - Good [documentation](https://plotly.com/graphing-libraries/)
++ [highcharts.js](https://www.highcharts.com/)
+    - Interfaced in R using [**highcharter**](https://jkunst.com/highcharter/)
+    - Not free for commercial use
+    
+]
+
+---
+
+## Data-Driven Documents ([d3.js](https://d3js.org))
+
++ d3.js is granular and complicated for starting out
++ Fortunately there are several alternatives built upon d3.js to make life easier for people
+
+
+
+.ba.br4.f3.b--dark-blue.bw2.mt4.ph4[It's better to have programs that are human-readable]
+
+
+
+### Candidates
+
+.fl.w-100.ba.br4.bw3.mt3.ph3.b--dark-blue[
+
+ #### [plotly.js](https://www.plotly.com)
+ 
+ - Interfaces in both R (**plotly**) and Python (**plotly**)
+ - Good [documentation](https://plotly.com/graphing-libraries/)
+]
+
+---
+layout: true
+
+# Plotly
+
+---
+class: middle,center,inverse
+
+
+
+---
+
+---
+
+### Plotly from R
+
+Plotly has an R-based API that covers most but not all of plotly's capabilities.
+
+However, what the **plotly** package in &lt;svg style="height:0.8em;top:.04em;position:relative;" viewBox="0 0 581 512"&gt;&lt;path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/&gt;&lt;/svg&gt; does provide
+is conversion of **ggplot2** plots to plotly using a single function, `ggplotly`
+
+---
+
+.pull-left[
+![](slide_11_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+]
+.pull-right[
+
+```r
+ggplotly(plt)
+```
+
+<div id="htmlwidget-f5f73118bfcb2fff277c" style="width:504px;height:504px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f5f73118bfcb2fff277c">{"x":{"data":[{"x":[3.79402544509666,3.68099065562682,3.1587498285201,4.09933015629768,3.08530235219712,2.63353984732021,3.31007599301138,2.848814873635,3.23148583131337,2.99394204506796,2.44334414004637,3.56021253312911,3.18885823537455,3.31858116595608,3.74672610693845,4.08472243900371,2.80710831941093,2.83935583435696,4.12078722664154,2.87665060639063,3.1230701584329,2.9743524119827,2.76285235400399,3.16531831968284,3.19571467604724,2.61753222691212,4.08125724466051,3.01902074595738,2.88044194586588,3.0181100381011,3.25603221652431,4.03969130967891,3.58208328429303,2.91576148434958,3.68224081186337,2.79216530171644,3.30405457229069,3.88480230343241,2.93605531183875,3.20369500466057,3.23362351372365,2.93577962517273,2.96667714274902,3.96706370233863,3.41537321502711,3.65451158423759,3.04433674769752,2.94594592049266,3.85082524675123,3.02382022004224,3.10421784482941,2.67182915731664],"y":[72.301,42.731,56.728,50.728,52.295,49.58,50.43,44.741,50.651,65.152,46.462,55.322,48.328,54.791,71.338,51.579,58.04,52.947,56.735,59.448,60.022,56.007,46.388,54.11,42.592,45.678,73.952,59.443,48.303,54.467,64.164,72.801,71.164,42.082,52.906,56.867,46.859,76.442,46.242,65.528,63.062,42.568,48.159,49.339,58.556,39.613,52.517,58.42,73.923,51.542,42.384,43.487],"text":["gdpPercap:  6223.3675<br />lifeExp: 72.301<br />pop:   33333216<br />continent: Africa","gdpPercap:  4797.2313<br />lifeExp: 42.731<br />pop:   12420476<br />continent: Africa","gdpPercap:  1441.2849<br />lifeExp: 56.728<br />pop:    8078314<br />continent: Africa","gdpPercap: 12569.8518<br />lifeExp: 50.728<br />pop:    1639131<br />continent: Africa","gdpPercap:  1217.0330<br />lifeExp: 52.295<br />pop:   14326203<br />continent: Africa","gdpPercap:   430.0707<br />lifeExp: 49.580<br />pop:    8390505<br />continent: Africa","gdpPercap:  2042.0952<br />lifeExp: 50.430<br />pop:   17696293<br />continent: Africa","gdpPercap:   706.0165<br />lifeExp: 44.741<br />pop:    4369038<br />continent: Africa","gdpPercap:  1704.0637<br />lifeExp: 50.651<br />pop:   10238807<br />continent: Africa","gdpPercap:   986.1479<br />lifeExp: 65.152<br />pop:     710960<br />continent: Africa","gdpPercap:   277.5519<br />lifeExp: 46.462<br />pop:   64606759<br />continent: Africa","gdpPercap:  3632.5578<br />lifeExp: 55.322<br />pop:    3800610<br />continent: Africa","gdpPercap:  1544.7501<br />lifeExp: 48.328<br />pop:   18013409<br />continent: Africa","gdpPercap:  2082.4816<br />lifeExp: 54.791<br />pop:     496374<br />continent: Africa","gdpPercap:  5581.1810<br />lifeExp: 71.338<br />pop:   80264543<br />continent: Africa","gdpPercap: 12154.0897<br />lifeExp: 51.579<br />pop:     551201<br />continent: Africa","gdpPercap:   641.3695<br />lifeExp: 58.040<br />pop:    4906585<br />continent: Africa","gdpPercap:   690.8056<br />lifeExp: 52.947<br />pop:   76511887<br />continent: Africa","gdpPercap: 13206.4845<br />lifeExp: 56.735<br />pop:    1454867<br />continent: Africa","gdpPercap:   752.7497<br />lifeExp: 59.448<br />pop:    1688359<br />continent: Africa","gdpPercap:  1327.6089<br />lifeExp: 60.022<br />pop:   22873338<br />continent: Africa","gdpPercap:   942.6542<br />lifeExp: 56.007<br />pop:    9947814<br />continent: Africa","gdpPercap:   579.2317<br />lifeExp: 46.388<br />pop:    1472041<br />continent: Africa","gdpPercap:  1463.2493<br />lifeExp: 54.110<br />pop:   35610177<br />continent: Africa","gdpPercap:  1569.3314<br />lifeExp: 42.592<br />pop:    2012649<br />continent: Africa","gdpPercap:   414.5073<br />lifeExp: 45.678<br />pop:    3193942<br />continent: Africa","gdpPercap: 12057.4993<br />lifeExp: 73.952<br />pop:    6036914<br />continent: Africa","gdpPercap:  1044.7701<br />lifeExp: 59.443<br />pop:   19167654<br />continent: Africa","gdpPercap:   759.3499<br />lifeExp: 48.303<br />pop:   13327079<br />continent: Africa","gdpPercap:  1042.5816<br />lifeExp: 54.467<br />pop:   12031795<br />continent: Africa","gdpPercap:  1803.1515<br />lifeExp: 64.164<br />pop:    3270065<br />continent: Africa","gdpPercap: 10956.9911<br />lifeExp: 72.801<br />pop:    1250882<br />continent: Africa","gdpPercap:  3820.1752<br />lifeExp: 71.164<br />pop:   33757175<br />continent: Africa","gdpPercap:   823.6856<br />lifeExp: 42.082<br />pop:   19951656<br />continent: Africa","gdpPercap:  4811.0604<br />lifeExp: 52.906<br />pop:    2055080<br />continent: Africa","gdpPercap:   619.6769<br />lifeExp: 56.867<br />pop:   12894865<br />continent: Africa","gdpPercap:  2013.9773<br />lifeExp: 46.859<br />pop:  135031164<br />continent: Africa","gdpPercap:  7670.1226<br />lifeExp: 76.442<br />pop:     798094<br />continent: Africa","gdpPercap:   863.0885<br />lifeExp: 46.242<br />pop:    8860588<br />continent: Africa","gdpPercap:  1598.4351<br />lifeExp: 65.528<br />pop:     199579<br />continent: Africa","gdpPercap:  1712.4721<br />lifeExp: 63.062<br />pop:   12267493<br />continent: Africa","gdpPercap:   862.5408<br />lifeExp: 42.568<br />pop:    6144562<br />continent: Africa","gdpPercap:   926.1411<br />lifeExp: 48.159<br />pop:    9118773<br />continent: Africa","gdpPercap:  9269.6578<br />lifeExp: 49.339<br />pop:   43997828<br />continent: Africa","gdpPercap:  2602.3950<br />lifeExp: 58.556<br />pop:   42292929<br />continent: Africa","gdpPercap:  4513.4806<br />lifeExp: 39.613<br />pop:    1133066<br />continent: Africa","gdpPercap:  1107.4822<br />lifeExp: 52.517<br />pop:   38139640<br />continent: Africa","gdpPercap:   882.9699<br />lifeExp: 58.420<br />pop:    5701579<br />continent: Africa","gdpPercap:  7092.9230<br />lifeExp: 73.923<br />pop:   10276158<br />continent: Africa","gdpPercap:  1056.3801<br />lifeExp: 51.542<br />pop:   29170398<br />continent: Africa","gdpPercap:  1271.2116<br />lifeExp: 42.384<br />pop:   11746035<br />continent: Africa","gdpPercap:   469.7093<br />lifeExp: 43.487<br />pop:   12311143<br />continent: Africa"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(68,1,84,1)","opacity":1,"size":[6.77527173254923,5.598900411863,5.24035330707835,4.40395768399738,5.7356199392208,5.26901439581437,5.9564773609874,4.8422259478741,5.42852631166044,4.15169850163956,7.9562662998771,4.76713328307226,5.97611663817011,4.06305719383881,8.43636871732964,4.08813627550005,4.90865391372741,8.32592567062337,4.36262596871136,4.41454467512776,6.25770233060098,5.40445197132612,4.3666011970112,6.87649613589243,4.480300710223,4.68010775450673,5.03693920169262,6.0461636385333,5.66517797748393,5.5697344023561,4.69148323166173,4.31315004312066,6.79437672410524,6.09253246174489,4.48845333089755,5.6338762963756,9.82271393327331,4.18215900239245,5.3111594952501,3.77952755905512,5.58747695964146,5.04848038390226,5.33382085391144,7.22380829377829,7.1561065468969,4.282361176813,6.98520027409899,5.00028803920838,5.43159101796171,6.580769078434,5.54798462578679,5.59074371141117],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(68,1,84,1)"}},"hoveron":"points","name":"Africa","legendgroup":"Africa","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[4.10650977201769,3.58230625931688,3.95740617340857,4.56013669242519,4.11963981438709,3.84550611104731,3.98430499758718,3.95173097080165,3.77998406330737,3.83716291957619,3.75802981175127,3.71483669984604,3.0797733480287,3.55002410662006,3.86456330372846,4.07836889751077,3.43922544380543,3.99163295350919,3.6204315729333,3.86975405900188,4.28620284789525,4.25547776303394,4.632979883279,4.02577526370184,4.05750656798335],"y":[75.32,65.554,72.39,80.653,78.553,72.889,78.782,78.273,72.235,74.994,71.878,70.259,60.916,70.198,72.567,76.195,72.899,75.537,71.752,71.421,78.746,69.819,78.242,76.384,73.747],"text":["gdpPercap: 12779.3796<br />lifeExp: 75.320<br />pop:   40301927<br />continent: Americas","gdpPercap:  3822.1371<br />lifeExp: 65.554<br />pop:    9119152<br />continent: Americas","gdpPercap:  9065.8008<br />lifeExp: 72.390<br />pop:  190010647<br />continent: Americas","gdpPercap: 36319.2350<br />lifeExp: 80.653<br />pop:   33390141<br />continent: Americas","gdpPercap: 13171.6388<br />lifeExp: 78.553<br />pop:   16284741<br />continent: Americas","gdpPercap:  7006.5804<br />lifeExp: 72.889<br />pop:   44227550<br />continent: Americas","gdpPercap:  9645.0614<br />lifeExp: 78.782<br />pop:    4133884<br />continent: Americas","gdpPercap:  8948.1029<br />lifeExp: 78.273<br />pop:   11416987<br />continent: Americas","gdpPercap:  6025.3748<br />lifeExp: 72.235<br />pop:    9319622<br />continent: Americas","gdpPercap:  6873.2623<br />lifeExp: 74.994<br />pop:   13755680<br />continent: Americas","gdpPercap:  5728.3535<br />lifeExp: 71.878<br />pop:    6939688<br />continent: Americas","gdpPercap:  5186.0500<br />lifeExp: 70.259<br />pop:   12572928<br />continent: Americas","gdpPercap:  1201.6372<br />lifeExp: 60.916<br />pop:    8502814<br />continent: Americas","gdpPercap:  3548.3308<br />lifeExp: 70.198<br />pop:    7483763<br />continent: Americas","gdpPercap:  7320.8803<br />lifeExp: 72.567<br />pop:    2780132<br />continent: Americas","gdpPercap: 11977.5750<br />lifeExp: 76.195<br />pop:  108700891<br />continent: Americas","gdpPercap:  2749.3210<br />lifeExp: 72.899<br />pop:    5675356<br />continent: Americas","gdpPercap:  9809.1856<br />lifeExp: 75.537<br />pop:    3242173<br />continent: Americas","gdpPercap:  4172.8385<br />lifeExp: 71.752<br />pop:    6667147<br />continent: Americas","gdpPercap:  7408.9056<br />lifeExp: 71.421<br />pop:   28674757<br />continent: Americas","gdpPercap: 19328.7090<br />lifeExp: 78.746<br />pop:    3942491<br />continent: Americas","gdpPercap: 18008.5092<br />lifeExp: 69.819<br />pop:    1056608<br />continent: Americas","gdpPercap: 42951.6531<br />lifeExp: 78.242<br />pop:  301139947<br />continent: Americas","gdpPercap: 10611.4630<br />lifeExp: 76.384<br />pop:    3447496<br />continent: Americas","gdpPercap: 11415.8057<br />lifeExp: 73.747<br />pop:   26084662<br />continent: Americas"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(59,82,139,1)","opacity":1,"size":[7.07528369289545,5.33385387656466,10.9497220287062,6.77784403625228,5.86681801798997,7.23282911414924,4.81182340745332,5.52260397354913,5.35122378867242,5.69571313317988,5.1306777542305,5.61021330347734,5.27919109958551,5.18415329737334,4.6155666029278,9.20063061292984,4.99737544049698,4.68733172329479,5.10307852744492,6.55670348636785,4.78640121163658,4.26132881438327,12.807919245623,4.71746231550028,6.42738713411734],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(59,82,139,1)"}},"hoveron":"points","name":"Americas","legendgroup":"Americas","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2.98881764549129,4.47415867018597,3.143406361057,3.23395473727517,3.6954041667466,4.59906367268864,3.38955773121288,3.54908318988216,4.06467188236304,3.65041068311967,4.40693643553008,4.50045697098462,3.65508665949928,3.20223362703668,4.3682522837381,4.67492531406996,4.01957563822304,4.09522710701315,3.49076900592376,2.97497199429807,3.03796794384465,4.34862010618943,3.41596567540354,3.50385616482709,4.33555481758265,4.67341887079622,3.59880094359832,3.62164856315343,4.45815837772449,3.87264545733796,3.38767031916547,3.4807755960326,3.35808147396803],"y":[43.828,75.635,64.062,59.723,72.961,82.208,64.698,70.65,70.964,59.545,80.745,82.603,72.535,67.297,78.623,77.588,71.993,74.241,66.803,62.069,63.785,75.64,65.483,71.688,72.777,79.972,72.396,74.143,78.4,70.616,74.249,73.422,62.698],"text":["gdpPercap:   974.5803<br />lifeExp: 43.828<br />pop:   31889923<br />continent: Asia","gdpPercap: 29796.0483<br />lifeExp: 75.635<br />pop:     708573<br />continent: Asia","gdpPercap:  1391.2538<br />lifeExp: 64.062<br />pop:  150448339<br />continent: Asia","gdpPercap:  1713.7787<br />lifeExp: 59.723<br />pop:   14131858<br />continent: Asia","gdpPercap:  4959.1149<br />lifeExp: 72.961<br />pop: 1318683096<br />continent: Asia","gdpPercap: 39724.9787<br />lifeExp: 82.208<br />pop:    6980412<br />continent: Asia","gdpPercap:  2452.2104<br />lifeExp: 64.698<br />pop: 1110396331<br />continent: Asia","gdpPercap:  3540.6516<br />lifeExp: 70.650<br />pop:  223547000<br />continent: Asia","gdpPercap: 11605.7145<br />lifeExp: 70.964<br />pop:   69453570<br />continent: Asia","gdpPercap:  4471.0619<br />lifeExp: 59.545<br />pop:   27499638<br />continent: Asia","gdpPercap: 25523.2771<br />lifeExp: 80.745<br />pop:    6426679<br />continent: Asia","gdpPercap: 31656.0681<br />lifeExp: 82.603<br />pop:  127467972<br />continent: Asia","gdpPercap:  4519.4612<br />lifeExp: 72.535<br />pop:    6053193<br />continent: Asia","gdpPercap:  1593.0655<br />lifeExp: 67.297<br />pop:   23301725<br />continent: Asia","gdpPercap: 23348.1397<br />lifeExp: 78.623<br />pop:   49044790<br />continent: Asia","gdpPercap: 47306.9898<br />lifeExp: 77.588<br />pop:    2505559<br />continent: Asia","gdpPercap: 10461.0587<br />lifeExp: 71.993<br />pop:    3921278<br />continent: Asia","gdpPercap: 12451.6558<br />lifeExp: 74.241<br />pop:   24821286<br />continent: Asia","gdpPercap:  3095.7723<br />lifeExp: 66.803<br />pop:    2874127<br />continent: Asia","gdpPercap:   944.0000<br />lifeExp: 62.069<br />pop:   47761980<br />continent: Asia","gdpPercap:  1091.3598<br />lifeExp: 63.785<br />pop:   28901790<br />continent: Asia","gdpPercap: 22316.1929<br />lifeExp: 75.640<br />pop:    3204897<br />continent: Asia","gdpPercap:  2605.9476<br />lifeExp: 65.483<br />pop:  169270617<br />continent: Asia","gdpPercap:  3190.4810<br />lifeExp: 71.688<br />pop:   91077287<br />continent: Asia","gdpPercap: 21654.8319<br />lifeExp: 72.777<br />pop:   27601038<br />continent: Asia","gdpPercap: 47143.1796<br />lifeExp: 79.972<br />pop:    4553009<br />continent: Asia","gdpPercap:  3970.0954<br />lifeExp: 72.396<br />pop:   20378239<br />continent: Asia","gdpPercap:  4184.5481<br />lifeExp: 74.143<br />pop:   19314747<br />continent: Asia","gdpPercap: 28718.2768<br />lifeExp: 78.400<br />pop:   23174294<br />continent: Asia","gdpPercap:  7458.3963<br />lifeExp: 70.616<br />pop:   65068149<br />continent: Asia","gdpPercap:  2441.5764<br />lifeExp: 74.249<br />pop:   85262356<br />continent: Asia","gdpPercap:  3025.3498<br />lifeExp: 73.422<br />pop:    4018332<br />continent: Asia","gdpPercap:  2280.7699<br />lifeExp: 62.698<br />pop:   22211743<br />continent: Asia"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(33,144,140,1)","opacity":1,"size":[6.70929835135528,4.1508288847182,10.1588656081799,5.72211801075065,22.6771653543307,5.13475345805415,21.1203680953071,11.5573968303758,8.11057131553749,6.49879524068774,5.07824026167466,9.65077587363648,5.03869129857133,6.28100350114513,7.4168446506104,4.56983839481089,4.78354392302204,6.36196165910748,4.63065651672448,7.36876387589759,6.56775273775666,4.68175365529605,10.5466615830696,8.74086596862592,6.50384061768477,4.86541785279541,6.11737587407916,6.05493528307165,6.27409491409121,7.97119993399054,8.57951329437571,4.79655097614072,6.22127948111281],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(33,144,140,1)"}},"hoveron":"points","name":"Asia","legendgroup":"Asia","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[3.77356920876217,4.55782580062218,4.52753459151331,3.87194045947979,4.02860349094832,4.16492428251317,4.35856884462783,4.54750911081685,4.52123074598147,4.48387269225076,4.50745611553652,4.43993889119905,4.25548825822109,4.55847803563392,4.60933819969144,4.45590597950278,3.96632461957789,4.56582342810493,4.69335042800253,4.18723649435127,4.31195820191596,4.03376444688129,3.990628940935,4.27133768016358,4.41108505321789,4.4597100052953,4.52968372605252,4.57410560181062,3.92728187211911,4.52118074293136],"y":[76.423,79.829,79.441,74.852,73.005,75.748,76.486,78.332,79.313,80.657,79.406,79.483,73.338,81.757,78.885,80.546,74.543,79.762,80.196,75.563,78.098,72.476,74.002,74.663,77.926,80.941,80.884,81.701,71.777,79.425],"text":["gdpPercap:  5937.0295<br />lifeExp: 76.423<br />pop:    3600523<br />continent: Europe","gdpPercap: 36126.4927<br />lifeExp: 79.829<br />pop:    8199783<br />continent: Europe","gdpPercap: 33692.6051<br />lifeExp: 79.441<br />pop:   10392226<br />continent: Europe","gdpPercap:  7446.2988<br />lifeExp: 74.852<br />pop:    4552198<br />continent: Europe","gdpPercap: 10680.7928<br />lifeExp: 73.005<br />pop:    7322858<br />continent: Europe","gdpPercap: 14619.2227<br />lifeExp: 75.748<br />pop:    4493312<br />continent: Europe","gdpPercap: 22833.3085<br />lifeExp: 76.486<br />pop:   10228744<br />continent: Europe","gdpPercap: 35278.4187<br />lifeExp: 78.332<br />pop:    5468120<br />continent: Europe","gdpPercap: 33207.0844<br />lifeExp: 79.313<br />pop:    5238460<br />continent: Europe","gdpPercap: 30470.0167<br />lifeExp: 80.657<br />pop:   61083916<br />continent: Europe","gdpPercap: 32170.3744<br />lifeExp: 79.406<br />pop:   82400996<br />continent: Europe","gdpPercap: 27538.4119<br />lifeExp: 79.483<br />pop:   10706290<br />continent: Europe","gdpPercap: 18008.9444<br />lifeExp: 73.338<br />pop:    9956108<br />continent: Europe","gdpPercap: 36180.7892<br />lifeExp: 81.757<br />pop:     301931<br />continent: Europe","gdpPercap: 40675.9964<br />lifeExp: 78.885<br />pop:    4109086<br />continent: Europe","gdpPercap: 28569.7197<br />lifeExp: 80.546<br />pop:   58147733<br />continent: Europe","gdpPercap:  9253.8961<br />lifeExp: 74.543<br />pop:     684736<br />continent: Europe","gdpPercap: 36797.9333<br />lifeExp: 79.762<br />pop:   16570613<br />continent: Europe","gdpPercap: 49357.1902<br />lifeExp: 80.196<br />pop:    4627926<br />continent: Europe","gdpPercap: 15389.9247<br />lifeExp: 75.563<br />pop:   38518241<br />continent: Europe","gdpPercap: 20509.6478<br />lifeExp: 78.098<br />pop:   10642836<br />continent: Europe","gdpPercap: 10808.4756<br />lifeExp: 72.476<br />pop:   22276056<br />continent: Europe","gdpPercap:  9786.5347<br />lifeExp: 74.002<br />pop:   10150265<br />continent: Europe","gdpPercap: 18678.3144<br />lifeExp: 74.663<br />pop:    5447502<br />continent: Europe","gdpPercap: 25768.2576<br />lifeExp: 77.926<br />pop:    2009245<br />continent: Europe","gdpPercap: 28821.0637<br />lifeExp: 80.941<br />pop:   40448191<br />continent: Europe","gdpPercap: 33859.7484<br />lifeExp: 80.884<br />pop:    9031088<br />continent: Europe","gdpPercap: 37506.4191<br />lifeExp: 81.701<br />pop:    7554661<br />continent: Europe","gdpPercap:  8458.2764<br />lifeExp: 71.777<br />pop:   71158647<br />continent: Europe","gdpPercap: 33203.2613<br />lifeExp: 79.425<br />pop:   60776238<br />continent: Europe"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(93,200,99,1)","opacity":1,"size":[4.73930360976545,5.2515712457991,5.44107849786917,4.86531670289218,5.16855282584858,4.85794694387522,5.42769965273683,4.97410786436283,4.94778140481952,7.84043376621969,8.49809123744673,5.46648280699294,5.40514308400654,3.9460291298415,4.8085649745634,7.74130405516196,4.14203032052794,5.88528441607637,4.87472139425141,7.00115515259145,5.46138101214586,6.22484391610449,5.42123845033248,4.97176812735327,4.47964255788798,7.0812884751231,5.32616181946541,5.19097245574501,8.16356363915206,7.83015990857845],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(93,200,99,1)"}},"hoveron":"points","name":"Europe","legendgroup":"Europe","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[4.53700472145269,4.40114211228811],"y":[81.235,80.204],"text":["gdpPercap: 34435.3674<br />lifeExp: 81.235<br />pop:   20434176<br />continent: Oceania","gdpPercap: 25185.0091<br />lifeExp: 80.204<br />pop:    4115771<br />continent: Oceania"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(253,231,37,1)","opacity":1,"size":[6.12061399094626,4.80944439195868],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(253,231,37,1)"}},"hoveron":"points","name":"Oceania","legendgroup":"Oceania","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":23.3059360730594,"r":7.30593607305936,"b":37.2602739726027,"l":37.2602739726027},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[2.33084382564856,4.80585074240034],"tickmode":"array","ticktext":["300","1000","3000","10000","30000"],"tickvals":[2.47712125471966,3,3.47712125471966,4,4.47712125471966],"categoryorder":"array","categoryarray":["300","1000","3000","10000","30000"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"GDP per capita","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[37.4635,84.7525],"tickmode":"array","ticktext":["40","50","60","70","80"],"tickvals":[40,50,60,70,80],"categoryorder":"array","categoryarray":["40","50","60","70","80"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Life expectancy","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":0.876265466816648},"annotations":[{"text":"Population<br />Continent","x":1.02,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"left","yanchor":"bottom","legendTitle":true}],"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"8e0f6d6b1f89":{"x":{},"y":{},"size":{},"colour":{},"type":"scatter"}},"cur_data":"8e0f6d6b1f89","visdat":{"8e0f6d6b1f89":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+
+]
+---
+class: middle,center,inverse
+
+# Scatter plots
+
+---
+
+
+.pull-left[
+.panelset[
+.panel[.panel-name[R]
+
+```r
+library(palmerpenguins)
+df &lt;- penguins
+plot_ly(df, 
+        x = ~bill_length_mm, 
+        y = ~body_mass_g,
+        type='scatter')
+```
+]
+.panel[.panel-name[Python]
+
+```python
+import seaborn as sns
+penguins = sns.load_dataset('penguins')
+
+fig = px.scatter(data_frame=penguins, 
+    x = 'bill_length_mm', 
+    y = 'body_mass_g') 
+```
+]
+]]
+.pull-right[
+<div id="htmlwidget-b06097b67a16a491272a" style="width:504px;height:504px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b06097b67a16a491272a">{"x":{"visdat":{"8e0f769a21b0":["function () ","plotlyVisDat"]},"cur_data":"8e0f769a21b0","attrs":{"8e0f769a21b0":{"x":{},"y":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"bill_length_mm"},"yaxis":{"domain":[0,1],"automargin":true,"title":"body_mass_g"},"hovermode":"closest","showlegend":false},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[39.1,39.5,40.3,36.7,39.3,38.9,39.2,34.1,42,37.8,37.8,41.1,38.6,34.6,36.6,38.7,42.5,34.4,46,37.8,37.7,35.9,38.2,38.8,35.3,40.6,40.5,37.9,40.5,39.5,37.2,39.5,40.9,36.4,39.2,38.8,42.2,37.6,39.8,36.5,40.8,36,44.1,37,39.6,41.1,37.5,36,42.3,39.6,40.1,35,42,34.5,41.4,39,40.6,36.5,37.6,35.7,41.3,37.6,41.1,36.4,41.6,35.5,41.1,35.9,41.8,33.5,39.7,39.6,45.8,35.5,42.8,40.9,37.2,36.2,42.1,34.6,42.9,36.7,35.1,37.3,41.3,36.3,36.9,38.3,38.9,35.7,41.1,34,39.6,36.2,40.8,38.1,40.3,33.1,43.2,35,41,37.7,37.8,37.9,39.7,38.6,38.2,38.1,43.2,38.1,45.6,39.7,42.2,39.6,42.7,38.6,37.3,35.7,41.1,36.2,37.7,40.2,41.4,35.2,40.6,38.8,41.5,39,44.1,38.5,43.1,36.8,37.5,38.1,41.1,35.6,40.2,37,39.7,40.2,40.6,32.1,40.7,37.3,39,39.2,36.6,36,37.8,36,41.5,46.1,50,48.7,50,47.6,46.5,45.4,46.7,43.3,46.8,40.9,49,45.5,48.4,45.8,49.3,42,49.2,46.2,48.7,50.2,45.1,46.5,46.3,42.9,46.1,44.5,47.8,48.2,50,47.3,42.8,45.1,59.6,49.1,48.4,42.6,44.4,44,48.7,42.7,49.6,45.3,49.6,50.5,43.6,45.5,50.5,44.9,45.2,46.6,48.5,45.1,50.1,46.5,45,43.8,45.5,43.2,50.4,45.3,46.2,45.7,54.3,45.8,49.8,46.2,49.5,43.5,50.7,47.7,46.4,48.2,46.5,46.4,48.6,47.5,51.1,45.2,45.2,49.1,52.5,47.4,50,44.9,50.8,43.4,51.3,47.5,52.1,47.5,52.2,45.5,49.5,44.5,50.8,49.4,46.9,48.4,51.1,48.5,55.9,47.2,49.1,47.3,46.8,41.7,53.4,43.3,48.1,50.5,49.8,43.5,51.5,46.2,55.1,44.5,48.8,47.2,46.8,50.4,45.2,49.9,46.5,50,51.3,45.4,52.7,45.2,46.1,51.3,46,51.3,46.6,51.7,47,52,45.9,50.5,50.3,58,46.4,49.2,42.4,48.5,43.2,50.6,46.7,52,50.5,49.5,46.4,52.8,40.9,54.2,42.5,51,49.7,47.5,47.6,52,46.9,53.5,49,46.2,50.9,45.5,50.9,50.8,50.1,49,51.5,49.8,48.1,51.4,45.7,50.7,42.5,52.2,45.2,49.3,50.2,45.6,51.9,46.8,45.7,55.8,43.5,49.6,50.8,50.2],"y":[3750,3800,3250,3450,3650,3625,4675,3475,4250,3300,3700,3200,3800,4400,3700,3450,4500,3325,4200,3400,3600,3800,3950,3800,3800,3550,3200,3150,3950,3250,3900,3300,3900,3325,4150,3950,3550,3300,4650,3150,3900,3100,4400,3000,4600,3425,2975,3450,4150,3500,4300,3450,4050,2900,3700,3550,3800,2850,3750,3150,4400,3600,4050,2850,3950,3350,4100,3050,4450,3600,3900,3550,4150,3700,4250,3700,3900,3550,4000,3200,4700,3800,4200,3350,3550,3800,3500,3950,3600,3550,4300,3400,4450,3300,4300,3700,4350,2900,4100,3725,4725,3075,4250,2925,3550,3750,3900,3175,4775,3825,4600,3200,4275,3900,4075,2900,3775,3350,3325,3150,3500,3450,3875,3050,4000,3275,4300,3050,4000,3325,3500,3500,4475,3425,3900,3175,3975,3400,4250,3400,3475,3050,3725,3000,3650,4250,3475,3450,3750,3700,4000,4500,5700,4450,5700,5400,4550,4800,5200,4400,5150,4650,5550,4650,5850,4200,5850,4150,6300,4800,5350,5700,5000,4400,5050,5000,5100,4100,5650,4600,5550,5250,4700,5050,6050,5150,5400,4950,5250,4350,5350,3950,5700,4300,4750,5550,4900,4200,5400,5100,5300,4850,5300,4400,5000,4900,5050,4300,5000,4450,5550,4200,5300,4400,5650,4700,5700,4650,5800,4700,5550,4750,5000,5100,5200,4700,5800,4600,6000,4750,5950,4625,5450,4725,5350,4750,5600,4600,5300,4875,5550,4950,5400,4750,5650,4850,5200,4925,4875,4625,5250,4850,5600,4975,5500,4725,5500,4700,5500,4575,5500,5000,5950,4650,5500,4375,5850,4875,6000,4925,4850,5750,5200,5400,3500,3900,3650,3525,3725,3950,3250,3750,4150,3700,3800,3775,3700,4050,3575,4050,3300,3700,3450,4400,3600,3400,2900,3800,3300,4150,3400,3800,3700,4550,3200,4300,3350,4100,3600,3900,3850,4800,2700,4500,3950,3650,3550,3500,3675,4450,3400,4300,3250,3675,3325,3950,3600,4050,3350,3450,3250,4050,3800,3525,3950,3650,3650,4000,3400,3775,4100,3775],"type":"scatter","mode":"markers","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+
+]
+
+---
+
+.pull-left[
+.panelset[
+.panel[.panel-name[R]
+
+```r
+plot_ly(penguins, 
+        x=~bill_length_mm,
+        y = ~ body_mass_g, 
+        color = ~species,
+        type='scatter', mode='markers')
+```
+]
+.panel[.panel-name[Python]
+
+```python
+px.scatter(data_frame=penguins, 
+    x='bill_length_mm', 
+    y = 'body_mass_g', 
+    color = 'species')
+```
+]
+]]
+.pull-right[
+<div id="htmlwidget-464d13338491e1f1d3c4" style="width:504px;height:504px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-464d13338491e1f1d3c4">{"x":{"visdat":{"8e0f5b697f9":["function () ","plotlyVisDat"]},"cur_data":"8e0f5b697f9","attrs":{"8e0f5b697f9":{"x":{},"y":{},"mode":"markers","color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"bill_length_mm"},"yaxis":{"domain":[0,1],"automargin":true,"title":"body_mass_g"},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[39.1,39.5,40.3,36.7,39.3,38.9,39.2,34.1,42,37.8,37.8,41.1,38.6,34.6,36.6,38.7,42.5,34.4,46,37.8,37.7,35.9,38.2,38.8,35.3,40.6,40.5,37.9,40.5,39.5,37.2,39.5,40.9,36.4,39.2,38.8,42.2,37.6,39.8,36.5,40.8,36,44.1,37,39.6,41.1,37.5,36,42.3,39.6,40.1,35,42,34.5,41.4,39,40.6,36.5,37.6,35.7,41.3,37.6,41.1,36.4,41.6,35.5,41.1,35.9,41.8,33.5,39.7,39.6,45.8,35.5,42.8,40.9,37.2,36.2,42.1,34.6,42.9,36.7,35.1,37.3,41.3,36.3,36.9,38.3,38.9,35.7,41.1,34,39.6,36.2,40.8,38.1,40.3,33.1,43.2,35,41,37.7,37.8,37.9,39.7,38.6,38.2,38.1,43.2,38.1,45.6,39.7,42.2,39.6,42.7,38.6,37.3,35.7,41.1,36.2,37.7,40.2,41.4,35.2,40.6,38.8,41.5,39,44.1,38.5,43.1,36.8,37.5,38.1,41.1,35.6,40.2,37,39.7,40.2,40.6,32.1,40.7,37.3,39,39.2,36.6,36,37.8,36,41.5],"y":[3750,3800,3250,3450,3650,3625,4675,3475,4250,3300,3700,3200,3800,4400,3700,3450,4500,3325,4200,3400,3600,3800,3950,3800,3800,3550,3200,3150,3950,3250,3900,3300,3900,3325,4150,3950,3550,3300,4650,3150,3900,3100,4400,3000,4600,3425,2975,3450,4150,3500,4300,3450,4050,2900,3700,3550,3800,2850,3750,3150,4400,3600,4050,2850,3950,3350,4100,3050,4450,3600,3900,3550,4150,3700,4250,3700,3900,3550,4000,3200,4700,3800,4200,3350,3550,3800,3500,3950,3600,3550,4300,3400,4450,3300,4300,3700,4350,2900,4100,3725,4725,3075,4250,2925,3550,3750,3900,3175,4775,3825,4600,3200,4275,3900,4075,2900,3775,3350,3325,3150,3500,3450,3875,3050,4000,3275,4300,3050,4000,3325,3500,3500,4475,3425,3900,3175,3975,3400,4250,3400,3475,3050,3725,3000,3650,4250,3475,3450,3750,3700,4000],"mode":"markers","type":"scatter","name":"Adelie","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[46.5,50,51.3,45.4,52.7,45.2,46.1,51.3,46,51.3,46.6,51.7,47,52,45.9,50.5,50.3,58,46.4,49.2,42.4,48.5,43.2,50.6,46.7,52,50.5,49.5,46.4,52.8,40.9,54.2,42.5,51,49.7,47.5,47.6,52,46.9,53.5,49,46.2,50.9,45.5,50.9,50.8,50.1,49,51.5,49.8,48.1,51.4,45.7,50.7,42.5,52.2,45.2,49.3,50.2,45.6,51.9,46.8,45.7,55.8,43.5,49.6,50.8,50.2],"y":[3500,3900,3650,3525,3725,3950,3250,3750,4150,3700,3800,3775,3700,4050,3575,4050,3300,3700,3450,4400,3600,3400,2900,3800,3300,4150,3400,3800,3700,4550,3200,4300,3350,4100,3600,3900,3850,4800,2700,4500,3950,3650,3550,3500,3675,4450,3400,4300,3250,3675,3325,3950,3600,4050,3350,3450,3250,4050,3800,3525,3950,3650,3650,4000,3400,3775,4100,3775],"mode":"markers","type":"scatter","name":"Chinstrap","marker":{"color":"rgba(252,141,98,1)","line":{"color":"rgba(252,141,98,1)"}},"textfont":{"color":"rgba(252,141,98,1)"},"error_y":{"color":"rgba(252,141,98,1)"},"error_x":{"color":"rgba(252,141,98,1)"},"line":{"color":"rgba(252,141,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[46.1,50,48.7,50,47.6,46.5,45.4,46.7,43.3,46.8,40.9,49,45.5,48.4,45.8,49.3,42,49.2,46.2,48.7,50.2,45.1,46.5,46.3,42.9,46.1,44.5,47.8,48.2,50,47.3,42.8,45.1,59.6,49.1,48.4,42.6,44.4,44,48.7,42.7,49.6,45.3,49.6,50.5,43.6,45.5,50.5,44.9,45.2,46.6,48.5,45.1,50.1,46.5,45,43.8,45.5,43.2,50.4,45.3,46.2,45.7,54.3,45.8,49.8,46.2,49.5,43.5,50.7,47.7,46.4,48.2,46.5,46.4,48.6,47.5,51.1,45.2,45.2,49.1,52.5,47.4,50,44.9,50.8,43.4,51.3,47.5,52.1,47.5,52.2,45.5,49.5,44.5,50.8,49.4,46.9,48.4,51.1,48.5,55.9,47.2,49.1,47.3,46.8,41.7,53.4,43.3,48.1,50.5,49.8,43.5,51.5,46.2,55.1,44.5,48.8,47.2,46.8,50.4,45.2,49.9],"y":[4500,5700,4450,5700,5400,4550,4800,5200,4400,5150,4650,5550,4650,5850,4200,5850,4150,6300,4800,5350,5700,5000,4400,5050,5000,5100,4100,5650,4600,5550,5250,4700,5050,6050,5150,5400,4950,5250,4350,5350,3950,5700,4300,4750,5550,4900,4200,5400,5100,5300,4850,5300,4400,5000,4900,5050,4300,5000,4450,5550,4200,5300,4400,5650,4700,5700,4650,5800,4700,5550,4750,5000,5100,5200,4700,5800,4600,6000,4750,5950,4625,5450,4725,5350,4750,5600,4600,5300,4875,5550,4950,5400,4750,5650,4850,5200,4925,4875,4625,5250,4850,5600,4975,5500,4725,5500,4700,5500,4575,5500,5000,5950,4650,5500,4375,5850,4875,6000,4925,4850,5750,5200,5400],"mode":"markers","type":"scatter","name":"Gentoo","marker":{"color":"rgba(141,160,203,1)","line":{"color":"rgba(141,160,203,1)"}},"textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+
+]
+
+---
+
+.pull-left[
+.panelset[
+.panel[.panel-name[R]
+
+```r
+fig &lt;- plot_ly(penguins,
+        x= ~bill_length_mm,
+        y= ~body_mass_g,
+        color = ~species,
+        type='scatter', mode='markers') %&gt;% 
+  layout(
+    xaxis = list(title='Bill length (mm)'),
+    yaxis = list(title='Body mass (g)'),
+    title = 'Palmer Penguins'
+  )
+```
+]
+.panel[.panel-name[Python]
+
+```python
+px.scatter(data_frame=penguins, 
+    x='bill_length_mm', 
+    y = 'body_mass_g', 
+    color = 'species',
+    labels = dict(bill_length_mm="Bill length (mm)",
+                  body_mass_g = "Body mass (g)",
+                  species='Species'),
+    title = "Palmer Penguins")
+```
+]
+]
+Add annotations
+]
+.pull-right[
+<div id="htmlwidget-f6fcc8c2c5e547f423ab" style="width:100%;height:504px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f6fcc8c2c5e547f423ab">{"x":{"url":"slide_11_files/figure-html//widgets/widget_unnamed-chunk-12.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+
+]
+
+---
+
+.pull-left[
+.panelset[
+.panel[.panel-name[R]
+
+```r
+fig &lt;- plot_ly(penguins,
+        x= ~bill_length_mm,
+        y= ~body_mass_g,
+        color = ~species,
+        type='scatter', mode='markers',
+        hovertemplate = paste("Species:",penguins$species,'&lt;br&gt;Island: ',penguins$island,"&lt;br&gt;Sex:",penguins$sex)) %&gt;% 
+  layout(
+    xaxis = list(title='Bill length (mm)'),
+    yaxis = list(title='Body mass (g)'),
+    title = 'Palmer Penguins')
+```
+]
+.panel[.panel-name[Python]
+
+```python
+fig =px.scatter(data_frame=penguins, 
+    x='bill_length_mm', 
+    y = 'body_mass_g', 
+    color = 'species',
+    labels = dict(bill_length_mm="Bill length (mm)",
+                  body_mass_g = "Body mass (g)",
+                  species='Species'),
+    title = "Palmer Penguins")
+fig.update_traces(customdata=penguins,
+  hovertemplate="Species: %{color}&lt;br&gt;Island: %{customdata[1]}&lt;br&gt;Sex: %{customdata[6]}")
+```
+]]
+
+You can customize the tooltip using the `hovertemplate` argument and a HTML-based template. Note that data
+currently not used in the figure can be used, but is 
+incorporated differently in &lt;svg style="height:0.8em;top:.04em;position:relative;" viewBox="0 0 581 512"&gt;&lt;path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/&gt;&lt;/svg&gt; and &lt;svg style="height:0.8em;top:.04em;position:relative;" viewBox="0 0 448 512"&gt;&lt;path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6zM286.2 404c11.1 0 20.1 9.1 20.1 20.3 0 11.3-9 20.4-20.1 20.4-11 0-20.1-9.2-20.1-20.4.1-11.3 9.1-20.3 20.1-20.3zM167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4zm-6.7-142.6c-11.1 0-20.1-9.1-20.1-20.3.1-11.3 9-20.4 20.1-20.4 11 0 20.1 9.2 20.1 20.4s-9 20.3-20.1 20.3z"/&gt;&lt;/svg&gt;]
+.pull-right[
+<div id="htmlwidget-6de0aba2f8ae132ea9eb" style="width:100%;height:504px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6de0aba2f8ae132ea9eb">{"x":{"url":"slide_11_files/figure-html//widgets/widget_unnamed-chunk-14.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+
+]
+---
+class: middle,center,inverse
+
+# Line plots and time series
+
+---
+
+.pull-left[
+.panelset[
+.panel[.panel-name[R]
+
+```r
+library(gapminder)
+df &lt;- filter(gapminder, continent=='Asia')
+fig &lt;- plot_ly(df, x = ~year, y = ~lifeExp,
+               color = ~country, 
+               type='scatter', mode='lines',
+               hovertemplate=paste('&lt;b&gt;',df$country,'&lt;/b&gt;&lt;br&gt;Year=%{x}&lt;br&gt;Life Expectancy=%{y:.2f} yrs')) %&gt;% 
+  layout(xaxis=list(title='Year'),
+         yaxis=list(title='Life Expectancy'),
+         showlegend=FALSE)
+```
+]
+.panel[.panel-name[Python]
+
+```python
+gap = px.data.gapminder()
+df = gap.query('continent=="Asia"')
+fig = px.line(df, 
+  x = 'year', 
+  y = 'lifeExp', 
+  color = 'country',
+  labels = dict(lifeExp = 'Life expectancy', 
+                year='Year'))
+fig.update_traces(customdata=df,
+  hovertemplate="&lt;b&gt;%{customdata[0]}&lt;/b&gt;&lt;br&gt;Year=%{x}&lt;br&gt;Life Expectancy=%{y}")
+fig.update_layout(showlegend=False)
+```
+]
+]
+]
+.pull-right[
+<div id="htmlwidget-9ed63d22a22b5f59d020" style="width:100%;height:504px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9ed63d22a22b5f59d020">{"x":{"url":"slide_11_files/figure-html//widgets/widget_unnamed-chunk-17.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+
+]
+
+---
+
+.pull-left[
+.panelset[
+.panel[.panel-name[R]
+
+]
+.panel[.panel-name[Python]
+
+```python
+gap = px.data.gapminder()
+df = gap.query("continent != 'Asia'")
+fig = px.line(df, x = 'year', y = 'lifeExp', 
+  color = 'continent', 
+  line_group = 'country', 
+  hover_name='country', 
+  height=500, width=500,
+  template='presentation',
+  labels = dict(lifeExp = 'Life expectancy',
+                year='Year'))
+                
+fig.update_layout(showlegend=False)
+```
+]
+]
+]
+.pull-right[
+
+&lt;iframe src='img/spagh1.html' width='550' height='550'&gt;&lt;/iframe&gt;
+
+]
+---
+class: middle,center,inverse
+
+# Facets
+
+---
+
+
+```python
+fig = px.line(data_frame = gap, x = 'year', y = 'lifeExp', 
+      color = 'country', facet_col='continent', facet_col_wrap=3,
+      labels = {'lifeExp': 'Life expectancy'},
+      width=1000,   
+      height=500).update_layout(showlegend=False)
+```
+
+
+&lt;iframe src='img/facet.html' width=1000 height=500&gt;&lt;/iframe&gt;
+
+---
+class: middle,center,inverse
+
+# Categorical variables
+
+---
+
+
+.pull-left[
+
+```python
+tips = px.data.tips()
+px.bar(tips, x = 'day', y = 'total_bill',
+      width=500, height=500),
+      labels={'day': 'Day',
+              'total_bill': 'Total bill'}
+      )
+```
+]
+.pull-right[
+
+&lt;iframe src='img/bar1.html' height=550 width=550&gt;&lt;/iframe&gt;
+
+]
+
+---
+
+.pull-left[
+
+```python
+px.bar(tips, x = 'day', y = 'total_bill',
+       category_orders={
+           'day': ['Thur','Fri','Sat','Sun']
+       },
+      width=500, height=500),
+      labels={'day': 'Day',
+              'total_bill': 'Total bill'}
+      )
+```
+
+Re-order the bars in alphabetical order
+]
+.pull-right[
+
+&lt;iframe src='img/bar2.html' width=550 height=550&gt;&lt;/iframe.
+]
+
+---
+
+.pull-left[
+
+```python
+px.bar(tips, x = 'day', y = 'total_bill', 
+    color='smoker', barmode='group',
+    category_orders={
+           'day': ['Thur','Fri','Sat','Sun']
+       },
+    width=500, height=500,
+    labels={'day': 'Day',
+            'total_bill': 'Total bill'})
+```
+
+Add a grouping variable
+]
+.pull-right[
+
+&lt;iframe src='img/bar3.html' width=550 height=550&gt;&lt;/iframe&gt;
+]
+
+---
+
+Add facets
+
+
+```python
+px.bar(tips, x = 'day', y = 'total_bill', color='smoker', barmode='group', 
+    facet_col='sex',
+    category_orders={
+           'day': ['Thur','Fri','Sat','Sun']
+       },
+    labels = {'day':'Day', 'total_bill': 'Total bill'},
+      width=1000, height=200)
+```
+
+&lt;iframe src='img/bar4.html' width=1050 height=250&gt;&lt;/iframe&gt;
+
+---
+
+Fix the order of faceting variables
+
+
+```python
+px.bar(tips, x = 'day', y = 'total_bill', color='smoker', barmode='group', facet_col='sex',
+       category_orders={
+           'day': ['Thur','Fri','Sat','Sun'],
+           'sex': ['Male', 'Female'],
+           'smoker': ['Yes','No']
+       },
+      labels = {'day':'Day', 'total_bill': 'Total bill', 'smoker':'Smoker','sex':'Sex'},
+      width=1000, height=200)
+```
+
+&lt;iframe src='img/bar5.html' width=1050 height=250&gt;&lt;/iframe&gt;
+
+---
+class: middle,center,inverse
+
+# Statistical plots
+
+---
+
+.pull-left[
+
+```python
+tips = px.data.tips()
+px.histogram(tips, x='total_bill', nbins=100, 
+    histnorm='probability density',
+    color_discrete_sequence=['indianred'],
+    labels={'total_bill':'Total bill'},
+    width=400, height=400)
+```
+
+Histogram, calibrated to have area 1
+]
+.pull-right[
+
+&lt;iframe src='img/hist1.html' width=450 height=450&gt;&lt;/iframe&gt;
+]
+
+---
+
+.pull-left[
+
+```python
+px.histogram(tips, x='total_bill', color='sex',
+  labels = {'total_bill':'Total bill'},
+  width=400, height=400)
+```
+Grouped histogram
+]
+.pull-right[
+
+&lt;iframe src='img/hist2.html' width=450 height=450&gt;&lt;/iframe&gt;
+]
+
+---
+
+.pull-left[
+
+```python
+px.histogram(tips, x='total_bill', 
+  color='sex',
+  label={'total_bill':'Total bill'},
+  marginal='box', # or 'rug' or 'violin'
+  width=500, height=500)
+```
+]
+.pull-right[
+
+&lt;iframe src='img/hist3.html' width=550 height=550&gt;&lt;/iframe&gt;
+
+]
+
+---
+
+.pull-left[
+
+```python
+px.histogram(tips, x='day',
+    category_orders={'day':['Thur','Fri','Sat','Sun']},
+    width=400, height=400)
+```
+
+The histogram, applied to a categorical variable, produces a frequency bar plot
+]
+.pull-right[
+
+&lt;iframe src='img/freq1.html' width=450 height=450&gt;&lt;/iframe&gt;
+]
+
+---
+
+.pull-left[
+
+```python
+(px.histogram(tips, x='day',
+            width=400, height=400)
+ .update_xaxes(
+   categoryorder='total ascending')) # This part is from the low-level API
+```
+
+You can also order by value
+]
+.pull-right[
+
+&lt;iframe src='img/freq2.html' width=450 height=450&gt;&lt;/iframe&gt;
+]
+
+---
+
+.pull-left[
+
+```python
+(px.histogram(tips, x='day', y='tip', histfunc='avg',
+             width=400, height=400)
+  .update_xaxes(categoryorder='total ascending')
+  .update_layout(yaxis_tickformat='$'))
+```
+Bar plots of values of one variable grouped by categories of another
+]
+.pull-right[
+
+&lt;iframe src='img/freq3.html' width=450 height=450&gt;&lt;/iframe&gt;
+]
+
+---
+class: middle,center,inverse
+
+# Continuous vs categorical variable
+
+---
+
+.pull-left[
+
+```python
+px.box(tips, x='day', y = 'total_bill',
+  labels = {'total_bill':'Total bill'},
+  width=400, height=400)
+```
+
+You can similarly do violin and strip plots
+]
+.pull-right[
+
+&lt;iframe src='img/box.html' width=450 height=450&gt;&lt;/iframe&gt;
+]
+
+---
+class: middle,center,inverse
+
+# 2-d and marginal plots
+
+---
+
+.pull-left[
+
+```python
+px.scatter(tips,
+  x='total_bill',
+  y='tip',
+  marginal_x='histogram',
+  marginal_y='histogram',
+  labels = dict(total_bill='Total bill',
+                tip = 'Tip'),
+  title = 'Tips vs Total bill',
+  width=400, height=400)
+```
+We can put marginal histograms or boxplots or violin plots quite easily
+]
+.pull-right[
+
+&lt;iframe src='img/marg.html' width=450 height=450&gt;&lt;/iframe&gt;
+]
+
+---
+
+.pull-left[
+
+```python
+px.density_heatmap(tips, 
+  x='total_bill', y = 'tip',
+  marginal_x='histogram', marginal_y='histogram',
+  color_continuous_scale=px.colors.sequential.Viridis,nbinsx=50, nbinsy=50,
+  labels=dict(total_bill='Total bill', tip='Tip'),
+  title = 'Joint distribution of tip and total bill',
+  width=400, height=400)
+```
+If you have too many points, you can consider using a 2-d density plot. If you have lots more points, like millions, you can use a Python package called **datashader**
+]
+.pull-right[
+
+&lt;iframe src='img/dens2d.html' width=450 height=450&gt;&lt;/iframe&gt;
+]
+
+---
+
+## Scatterplot matrix
+
+
+```python
+penguin = sns.load_dataset('penguins')
+px.scatter_matrix(penguin, width=600, height=400)
+```
+
+&lt;iframe src='img/splom.html' width=450 height=650&gt;&lt;/iframe&gt;
+
+---
+
+### A more specified example
+
+
+```python
+(px.scatter_matrix(penguin,
+    dimensions = ['bill_length_mm','bill_depth_mm','flipper_length_mm','body_mass_g'],
+    color='species',
+    width=1000, height=1000,
+    labels = dict(bill_length_mm='Bill length (mm)',
+                  bill_depth_mm = 'Bill depth (mm)',
+                  flipper_length_mm = 'Flipper length (mm)',
+                  body_mass_g = 'Body mass (g)'))
+    .update_traces(diagonal_visible=False))
+```
+
+---
+
+## A more specified example
+
+
+&lt;iframe src='img/splom2.html' width=1050 height=1050&gt;&lt;/iframe&gt;
+
+---
+class: middle,center,inverse
+
+# Parallel coordinates
+
+---
+
+
+
+```python
+penguin['species'] = penguin.species.astype('category')
+penguin['species_id']=penguin.species.cat.codes
+px.parallel_coordinates(penguin,
+                        color='species_id',
+            color_continuous_scale=px.colors.diverging.Tealrose,
+            height=300, width=1000)
+```
+
+&lt;iframe src='img/parallel.html' width=1000, height=340&gt;&lt;/iframe&gt;
+
+---
+class: middle,center,inverse
+
+# Maps
+
+---
+
+
+The most mature library for maps is `leaflet.js`
+
+- &lt;svg style="height:0.8em;top:.04em;position:relative;fill:blue;" viewBox="0 0 581 512"&gt;&lt;path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/&gt;&lt;/svg&gt;: **leaflet**, **tmap**, **plotly**
+- &lt;svg style="height:0.8em;top:.04em;position:relative;fill:blue;" viewBox="0 0 448 512"&gt;&lt;path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6zM286.2 404c11.1 0 20.1 9.1 20.1 20.3 0 11.3-9 20.4-20.1 20.4-11 0-20.1-9.2-20.1-20.4.1-11.3 9.1-20.3 20.1-20.3zM167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4zm-6.7-142.6c-11.1 0-20.1-9.1-20.1-20.3.1-11.3 9-20.4 20.1-20.4 11 0 20.1 9.2 20.1 20.4s-9 20.3-20.1 20.3z"/&gt;&lt;/svg&gt;: **folium**, **plotly**
+
+---
+
+
+
+.pull-left[
+
+```python
+px.choropleth(df, 
+  geojson=counties, 
+  locations='fips', 
+  color='unemp', 
+  color_continuous_scale=px.colors.sequential.Viridis, 
+  range_color=(0,12), 
+  scope='usa', 
+  labels = {'unemp': 'Unemployment rate'})
+```
+Unemployment rates in 2016
+]
+.pull-right[
+
+```python
+fig=px.choropleth(df, 
+  geojson=counties, 
+  locations='fips', 
+  color='unemp', 
+  color_continuous_scale=px.colors.sequential.Viridis, 
+  range_color=(0,12), 
+  scope='usa', 
+  labels = {'unemp': 'Unemployment rate'},
+  width=400, height=400)
+fig.write_html('img/map.html')
+```
+&lt;iframe src='img/map.html' width=450 height=450&gt;&lt;/iframe&gt;
+]
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="../js/macros.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
