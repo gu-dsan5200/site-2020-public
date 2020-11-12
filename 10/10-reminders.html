@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>10-reminders.utf8</title>
+    <meta charset="utf-8" />
+    <script src="10-reminders_files/header-attrs-2.5/header-attrs.js"></script>
+    <link href="10-reminders_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+    <script src="10-reminders_files/anchor-sections-1.0/anchor-sections.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="../custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+## Tufte's Principles of Graphical Integrity
+
+1. Show data variation, not design variation
+1. Do not use graphics to quote data out of context
+1. Use clear, detailed, thorough labelling. 
+1. Representation of numbers should be directly proportional to numerical quantities
+1. Don't use more dimensions than the data require
+
+---
+
+# Nathan Yau's Seven Basic Rules for Making Charts and Graphs
+
+1. Check the data
+1. Explain encodings
+1. Label axes
+1. Include units
+1. Keep your geometry in check
+1. Include your sources
+1. Consider your audience
+
+---
+
+.pull-left[
+### 1) Check the data
+
+&lt;img src="https://flowingdata.com/wp-content/uploads/2010/07/1-check-the-data.jpg"&gt;
+
+* This should be obvious
+* If your data is weak, your chart is weak
+* Start with simple graphs to see if there are any outliers
+]
+
+--
+
+.pull-right[
+### 2) Explain encodings
+
+&lt;img src="https://flowingdata.com/wp-content/uploads/2010/07/2-explain-encodings.jpg"&gt;
+
+* Don't assume the reader knows what everything means
+* Provide a legend
+* Label shapes
+* Explain color scales
+]
+
+---
+
+.pull-left[
+### 3) Label axes
+
+&lt;img src="https://flowingdata.com/wp-content/uploads/2010/07/3-labels-axes.jpg"&gt;
+
+* Axes without labels or explanation are just decoration
+* Describe the scale (incremental, exponential, logarithmic?)
+* Have axes values start at zero
+]
+
+--
+
+.pull-right[
+### 4) Include units
+
+&lt;img src="https://flowingdata.com/wp-content/uploads/2010/07/4-include-units.jpg"&gt;
+
+* Numbers without units are meaningless
+* Remove the guesswork
+]
+
+---
+
+.pull-left[
+### 5) Keep your geometry in check
+
+&lt;img src="https://flowingdata.com/wp-content/uploads/2010/07/5-keep-geometry-in-check.jpg"&gt;
+
+* This is something that is immediately noticeable
+* Don't use area to compare two units unless they are an area. An increase in a unit squares the area.
+* Tip: size circles and other 2D shapes by area, unless it's a bar chart
+]
+
+--
+
+.pull-left[
+### 6) Include your sources
+
+&lt;img src="https://flowingdata.com/wp-content/uploads/2010/07/6-sources.jpg"&gt;
+
+* This is another obvious one
+* Always include the source of your data
+* Makes your graphic more reputable
+* Allows for others to dig deeper
+]
+
+
+---
+
+.pull-left[
+### 7) Consider your audience
+
+&lt;img src="https://flowingdata.com/wp-content/uploads/2010/07/7-audience.jpg"&gt;
+
+* What purpose do your charts have and who are they for?
+* Avoid quirky fonts
+* Make good design choices
+]
+
+---
+
+# Visualization critiques: what is wrong with this picture?
+
+* What is the first thing you notice about this visualization?
+* What point is the visualization trying to make?
+* Who is the intended audience?
+* What is the visualization doing well?
+* What problems do you see with the visualization design?
+
+---
+class: middle, center
+
+## When you make a chart using _default settings_, you usually get a flat graphic where everything — from the tick marks, to the encoded data, to the title — gets the same amount of importance visually
+
+---
+class: middle,center,inverse
+
+# Random examples
+
+---
+
+![](img/hw5-badgraphs/task1.png)
+
+---
+
+![](img/hw5-badgraphs/task2a.png)
+
+---
+
+![](img/hw5-badgraphs/task2b.png)
+
+---
+
+![](img/hw5-badgraphs/task3.png)
+
+---
+
+![](img/hw5-badgraphs/task4a.png)
+
+---
+
+![](img/hw5-badgraphs/task4b.png)
+
+---
+
+![](img/hw5-badgraphs/task5.png)
+
+---
+class: middle,center,inverse
+
+# Moving forward
+
+---
+
+## We have high expectations!!
+
+1. We expect you to be happy and proud of what you submit, so don't just mail it in
+1. We don't expect brilliance, but we do expect solid, professional work. Surprise us with your brilliance.
+
+--
+
+To wit,
+
+1. All labels should be in appropriate units
+1. All axes, legends should be labelled
+1. Every chart has a title that tells us what it's about
+1. Plot types, axis scales are appropriate for the chart's story
+1. The story from the visualization should be "obvious", i.e. it should hit the reader between the eyes
+1. The graphical style has to be your own. **No more defaults!!!**
+
+---
+
+## Creating your own graphics style
+
+We would like you to create your own distinctive graphics style to use
+in your homeworks and projects. We don't want to see you use the default styles.
+
+### Python
+
+You can create a style template in `matplotlib` [link](https://towardsdatascience.com/a-guide-to-creating-and-using-your-own-matplotlib-style-30de6c60bac0)
+
+### R
+
+You can create your own theme in `ggplot2` [link](https://emanuelaf.github.io/own-ggplot-theme.html)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,545 @@
+
+
+## A few words about natural language processing (NLP)
+
+![](img/tmwr_0201.png)
+
+---
+
+## A few words about natural language processing (NLP)
+
+There are several steps that are commonly performed in textual analyses, 
+including tokenizing, stemming, lemmatizing and other processing steps. 
+
+Common uses for textual analytics include sentiment analysis, identifying common patterns in texts (useful for literature research and intelligence), 
+summarizing corpuses of texts by identifying key words and phrases.
+
+In this class we won't talk about the analytics aspects per se, but we will 
+describe some of the possible visualizations that can arise from textual analyses.
+
+
+
+.footnote[This material is taken from [_Text Mining with R_](https://www.tidytextmining.com/) by Silge and Robinson, among other sources]
+
+---
+
+## Resources
+
+.pull-left[
+### R
+
+**Materials**
++ [Text Mining with R](https://www.tidytextmining.com/) by Silge and Robinson
+
+**Packages**
++ `tidytext`
++ `text2vec`
++ `quanteda`
++ `tm`
++ `wordcloud`
+]
+.pull-right[
+### Python
+
+**Materials**
++ [Natural Language Toolkit](https://www.nltk.org/) 
++ [Natural Language Processing with Python](https://www.nltk.org/book/) by Bird, Klein and Loper
+
+**Packages**
+- `nltk`
+- `scikit-learn`
+]
+---
+
+```{r, include=F}
+knitr::opts_chunk$set(fig.height=6, warning=F, message=F)
+library(tidytext)
+library(janeaustenr)
+library(dplyr)
+library(stringr)
+library(tidyverse)
+library(igraph)
+library(ggraph)
+library(widyr)
+
+tidy_books <- austen_books() %>%
+  group_by(book) %>%
+  mutate(linenumber = row_number(),
+         chapter = cumsum(str_detect(text, regex("^chapter [\\divxlc]", 
+                                                 ignore_case = TRUE)))) %>%
+  ungroup() %>%
+  unnest_tokens(word, text)
+
+nrc_joy <- get_sentiments("nrc") %>% 
+  filter(sentiment == "joy")
+
+tidy_books %>%
+  filter(book == "Emma") %>%
+  inner_join(nrc_joy) %>%
+  count(word, sort = TRUE)
+
+library(tidyr)
+
+jane_austen_sentiment <- tidy_books %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(book, index = linenumber %/% 80, sentiment) %>%
+  spread(sentiment, n, fill = 0) %>%
+  mutate(sentiment = positive - negative)
+```
+
+## Sentiment trajectories
+
+.pull-left[
+```{r st, echo=T, eval=F}
+library(ggplot2)
+
+ggplot(jane_austen_sentiment, 
+       aes(index, sentiment, fill = book)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~book, ncol = 2, 
+             scales = "free_x")
+```
+
+Using barplots to show positive and negative sentiments as you go through 
+a book (in this case, Jane Austen's books)
+]
+.pull-right[
+```{r, eval=T, echo=F, ref.label='st'}
+
+```
+
+]
+---
+
+## Word clouds
+
+Word clouds are one way to show the **frequency distribution** of words in a document
+
+.pull-left[
+```{r wc, eval = F, echo = T}
+library(wordcloud)
+
+tidy_books %>%
+  anti_join(stop_words) %>%
+  count(word) %>%
+  with(wordcloud(word, n, max.words = 100))
+```
+
+There is a bit of randomness to how the word cloud is arranged, though
+the relative sizes of the words remain the same
+]
+.pull-right[
+```{r, eval=T, echo = F, ref.label="wc", message=F}
+```
+]
+
+---
+
+## Word clouds
+
+You can also use word clouds to compare the frequencies of words within different sentiments
+
+.pull-left[
+```{r wc2, eval = F, echo = T}
+library(reshape2)
+
+tidy_books %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  pivot_wider(id_cols=word, 
+              names_from = sentiment, 
+              values_from = n, values_fill=0) %>% 
+  column_to_rownames('word') %>% 
+  as.matrix() %>% 
+  comparison.cloud(colors = c("gray20", "gray80"),
+                   max.words = 100)
+```
+
+> `comparison.cloud` is based on base R graphics. It requires a _matrix_ as input rather than a _data frame_
+]
+.pull-right[
+```{r, eval=T, echo = F, ref.label="wc2", message=F}
+```
+]
+
+---
+layout: true
+
+## Frequency distribution of words
+
+---
+
+There are two metrics commonly used in NLP:
+
++ The _term frequency_ (tf), i.e. how often a word appears in a document
++ The _inverse document frequency_ (idf), i.e. how rarely a term appears in a collection of documents, and is defined as 
+
+
+
+$$idf(\text{term}) = \ln\left(\frac{n_{\text{documents}}}{n_{\text{documents containing term}}}\right)$$
+
+These are often combined in a _td-idf_, the product of _td_ and _idf_, which is intended to measure how important a word is to a document in a collection (or corpus) of documents
+---
+
+The term frequencies tend to be skew and long tailed
+
+```{r, include=FALSE}
+
+library(dplyr)
+library(janeaustenr)
+library(tidytext)
+
+book_words <- austen_books() %>%
+  unnest_tokens(word, text) %>%
+  count(book, word, sort = TRUE)
+
+total_words <- book_words %>% 
+  group_by(book) %>% 
+  summarize(total = sum(n))
+
+book_words <- left_join(book_words, total_words)
+```
+
+.pull-left[
+```{r tf, eval = F, echo = T}
+library(ggplot2)
+
+ggplot(book_words, aes(n/total, fill = book)) +
+  geom_histogram(show.legend = FALSE) +
+  xlim(NA, 0.0009) +
+  facet_wrap(~book, ncol = 2, scales = "free_y")
+```
+
+This typical distribution is known as **Zipf's Law**, and we can check how well a book's term frequencies align with it.
+]
+.pull-right[
+```{r, eval=T, echo = F, ref.label="tf"}
+```
+]
+
+---
+
+```{r, include=F}
+freq_by_rank <- book_words %>% 
+  group_by(book) %>% 
+  mutate(rank = row_number(), 
+         `term frequency` = n/total)
+
+```
+
+
+.pull-left[
+```{r tf2, eval = F, echo = T}
+freq_by_rank %>% 
+  ggplot(aes(rank, `term frequency`, 
+             color = book)) + 
+  geom_abline(intercept=-0.62, slope=-1.1, 
+              color='gray50', linetype=2)+
+  geom_line(size = 1.1, alpha = 0.8, 
+            show.legend = FALSE) + 
+  scale_x_log10() +
+  scale_y_log10()
+```
+
+All six books have very similar characteristics, but are not quite following a straight line, which would indicate alignment with Zipf's Law. 
+
+Note we are plotting on a log-log scale]
+.pull-right[
+```{r, eval=T, echo = F, ref.label="tf2"}
+```
+]
+---
+layout: true
+
+## Network of bigrams
+
+---
+
+Bigrams are pairs of words (tokens) that occur together. More generally, you can consider _n_-grams. 
+
+```{r, include=F, cache=TRUE}
+library(dplyr)
+library(tidytext)
+library(janeaustenr)
+
+austen_bigrams<- austen_books() %>%
+  unnest_tokens(bigram, text, token = "ngrams", n = 2)
+
+library(tidyr)
+
+bigrams_separated <- austen_bigrams %>%
+  separate(bigram, c("word1", "word2"), sep = " ")
+
+bigrams_filtered <- bigrams_separated %>%
+  filter(!word1 %in% stop_words$word) %>%
+  filter(!word2 %in% stop_words$word)
+
+# new bigram counts:
+bigram_counts <- bigrams_filtered %>% 
+  count(word1, word2, sort = TRUE)
+
+
+```
+
+.pull-left[
+```{r net1, echo=T, eval=F}
+library(igraph)
+library(ggraph)
+set.seed(2017)
+
+bigram_graph <- bigram_counts %>%
+  filter(n > 20) %>%
+  graph_from_data_frame()
+
+ggraph(bigram_graph, layout = "fr") +
+  geom_edge_link() +
+  geom_node_point() +
+  geom_node_text(aes(label = name), 
+                 vjust = 1, hjust = 1)
+```
+
+Here we are showing common (occurring at least 20 times) bigrams from Austen's novels, where neither word is a stop word ]
+.pull-right[
+```{r, eval=T, echo=F, ref.label='net1'}
+
+```
+
+]
+
+---
+
+.pull-left[
+```{r net2, eval = F, echo = T}
+set.seed(2016)
+
+a <- grid::arrow(type = "closed", 
+                 length = unit(.15, "inches"))
+
+ggraph(bigram_graph, layout = "fr") +
+  geom_edge_link(aes(edge_alpha = n), 
+                 show.legend = FALSE,
+                 arrow = a, 
+                 end_cap = circle(.07, 'inches')) +
+  geom_node_point(color = "lightblue", 
+                  size = 5) +
+  geom_node_text(aes(label = name), 
+                 vjust = 1, hjust = 1) +
+  theme_void()
+```
+
+We polished up the network visualization a bit
+]
+.pull-right[
+```{r, eval=T, echo = F, ref.label="net2"}
+```
+]
+---
+
+```{r, include=F}
+library(dplyr)
+library(tidyr)
+library(tidytext)
+library(ggplot2)
+library(igraph)
+library(ggraph)
+
+count_bigrams <- function(dataset) {
+  dataset %>%
+    unnest_tokens(bigram, text, token = "ngrams", n = 2) %>%
+    separate(bigram, c("word1", "word2"), sep = " ") %>%
+    filter(!word1 %in% stop_words$word,
+           !word2 %in% stop_words$word) %>%
+    count(word1, word2, sort = TRUE)
+}
+
+visualize_bigrams <- function(bigrams) {
+  set.seed(2016)
+  a <- grid::arrow(type = "closed", length = unit(.15, "inches"))
+  
+  bigrams %>%
+    graph_from_data_frame() %>%
+    ggraph(layout = "fr") +
+    geom_edge_link(aes(edge_alpha = n), show.legend = FALSE, arrow = a) +
+    geom_node_point(color = "lightblue", size = 5) +
+    geom_node_text(aes(label = name), vjust = 1, hjust = 1) +
+    theme_void()
+}
+```
+
+.pull-left[
+```{r kjb, eval = F, echo = T}
+# the King James version is book 10 on Project Gutenberg:
+library(gutenbergr)
+kjv <- gutenberg_download(10)
+library(stringr)
+
+kjv_bigrams <- kjv %>%
+  count_bigrams()
+
+# filter out rare combinations, as well as digits
+kjv_bigrams %>%
+  filter(n > 40,
+         !str_detect(word1, "\\d"),
+         !str_detect(word2, "\\d")) %>%
+  visualize_bigrams()
+```
+
+Common (n >= 40) bigrams in the King James Bible
+]
+.pull-right[
+```{r, eval=T, echo = F, ref.label="kjb"}
+```
+]
+
+
+---
+layout: true
+
+## Network of co-occurring words
+
+We will visualize patterns in the metadata available from over 32K datasets hosted and/or maintained by NASA
+
+---
+
+```{r, include=F, cache=TRUE}
+library(jsonlite)
+# metadata <- fromJSON("https://data.nasa.gov/data.json")
+# saveRDS(metadata, 'data/nasa_meta.rds')
+metadata <- readRDS('data/nasa_meta.rds')
+
+
+#names(metadata$dataset)
+
+nasa_title <- tibble(id = metadata$dataset$identifier,
+                         title = metadata$dataset$title)
+# nasa_title
+
+nasa_desc <- tibble(id = metadata$dataset$identifier,
+                        desc = metadata$dataset$description)
+
+nasa_keyword <- tibble(id = metadata$dataset$identifier,
+                           keyword = metadata$dataset$keyword) %>%
+  unnest(keyword)
+
+# nasa_keyword
+
+library(tidytext)
+
+nasa_title <- nasa_title %>% 
+  unnest_tokens(word, title) %>% 
+  anti_join(stop_words)
+
+nasa_desc <- nasa_desc %>% 
+  unnest_tokens(word, desc) %>% 
+  anti_join(stop_words)
+
+my_stopwords <- tibble(word = c(as.character(1:10), 
+                                    "v1", "v03", "l2", "l3", "l4", "v5.2.0", 
+                                    "v003", "v004", "v005", "v006", "v7"))
+nasa_title <- nasa_title %>% 
+  anti_join(my_stopwords)
+nasa_desc <- nasa_desc %>% 
+  anti_join(my_stopwords)
+
+library(widyr)
+
+title_word_pairs <- nasa_title %>% 
+  pairwise_count(word, id, sort = TRUE, upper = FALSE)
+
+# title_word_pairs
+
+desc_word_pairs <- nasa_desc %>% 
+  pairwise_count(word, id, sort = TRUE, upper = FALSE)
+
+```
+
+.pull-left[
+```{r commonwords, eval = F, echo = T}
+set.seed(1234)
+title_word_pairs %>%
+  filter(n >= 250) %>%
+  graph_from_data_frame() %>%
+  ggraph(layout = "fr") +
+  geom_edge_link(aes(edge_alpha = n, 
+                     edge_width = n), 
+                 edge_colour = "cyan4") +
+  geom_node_point(size = 5) +
+  geom_node_text(aes(label = name), 
+                 repel = TRUE, 
+                 point.padding = unit(0.2, "lines")) +
+  theme_void()
+```
+
+Network in NASA dataset titles]
+.pull-right[
+```{r, eval=T, echo = F, ref.label="commonwords"}
+```
+]
+
+---
+
+.pull-left[
+```{r connect2, eval = F, echo = T}
+set.seed(1234)
+desc_word_pairs %>%
+  filter(n >= 2000) %>%
+  graph_from_data_frame() %>%
+  ggraph(layout = "fr") +
+  geom_edge_link(aes(edge_alpha = n, 
+                     edge_width = n), 
+                 edge_colour = "darkred") +
+  geom_node_point(size = 5) +
+  geom_node_text(aes(label = name), repel = TRUE,
+                 point.padding = unit(0.2, "lines")) +
+  theme_void()
+```
+Network in NASA dataset descriptions]
+.pull-right[
+```{r, eval=T, echo = F, ref.label="connect2"}
+```
+]
+
+---
+
+.pull-left[
+```{r connect3, eval = F, echo = T}
+keyword_pairs <- nasa_keyword %>% 
+  pairwise_count(keyword, id, 
+                 sort = TRUE, upper = FALSE)
+set.seed(1234)
+keyword_pairs %>%
+  filter(n >= 700) %>%
+  graph_from_data_frame() %>%
+  ggraph(layout = "fr") +
+  geom_edge_link(aes(edge_alpha = n, 
+                     edge_width = n), 
+                 edge_colour = "royalblue") +
+  geom_node_point(size = 5) +
+  geom_node_text(aes(label = name), 
+                 repel = TRUE,
+                 point.padding = unit(0.2, "lines")) +
+  theme_void()
+```
+Network in NASA dataset keywords]
+.pull-right[
+```{r, eval=T, echo = F, ref.label="connect3"}
+```
+]
+
+---
+layout: false
+
+## Other resources
+
+**R**
+
++ [Textual data visualization](https://quanteda.io/articles/pkgdown/examples/plotting.html) by Benoit, Obeng and Muller
++ [Text Mining, Networks and Visualization: Plebiscito Tweets](https://juanitorduz.github.io/text-mining-networks-and-visualization-plebiscito-tweets/)
+
+**Python**
+
++ [Text analytics with Yellowbrick](https://www.districtdatalabs.com/text-analytics-with-yellowbrick)
++ [`scattertext`](https://github.com/JasonKessler/scattertext)
+    - Associated [blog](https://kanoki.org/2019/03/17/text-data-visualization-in-python/)
++ [A Complete Exploratory Data Analysis and Visualization for Text Data](https://towardsdatascience.com/a-complete-exploratory-data-analysis-and-visualization-for-text-data-29fb1b96fb6a)
++ [Text Analytics and Visualization](https://pythondata.com/text-analytics-visualization/)
