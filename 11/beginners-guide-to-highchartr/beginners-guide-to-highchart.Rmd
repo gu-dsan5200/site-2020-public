@@ -1,12 +1,6 @@
 ---
 title: "Interactive Visualizations with Highchart in R"
-output: 
-    html_document:
-        number_sections: true
-        toc: true
-        theme: cosmo
-        highlight: tango
-        code_folding: hide
+output: html_document
 ---
 
 ```{r}
@@ -25,9 +19,9 @@ library(highcharter) #interactive visualization
 
 
 ```{r}
-#https://bigdatateaching.blob.core.windows.net/public/survey_results_public.csv
 survey18 <- read_csv("https://bigdatateaching.blob.core.windows.net/public/survey_results_public.csv")
-#glimpse(survey18)
+
+glimpse(survey18)
 ```
 
 # Philosophy 
@@ -59,18 +53,6 @@ Similarly, Once the `highchart()` function is defined further highchart elements
 
 Let us begin our Interactive Visualization journey with the easy plots.
 
-# Icons Plot
-
-
-```{r}
-survey18 %>% 
-  select(Gender) %>% 
-  filter(!is.na(Gender)) %>% 
-  filter(Gender %in% c('Male','Female')) %>% 
-  count(Gender) %>% 
-  mutate(perc = round((n /sum(n))*100)) -> gender_icons
-  hciconarray(c('Female','Male'),gender_icons$perc,icons = c('male','female'))
-```
 
 # Bar
 
