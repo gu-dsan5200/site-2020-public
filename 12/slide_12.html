@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Model-based visualizations</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Vaisman &amp; Dasgupta" />
+    <meta name="date" content="2020-11-19" />
+    <script src="slide_12_files/header-attrs-2.5/header-attrs.js"></script>
+    <link href="slide_12_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+    <script src="slide_12_files/anchor-sections-1.0/anchor-sections.js"></script>
+    <link href="slide_12_files/tachyons-4.12.0/tachyons.min.css" rel="stylesheet" />
+    <link href="slide_12_files/panelset-0.2.3.9000/panelset.css" rel="stylesheet" />
+    <script src="slide_12_files/panelset-0.2.3.9000/panelset.js"></script>
+    <link href="slide_12_files/xaringanExtra-extra-styles-0.2.3.9000/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link href="slide_12_files/font-awesome-5.3.1/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="../custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Model-based visualizations
+## ANLY 503, Fall 2020
+### Vaisman &amp; Dasgupta
+### Georgetown University
+### November 19, 2020
+
+---
+
+
+
+
+
+
+
+---
+layout: true
+
+# Visualizing the results of models
+
+---
+class: middle,center,inverse
+
+---
+
+
+We've talked a lot about exploratory and descriptive visualizations to understand 
+the unprocessed data
+
+Modeling is part of most insight strategies to understand patterns in the data. These are often the "end results" of a data science project and the "punch line" of what you're presenting
+
++ Visualizing results rather than a tabular presentation can be more impactful
++ Take advantage of receivers' innate pattern recognition capabilities
++ Ability to highlight main stories out of the models
+
+&lt;p&gt;
+
++ Easier to not only show results but also highlight weaknesses
+    + Fitting a straight line to a curvilinear relationship <i class="fas  fa-grin " style="color:blue;"></i>
++ Easy to put too much on a graphic
+    + Need restraint
+
+.fl.w-40[
+![](slide_12_files/figure-html/unnamed-chunk-1-1.png)&lt;!-- --&gt;
+
+]
+.fl.w-30[
+![](slide_12_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+
+]
+.fl.w-30[
+![](slide_12_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
+
+]
+
+
+---
+
+## Toolboxes
+
+.pull-left[
+### R
+
++ **ggplot2** and family
++ **ggeffects**
+
+&lt;p&gt;
+
++ **base** (unsupervised learning, regression)
++ **broom** (tidy-fying results)
++ **caret**/**parsnip** (supervised learning)
++ **party**/**partykit** (decision trees)
+]
+.pull-right[
+### Python
+
++ **matplotlib**
++ **yellowbrick**
+
+&lt;p&gt;
+
++ **statsmodels** (statistical mdoels)
++ **scikit-learn** (machine learning)
+]
+
+---
+layout: true
+
+# Unsupervised learning models
+
+---
+class: middle, center, inverse
+
+---
+
+Unsupervised learning are machine learning models where we're looking to discover patterns within *unlabeled* data.
+
+This can be considered a form of *clustering* or *pattern recognition*
+
+Unsupervised learning can be used 
+
+- to find groups in data where 
+    + members within a group are more similar to each other
+    + than with members of another group
+- to detect anomalies/outliers
+
+---
+
+Unsupervised learning can be used to 
+
+- detect subgroups of cancer patients based on biology and biomarkers
+- detect abnormal packets on the internet
+- characterize different customer profiles
+- identify subtle problems on x-rays and medical images
+- characterize different kinds of galaxies
+
+---
+
+Some common methods in unsupervised learning
+
+- Cluster analysis
+  + Hierarchical clustering
+  + k-means clustering
+  + Density estimation / mixture models
+  + Self-organizing maps
+  + Voronoi diagrams
+
+&lt;p&gt;
+
+- Data transformations for pattern recognition
+  + PCA
+  + tSNE
+  + UMAP
+
+
+
+---
+
+## Correlograms
+
+.pull-left[
+![](slide_12_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+
+]
+
+.pull-right[
+![](slide_12_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+]
+
+.footnote[Using Pima diabetes data]
+
+---
+
+## Correlograms
+
+.pull-left[
+![](slide_12_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+
+]
+
+.footnote[Using Pima diabetes data]
+
+---
+
+## Hierarchical clustering
+
+### Agglomerative clustering
+
+.pull-left[
+1. Start with each member in its own cluster
+1. Join clusters based on distance between (linkage)
+1. Visualize using trees
+]
+.pull-right[
+&lt;img src='img/clust1.png' height=300, width=400/&gt;
+
+]
+
+
+---
+
+## Hierarchical clustering
+
+### Agglomerative clustering
+
+.pull-left[
+1. Start with each member in its own cluster
+1. Join clusters based on distance between (linkage)
+1. Visualize using trees
+
+-----
+
++ Euclidean distance (root mean square distance)
++ Correlation distance (1 - correlation)
++ Many other choices
+]
+.pull-right[
+&lt;img src='img/clust2.png' height=300, width=400/&gt;
+
+]
+
+
+---
+
+## Hierarchical clustering
+
+### Agglomerative clustering
+
+.pull-left[
+1. Start with each member in its own cluster
+1. Join clusters based on distance between (linkage)
+1. Visualize using trees
+
+
+]
+.pull-right[
+&lt;img src='img/clust3.png' height=300, width=400/&gt;
+
+]
+
+
+---
+
+## Hierarchical clustering
+
+### Agglomerative clustering
+
+
+.pull-left[
+1. Start with each member in its own cluster
+1. Join clusters based on distance between (linkage)
+1. Visualize using trees
+]
+.pull-right[
+&lt;img src='img/clust4.png' height=300, width=400/&gt;
+
+]
+
+
+.footnote[More details [here](https://www.dropbox.com/s/okp3t58zu9vfs49/ClusteringDSDC.pdf?dl=0)]
+
+
+
+---
+## Hierarchical clustering (R)
+
+.pull-left[
+![](slide_12_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+]
+.pull-right[
+![](slide_12_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+]
+
+---
+
+## Hierarchical clustering (R)
+
+.pull-left[
+![](slide_12_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+
+]
+.pull-right[
+![](slide_12_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+
+]
+---
+
+## Hierarchical clustering (Python)
+
+.pull-left[
+&lt;img src="slide_12_files/figure-html/unnamed-chunk-11-1.png" width="672" /&gt;
+
+]
+
+.pull-right[
+&lt;img src="slide_12_files/figure-html/unnamed-chunk-12-1.png" width="672" /&gt;
+
+]
+
+---
+
+## Comparing linkages
+
+![](slide_12_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+
+---
+
+## k-means clustering
+
++ Choose number of clusters **first**
++ Optimize clusters so that
+    - Within cluster variability is minimized
+    - Between cluster variability is maximized
+    
+Typically k-means clustering looks at spherical clusters
+
+.pull-left[
+![](slide_12_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
+
+]
+
+---
+## Heatmaps
+
+![](slide_12_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+
+---
+## Heatmaps
+
+.pull-left[
+Using a complex heatmap to understand the prevalence of measles in the US over time and the effect of introducing the vaccine.
+]
+.pull-right[
+![](slide_12_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
+]
+.footnote[Available in complexhm.R]
+
+
+---
+
+## PCA 
+
+PCA (principal components analysis) is a 
+method to "rotate" the data based on variability of the data cloud, resulting in fewer variables that capture the information in the data cloud. It's a popular method of **dimension 
+reduction**
+
+.pull-left[
+PCA first finds the direction in which there is maximum variance
+
+Then finds the directional orthogonal (uncorrelated) to the first direction with the most variance
+
+And so on
+
+In this case, these two new variables capture 99.7% of the variability in the iris measurements
+
+It's not uncommon that PCA separates groups along one of the axes
+]
+.pull-right[
+![](slide_12_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+
+
+]
+
+---
+
+## tSNE
+
+tSNE (t-distributed stochastic neighbor embedding) is a machine learning algorithm to visualize high-dimensional data. 
+
+.pull-left[
+It is a **non-linear** dimension reduction technique, as opposed to PCA, which is a **linear** technique
+
+tSNE is also probabilistic, so unless you fix the seed of the random number generator,
+you will get different results on different runs
+]
+.pull-right[
+![](slide_12_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
+]
+
+.footnote[Using iris]
+---
+
+## UMAP
+
+UMAP (uniform manifold approximation and projection) is another non-linear dimension-reduction technique that is increasingly used in bioinformatics to cluster high-dimensional data.
+
+
+![](slide_12_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
+
+.footnote[Using iris]
+
+---
+
+### in Python
+
+&lt;img src="slide_12_files/figure-html/unnamed-chunk-20-1.png" width="960" /&gt;
+
+---
+
+## Voronoi diagrams
+
+.pull-left[
+A Voronoi diagram splits up a plane based on a set of original points. Each polygon, or Voronoi cell, contains an original point and all areas that are closer to that point than any other.
+
+This can be used in different contexts, but especially with geospatial data
+
+Here, we're plotting the locations of airports in the USA
+]
+.pull-right[
+![](slide_12_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
+
+]
+
+---
+
+## Voronoi diagrams
+
+.pull-left[
+A Voronoi diagram splits up a plane based on a set of original points. Each polygon, or Voronoi cell, contains an original point and all areas that are closer to that point than any other.
+
+This can be used in different contexts, but especially with geospatial data
+]
+.pull-right[
+![](slide_12_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
+
+]
+
+.footnote[Credit: Nathan Yau]
+---
+layout: true
+
+# Regression models
+
+---
+class: middle,center,inverse
+
+---
+
+We will use the diamonds dataset for the supervised learning section. This
+data is available in R by `library(ggplot2); data(diamonds)` and in Python by 
+`import seaborn as sns; diamonds = sns.load_dataset("diamonds")`.
+
+Our initial regression model will look at price as a function of carat, cut, color, clarity and depth. 
+
+.pull-left[
+### R
+
+
+```r
+diamonds &lt;- diamonds %&gt;% 
+  mutate(across(c(cut, color, clarity), ~factor(., ordered=F)))
+model &lt;- lm(log(price) ~ log(carat) + cut + color + clarity + depth,
+            data=diamonds)
+```
+
+]
+.pull-right[
+### Python
+
+
+```python
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+import seaborn as sns
+import numpy as np
+diamonds = sns.load_dataset('diamonds')
+model = smf.ols('np.log(price) ~ np.log(carat)+ C(cut, Treatment("Fair")) + C(color, Treatment("D")) + C(clarity, Treatment("I1")) + depth', data=diamonds)
+result = model.fit()
+```
+
+]
+
+
+---
+class: middle, center
+
+## Model results
+
+---
+
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#wvuuafjlul .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: small;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#wvuuafjlul .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#wvuuafjlul .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#wvuuafjlul .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#wvuuafjlul .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wvuuafjlul .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#wvuuafjlul .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#wvuuafjlul .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#wvuuafjlul .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#wvuuafjlul .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#wvuuafjlul .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#wvuuafjlul .gt_group_heading {
+  padding: 1px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#wvuuafjlul .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#wvuuafjlul .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#wvuuafjlul .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#wvuuafjlul .gt_row {
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#wvuuafjlul .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#wvuuafjlul .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wvuuafjlul .gt_first_summary_row {
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#wvuuafjlul .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wvuuafjlul .gt_first_grand_summary_row {
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#wvuuafjlul .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#wvuuafjlul .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wvuuafjlul .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#wvuuafjlul .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 1px;
+}
+
+#wvuuafjlul .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#wvuuafjlul .gt_sourcenote {
+  font-size: 90%;
+  padding: 1px;
+}
+
+#wvuuafjlul .gt_left {
+  text-align: left;
+}
+
+#wvuuafjlul .gt_center {
+  text-align: center;
+}
+
+#wvuuafjlul .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#wvuuafjlul .gt_font_normal {
+  font-weight: normal;
+}
+
+#wvuuafjlul .gt_font_bold {
+  font-weight: bold;
+}
+
+#wvuuafjlul .gt_font_italic {
+  font-style: italic;
+}
+
+#wvuuafjlul .gt_super {
+  font-size: 65%;
+}
+
+#wvuuafjlul .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="wvuuafjlul" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>Beta</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>95% CI</strong><sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>p-value</strong></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left">log(carat)</td>
+      <td class="gt_row gt_center">1.9</td>
+      <td class="gt_row gt_center">1.9, 1.9</td>
+      <td class="gt_row gt_center"><0.001</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">cut</td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center"></td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Fair</td>
+      <td class="gt_row gt_center">&mdash;</td>
+      <td class="gt_row gt_center">&mdash;</td>
+      <td class="gt_row gt_center"></td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Good</td>
+      <td class="gt_row gt_center">0.08</td>
+      <td class="gt_row gt_center">0.07, 0.09</td>
+      <td class="gt_row gt_center"><0.001</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Very Good</td>
+      <td class="gt_row gt_center">0.12</td>
+      <td class="gt_row gt_center">0.11, 0.12</td>
+      <td class="gt_row gt_center"><0.001</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Premium</td>
+      <td class="gt_row gt_center">0.14</td>
+      <td class="gt_row gt_center">0.13, 0.14</td>
+      <td class="gt_row gt_center"><0.001</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Ideal</td>
+      <td class="gt_row gt_center">0.16</td>
+      <td class="gt_row gt_center">0.15, 0.17</td>
+      <td class="gt_row gt_center"><0.001</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">color</td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center"></td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">D</td>
+      <td class="gt_row gt_center">&mdash;</td>
+      <td class="gt_row gt_center">&mdash;</td>
+      <td class="gt_row gt_center"></td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">E</td>
+      <td class="gt_row gt_center">-0.05</td>
+      <td class="gt_row gt_center">-0.06, -0.05</td>
+      <td class="gt_row gt_center"><0.001</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">F</td>
+      <td class="gt_row gt_center">-0.09</td>
+      <td class="gt_row gt_center">-0.10, -0.09</td>
+      <td class="gt_row gt_center"><0.001</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">G</td>
+      <td class="gt_row gt_center">-0.16</td>
+      <td class="gt_row gt_center">-0.16, -0.16</td>
+      <td class="gt_row gt_center"><0.001</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">H</td>
+      <td class="gt_row gt_center">-0.25</td>
+      <td class="gt_row gt_center">-0.26, -0.25</td>
+      <td class="gt_row gt_center"><0.001</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">I</td>
+      <td class="gt_row gt_center">-0.37</td>
+      <td class="gt_row gt_center">-0.38, -0.37</td>
+      <td class="gt_row gt_center"><0.001</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">J</td>
+      <td class="gt_row gt_center">-0.51</td>
+      <td class="gt_row gt_center">-0.52, -0.50</td>
+      <td class="gt_row gt_center"><0.001</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">clarity</td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center"></td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">I1</td>
+      <td class="gt_row gt_center">&mdash;</td>
+      <td class="gt_row gt_center">&mdash;</td>
+      <td class="gt_row gt_center"></td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">SI2</td>
+      <td class="gt_row gt_center">0.43</td>
+      <td class="gt_row gt_center">0.42, 0.44</td>
+      <td class="gt_row gt_center"><0.001</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">SI1</td>
+      <td class="gt_row gt_center">0.59</td>
+      <td class="gt_row gt_center">0.58, 0.60</td>
+      <td class="gt_row gt_center"><0.001</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">VS2</td>
+      <td class="gt_row gt_center">0.74</td>
+      <td class="gt_row gt_center">0.73, 0.75</td>
+      <td class="gt_row gt_center"><0.001</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">VS1</td>
+      <td class="gt_row gt_center">0.81</td>
+      <td class="gt_row gt_center">0.80, 0.82</td>
+      <td class="gt_row gt_center"><0.001</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">VVS2</td>
+      <td class="gt_row gt_center">0.95</td>
+      <td class="gt_row gt_center">0.94, 1.0</td>
+      <td class="gt_row gt_center"><0.001</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">VVS1</td>
+      <td class="gt_row gt_center">1.0</td>
+      <td class="gt_row gt_center">1.0, 1.0</td>
+      <td class="gt_row gt_center"><0.001</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">IF</td>
+      <td class="gt_row gt_center">1.1</td>
+      <td class="gt_row gt_center">1.1, 1.1</td>
+      <td class="gt_row gt_center"><0.001</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">depth</td>
+      <td class="gt_row gt_center">0.00</td>
+      <td class="gt_row gt_center">0.00, 0.00</td>
+      <td class="gt_row gt_center">0.10</td>
+    </tr>
+  </tbody>
+  
+  <tfoot>
+    <tr class="gt_footnotes">
+      <td colspan="4">
+        <p class="gt_footnote">
+          <sup class="gt_footnote_marks">
+            <em>1</em>
+          </sup>
+           
+          CI = Confidence Interval
+          <br />
+        </p>
+      </td>
+    </tr>
+  </tfoot>
+</table></div>
+
+---
+
+This is a large model, so it would be nice to make the representation a bit more
+compact using graphics. 
+
+We'll use a tidy representation of the results using **broom** in R
+
+
+```r
+mod_tidy &lt;- broom::tidy(model)
+mod_aug &lt;- broom::augment(model)
+```
+
+
+
+---
+
+## Coefficient plots
+
+.pull-left[
+
+
+**coefplot** produces a **ggplot2** graphic, so we could add to this using what we know about ggplot
+]
+.pull-right[
+![](slide_12_files/figure-html/unnamed-chunk-28-1.png)&lt;!-- --&gt;
+]
+
+---
+
+## Coefficient plots
+
+.pull-left[
+
+
+There is actually a confidence interval being drawn, but it's too small to see compared to the dot representing the estimate
+]
+.pull-right[
+![](slide_12_files/figure-html/unnamed-chunk-29-1.png)&lt;!-- --&gt;
+]
+---
+
+## Coefficient plots
+
+.pull-left[
+
+
+Here, I'm taking a 1% sample of the diamonds data for modeling. This increases the magnitude of the standard errors of the coefficients
+]
+.pull-right[
+![](slide_12_files/figure-html/unnamed-chunk-30-1.png)&lt;!-- --&gt;
+]
+
+---
+
+## Marginal effects plots
+
+.pull-left[
+
+
+The other variables are held at the following values:
+
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; cut &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; color &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; clarity &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; depth &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Fair &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; D &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; I1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 61.7494 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+]
+.pull-right[
+![](slide_12_files/figure-html/unnamed-chunk-32-1.png)&lt;!-- --&gt;
+
+
+]
+
+---
+
+## Marginal effect plots
+
+.pull-left[
+
+
+You can also draw marginal effects for categorical predictors
+]
+.pull-right[
+![](slide_12_files/figure-html/unnamed-chunk-33-1.png)&lt;!-- --&gt;
+]
+
+---
+
+## Marginal effect plots
+
+.pull-left[
+
+
+You can also look at marginal effects for one variable conditional on one or more other variables
+]
+.pull-right[
+![](slide_12_files/figure-html/unnamed-chunk-34-1.png)&lt;!-- --&gt;
+]
+---
+class: middle, center
+
+# Model diagnostics
+
+---
+
+## Residual plots
+
+.pull-left[
+
+
+We expect, in well-fitting models, that the residuals are on average 0, and that they have no pattern with the predicted/fitted values
+]
+.pull-right[
+![](slide_12_files/figure-html/unnamed-chunk-35-1.png)&lt;!-- --&gt;
+]
+---
+
+## Q-Q plots for residuals
+
+.pull-left[
+An assumption of linear (OLS) regression is that the errors are distributed as 
+a Gaussian (normal) distribution. 
+
+This can be visually checked using a quantile-quantile (Q-Q) plot. 
+
+If the residuals follow a Gaussian distribution, this plot should be close to the diagonal line
+]
+.pull-right[
+![](slide_12_files/figure-html/unnamed-chunk-36-1.png)&lt;!-- --&gt;
+
+]
+
+---
+
+## Cook's distance
+
+.pull-left[
+**Cook's distance** or Cook's D is a commonly used estimate of the influence of a data point when performing a least-squares regression analysis
+
+Cook's distance measures the effect of deleting a given observation. Points with a large Cook's distance are considered to merit closer examination in the analysis.
+]
+.pull-right[
+![](slide_12_files/figure-html/unnamed-chunk-37-1.png)&lt;!-- --&gt;
+
+]
+
+---
+
+## Leverage
+
+.pull-left[
+Leverage is a measure of how far away the independent variable values of an observation are from those of the other observations.
+
+High-leverage points are those observations, if any, made at extreme or outlying values of the independent variables such that the lack of neighboring observations means that the fitted regression model will pass close to that particular observation.[
+]
+.pull-right[
+![](slide_12_files/figure-html/unnamed-chunk-38-1.png)&lt;!-- --&gt;
+
+]
+---
+layout: true
+
+# Machine learning models
+
+---
+class: middle,center,inverse
+
+---
+
+In this section, we will consider a classification machine learning model to predict
+breast cancer from various pathological variables, which is available as `BreastCancer` in the **mlbench** package in R
+
+We will fit a Random Forest model to this data
+
+
+
+---
+class: middle, center
+
+## Model description
+
+---
+
+## Decision trees
+
+![](slide_12_files/figure-html/unnamed-chunk-40-1.png)&lt;!-- --&gt;
+
+---
+class: middle, center
+
+# Model introspection
+
+---
+
+## Feature importances
+
+.pull-left[
+Feature importances are typically a measure of how much a predictive performance metric is reduced when the values of the a variable is scrambled (permuted). They represent the 
+predictive power of a variable
+
+Feature importances and p-values aren't necessarily related; a variable can be predictive and not statistically significant and vice versa. The former depends on the size of the effect, and the latter depends on the signal-to-noise ratio
+]
+.pull-right[
+&lt;img src="slide_12_files/figure-html/unnamed-chunk-41-1.png" width="960" /&gt;
+]
+
+---
+
+## Feature importances
+.pull-left[
+Feature importances are typically a measure of how much a predictive performance metric is reduced when the values of the a variable is scrambled (permuted). They represent the 
+predictive power of a variable
+
+Feature importances and p-values aren't necessarily related; a variable can be predictive and not statistically significant and vice versa. The former depends on the size of the effect, and the latter depends on the signal-to-noise ratio
+]
+.pull-right[
+
+```
+/Users/abhijit/opt/miniconda3/envs/ds/lib/python3.8/site-packages/sklearn/base.py:209: FutureWarning: From version 0.24, get_params will raise an AttributeError if a parameter cannot be retrieved as an instance attribute. Previously it would return None.
+  warnings.warn('From version 0.24, get_params will raise an '
+```
+
+&lt;img src="slide_12_files/figure-html/unnamed-chunk-42-1.png" width="960" /&gt;
+
+]
+
+---
+
+## Regularization (lasso/ridge/elastic net)
+
+.pull-left[
+Lasso regression fits a penalized regression with `\(L_1\)` penalties on the coefficients. This 
+model minimizes
+
+$$
+||y-X\beta||^2_2 + \lambda ||\beta||_1
+$$
+where `\(||x||_1 = \sum |x_i|/n\)` and `\(||x||_2 = \sqrt{\sum x_i^2/n}\)`
+
+This forces slope coefficients to 0 as the value of `\(\lambda\)` changes. 
+
+The plot shows the values of the slope coefficients for different values of `\(\log(\lambda)\)`
+]
+.pull-right[
+![](slide_12_files/figure-html/unnamed-chunk-43-1.png)&lt;!-- --&gt;
+]
+
+---
+
+## Regularization (lasso/ridge/elastic net)
+
+.pull-left[
+The elastic net regression (ELR) minimizes the penalized objective function
+
+$$
+||y-X\beta||^2_2 + \alpha\lambda ||\beta||_1 + \frac{(1-\alpha)\lambda}{2} ||\beta||_2^2
+$$
+Notice that in ELR, the coefficients move to 0 at a slower rate than for lasso regression
+
++ `\(\alpha=1\)`: Lasso regression
++ `\(\alpha=0\)`: Ridge regression
+
+Regularized regression is typically used for variable selection in regression models, 
+where `\(\lambda\)` is estimated via cross-validation
+
+Note that the actual coefficients are provably biased, so they are not interpreted.
+]
+.pull-right[
+![](slide_12_files/figure-html/unnamed-chunk-44-1.png)&lt;!-- --&gt;
+]
+
+---
+class: middle, center
+
+# Model prediction
+
+---
+
+## ROC curves
+
+.pull-left[
+A receiver operating characteristic (ROC) curve is a graphical plot that illustrates the diagnostic ability of a binary classifier system as its discrimination threshold is varied.
+
+The ROC curve is created by plotting the true positive rate (TPR) against the false positive rate (FPR) at various threshold settings. The true-positive rate is also known as sensitivity, recall or probability of detection in machine learning. The false-positive rate is also known as probability of false alarm and can be calculated as (1 − specificity). 
+
+A classifier no better than chance will have a ROC curve along the unit diagonal
+]
+.pull-right[
+&lt;img src="slide_12_files/figure-html/unnamed-chunk-45-1.png" width="672" /&gt;
+
+]
+---
+
+## Precision-recall curves
+
+.pull-left[
++ Precision = positive predictive value = P(True + | prediction +)
++ Recall = sensitivity = P(prediction + | True +)
+
+The precision-recall curve is used for evaluating the performance of binary classification algorithms. It is often used in situations where classes are heavily imbalanced.
+
+A "good" classifier will have high precision and high recall throughout the graph, to be close to the upper right corner
+]
+.pull-right[
+&lt;img src="slide_12_files/figure-html/unnamed-chunk-46-1.png" width="672" /&gt;
+]
+---
+
+
+## Classification report
+
+
+```
+/Users/abhijit/opt/miniconda3/envs/ds/lib/python3.8/site-packages/sklearn/base.py:209: FutureWarning: From version 0.24, get_params will raise an AttributeError if a parameter cannot be retrieved as an instance attribute. Previously it would return None.
+  warnings.warn('From version 0.24, get_params will raise an '
+```
+
+&lt;img src="slide_12_files/figure-html/unnamed-chunk-47-1.png" width="672" /&gt;&lt;img src="slide_12_files/figure-html/unnamed-chunk-47-2.png" width="672" /&gt;
+
+---
+
+## Confusion matrix
+
+&lt;img src="slide_12_files/figure-html/unnamed-chunk-48-1.png" width="672" /&gt;
+
+
+---
+
+## Calibration curves
+
+.pull-left[
+We can predict the **probability** that an individual is a member of a class, rather than the predicted class. One property of the learning methods we can then assess is **calibration**. 
+
+Calibration curves are used to evaluate how calibrated a classifier is i.e., how the probabilities of predicting each class label differ.  We bin the data, and for each bin we compute the average predicted probability (x-axis) and the proportion of positives (y-axis). 
+
+We expect bins with low proportion of positives to also have low average probability of being in the positive class, and vice versa
+]
+.pull-right[
+&lt;img src="slide_12_files/figure-html/unnamed-chunk-49-1.png" width="672" /&gt;
+]
+---
+
+## Prediction vs actual
+
+.pull-left[
+This plot works well for continuous outcomes
+
+We can see how well our predictions match the actual data
+]
+.pull-right[
+![](slide_12_files/figure-html/unnamed-chunk-50-1.png)&lt;!-- --&gt;
+
+]
+---
+layout: true
+
+# Survival/reliability models
+
+---
+class: middle,center,inverse
+
+
+
+---
+
+
+## Lifetime plots
+
+.pull-left[
+Survival analysis methods can be applied to a variety of domains:
+
++ Difference in death rate between two treatments
++ Failure rate of machines
++ Customer churn
+
+Survival data is characterized by **censoring**, i.e. when an individual is lost to followup while still "alive", and is assumed to be independent of "failure" (violations of this assumption requires different methods)
+
+This plot looks at how long we followed each individual and whether they failed (red) or were censored (white) the last time we saw them
+]
+![](slide_12_files/figure-html/unnamed-chunk-51-1.png)&lt;!-- --&gt;
+
+---
+
+## Kaplan-Meier plots
+
+.pull-left[
+The Kaplan-Meier estimator is used to estimate the survival function `\(\Pr(T &gt; t)\)`, where `\(T\)` is the time to failure. 
+
+The visual representation of this function is usually called the Kaplan-Meier curve, and it shows what the probability of failure is at a certain point of time. 
+
+From the plot, at 1000 days, about 75% of patients are expected to survive. 
+]
+.pull-right[
+![](slide_12_files/figure-html/unnamed-chunk-52-1.png)&lt;!-- --&gt;
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="../js/macros.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
